@@ -7,7 +7,7 @@ window.addEventListener("load", function() {
 
 	var tenant_input = document.getElementById('tenant_input');
 	
-	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "SuiteNumber,FirstName,LastName", "TenantId", "GET", "filter.php", "tenants", "building", document.getElementById("building_input").value)});
+	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "SuiteNumber,TenantName", "TenantId",  "GET", "filter.php", "tenants", "building", document.getElementById("building_input").value)});
 	
 	window.autocompleteXmlHttpRequest = new XMLHttpRequest();
 	
@@ -19,8 +19,8 @@ window.addEventListener("load", function() {
 	oldValues("save", "testinput", "test");
 	oldValues("save", "testinput2", "test2");
 	
-	alert(oldValues("get", "testinput"));
-	alert(oldValues("get", "testinput2"));
+	//alert(oldValues("get", "testinput"));
+	//alert(oldValues("get", "testinput2"));
 	
 });
 
@@ -80,27 +80,37 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 					var row = document.createElement("tr");
 					
 					row.onclick = function() {
-						var cellValue = this.cells[0].innerHTML;
-						input.value = cellValue;
+						
+						var cellsCount = this.cells.length;
+						var cellValue = "";
+						
+						if(cellsCount == 1)
+							cellValue = this.cells[0].innerHTML;
+						else {
+							
+							for(i=0; i<this.cells.length; i++)
+								cellValue = cellValue + this.cells[i].innerHTML + ' ';
+						}
+						
+						input.value = cellValue.trim();
 						searchList.innerHTML = "";
 						
 						var rowAttributeValue = row.attributes[0].value;
 					};
 					
-					var cell = document.createElement("td");
-					
 					var colArray = itemColumns.split(",");
 
+					var cell;
 					var cellText;
-					if(colArray.length == 1)		
-						cellText = document.createTextNode(item[colArray[0]]);
-					else
-						cellText = document.createTextNode(item[colArray[0]] + ' ' + item[colArray[1]] + ' ' + item[colArray[2]]);
 					
-					cell.appendChild(cellText);
-					row.appendChild(cell);
-					
-					row.setAttribute("value", item[valueField]);
+					for(i=0; i<colArray.length; i++)
+					{
+						cell = document.createElement("td");
+						cellText = document.createTextNode(item[colArray[i]]);
+						cell.appendChild(cellText);
+						row.appendChild(cell);
+						row.setAttribute("value", item[valueField]);
+					}
 					
 					tbl.appendChild(row);
 					
