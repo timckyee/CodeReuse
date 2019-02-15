@@ -9,10 +9,46 @@ window.addEventListener("load", function() {
 	
 	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "SuiteNumber,FirstName,LastName", "TenantId", "GET", "filter.php", "tenants", "building", document.getElementById("building_input").value)});
 	
-	window.autocompleteXHR = new XMLHttpRequest();
+	window.autocompleteXmlHttpRequest = new XMLHttpRequest();
+	
+	var config = Config();
+	var server = config.server;
+					
+	oldValuesArray = Array();	
+	
+	oldValues("save", "testinput", "test");
+	oldValues("save", "testinput2", "test2");
+	
+	alert(oldValues("get", "testinput"));
+	alert(oldValues("get", "testinput2"));
 	
 });
 
+function oldValues(saveOrGet, arrayItem, arrayValue) {
+	
+	if(saveOrGet == "save")
+	{			
+		oldValuesArray[arrayItem] = arrayValue;
+	}
+	else if(saveOrGet == "get")
+	{
+		return oldValuesArray[arrayItem];
+	}
+	
+}
+
+function submitTest() {
+	
+	if(oldValues("get", "testinput") != document.getElementById('tenant_input').value)
+	{
+		alert('not same');
+	}
+	else
+	{
+		alert('same');
+	}
+	
+};
 
 function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue) {
 		
@@ -26,9 +62,9 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 		return;
 	} else {
 		
-		window.autocompleteXHR.abort();
+		window.autocompleteXmlHttpRequest.abort();
 		
-		window.autocompleteXHR.onreadystatechange = function() {
+		window.autocompleteXmlHttpRequest.onreadystatechange = function() {
 			
 			
 			if (this.readyState == 4 && this.status == 200) {
@@ -68,7 +104,7 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 					
 					tbl.appendChild(row);
 					
-				})
+			  	});
 				
 				searchList.appendChild(tbl);
 			}
@@ -83,7 +119,7 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 	else
 		queryString = "queryName" + "=" + queryName + "&filter=" + input.value + "&" + additionalArgs + "=" + additionalArgsValue;
 	
-	window.autocompleteXHR.open(httpGetOrPost, phpFile + "?" + queryString, true);
-	window.autocompleteXHR.send();
-
+	window.autocompleteXmlHttpRequest.open(httpGetOrPost, phpFile + "?" + queryString, true);
+	window.autocompleteXmlHttpRequest.send();
+	
 }
