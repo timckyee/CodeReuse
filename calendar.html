@@ -9,6 +9,7 @@
 		td {
 			
 			border: 1px solid black;
+			text-align: center;
 			
 		}
 		
@@ -20,13 +21,14 @@
 		
 		}
 		
-		
 	</style>
 	
 </head>
 
 <body>
-	
+
+<input class="inputTest" type="text" id="inputCalendar" style="position: absolute; z-index: 1; background-color: white">
+<div id="calendarId" style="position: absolute; display: none; z-index: 2; background-color: white">	
 <table>
 <tr>
 	<td id="back" style="text-align: center" onclick="moveCalendar('back',this)"><</td>
@@ -34,13 +36,13 @@
 	<td id="forward" style="text-align: center" onclick="moveCalendar('forward',this)">></td>
 </tr>
 <tr>
-	<th>Sun</th>
-	<th>Mon</th>
-	<th>Tue</th>
-	<th>Wed</th>
-	<th>Thu</th>
-	<th>Fri</th>
-	<th>Sat</th>
+	<th>S</th>
+	<th>M</th>
+	<th>T</th>
+	<th>W</th>
+	<th>T</th>
+	<th>F</th>
+	<th>S</th>
 </tr>
 <tr>	
 	<td id="cal_cell_1"></td>
@@ -97,7 +99,11 @@
 	<td id="cal_cell_42"></td>	
 </tr>
 
-</table>	
+</table>
+</div>
+
+<br>
+<input type="text" id="inputtest"/>
 	
 </body>
 
