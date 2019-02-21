@@ -24,7 +24,6 @@ function showHideCalendar() {
 	if(calendarId.style.display != "block")
 	{
 		calendarId.style.display = "block";
-		calendar(calendarDate.getMonth(), calendarDate.getFullYear(), 'inputCalendar', 'calendarId');
 	}
 	
 }
@@ -68,19 +67,19 @@ function calendar(month, year, inputId, divCalendarId) {
 	for(i=1; i<days+1; i++)
 	{
 		intCalCell = i + parseInt(calendarDayStart);
-		document.getElementById('cal_cell_' + intCalCell).innerHTML = i;	
+		document.getElementById('cal_cell_' + intCalCell).innerHTML = i;
 		
 		document.getElementById('cal_cell_' + intCalCell).onclick = function (obj) {
 			
-			var monthYear = obj.srcElement.parentElement.parentElement.childNodes[0].innerText;
+			var calCurrentMonthYear = obj.srcElement.parentElement.parentElement.childNodes[0].innerText;
+			var calCurrentMonthYearForwardSign = calCurrentMonthYear.substr(1, calCurrentMonthYear.length-1).trim();
+			var calCurrentMonthYearNoBackForwardSign = calCurrentMonthYearForwardSign.substr(0, calCurrentMonthYearForwardSign.length - 1).trim();
 			
-			var day = obj.srcElement.innerHTML;
-			
-			var currentMonthYear = monthYear.substr(2, monthYear.length).substr(0,monthYear.length-4).split(' ');
-			
+			var currentMonthYear = calCurrentMonthYearNoBackForwardSign.split(' ');
+
 			var currentMonth = currentMonthYear[0];
 			var currentYear = currentMonthYear[1];
-						
+			
 			for(month=0; month<12; month++)
 			{
 				if(monthsArray[month] == currentMonth)
@@ -88,14 +87,28 @@ function calendar(month, year, inputId, divCalendarId) {
 					break;
 				}
 			}	
-						
+			
+			var day = obj.srcElement.innerHTML;
+			
+			var dayPadding = day;
+			
 			if(day.length != 2)
-				day = '0' + day;
+				dayPadding = '0' + dayPadding;
 						
-			document.getElementById(inputId).value = day + '-' + currentMonth.substr(0,3).toLowerCase() + '-' + calendarDateYear;
+			document.getElementById(inputId).value = dayPadding + '-' + currentMonth.substr(0,3).toLowerCase() + '-' + calendarDateYear;
 			
 			document.getElementById(divCalendarId).style.display = "none";
-						
+			
+			for(calCellDay=1; calCellDay<=42; calCellDay++)
+			{
+				if(document.getElementById('cal_cell_' + calCellDay).innerHTML == day)
+					document.getElementById('cal_cell_' + calCellDay).className = "selectedDay";
+				else
+				{
+					if(document.getElementById('cal_cell_' + calCellDay).className != "currentDay")
+						document.getElementById('cal_cell_' + calCellDay).className = "normalDay";
+				}
+			}
 		};
 		
 		if(i == days)
@@ -115,9 +128,12 @@ function calendar(month, year, inputId, divCalendarId) {
 	{
 		var calCell = document.getElementById('cal_cell_' + i);
 		
-		var monthYear = calCell.parentElement.parentElement.childNodes[0].innerText;
+		var calCurrentMonthYearBackForwardSign = calCell.parentElement.parentElement.childNodes[0].innerText;
+		var calCurrentMonthYearBackForwardSignTrim = calCurrentMonthYearBackForwardSign.trim();
+		var calCurrentMonthYearForwardSign = calCurrentMonthYearBackForwardSignTrim.substr(1, calCurrentMonthYearBackForwardSignTrim.length-1).trim();
+		var calCurrentMonthYearNoBackForwardSign = calCurrentMonthYearForwardSign.substr(0, calCurrentMonthYearForwardSign.length - 1).trim();
 		
-		var currentMonthYear = monthYear.substr(2, monthYear.length).substr(0,monthYear.length-4).split(' ');
+		var currentMonthYear = calCurrentMonthYearNoBackForwardSign.split(' ');
 		
 		var currentMonth = currentMonthYear[0];
 		var currentYear = currentMonthYear[1];
@@ -132,7 +148,8 @@ function calendar(month, year, inputId, divCalendarId) {
 		
 		if(parseInt(calCell.innerHTML) == calendarDateDay && calendarDateMonth == month && calendarDateYear == currentYear)
 		{
-			calCell.style.backgroundColor = "lightgray";
+			calCell.className = "currentDay";
+			calCell.style.fontWeight = "bold";
 			break;
 		}
 	}	
@@ -156,9 +173,11 @@ function moveCalendar(backOrForward, obj) {
 	{
 		var calCell = document.getElementById('cal_cell_' + i);
 		
-		var monthYear = calCell.parentElement.parentElement.childNodes[0].innerText;
+		var calCurrentMonthYear = calCell.parentElement.parentElement.childNodes[0].innerText;
+		var calCurrentMonthYearForwardSign = calCurrentMonthYear.substr(1, calCurrentMonthYear.length-1).trim();
+		var calCurrentMonthYearNoBackForwardSign = calCurrentMonthYearForwardSign.substr(0, calCurrentMonthYearForwardSign.length - 1).trim();
 		
-		var currentMonthYear = monthYear.substr(2, monthYear.length).substr(0,monthYear.length-4).split(' ');
+		var currentMonthYear = calCurrentMonthYearNoBackForwardSign.split(' ');
 		
 		var currentMonth = currentMonthYear[0];
 		var currentYear = currentMonthYear[1];
@@ -173,9 +192,15 @@ function moveCalendar(backOrForward, obj) {
 		
 		if(parseInt(calCell.innerHTML) == calendarDateDay && calendarDateMonth == month && calendarDateYear == currentYear)
 		{
-			calCell.style.backgroundColor = "transparent";
+			calCell.className = "normalDay";
+			calCell.style.fontWeight = "normal";
 			break;
 		}
+	}
+	
+	for(calCellDay=1; calCellDay<=42; calCellDay++)
+	{
+		document.getElementById('cal_cell_' + calCellDay).className = "normalDay";
 	}
 	
 	var monthYear = obj.parentElement.cells[1].innerHTML;
