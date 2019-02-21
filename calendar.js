@@ -3,9 +3,14 @@ window.addEventListener("load", function() {
 
 	var calendarDate = new Date();
 
+	var month = calendarDate.getMonth();
+	var year = calendarDate.getFullYear();
+
 	monthsArray = Array();
 	
 	populateMonthsArray();
+
+	document.getElementById('monthYear').innerHTML = monthsArray[month] + ' ' + year;
 
 	var inputCalendar = document.getElementById('inputCalendar');
 	
