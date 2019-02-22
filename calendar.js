@@ -6,6 +6,8 @@ window.addEventListener("load", function() {
 	var month = calendarDate.getMonth();
 	var year = calendarDate.getFullYear();
 
+	//createCalendarTable();
+
 	monthsArray = Array();
 	
 	populateMonthsArray();
@@ -19,6 +21,157 @@ window.addEventListener("load", function() {
 	calendar(calendarDate.getMonth(), calendarDate.getFullYear(), 'inputCalendar', 'calendarId');
 	
 });
+
+function createCalendarTable() {
+	
+	var tbl = document.createElement("table");
+	
+	var row = document.createElement("tr");
+	
+	var cell = document.createElement("td");
+	cell.id = "back";
+	cell.style.textAlign = "center";
+	cell.onclick = function() { moveCalendar('back',this); };
+	cellText = document.createTextNode("<");
+	
+	cell.appendChild(cellText);
+	row.appendChild(cell);
+	
+	cell = document.createElement("td");
+	cell.id = "monthYear";
+	cell.colSpan = "5";
+	cell.style.textAlign = "center";
+	
+	row.appendChild(cell);
+	
+	cell = document.createElement("td");
+	cell.id = "forward";
+	cell.style.textAlign = "center";
+	cell.onclick = function() { moveCalendar('forward',this); };
+	cellText = document.createTextNode(">");		
+	
+	cell.appendChild(cellText);
+	row.appendChild(cell);
+	
+	tbl.appendChild(row);
+	
+	row = document.createElement("tr");
+	
+	header = document.createElement("th");
+	headerText = document.createTextNode("S");
+	
+	header.appendChild(headerText);
+	row.appendChild(header);
+	
+	header = document.createElement("th");
+	headerText = document.createTextNode("M");
+	
+	header.appendChild(headerText);
+	row.appendChild(header);
+	
+	header = document.createElement("th");
+	headerText = document.createTextNode("T");
+	
+	header.appendChild(headerText);
+	row.appendChild(header);
+	
+	header = document.createElement("th");
+	headerText = document.createTextNode("W");
+	
+	header.appendChild(headerText);
+	row.appendChild(header);
+	
+	header = document.createElement("th");
+	headerText = document.createTextNode("T");
+	
+	header.appendChild(headerText);
+	row.appendChild(header);
+	
+	header = document.createElement("th");
+	headerText = document.createTextNode("F");
+	
+	header.appendChild(headerText);
+	row.appendChild(header);
+	
+	header = document.createElement("th");
+	headerText = document.createTextNode("S");	
+	
+	header.appendChild(headerText);
+	row.appendChild(header);
+		
+	tbl.appendChild(row);	
+	
+	row = document.createElement("tr");
+	
+	for(i=1; i<=7; i++)
+	{
+		cell = document.createElement("td");
+		cell.id = "cal_cell_" + i;
+		row.appendChild(cell);
+	}
+	
+	tbl.appendChild(row);
+	
+	row = document.createElement("tr");
+	
+	for(i=8; i<=14; i++)
+	{
+		cell = document.createElement("td");
+		cell.id = "cal_cell_" + i;
+		row.appendChild(cell);
+	}
+	
+	tbl.appendChild(row);
+	
+	row = document.createElement("tr");
+	
+	for(i=15; i<=21; i++)
+	{
+		cell = document.createElement("td");
+		cell.id = "cal_cell_" + i;
+		row.appendChild(cell);
+	}
+	
+	tbl.appendChild(row);
+	
+	row = document.createElement("tr");
+	
+	for(i=22; i<=28; i++)
+	{
+		cell = document.createElement("td");
+		cell.id = "cal_cell_" + i;
+		row.appendChild(cell);
+	}
+	
+	tbl.appendChild(row);
+	
+	row = document.createElement("tr");
+	
+	for(i=29; i<=35; i++)
+	{
+		cell = document.createElement("td");
+		cell.id = "cal_cell_" + i;
+		row.appendChild(cell);
+	}
+	
+	tbl.appendChild(row);
+	
+	row = document.createElement("tr");
+	
+	for(i=36; i<=42; i++)
+	{
+		cell = document.createElement("td");
+		cell.id = "cal_cell_" + i;
+		row.appendChild(cell);
+	}	
+	
+	tbl.appendChild(row);
+	
+	calendarId = document.getElementById('calendarId');
+	
+	calendarId.appendChild(tbl);
+	
+}
 
 function showHideCalendar() {
 	
@@ -76,14 +229,12 @@ function calendar(month, year, inputId, divCalendarId) {
 		
 		document.getElementById('cal_cell_' + intCalCell).onclick = function (obj) {
 			
-			var calCurrentMonthYear = obj.srcElement.parentElement.parentElement.childNodes[0].innerText;
-			var calCurrentMonthYearForwardSign = calCurrentMonthYear.substr(1, calCurrentMonthYear.length-1).trim();
-			var calCurrentMonthYearNoBackForwardSign = calCurrentMonthYearForwardSign.substr(0, calCurrentMonthYearForwardSign.length - 1).trim();
-			
-			var currentMonthYear = calCurrentMonthYearNoBackForwardSign.split(' ');
+			var currentMonthYear = obj.srcElement.parentElement.parentElement.childNodes[0].children[1].innerHTML;
 
-			var currentMonth = currentMonthYear[0];
-			var currentYear = currentMonthYear[1];
+			var currentMonthYearArray = currentMonthYear.split(' ');
+
+			var currentMonth = currentMonthYearArray[0];
+			var currentYear = currentMonthYearArray[1];
 			
 			for(month=0; month<12; month++)
 			{
@@ -100,7 +251,7 @@ function calendar(month, year, inputId, divCalendarId) {
 			if(day.length != 2)
 				dayPadding = '0' + dayPadding;
 						
-			document.getElementById(inputId).value = dayPadding + '-' + currentMonth.substr(0,3).toLowerCase() + '-' + calendarDateYear;
+			document.getElementById(inputId).value = dayPadding + '-' + currentMonth.substr(0,3).toLowerCase() + '-' + currentYear;
 			
 			document.getElementById(divCalendarId).style.display = "none";
 			
@@ -133,15 +284,12 @@ function calendar(month, year, inputId, divCalendarId) {
 	{
 		var calCell = document.getElementById('cal_cell_' + i);
 		
-		var calCurrentMonthYearBackForwardSign = calCell.parentElement.parentElement.childNodes[0].innerText;
-		var calCurrentMonthYearBackForwardSignTrim = calCurrentMonthYearBackForwardSign.trim();
-		var calCurrentMonthYearForwardSign = calCurrentMonthYearBackForwardSignTrim.substr(1, calCurrentMonthYearBackForwardSignTrim.length-1).trim();
-		var calCurrentMonthYearNoBackForwardSign = calCurrentMonthYearForwardSign.substr(0, calCurrentMonthYearForwardSign.length - 1).trim();
+		var currentMonthYear = calCell.parentElement.parentElement.childNodes[0].children[1].innerHTML;
 		
-		var currentMonthYear = calCurrentMonthYearNoBackForwardSign.split(' ');
-		
-		var currentMonth = currentMonthYear[0];
-		var currentYear = currentMonthYear[1];
+		var currentMonthYearArray = currentMonthYear.split(' ');
+				
+		var currentMonth = currentMonthYearArray[0];
+		var currentYear = currentMonthYearArray[1];
 		
 		for(month=0; month<12; month++)
 		{
@@ -178,14 +326,12 @@ function moveCalendar(backOrForward, obj) {
 	{
 		var calCell = document.getElementById('cal_cell_' + i);
 		
-		var calCurrentMonthYear = calCell.parentElement.parentElement.childNodes[0].innerText;
-		var calCurrentMonthYearForwardSign = calCurrentMonthYear.substr(1, calCurrentMonthYear.length-1).trim();
-		var calCurrentMonthYearNoBackForwardSign = calCurrentMonthYearForwardSign.substr(0, calCurrentMonthYearForwardSign.length - 1).trim();
+		var currentMonthYear = calCell.parentElement.parentElement.childNodes[0].children[1].innerHTML;
 		
-		var currentMonthYear = calCurrentMonthYearNoBackForwardSign.split(' ');
+		var currentMonthYearArray = currentMonthYear.split(' ');
 		
-		var currentMonth = currentMonthYear[0];
-		var currentYear = currentMonthYear[1];
+		var currentMonth = currentMonthYearArray[0];
+		var currentYear = currentMonthYearArray[1];
 		
 		for(month=0; month<12; month++)
 		{
