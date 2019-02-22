@@ -6,23 +6,27 @@ window.addEventListener("load", function() {
 	var month = calendarDate.getMonth();
 	var year = calendarDate.getFullYear();
 
-	//createCalendarTable();
+	//createCalendarTable('calendarId');
 
 	monthsArray = Array();
 	
 	populateMonthsArray();
+	
+	selectedDay = "";
+	selectedMonth = "";
+	selectedYear = "";
 
 	document.getElementById('monthYear').innerHTML = monthsArray[month] + ' ' + year;
 
 	var inputCalendar = document.getElementById('inputCalendar');
 	
-	inputCalendar.addEventListener("focus", function(event){showHideCalendar(event)});
+	inputCalendar.addEventListener("focus", function(event){showHideCalendar(event, 'calendarId')});
 
 	calendar(calendarDate.getMonth(), calendarDate.getFullYear(), 'inputCalendar', 'calendarId');
 	
 });
 
-function createCalendarTable() {
+function createCalendarTable(divCalendarId) {
 	
 	var tbl = document.createElement("table");
 	
@@ -167,17 +171,15 @@ function createCalendarTable() {
 	
 	tbl.appendChild(row);
 	
-	calendarId = document.getElementById('calendarId');
+	calendarId = document.getElementById(divCalendarId);
 	
 	calendarId.appendChild(tbl);
 	
 }
 
-function showHideCalendar() {
-	
-	var calendarDate = new Date();
+function showHideCalendar(event, divCalendarId) {
 
-	var calendarId = document.getElementById('calendarId');
+	var calendarId = document.getElementById(divCalendarId);
 	
 	if(calendarId.style.display != "block")
 	{
@@ -229,8 +231,8 @@ function calendar(month, year, inputId, divCalendarId) {
 		
 		document.getElementById('cal_cell_' + intCalCell).onclick = function (obj) {
 			
-			var currentMonthYear = obj.srcElement.parentElement.parentElement.childNodes[0].children[1].innerHTML;
-
+			var currentMonthYear = document.getElementById('monthYear').innerHTML;
+			
 			var currentMonthYearArray = currentMonthYear.split(' ');
 
 			var currentMonth = currentMonthYearArray[0];
@@ -246,6 +248,10 @@ function calendar(month, year, inputId, divCalendarId) {
 			
 			var day = obj.srcElement.innerHTML;
 			
+			selectedDay = day;
+			selectedMonth = month;
+			selectedYear = currentYear;
+			
 			var dayPadding = day;
 			
 			if(day.length != 2)
@@ -257,12 +263,21 @@ function calendar(month, year, inputId, divCalendarId) {
 			
 			for(calCellDay=1; calCellDay<=42; calCellDay++)
 			{
-				if(document.getElementById('cal_cell_' + calCellDay).innerHTML == day)
-					document.getElementById('cal_cell_' + calCellDay).className = "selectedDay";
-				else
-				{
-					if(document.getElementById('cal_cell_' + calCellDay).className != "currentDay")
-						document.getElementById('cal_cell_' + calCellDay).className = "normalDay";
+				calCell = document.getElementById('cal_cell_' + calCellDay);
+				
+				if(calCell.innerHTML != "" && calCell.innerHTML != "&nbps")
+				{	
+					if(calCell.innerHTML == selectedDay && month == selectedMonth && currentYear == selectedYear)
+					{
+						calCell.className = "selectedDay";
+					}
+					else
+					{
+						if(calCell.className != "currentDay")
+						{
+							calCell.className = "normalDay";
+						}
+					}
 				}
 			}
 		};
@@ -275,37 +290,39 @@ function calendar(month, year, inputId, divCalendarId) {
 	{
 		intCalCell = i + parseInt(calendarDayEnd);
 		if(intCalCell <= 42)
-			document.getElementById('cal_cell_' + intCalCell).innerHTML = "&nbsp;";
+			document.getElementById('cal_cell_' + intCalCell).innerHTML = "&nbsp";
 		else
 			break;
 	}
+	
+	var currentMonthYear = document.getElementById('monthYear').innerHTML;
+	
+	var currentMonthYearArray = currentMonthYear.split(' ');
+			
+	var currentMonth = currentMonthYearArray[0];
+	var currentYear = currentMonthYearArray[1];
 	
 	for(i=1; i<=42; i++)
 	{
 		var calCell = document.getElementById('cal_cell_' + i);
 		
-		var currentMonthYear = calCell.parentElement.parentElement.childNodes[0].children[1].innerHTML;
-		
-		var currentMonthYearArray = currentMonthYear.split(' ');
-				
-		var currentMonth = currentMonthYearArray[0];
-		var currentYear = currentMonthYearArray[1];
-		
-		for(month=0; month<12; month++)
+		if(calCell.innerHTML != "" && calCell.innerHTML != "&nbps")
 		{
-			if(monthsArray[month] == currentMonth)
+			if(parseInt(calCell.innerHTML) == calendarDateDay && month == calendarDateMonth && currentYear == calendarDateYear)
 			{
-				break;
+				calCell.className = "currentDay";
+				calCell.style.fontWeight = "bold";
+			}
+	
+			if(selectedDay != "")
+			{
+				if(parseInt(calCell.innerHTML) == selectedDay && month == selectedMonth && currentYear == selectedYear)
+				{
+					calCell.className = "selectedDay";
+				}
 			}
 		}
-		
-		if(parseInt(calCell.innerHTML) == calendarDateDay && calendarDateMonth == month && calendarDateYear == currentYear)
-		{
-			calCell.className = "currentDay";
-			calCell.style.fontWeight = "bold";
-			break;
-		}
-	}	
+	}
 }
 
 function daysInMonth(month, year) {
@@ -322,43 +339,26 @@ function moveCalendar(backOrForward, obj) {
 	var calendarDateMonth = calendarDate.getMonth();
 	var calendarDateYear = calendarDate.getFullYear();
 	
-	for(i=1; i<=42; i++)
-	{
-		var calCell = document.getElementById('cal_cell_' + i);
-		
-		var currentMonthYear = calCell.parentElement.parentElement.childNodes[0].children[1].innerHTML;
-		
-		var currentMonthYearArray = currentMonthYear.split(' ');
-		
-		var currentMonth = currentMonthYearArray[0];
-		var currentYear = currentMonthYearArray[1];
-		
-		for(month=0; month<12; month++)
-		{
-			if(monthsArray[month] == currentMonth)
-			{
-				break;
-			}
-		}
-		
-		if(parseInt(calCell.innerHTML) == calendarDateDay && calendarDateMonth == month && calendarDateYear == currentYear)
-		{
-			calCell.className = "normalDay";
-			calCell.style.fontWeight = "normal";
-			break;
-		}
-	}
-	
 	for(calCellDay=1; calCellDay<=42; calCellDay++)
 	{
-		document.getElementById('cal_cell_' + calCellDay).className = "normalDay";
+		document.getElementById('cal_cell_' + calCellDay).onclick = null;
+	}
+
+	for(calCellDay=1; calCellDay<=42; calCellDay++)
+	{
+		var calCell = document.getElementById('cal_cell_' + calCellDay);
+		
+		if(calCell.style.fontWeight == "bold")
+			calCell.style.fontWeight = "normal";
+			
+		calCell.className = "normalDay";
 	}
 	
 	var monthYear = obj.parentElement.cells[1].innerHTML;
 	var monthYearArray = monthYear.split(" ");
 	
 	var month = monthYearArray[0];
-	
+
 	var year = monthYearArray[1];
 	
 	var numMonths = 12;
