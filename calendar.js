@@ -6,12 +6,12 @@ window.addEventListener("load", function() {
 	populateMonthsArray();
 
 	var divCalendarId = "calendarId";
-
+	
 	document.onclick = function(e) {
 
 		var calendarId = document.getElementById(divCalendarId);
 		
-		if(e.target.id != "back" && e.target.id != "forward") {
+		if(e.target.id == "" && e.target.id != "back" && e.target.id != "forward") {
 			calendarId.style.display = "none";
 		}
 		
@@ -19,7 +19,7 @@ window.addEventListener("load", function() {
 
 	var inputCalendar = document.getElementById('inputCalendar');
 	
-	inputCalendar.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendar', 'calendarId')});
+	inputCalendar.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendar', divCalendarId)});
 	
 });
 
@@ -39,7 +39,7 @@ function positionCalendar(inputCalendarId, divCalendarId) {
 	var positionDivCalendar = document.getElementById(divCalendarId);
 	
 	positionDivCalendar.style.left = left;
-	positionDivCalendar.style.top = top;
+	positionDivCalendar.style.top = top + positionInputCalendar.offsetHeight;
 	
 }
 
@@ -80,42 +80,49 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 	row = document.createElement("tr");
 	
 	header = document.createElement("th");
+	header.id = "cal_cell_h1";
 	headerText = document.createTextNode("S");
 	
 	header.appendChild(headerText);
 	row.appendChild(header);
 	
 	header = document.createElement("th");
+	header.id = "cal_cell_h2";
 	headerText = document.createTextNode("M");
 	
 	header.appendChild(headerText);
 	row.appendChild(header);
 	
 	header = document.createElement("th");
+	header.id = "cal_cell_h3";
 	headerText = document.createTextNode("T");
 	
 	header.appendChild(headerText);
 	row.appendChild(header);
 	
 	header = document.createElement("th");
+	header.id = "cal_cell_h4";
 	headerText = document.createTextNode("W");
 	
 	header.appendChild(headerText);
 	row.appendChild(header);
 	
 	header = document.createElement("th");
+	header.id = "cal_cell_h5";
 	headerText = document.createTextNode("T");
 	
 	header.appendChild(headerText);
 	row.appendChild(header);
 	
 	header = document.createElement("th");
+	header.id = "cal_cell_h6";
 	headerText = document.createTextNode("F");
 	
 	header.appendChild(headerText);
 	row.appendChild(header);
 	
 	header = document.createElement("th");
+	header.id = "cal_cell_h7";
 	headerText = document.createTextNode("S");	
 	
 	header.appendChild(headerText);
@@ -235,7 +242,7 @@ function getInputCalendarValue(dayMonthOrYear, inputCalendarId) {
 	var inputCalendar = document.getElementById(inputCalendarId);
 	
 	if(inputCalendar.value == "")
-		return;
+		return "";
 	
 	var day, month, year;
 	
@@ -270,6 +277,10 @@ function getInputCalendarValue(dayMonthOrYear, inputCalendarId) {
 	{
 		return year;
 	}
+	else 
+	{
+		return "";
+	}
 }
 
 function populateMonthsArray() {
@@ -294,10 +305,6 @@ function calendar(month, year, inputCalendarId, divCalendarId) {
 	clearCalendar();
 	
 	var calendarDate = new Date();
-	
-	var calendarDateDay = calendarDate.getDate();
-	var calendarDateMonth = calendarDate.getMonth();
-	var calendarDateYear = calendarDate.getFullYear();
 				
 	calendarDate.setDate(1);
 	calendarDate.setMonth(month);
@@ -334,10 +341,6 @@ function calendar(month, year, inputCalendarId, divCalendarId) {
 			
 			var dayClick = obj.srcElement.innerHTML;
 			
-			var selectedDay = getInputCalendarValue("day",inputCalendarId);
-			var selectedMonth = getInputCalendarValue("month",inputCalendarId);
-			var selectedYear = getInputCalendarValue("year",inputCalendarId);
-			
 			var dayPadding = dayClick;
 			
 			if(dayClick.length != 2)
@@ -346,26 +349,6 @@ function calendar(month, year, inputCalendarId, divCalendarId) {
 			document.getElementById(inputCalendarId).value = dayPadding + '-' + currentMonthString.substr(0,3).toLowerCase() + '-' + currentYear;
 			
 			document.getElementById(divCalendarId).style.display = "none";
-			
-			for(calCellDay=1; calCellDay<=42; calCellDay++)
-			{
-				calCell = document.getElementById('cal_cell_' + calCellDay);
-				
-				if(calCell.innerHTML != "" && calCell.innerHTML != "&nbps")
-				{	
-					if(calCell.innerHTML == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear)
-					{
-						calCell.className = "selectedDay";
-					}
-					else
-					{
-						if(calCell.className != "currentDay")
-						{
-							calCell.className = "normalDay";
-						}
-					}
-				}
-			}
 		};
 		
 		if(i == days)
@@ -396,6 +379,11 @@ function calendar(month, year, inputCalendarId, divCalendarId) {
 		}
 	}	
 	
+	var calendarCurrentDate = new Date();
+	var calendarCurrentDay = calendarCurrentDate.getDate();
+	var calendarCurrentMonth = calendarCurrentDate.getMonth();
+	var calendarCurrentYear = calendarCurrentDate.getFullYear();	
+	
 	var selectedDay = getInputCalendarValue("day",inputCalendarId);
 	var selectedMonth = getInputCalendarValue("month",inputCalendarId);
 	var selectedYear = getInputCalendarValue("year",inputCalendarId);	
@@ -406,14 +394,14 @@ function calendar(month, year, inputCalendarId, divCalendarId) {
 		
 		if(calCell.innerHTML != "" && calCell.innerHTML != "&nbps")
 		{
-			if(parseInt(calCell.innerHTML) == calendarDateDay && currentMonth == calendarDateMonth && currentYear == calendarDateYear)
+			if(parseInt(calCell.innerHTML) == calendarCurrentDay && currentMonth == calendarCurrentMonth && currentYear == calendarCurrentYear.toString())
 			{
 				calCell.className = "currentDay";
 				calCell.style.fontWeight = "bold";
 			}
 			else
 			{
-				if(selectedDay != "" && selectedMonth != "" && selectedYear != "")
+				if(selectedDay != "" && (selectedMonth == 0 || selectedMonth <12) && selectedYear != "")
 				{
 					if(parseInt(calCell.innerHTML) == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear)
 					{
@@ -434,21 +422,6 @@ function daysInMonth(month, year) {
 }
 
 function moveCalendar(backOrForward, obj, inputCalendarId, divCalendarId) {
-	
-	for(calCellDay=1; calCellDay<=42; calCellDay++)
-	{
-		document.getElementById('cal_cell_' + calCellDay).onclick = null;
-	}
-
-	for(calCellDay=1; calCellDay<=42; calCellDay++)
-	{
-		var calCell = document.getElementById('cal_cell_' + calCellDay);
-		
-		if(calCell.style.fontWeight == "bold")
-			calCell.style.fontWeight = "normal";
-				
-		calCell.className = "normalDay";
-	}
 	
 	var monthYear = obj.parentElement.cells[1].innerHTML;
 	var monthYearArray = monthYear.split(" ");
@@ -507,9 +480,17 @@ function moveCalendar(backOrForward, obj, inputCalendarId, divCalendarId) {
 
 function clearCalendar() {
 	
-	for(i=1; i<=42; i++)
+	for(calCellDay=1; calCellDay<=42; calCellDay++)
 	{
-		document.getElementById('cal_cell_' + i).innerHTML = "";
+		var calCell = document.getElementById('cal_cell_' + calCellDay);
+		
+		calCell.innerHTML = "";
+		calCell.onclick = null;
+		
+		if(calCell.style.fontWeight == "bold")
+			calCell.style.fontWeight = "normal";
+				
+		calCell.className = "normalDay";		
 	}
 	
 }
