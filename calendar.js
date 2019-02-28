@@ -29,6 +29,20 @@ function removeCalendarTable(divCalendarId) {
 
 };
 
+function positionCalendar(inputCalendarId, divCalendarId) {
+	
+	var positionInputCalendar = document.getElementById(inputCalendarId);
+	
+	var left = positionInputCalendar.offsetLeft;
+	var top = positionInputCalendar.offsetTop;
+	
+	var positionDivCalendar = document.getElementById(divCalendarId);
+	
+	positionDivCalendar.style.left = left;
+	positionDivCalendar.style.top = top;
+	
+}
+
 function createCalendarTable(inputCalendarId, divCalendarId) {
 	
 	var tbl = document.createElement("table");
@@ -184,6 +198,8 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 function showHideCalendar(event, showOrHide, inputCalendarId, divCalendarId) {
 
 	var calendarId = document.getElementById(divCalendarId);
+	
+	positionCalendar(inputCalendarId, divCalendarId);
 	
 	if(showOrHide == "show")
 	{
