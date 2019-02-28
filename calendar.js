@@ -203,13 +203,13 @@ function showHideCalendar(event, showOrHide, inputCalendarId, divCalendarId) {
 	
 	if(inputCalendar.value != "")
 	{
-		calendar(getInputCalendarValue("day", inputCalendarId),getInputCalendarValue("month", inputCalendarId),getInputCalendarValue("year", inputCalendarId), inputCalendarId, divCalendarId);
+		calendar(getInputCalendarValue("month", inputCalendarId),getInputCalendarValue("year", inputCalendarId), inputCalendarId, divCalendarId);
 	}
 	else
 	{
 		var calendarDate = new Date();
 		
-		calendar(calendarDate.getDate(),calendarDate.getMonth(), calendarDate.getFullYear(), inputCalendarId, divCalendarId);
+		calendar(calendarDate.getMonth(), calendarDate.getFullYear(), inputCalendarId, divCalendarId);
 	}
 
 }
@@ -273,7 +273,7 @@ function populateMonthsArray() {
 	
 }
 
-function calendar(day, month, year, inputCalendarId, divCalendarId) {
+function calendar(month, year, inputCalendarId, divCalendarId) {
 	
 	clearCalendar();
 	
@@ -305,12 +305,12 @@ function calendar(day, month, year, inputCalendarId, divCalendarId) {
 			
 			var currentMonthYearArray = currentMonthYear.split(' ');
 
-			var currentMonth = currentMonthYearArray[0];
+			var currentMonthString = currentMonthYearArray[0];
 			var currentYear = currentMonthYearArray[1];
 			
-			for(month=0; month<12; month++)
+			for(currentMonth=0; currentMonth<12; currentMonth++)
 			{
-				if(monthsArray[month] == currentMonth)
+				if(monthsArray[currentMonth] == currentMonthString)
 				{
 					break;
 				}
@@ -327,7 +327,7 @@ function calendar(day, month, year, inputCalendarId, divCalendarId) {
 			if(dayClick.length != 2)
 				dayPadding = '0' + dayPadding;
 						
-			document.getElementById(inputCalendarId).value = dayPadding + '-' + currentMonth.substr(0,3).toLowerCase() + '-' + currentYear;
+			document.getElementById(inputCalendarId).value = dayPadding + '-' + currentMonthString.substr(0,3).toLowerCase() + '-' + currentYear;
 			
 			document.getElementById(divCalendarId).style.display = "none";
 			
@@ -337,7 +337,7 @@ function calendar(day, month, year, inputCalendarId, divCalendarId) {
 				
 				if(calCell.innerHTML != "" && calCell.innerHTML != "&nbps")
 				{	
-					if(calCell.innerHTML == selectedDay && month == selectedMonth && currentYear == selectedYear)
+					if(calCell.innerHTML == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear)
 					{
 						calCell.className = "selectedDay";
 					}
@@ -369,12 +369,20 @@ function calendar(day, month, year, inputCalendarId, divCalendarId) {
 	
 	var currentMonthYearArray = currentMonthYear.split(' ');
 			
-	var currentMonth = currentMonthYearArray[0];
+	var currentMonthString = currentMonthYearArray[0];
 	var currentYear = currentMonthYearArray[1];
+	
+	for(currentMonth=0; currentMonth<12; currentMonth++)
+	{
+		if(monthsArray[currentMonth] == currentMonthString)
+		{
+			break;
+		}
+	}	
 	
 	var selectedDay = getInputCalendarValue("day",inputCalendarId);
 	var selectedMonth = getInputCalendarValue("month",inputCalendarId);
-	var selectedYear = getInputCalendarValue("year",inputCalendarId);
+	var selectedYear = getInputCalendarValue("year",inputCalendarId);	
 	
 	for(i=1; i<=42; i++)
 	{
@@ -382,22 +390,22 @@ function calendar(day, month, year, inputCalendarId, divCalendarId) {
 		
 		if(calCell.innerHTML != "" && calCell.innerHTML != "&nbps")
 		{
-			if(parseInt(calCell.innerHTML) == calendarDateDay && month == calendarDateMonth && currentYear == calendarDateYear)
+			if(parseInt(calCell.innerHTML) == calendarDateDay && currentMonth == calendarDateMonth && currentYear == calendarDateYear)
 			{
 				calCell.className = "currentDay";
 				calCell.style.fontWeight = "bold";
 			}
 			else
 			{
-				calCell.className = "normalDay";
-			}
-			
-			if(selectedDay != "" && selectedMonth != "" && selectedYear != "")
-			{
-				if(parseInt(calCell.innerHTML) == selectedDay && month == selectedMonth && year == selectedYear)
+				if(selectedDay != "" && selectedMonth != "" && selectedYear != "")
 				{
-					calCell.className = "selectedDay";
-				}
+					if(parseInt(calCell.innerHTML) == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear)
+					{
+						calCell.className = "selectedDay";
+					}
+				}			
+				else
+					calCell.className = "normalDay";
 			}
 		}
 	}
@@ -477,7 +485,7 @@ function moveCalendar(backOrForward, obj, inputCalendarId, divCalendarId) {
 
 	obj.parentElement.cells[1].innerHTML = monthsArray[newMonth] + ' ' + newYear;
 	
-	calendar(1, newMonth, newYear, inputCalendarId, divCalendarId);
+	calendar(newMonth, newYear, inputCalendarId, divCalendarId);
 
 }
 
