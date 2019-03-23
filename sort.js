@@ -13,13 +13,14 @@ function sortTable(){
         
     var Arr = [];
     
-    
     for(var i=0, ln=table.rows.length; i<ln; i++){
 	    
         var row = table.rows[i];
         var firstCell = row.cells[sortCol].textContent;
         
-		Arr.push([firstCell, row]);  //temporary array
+        var firstCellUpper = firstCell.charAt(0).toUpperCase();
+        
+		Arr.push([firstCellUpper, row]);  //temporary array
     }
 
 	// skip the header rows
