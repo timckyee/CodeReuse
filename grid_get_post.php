@@ -23,14 +23,14 @@
 	
 		$queryName = $_GET["queryName"];
 		
-		if($queryName == "table") {
-			
-			$result = $mysqli->query("select fieldPrimaryKey, field2, field3, field4, field5, selectField, selectField2 from " . $_GET["tableName"]);
+		if($queryName == "gridtable") {
+		
+			$result = $mysqli->query("select " . $_GET["selectString"] . " from tableGridGetPost");
 			
 		}
 		else if($queryName == "populate")
 		{
-			$result = $mysqli->query("select fieldPrimaryKey, field2, field3, field4, field5, selectField, selectField2 from " . $_GET["tableName"] . " where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
+			$result = $mysqli->query("select " . $_GET["selectString"] . " from tableGridGetPost where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		}
 	
 	    if (!is_null($result)) {
@@ -51,11 +51,11 @@
 	 
 		if($_POST["postType"] == "updateTableGridGetPost")
 	    {   		    
-			$result = $mysqli->query("update " . $_POST["tableName"] . " set " . $_POST["updateString"] . " where " . "fieldPrimaryKey = " . $_POST["htmlObjectPrimaryKeyValue"]);
+			$result = $mysqli->query("update tableGridGetPost set " . $_POST["updateString"] . " where " . "fieldPrimaryKey = " . $_POST["htmlObjectPrimaryKeyValue"]);
 	    }
 	    else if($_POST["postType"] == "createRecordTableGridGetPost")
 	    {
-			$result = $mysqli->query("insert into " . $_POST["tableName"] . " " . $_POST["insertString"]);
+			$result = $mysqli->query("insert into tableGridGetPost " . $_POST["insertString"]);
 	    }
 	}
 	

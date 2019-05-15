@@ -1,24 +1,40 @@
-window.addEventListener("load", function() {
-	
+function init()
+{
 	window.gridXmlHttpRequest = new XMLHttpRequest();
 	window.getXmlHttpRequest = new XMLHttpRequest();
 	window.postXmlHttpRequest = new XMLHttpRequest();
 	
-	document.getElementById("inputPrimaryKey").value = "";
+	phpFile = "grid_get_post.php";
+	
+	htmlObjectFieldsSelect = "inputPrimaryKey,input2,input3,input4,input5,selectWithValue,selectWithValue2";
+	databaseFieldsSelect = "fieldPrimaryKey,field2,field3,field4,field5,selectField,selectField2";
+
+	htmlObjectFieldsUpdate = "inputPrimaryKey,input2,input3,input4,input5,selectWithValue,selectWithValue2";
+	databaseFieldsUpdate = "fieldPrimaryKey,field2,field3,field4,field5,selectField,selectField2";
+	
+	htmlObjectFieldsInsert = "input2,input3,input4,input5,selectWithValue,selectWithValue2";
+	databaseFieldsInsert = "field2,field3,field4,field5,selectField,selectField2";
 	
 	arrayOldValuesTable = [];
+}
+
+window.addEventListener("load", function() {
 	
-	grid("gridTenants", "grid_get_post.php", "table", "tableGridGetPost", "fieldPrimaryKey", "fieldPrimaryKey,field2,field3,field4,field5,selectField,selectField2");
+	init();	
+	
+	document.getElementById("inputPrimaryKey").value = "";
+	
+	grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect);
 	
 });
 
-function selectBuildingOnChange() {
+function refreshGridGetPost() {
 	
-	grid("gridTenants", "grid_get_post.php", "table", "tableGridGetPost", "fieldPrimaryKey", "fieldPrimaryKey,field2,field3,field4,field5,selectField,selectField2");
+	grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect);
 	
 }
 
-function grid(divElement, phpFile, queryName, tableName, valueField, itemColumns, additionalArgs, additionalArgsValue) {
+function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, additionalArgs, additionalArgsValue) {
 	
 	var divTable = document.getElementById(divElement);
 		
@@ -36,7 +52,7 @@ function grid(divElement, phpFile, queryName, tableName, valueField, itemColumns
 										
 			var tableHeaderRow = document.createElement("tr");
 			
-			var colArray = itemColumns.split(",");
+			var colArray = databaseFieldsSelect.split(",");
 			
 			var tableHeader;
 			var tableHeaderText;
@@ -58,9 +74,9 @@ function grid(divElement, phpFile, queryName, tableName, valueField, itemColumns
 				row.onclick = function() {
 					var cellValue = this.cells[0].innerHTML;
 					
-					var rowAttributeValue = row.attributes["valueField"].value;
+					var rowAttributeValue = row.attributes["gridIdField"].value;
 					
-					get("grid_get_post.php", "populate", "tableGridGetPost", rowAttributeValue, "inputPrimaryKey,input2,input3,input4,input5,selectWithValue,selectWithValue2", itemColumns, arrayOldValuesTable);
+					get_populateForm(phpFile, "populate", rowAttributeValue, htmlObjectFieldsSelect, databaseFieldsSelect, arrayOldValuesTable);
 				};
 				
 				var cell;
@@ -72,7 +88,7 @@ function grid(divElement, phpFile, queryName, tableName, valueField, itemColumns
 					cellText = document.createTextNode(item[colArray[i]]);
 					cell.appendChild(cellText);
 					row.appendChild(cell);					
-					row.setAttribute("valueField", item[valueField]);				
+					row.setAttribute("gridIdField", item[gridIdField]);				
 				}
 				
 				tbl.appendChild(row);
@@ -86,16 +102,16 @@ function grid(divElement, phpFile, queryName, tableName, valueField, itemColumns
 	var queryString;
 	
 	if(additionalArgs != undefined)
-		queryString = "queryName" + "=" + queryName + "&" + "tableName=" + tableName + "&" + additionalArgs + "=" + additionalArgsValue;
+		queryString = "queryName" + "=" + queryName + "&" + "selectString" + "=" + encodeURIComponent(databaseFieldsSelect) + "&" + additionalArgs + "=" + additionalArgsValue;
 	else
-		queryString = "queryName" + "=" + queryName + "&" + "tableName=" + tableName;
+		queryString = "queryName" + "=" + queryName + "&" + "selectString" + "=" + encodeURIComponent(databaseFieldsSelect);
 	
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();
 	
 }
 
-function get(phpFile, queryName, tableName, htmlObjectPrimaryKeyValue, htmlObjectFields, databaseFields, arrayOldValuesTable)
+function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObjectFieldsSelect, databaseFieldsSelect, arrayOldValuesTable)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -105,8 +121,8 @@ function get(phpFile, queryName, tableName, htmlObjectPrimaryKeyValue, htmlObjec
 			
 			var record = response[0];
 			
-			var htmlObjectFieldsArray = htmlObjectFields.split(",");
-			var databaseFieldsArray = databaseFields.split(",");
+			var htmlObjectFieldsArray = htmlObjectFieldsSelect.split(",");
+			var databaseFieldsArray = databaseFieldsSelect.split(",");
 			
 			for(i=0; i<htmlObjectFieldsArray.length; i++)
 			{
@@ -120,112 +136,117 @@ function get(phpFile, queryName, tableName, htmlObjectPrimaryKeyValue, htmlObjec
 		}
 	}
 	
-	var queryString = "queryName" + "=" + queryName + "&" + "tableName" + "=" + tableName + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue;
+	var queryString = "queryName" + "=" + queryName + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue + "&" + "selectString" + "=" + encodeURIComponent(databaseFieldsSelect);
 	
 	window.getXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.getXmlHttpRequest.send();
 }
 
-function post(phpFile, updateOrInsert, postType, tableName, htmlObjectPrimaryKeyValue, htmlObjectFields, databaseFields, arrayOldValuesTable)
+function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsUpdate, databaseFieldsUpdate, arrayOldValuesTable)
 {		
-	var htmlObjectFieldsArray = htmlObjectFields.split(",");
-	var databaseFieldsArray = databaseFields.split(",");
-	
-	if(updateOrInsert == "update")
-	{		
-		var updateString = "";
-		
-		for(update=0; update<htmlObjectFieldsArray.length; update++)
-		{
-			var htmlObjectField = htmlObjectFieldsArray[update];
-			var databaseField = databaseFieldsArray[update];
+	var htmlObjectFieldsArray = htmlObjectFieldsUpdate.split(",");
+	var databaseFieldsArray = databaseFieldsUpdate.split(",");
 			
-			if(document.getElementById(htmlObjectField).value != arrayOldValuesTable[htmlObjectField])
-			{
-				updateString = updateString + databaseField + "=" + document.getElementById(htmlObjectField).value + ",";
-			}
-		}
+	var updateString = "";
+	
+	for(update=0; update<htmlObjectFieldsArray.length; update++)
+	{
+		var htmlObjectField = htmlObjectFieldsArray[update];
+		var databaseField = databaseFieldsArray[update];
 		
-		if(updateString != "")
+		if(document.getElementById(htmlObjectField).value != arrayOldValuesTable[htmlObjectField])
 		{
-			if(!confirm('There are changes to the fields. Continue with the update?'))
-			{
-				return;
-			}
-						
-			updateString = updateString.substr(0, updateString.length - 1)
-							
-			window.postXmlHttpRequest.onreadystatechange = function() {
-				
-				if (this.readyState == 4 && this.status == 200) {	
-				
-					//var response = this.responseText;
-					
-					for(update=0; update<htmlObjectFieldsArray.length; update++)
-					{
-						arrayOldValuesTable[htmlObjectFieldsArray[update]] = document.getElementById(htmlObjectFieldsArray[update]).value;
-					}
-				}
-			}
-		
-			var formVariables = "postType" + "=" + postType + "&" + "tableName" + "=" + tableName + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue + "&" + "updateString" + "=" + encodeURIComponent(updateString);
-				
-			window.postXmlHttpRequest.open("POST", phpFile, true);
-			window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			window.postXmlHttpRequest.send(formVariables);
+			updateString = updateString + databaseField + "=" + document.getElementById(htmlObjectField).value + ",";
 		}
 	}
-	else if(updateOrInsert == "insert")
+	
+	if(updateString != "")
 	{
-		if(!confirm('Confirm to create new record?'))
+		if(!confirm('There are changes to the fields. Continue with the update?'))
 		{
 			return;
-		}		
-		
-		var insertString = "";
-		
-		insertString = insertString + "(";
-		
-		for(insert=0; insert<databaseFieldsArray.length; insert++)
-		{
-			insertString = insertString + databaseFieldsArray[insert] + ",";
 		}
-		
-		insertString = insertString.substr(0, insertString.length - 1);
-		
-		insertString = insertString + ")";
-		
-		insertString = insertString + " values (";
-		
-		for(insert=0; insert<htmlObjectFieldsArray.length; insert++)
-		{
-			var htmlObjectFieldsArrayInsertValue = document.getElementById(htmlObjectFieldsArray[insert]).value;
+					
+		updateString = updateString.substr(0, updateString.length - 1)
 						
-			if(htmlObjectFieldsArrayInsertValue != "")
-				insertString = insertString + document.getElementById(htmlObjectFieldsArray[insert]).value + ",";
-			else
-				insertString = insertString + "'',";
-		}
-		
-		insertString = insertString.substr(0, insertString.length - 1);
-		
-		insertString = insertString + ")";
-			
 		window.postXmlHttpRequest.onreadystatechange = function() {
 			
 			if (this.readyState == 4 && this.status == 200) {	
 			
 				//var response = this.responseText;
-			
+				
+				for(update=0; update<htmlObjectFieldsArray.length; update++)
+				{
+					arrayOldValuesTable[htmlObjectFieldsArray[update]] = document.getElementById(htmlObjectFieldsArray[update]).value;
+				}
+				
+				refreshGridGetPost();
 			}
-		}	
-		
-		var formVariables = "postType" + "=" + postType + "&" + "tableName" + "=" + tableName + "&" + "insertString" + "=" + encodeURIComponent(insertString);
+		}
+	
+		var formVariables = "postType" + "=" + postType + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue + "&" + "updateString" + "=" + encodeURIComponent(updateString);
 			
 		window.postXmlHttpRequest.open("POST", phpFile, true);
 		window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		window.postXmlHttpRequest.send(formVariables);		
+		window.postXmlHttpRequest.send(formVariables);
 	}
+}
+
+function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, databaseFieldsInsert)
+{
+	var htmlObjectFieldsArray = htmlObjectFieldsInsert.split(",");
+	var databaseFieldsArray = databaseFieldsInsert.split(",");	
+	
+	if(!confirm('Confirm to create new record?'))
+	{
+		return;
+	}		
+	
+	var insertString = "";
+	
+	insertString = insertString + "(";
+	
+	for(insert=0; insert<databaseFieldsArray.length; insert++)
+	{
+		insertString = insertString + databaseFieldsArray[insert] + ",";
+	}
+	
+	insertString = insertString.substr(0, insertString.length - 1);
+	
+	insertString = insertString + ")";
+	
+	insertString = insertString + " values (";
+	
+	for(insert=0; insert<htmlObjectFieldsArray.length; insert++)
+	{
+		var htmlObjectFieldsArrayInsertValue = document.getElementById(htmlObjectFieldsArray[insert]).value;
+					
+		if(htmlObjectFieldsArrayInsertValue != "")
+			insertString = insertString + document.getElementById(htmlObjectFieldsArray[insert]).value + ",";
+		else
+			insertString = insertString + "'',";
+	}
+	
+	insertString = insertString.substr(0, insertString.length - 1);
+	
+	insertString = insertString + ")";
+		
+	window.postXmlHttpRequest.onreadystatechange = function() {
+		
+		if (this.readyState == 4 && this.status == 200) {	
+		
+			//var response = this.responseText;
+		
+			refreshGridGetPost();
+		
+		}
+	}	
+	
+	var formVariables = "postType" + "=" + postType + "&" + "insertString" + "=" + encodeURIComponent(insertString);
+		
+	window.postXmlHttpRequest.open("POST", phpFile, true);
+	window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	window.postXmlHttpRequest.send(formVariables);
 }
 
 function save()
@@ -234,17 +255,15 @@ function save()
 	
 	if(htmlObjectPrimaryKey != "")
 	{
-		post("grid_get_post.php", "update", "updateTableGridGetPost", "tableGridGetPost", document.getElementById("inputPrimaryKey").value, "inputPrimaryKey,input2,input3,input4,input5,selectWithValue,selectWithValue2", "fieldPrimaryKey,field2,field3,field4,field5,selectField,selectField2", arrayOldValuesTable);
+		post_updateForm(phpFile, "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsUpdate, databaseFieldsUpdate, arrayOldValuesTable);
 	}
 	else if(htmlObjectPrimaryKey == "")
 	{
-		if(validateHtmlObjectFields("input2,input3,input4,input5,selectWithValue,selectWithValue2"))
+		if(validateHtmlObjectFields(htmlObjectFieldsInsert))
 		{
-			post("grid_get_post.php", "insert", "createRecordTableGridGetPost", "tableGridGetPost", "", "input2,input3,input4,input5,selectWithValue,selectWithValue2", "field2,field3,field4,field5,selectField,selectField2", "");
+			post_insertRecordForm(phpFile, "createRecordTableGridGetPost", htmlObjectFieldsInsert, databaseFieldsInsert);
 		}
 	}
-	
-	selectBuildingOnChange();
 }
 
 function newRecord()
