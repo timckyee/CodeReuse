@@ -9,14 +9,18 @@ function Tenant(inputValueArray,primaryKey) {
 	var field4;
 		
 	fields = [
-		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectType: "text" },
+		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectType: "primaryKey" },
 		{ name: "field1", dbType: "date", htmlObjectType: "calendar" },
 		{ name: "field2", dbType: "date", htmlObjectType: "calendar" },
 		{ name: "field3", dbType: "int", htmlObjectType: "autocomplete" },
 		{ name: "field4", dbType: "int", htmlObjectType: "autocomplete" }
 	];		
 		
-	var	phpFile = "grid_get_post.php";
+	var sortTableHtmObjectId = "tableTenant";	
+	
+	var sortTableColumns = "field1=1,field2=2,field3=3,field4=4";
+		
+	phpFile = "grid_get_post.php";
 	
 	htmlObjectFieldsSelect = "inputPrimaryKey,inputCalendar,inputCalendarTesting,building_input,tenant_input";
 	databaseFieldsSelect = "fieldPrimaryKey,field1,field2,field3,field4";	
@@ -30,6 +34,12 @@ function Tenant(inputValueArray,primaryKey) {
 	this.getFieldsInfo = function() {
 		
 		return fields;
+	};
+	
+	this.getSortFields = function() {
+		
+		return sortTableColumns;
+		
 	};
 	
 	this.setFieldValuesFromInputs = function(inputValueArray, primaryKey) {
@@ -57,7 +67,7 @@ function Tenant(inputValueArray,primaryKey) {
 	
 	this.loadGridGetPost = function() {
 		
-		grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo());
+		grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo(), sortTableHtmObjectId, this.getSortFields());
 		
 	};
 		

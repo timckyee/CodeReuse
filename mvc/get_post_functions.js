@@ -2,19 +2,20 @@ window.gridXmlHttpRequest = new XMLHttpRequest();
 window.getXmlHttpRequest = new XMLHttpRequest();
 window.postXmlHttpRequest = new XMLHttpRequest();
 
-function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, fieldsInfo, additionalArgs, additionalArgsValue) {
-		
+function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, fieldsInfo, sortTableHtmlId, sortTableColumns, additionalArgs, additionalArgsValue) {
+	
 	var divTable = document.getElementById(divElement);
 	
 	window.gridXmlHttpRequest.onreadystatechange = function() {
 		
 		if (this.readyState == 4 && this.status == 200) {
 			
-			var response = JSON.parse(this.responseText);
+			var response = JSON.parse(this.responseText);		
 						
 			divTable.innerHTML = "";
 			
-			var tbl = document.createElement("table");				
+			var tbl = document.createElement("table");
+			tbl.id = "tableTenant";			
 										
 			var tableHeaderRow = document.createElement("tr");
 			
@@ -24,8 +25,11 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 			var tableHeaderText;
 			
 			for(i=0; i<colArray.length; i++)
-			{
+			{					
 				tableHeader = document.createElement("th");
+					
+				tableHeader.onclick = sortTableColumnOnclickHandler(sortTableHtmlId, sortTableColumns, colArray, i);
+				
 				tableHeaderText = document.createTextNode(colArray[i]);
 				tableHeader.appendChild(tableHeaderText);
 				tableHeaderRow.appendChild(tableHeader);				
@@ -101,6 +105,27 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();
 	
+}
+
+function sortTableColumnOnclickHandler(sortTableHtmlId, sortTableColumns, databaseFieldsSelectArray, column) {
+	
+	return function() { 
+	
+		var sortTableColumnsCount = sortTableColumns.split(",").length;
+
+		for(sort=0; sort<sortTableColumnsCount; sort++)
+		{
+			var sortFieldArray = sortTableColumns.split(",");
+			var sortFieldKeyValue = sortFieldArray[sort].split("=");
+			var sortFieldKey = sortFieldKeyValue[0];
+			var sortFieldValue = sortFieldKeyValue[1];
+			
+			if(sortFieldKey == databaseFieldsSelectArray[column])
+			{
+				sortTable(sortTableHtmlId, sortFieldValue);
+			}
+		};			
+	};
 }
 
 function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObjectFieldsSelect, databaseFieldsSelect, fieldsInfo, arrayOldValuesTable)

@@ -3,11 +3,11 @@ window.addEventListener("load", function() {
 
 	var building_input = document.getElementById("building_input");
 	
-	building_input.addEventListener("keyup", function(event){autocomplete(event, "buildingSearchList", "BuildingCode", "BuildingId", "GET", "filter.php", "buildings", "", "", "building_input", "buildingSearchList")});
+	building_input.addEventListener("keyup", function(event){autocomplete(event, "buildingSearchList", "BuildingCode", "BuildingId", "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList")});
 
 	var tenant_input = document.getElementById("tenant_input");
 	
-	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "SuiteNumber,TenantName", "TenantId",  "GET", "filter.php", "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList")});
+	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "SuiteNumber,TenantName", "TenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList")});
 	
 	building_input.addEventListener("focusout", function() { focusOutHide ("buildingSearchList"); });
 	tenant_input.addEventListener("focusout", function() { focusOutHide ("tenantSearchList"); });

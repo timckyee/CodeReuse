@@ -20,19 +20,31 @@
     $result;
 	
 	if($_SERVER["REQUEST_METHOD"] == "GET") {	
-	
+		
 		$queryName = $_GET["queryName"];
 		
 		if($queryName == "gridtable") {
-		
-			$result = $mysqli->query("select " . $_GET["selectString"] . " from tableGridGetPost2");
+							
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4 from tableGridGetPost2");
 			
 		}
-		else if($queryName == "populate")
-		{
+		
+		/*
+		else 
+		if($queryName == "populate") {
 			$result = $mysqli->query("select " . $_GET["selectString"] . " from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
+		
 		}
-	
+		*/
+		
+		//else if($queryName == "tenants") {
+
+		//$buildingId = $_GET["building"];
+
+        //$result = $mysqli->query("select suiteNumber, concat(firstname, ' ', lastname) as TenantName from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tableGridGetPostSuite.buildingId = 1 and (SuiteNumber like '%101%' or concat(firstname, ' ',  lastname) like '%101%') order by SuiteNumber, concat(firstname, ' ', lastname)");
+		
+		//}
+			
 	    if (!is_null($result)) {
 	        $tempArray = array();
 	        while($row = $result->fetch_object()) {
