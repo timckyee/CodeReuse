@@ -63,7 +63,7 @@ function Tenant(inputValueArray,primaryKey) {
 		
 	this.tenantUpdate = function() {
 		
-		var htmlObjectFieldsValuesUpdate = ssthis.createCommaListOfInputValuesUpdate();
+		var htmlObjectFieldsValuesUpdate = this.createCommaListOfInputValuesUpdate();
 				
 		if(validateHtmlObjectFields(htmlObjectFieldsUpdate))
 		{							
