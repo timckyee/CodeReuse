@@ -28,14 +28,11 @@
 			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4 from tableGridGetPost2");
 			
 		}
-		
-		/*
 		else 
 		if($queryName == "populate") {
 			$result = $mysqli->query("select " . $_GET["selectString"] . " from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		
 		}
-		*/
 		
 		//else if($queryName == "tenants") {
 
