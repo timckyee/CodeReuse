@@ -19,10 +19,15 @@ window.addEventListener("load", function() {
 
 	var inputCalendar = document.getElementById('inputCalendar');
 	
+	var inputCalendarTesting = document.getElementById('inputCalendarTesting');
+	
 	inputCalendar.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendar', divCalendarId)});
 	
 	inputCalendar.placeholder = "dd-mmm-yy";
 	
+	inputCalendarTesting.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendarTesting', divCalendarId)});
+	
+	inputCalendarTesting.placeholder = "dd-mmm-yy";
 });
 
 function removeCalendarTable(divCalendarId) {
@@ -49,8 +54,11 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 	
 	var tbl = document.createElement("table");
 	tbl.id = "tableCalendarId";
+	tbl.className = "calendar";
 	
 	var row = document.createElement("tr");
+	
+	row.className = "calendarHover";
 	
 	var cell = document.createElement("td");
 	cell.id = "back";
@@ -149,6 +157,7 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 	{
 		cell = document.createElement("td");
 		cell.id = "cal_cell_" + i;
+		cell.className = "calendar";
 		row.appendChild(cell);
 	}
 	
@@ -160,6 +169,7 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 	{
 		cell = document.createElement("td");
 		cell.id = "cal_cell_" + i;
+		cell.className = "calendar";
 		row.appendChild(cell);
 	}
 	

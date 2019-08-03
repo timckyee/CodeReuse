@@ -3,11 +3,11 @@ window.addEventListener("load", function() {
 
 	var building_input = document.getElementById("building_input");
 	
-	building_input.addEventListener("keyup", function(event){autocomplete(event, "buildingSearchList", "BuildingCode", "BuildingId", "GET", "filter.php", "buildings")});
+	building_input.addEventListener("keyup", function(event){autocomplete(event, "buildingSearchList", "BuildingCode", "BuildingId", "GET", "filter.php", "buildings", "", "", "building_input", "buildingSearchList")});
 
 	var tenant_input = document.getElementById("tenant_input");
 	
-	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "SuiteNumber,TenantName", "TenantId",  "GET", "filter.php", "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"))});
+	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "SuiteNumber,TenantName", "TenantId",  "GET", "filter.php", "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList")});
 	
 	building_input.addEventListener("focusout", function() { focusOutHide ("buildingSearchList"); });
 	tenant_input.addEventListener("focusout", function() { focusOutHide ("tenantSearchList"); });
@@ -20,6 +20,20 @@ window.addEventListener("load", function() {
 	oldValuesArray = Array();	
 	
 });
+
+function positionAutcomplete(inputAutocompleteId, divListId) {
+	
+	var positionInputAutocomplete = document.getElementById(inputAutocompleteId);
+	
+	var left = positionInputAutocomplete.offsetLeft;
+	var top = positionInputAutocomplete.offsetTop;
+	
+	var positionDivList = document.getElementById(divListId);
+	
+	positionDivList.style.left = left;
+	positionDivList.style.top = top + positionInputAutocomplete.offsetHeight;
+	
+}
 
 function focusOutHide(div) {
 	
@@ -84,7 +98,7 @@ function resetInputFields(input)
 	}	
 }
 
-function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue) {
+function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {
 		
 	var input = event.target;
 	
@@ -102,6 +116,8 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 			if (this.readyState == 4 && this.status == 200) {
 				
 				var response = JSON.parse(this.responseText);
+				
+				positionAutcomplete(positionResultsListInput, positionResultsListDiv);
 				
 				searchList.innerHTML = "";
 				
@@ -150,6 +166,8 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 						row.appendChild(cell);
 						row.setAttribute("value", item[valueField]);
 					}
+					
+					row.className = "autocomplete";
 					
 					tbl.appendChild(row);
 					

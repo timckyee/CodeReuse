@@ -1,0 +1,23 @@
+table {
+	
+	border-collapse: collapse;
+	
+}
+
+.tableHover:hover {
+	
+	background-color: lightgray;
+
+}
+
+td {
+	
+	border: 1px solid black;
+	
+}
+
+tr.autocomplete:hover {
+	
+	background-color: lightgray;
+	
+}

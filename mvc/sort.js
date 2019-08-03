@@ -1,7 +1,7 @@
 
 window.addEventListener("load", function() {
 	
-	sortTable(0);
+	//sortTable(0);
 	
 });
 

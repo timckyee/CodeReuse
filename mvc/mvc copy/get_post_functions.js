@@ -1,41 +1,9 @@
-function init()
-{
-	window.gridXmlHttpRequest = new XMLHttpRequest();
-	window.getXmlHttpRequest = new XMLHttpRequest();
-	window.postXmlHttpRequest = new XMLHttpRequest();
-	
-	phpFile = "grid_get_post.php";
-	
-	htmlObjectFieldsSelect = "inputPrimaryKey,input2,input3,input4,input5,selectWithValue,selectWithValue2";
-	databaseFieldsSelect = "fieldPrimaryKey,field2,field3,field4,field5,selectField,selectField2";
-
-	htmlObjectFieldsUpdate = "inputPrimaryKey,input2,input3,input4,input5,selectWithValue,selectWithValue2";
-	databaseFieldsUpdate = "fieldPrimaryKey,field2,field3,field4,field5,selectField,selectField2";
-	
-	htmlObjectFieldsInsert = "input2,input3,input4,input5,selectWithValue,selectWithValue2";
-	databaseFieldsInsert = "field2,field3,field4,field5,selectField,selectField2";
-	
-	arrayOldValuesTable = [];
-}
-
-window.addEventListener("load", function() {
-	
-	init();
-	
-	document.getElementById("inputPrimaryKey").value = "";
-	
-	grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect);
-	
-});
-
-function refreshGridGetPost() {
-	
-	grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect);
-	
-}
+window.gridXmlHttpRequest = new XMLHttpRequest();
+window.getXmlHttpRequest = new XMLHttpRequest();
+window.postXmlHttpRequest = new XMLHttpRequest();
 
 function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, additionalArgs, additionalArgsValue) {
-	
+		
 	var divTable = document.getElementById(divElement);
 	
 	window.gridXmlHttpRequest.onreadystatechange = function() {
@@ -43,7 +11,7 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 		if (this.readyState == 4 && this.status == 200) {
 			
 			var response = JSON.parse(this.responseText);
-			
+						
 			divTable.innerHTML = "";
 			
 			var tbl = document.createElement("table");					
@@ -86,7 +54,7 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 					cellText = document.createTextNode(item[colArray[i]]);
 					cell.appendChild(cellText);
 					row.appendChild(cell);					
-					row.setAttribute("gridIdField", item[gridIdField]);				
+					row.setAttribute("gridIdField", item[gridIdField]);		
 				}
 				
 				tbl.appendChild(row);
@@ -140,9 +108,10 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 	window.getXmlHttpRequest.send();
 }
 
-function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsUpdate, databaseFieldsUpdate, arrayOldValuesTable)
+function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsUpdate, htmlObjectFieldsValuesUpdate, databaseFieldsUpdate, arrayOldValuesTable)
 {		
 	var htmlObjectFieldsArray = htmlObjectFieldsUpdate.split(",");
+	var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesUpdate.split(",");
 	var databaseFieldsArray = databaseFieldsUpdate.split(",");
 			
 	var updateString = "";
@@ -150,11 +119,12 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 	for(update=0; update<htmlObjectFieldsArray.length; update++)
 	{
 		var htmlObjectField = htmlObjectFieldsArray[update];
+		var htmlObjectFieldValue = htmlObjectFieldsValuesArray[update];
 		var databaseField = databaseFieldsArray[update];
 		
-		if(document.getElementById(htmlObjectField).value != arrayOldValuesTable[htmlObjectField])
+		if(htmlObjectFieldValue != arrayOldValuesTable[htmlObjectField])
 		{
-			updateString = updateString + databaseField + "='" + document.getElementById(htmlObjectField).value + "',";
+			updateString = updateString + databaseField + "='" + htmlObjectFieldValue + "',";
 		}
 	}
 	
@@ -170,15 +140,11 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 		window.postXmlHttpRequest.onreadystatechange = function() {
 			
 			if (this.readyState == 4 && this.status == 200) {	
-			
-				//var response = this.responseText;
 				
 				for(update=0; update<htmlObjectFieldsArray.length; update++)
 				{
-					arrayOldValuesTable[htmlObjectFieldsArray[update]] = document.getElementById(htmlObjectFieldsArray[update]).value;
+					arrayOldValuesTable[htmlObjectFieldsArray[update]] = htmlObjectFieldsValuesArray[update]
 				}
-				
-				refreshGridGetPost();
 			}
 		}
 	
@@ -190,9 +156,10 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 	}
 }
 
-function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, databaseFieldsInsert)
-{
+function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlObjectFieldsValuesInsert, databaseFieldsInsert, inputPrimaryKey)
+{	
 	var htmlObjectFieldsArray = htmlObjectFieldsInsert.split(",");
+	var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesInsert.split(",");
 	var databaseFieldsArray = databaseFieldsInsert.split(",");	
 	
 	if(!confirm('Confirm to create new record?'))
@@ -217,12 +184,9 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, databa
 	
 	for(insert=0; insert<htmlObjectFieldsArray.length; insert++)
 	{
-		var htmlObjectFieldsArrayInsertValue = document.getElementById(htmlObjectFieldsArray[insert]).value;
-					
-		if(htmlObjectFieldsArrayInsertValue != "")
-			insertString = insertString + "'" + document.getElementById(htmlObjectFieldsArray[insert]).value + "',";
-		else
-			insertString = insertString + "'',";
+		var htmlObjectFieldsArrayInsertValue = htmlObjectFieldsValuesArray[insert];
+		
+		insertString = insertString + "'" + htmlObjectFieldsArrayInsertValue + "',";
 	}
 	
 	insertString = insertString.substr(0, insertString.length - 1);
@@ -233,10 +197,16 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, databa
 		
 		if (this.readyState == 4 && this.status == 200) {	
 		
-			//var response = this.responseText;
-		
-			refreshGridGetPost();
-		
+			var insertId = this.responseText;
+			
+			document.getElementById(inputPrimaryKey).value = insertId;
+			
+			arrayOldValuesTable[inputPrimaryKey] = insertId;
+						
+			for(insert=0; insert<htmlObjectFieldsArray.length; insert++)
+			{
+				arrayOldValuesTable[htmlObjectFieldsArray[insert]] = htmlObjectFieldsValuesArray[insert];
+			}
 		}
 	}	
 	
@@ -245,34 +215,6 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, databa
 	window.postXmlHttpRequest.open("POST", phpFile, true);
 	window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	window.postXmlHttpRequest.send(formVariables);
-}
-
-function save()
-{
-	var htmlObjectPrimaryKey = document.getElementById("inputPrimaryKey").value;
-	
-	if(htmlObjectPrimaryKey != "")
-	{
-		post_updateForm(phpFile, "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsUpdate, databaseFieldsUpdate, arrayOldValuesTable);
-	}
-	else if(htmlObjectPrimaryKey == "")
-	{
-		if(validateHtmlObjectFields(htmlObjectFieldsInsert))
-		{
-			post_insertRecordForm(phpFile, "createRecordTableGridGetPost", htmlObjectFieldsInsert, databaseFieldsInsert);
-		}
-	}
-}
-
-function newRecord()
-{
-	document.getElementById("inputPrimaryKey").value = "";
-	document.getElementById("input2").value = "";
-	document.getElementById("input3").value = "";
-	document.getElementById("input4").value = "";
-	document.getElementById("input5").value = "";
-	document.getElementById("selectWithValue").value = "";
-	document.getElementById("selectWithValue2").value = "";
 }
 
 function validateHtmlObjectFields(htmlObjectFields)
