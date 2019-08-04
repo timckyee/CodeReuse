@@ -156,26 +156,31 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 				}
 				
 				if(fieldInfo.dbType == "date")
-				{
+				{					
 					var dateFromDatabase = record[databaseFieldsArray[i]];
 					
 					var dateFormat = convertDateFromDatabase(dateFromDatabase);
 					
 					document.getElementById(htmlObjectFieldsArray[i]).value = dateFormat;
+					
+					arrayOldValuesTable[htmlObjectFieldsArray[i]] = dateFormat;
 				}
 				else
-				{
-					document.getElementById(htmlObjectFieldsArray[i]).value = record[databaseFieldsArray[i]];
-				}
-				
-				arrayOldValuesTable[htmlObjectFieldsArray[i]] = document.getElementById(htmlObjectFieldsArray[i]).value;
-
 				if(fieldInfo.htmlObjectType == "autocomplete")
-				{
-					//debugger
+				{	
+					document.getElementById(htmlObjectFieldsArray[i]).value = record[databaseFieldsArray[i] + "display"];
 					
-					document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", document.getElementById(htmlObjectFieldsArray[i]).value);
+					document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", record[databaseFieldsArray[i]]);
 					
+					arrayOldValuesTable[htmlObjectFieldsArray[i]] = document.getElementById(htmlObjectFieldsArray[i]).getAttribute("rowAttributeValue");
+					
+					//arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
+				}
+				else
+				{						
+					document.getElementById(htmlObjectFieldsArray[i]).value = record[databaseFieldsArray[i]];
+					
+					arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
 				}
 			}			
 		}
@@ -211,12 +216,12 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 		
 		var htmlObjectField = htmlObjectFieldsArray[update];
 		var htmlObjectFieldValue = htmlObjectFieldsValuesArray[update];
-		var databaseField = databaseFieldsArray[update];
-		
+		var databaseField = databaseFieldsArray[update];		
+				
 		if(htmlObjectFieldValue != arrayOldValuesTable[htmlObjectField])
-		{
+		{			
 			if(fieldInfo.dbType == "date")
-			{
+			{				
 				var dateFromSystem = htmlObjectFieldValue;
 												
 				var dateFormat = convertDateFromSystem(dateFromSystem);				
@@ -241,12 +246,31 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 						
 		window.postXmlHttpRequest.onreadystatechange = function() {
 			
-			if (this.readyState == 4 && this.status == 200) {	
+			if (this.readyState == 4 && this.status == 200) {
 				
 				for(update=0; update<htmlObjectFieldsArray.length; update++)
 				{
-					arrayOldValuesTable[htmlObjectFieldsArray[update]] = htmlObjectFieldsValuesArray[update]
-				}
+					var fieldInfo;
+					
+					for(field=0; field<fieldsInfo.length; field++)
+					{
+						fieldInfo = fieldsInfo[field];
+						
+						if(fieldInfo.name == databaseFieldsArray[update])
+						{
+							break;
+						}
+					}
+					
+					if(fieldInfo.htmlObjectType == "autocomplete")
+					{	
+						arrayOldValuesTable[htmlObjectFieldsArray[update]] = document.getElementById(htmlObjectFieldsArray[update]).getAttribute("rowAttributeValue");
+					}
+					else
+					{						
+						arrayOldValuesTable[htmlObjectFieldsArray[update]] = htmlObjectFieldsValuesArray[update];
+					}
+				}		
 			}
 		}
 	

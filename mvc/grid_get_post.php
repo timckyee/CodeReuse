@@ -31,7 +31,7 @@
 		else 
 		if($queryName == "populate") {
 						
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2, field3, (select concat(suiteNumber,' ',concat(firstname, ' ', lastname)) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2, field3, (select concat(suiteNumber,' ',concat(firstname, ' ', lastname)) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4display, field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		
 		}
 		else if($queryName == "tenants") {
