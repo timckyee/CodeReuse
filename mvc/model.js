@@ -16,7 +16,7 @@ function Tenant(inputValueArray,primaryKey) {
 		{ name: "field4", dbType: "int", htmlObjectType: "autocomplete" }
 	];		
 		
-	var sortTableHtmObjectId = "tableTenant";
+	var sortTableHtmlObjectId = "tableTenant";
 	
 	var sortTableColumns = "field1=1,field2=2,field3=3,field4=4";
 		
@@ -67,7 +67,7 @@ function Tenant(inputValueArray,primaryKey) {
 	
 	this.loadGridGetPost = function() {
 		
-		grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo(), sortTableHtmObjectId, this.getSortFields());
+		grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo(), sortTableHtmlObjectId, this.getSortFields());
 		
 	};
 		

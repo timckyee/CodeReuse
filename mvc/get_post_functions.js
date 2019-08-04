@@ -2,7 +2,7 @@ window.gridXmlHttpRequest = new XMLHttpRequest();
 window.getXmlHttpRequest = new XMLHttpRequest();
 window.postXmlHttpRequest = new XMLHttpRequest();
 
-function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, fieldsInfo, sortTableHtmlId, sortTableColumns, additionalArgs, additionalArgsValue) {
+function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, fieldsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue) {
 	
 	var divTable = document.getElementById(divElement);
 	
@@ -15,7 +15,7 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 			divTable.innerHTML = "";
 			
 			var tbl = document.createElement("table");
-			tbl.id = "tableTenant";			
+			tbl.id = sortTableHtmlObjectId;		
 										
 			var tableHeaderRow = document.createElement("tr");
 			
@@ -28,7 +28,7 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 			{					
 				tableHeader = document.createElement("th");
 					
-				tableHeader.onclick = sortTableColumnOnclickHandler(sortTableHtmlId, sortTableColumns, colArray, i);
+				tableHeader.onclick = sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, colArray, i);
 				
 				tableHeaderText = document.createTextNode(colArray[i]);
 				tableHeader.appendChild(tableHeaderText);
@@ -107,7 +107,7 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 	
 }
 
-function sortTableColumnOnclickHandler(sortTableHtmlId, sortTableColumns, databaseFieldsSelectArray, column) {
+function sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, databaseFieldsSelectArray, column) {
 	
 	return function() { 
 	
@@ -122,7 +122,7 @@ function sortTableColumnOnclickHandler(sortTableHtmlId, sortTableColumns, databa
 			
 			if(sortFieldKey == databaseFieldsSelectArray[column])
 			{
-				sortTable(sortTableHtmlId, sortFieldValue);
+				sortTable(sortTableHtmlObjectId, sortFieldValue);
 			}
 		};			
 	};
@@ -172,9 +172,7 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 					
 					document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", record[databaseFieldsArray[i]]);
 					
-					arrayOldValuesTable[htmlObjectFieldsArray[i]] = document.getElementById(htmlObjectFieldsArray[i]).getAttribute("rowAttributeValue");
-					
-					//arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
+					arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
 				}
 				else
 				{						
@@ -249,28 +247,9 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 			if (this.readyState == 4 && this.status == 200) {
 				
 				for(update=0; update<htmlObjectFieldsArray.length; update++)
-				{
-					var fieldInfo;
-					
-					for(field=0; field<fieldsInfo.length; field++)
-					{
-						fieldInfo = fieldsInfo[field];
-						
-						if(fieldInfo.name == databaseFieldsArray[update])
-						{
-							break;
-						}
-					}
-					
-					if(fieldInfo.htmlObjectType == "autocomplete")
-					{	
-						arrayOldValuesTable[htmlObjectFieldsArray[update]] = document.getElementById(htmlObjectFieldsArray[update]).getAttribute("rowAttributeValue");
-					}
-					else
-					{						
-						arrayOldValuesTable[htmlObjectFieldsArray[update]] = htmlObjectFieldsValuesArray[update];
-					}
-				}		
+				{					
+					arrayOldValuesTable[htmlObjectFieldsArray[update]] = htmlObjectFieldsValuesArray[update];
+				}
 			}
 		}
 	
@@ -351,9 +330,9 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlOb
 			document.getElementById(inputPrimaryKey).value = insertId;
 			
 			arrayOldValuesTable[inputPrimaryKey] = insertId;
-						
+			
 			for(insert=0; insert<htmlObjectFieldsArray.length; insert++)
-			{
+			{									
 				arrayOldValuesTable[htmlObjectFieldsArray[insert]] = htmlObjectFieldsValuesArray[insert];
 			}
 		}
