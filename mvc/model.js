@@ -12,23 +12,23 @@ function Tenant(inputValueArray,primaryKey) {
 		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectType: "primaryKey" },
 		{ name: "field1", dbType: "date", htmlObjectType: "calendar" },
 		{ name: "field2", dbType: "date", htmlObjectType: "calendar" },
-		{ name: "field3", dbType: "int", htmlObjectType: "autocomplete" },
+		{ name: "field3", dbType: "int", htmlObjectType: "select" },
 		{ name: "field4", dbType: "int", htmlObjectType: "autocomplete" }
 	];		
 		
-	var sortTableHtmObjectId = "tableTenant";	
+	var sortTableHtmObjectId = "tableTenant";
 	
 	var sortTableColumns = "field1=1,field2=2,field3=3,field4=4";
 		
 	phpFile = "grid_get_post.php";
 	
-	htmlObjectFieldsSelect = "inputPrimaryKey,inputCalendar,inputCalendarTesting,building_input,tenant_input";
-	databaseFieldsSelect = "fieldPrimaryKey,field1,field2,field3,field4";	
+	htmlObjectFieldsSelect = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
+	databaseFieldsSelect = "fieldPrimaryKey,field1,field2,field3,field4";
 	
-	htmlObjectFieldsUpdate = "inputPrimaryKey,inputCalendar,inputCalendarTesting,building_input,tenant_input";
+	htmlObjectFieldsUpdate = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsUpdate = "fieldPrimaryKey,field1,field2,field3,field4";
 	
-	htmlObjectFieldsInsert = "inputCalendar,inputCalendarTesting,building_input,tenant_input";
+	htmlObjectFieldsInsert = "inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsInsert = "field1,field2,field3,field4";
 		
 	this.getFieldsInfo = function() {
@@ -48,7 +48,7 @@ function Tenant(inputValueArray,primaryKey) {
 		
 		field1 = inputValueArray["inputCalendar"];
 		field2 = inputValueArray["inputCalendarTesting"];
-		field3 = inputValueArray["building_input"];
+		field3 = inputValueArray["selectBuilding"];
 		field4 = inputValueArray["tenant_input"];
 		
 	};

@@ -172,6 +172,8 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 
 				if(fieldInfo.htmlObjectType == "autocomplete")
 				{
+					//debugger
+					
 					document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", document.getElementById(htmlObjectFieldsArray[i]).value);
 					
 				}

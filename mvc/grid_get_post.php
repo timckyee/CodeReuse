@@ -24,23 +24,24 @@
 		$queryName = $_GET["queryName"];
 		
 		if($queryName == "gridtable") {
-							
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4 from tableGridGetPost2");
+										
+			$result = $mysqli->query("select " . $_GET["selectString"] . " from tableGridGetPost2");
 			
 		}
 		else 
 		if($queryName == "populate") {
-			$result = $mysqli->query("select " . $_GET["selectString"] . " from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
+						
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2, field3, (select concat(suiteNumber,' ',concat(firstname, ' ', lastname)) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		
 		}
-		
-		//else if($queryName == "tenants") {
+		else if($queryName == "tenants") {
 
-		//$buildingId = $_GET["building"];
+		$buildingId = $_GET["building"];
+		$filter = $_GET["filter"];
 
-        //$result = $mysqli->query("select suiteNumber, concat(firstname, ' ', lastname) as TenantName from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tableGridGetPostSuite.buildingId = 1 and (SuiteNumber like '%101%' or concat(firstname, ' ',  lastname) like '%101%') order by SuiteNumber, concat(firstname, ' ', lastname)");
+        $result = $mysqli->query("select suiteNumber, tenantId, concat(firstname, ' ', lastname) as tenantName from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tableGridGetPostSuite.buildingId = " . $buildingId . " and (suiteNumber like '%" . $filter. "%' or concat(firstname, ' ',  lastname) like '%" . $filter . "%') order by suiteNumber, concat(firstname, ' ', lastname)");
 		
-		//}
+		}
 			
 	    if (!is_null($result)) {
 	        $tempArray = array();

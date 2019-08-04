@@ -1,15 +1,15 @@
 
 window.addEventListener("load", function() {
 
-	var building_input = document.getElementById("building_input");
+	//var building_input = document.getElementById("building_input");
 	
-	building_input.addEventListener("keyup", function(event){autocomplete(event, "buildingSearchList", "BuildingCode", "BuildingId", "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList")});
+	//building_input.addEventListener("keyup", function(event){autocomplete(event, "buildingSearchList", "BuildingCode", "BuildingId", "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList")});
 
 	var tenant_input = document.getElementById("tenant_input");
 	
-	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "SuiteNumber,TenantName", "TenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList")});
+	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("selectBuilding").value, "tenant_input", "tenantSearchList")});
 	
-	building_input.addEventListener("focusout", function() { focusOutHide ("buildingSearchList"); });
+	//building_input.addEventListener("focusout", function() { focusOutHide ("buildingSearchList"); });
 	tenant_input.addEventListener("focusout", function() { focusOutHide ("tenantSearchList"); });
 		
 	window.autocompleteXmlHttpRequest = new XMLHttpRequest();
@@ -17,7 +17,7 @@ window.addEventListener("load", function() {
 	var config = Config();
 	var server = config.server;
 					
-	oldValuesArray = Array();	
+	oldValuesArray = Array();
 	
 });
 
@@ -99,7 +99,7 @@ function resetInputFields(input)
 }
 
 function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {
-		
+			
 	var input = event.target;
 	
 	var searchList = document.getElementById(divElement);
