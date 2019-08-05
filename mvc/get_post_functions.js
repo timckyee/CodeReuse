@@ -19,7 +19,6 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 										
 			var tableHeaderRow = document.createElement("tr");
 			
-			var colArray = databaseFieldsSelect.split(",");
 			var gridSelectFieldsArray = gridSelectFields.split(",");
 			
 			var tableHeader;
@@ -48,7 +47,7 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 					var cellValue = this.cells[0].innerHTML;
 					
 					var rowAttributeValue = row.attributes["gridIdField"].value;
-					
+										
 					get_populateForm(phpFile, "populate", rowAttributeValue, htmlObjectFieldsSelect, databaseFieldsSelect, gridSelectFields, fieldsInfo, arrayOldValuesTable);
 				};
 				
@@ -99,9 +98,9 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 	var queryString;
 	
 	if(additionalArgs != undefined)
-		queryString = "queryName" + "=" + queryName + "&" + "selectString" + "=" + encodeURIComponent(databaseFieldsSelect) + "&" + additionalArgs + "=" + additionalArgsValue;
+		queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue;
 	else
-		queryString = "queryName" + "=" + queryName + "&" + "selectString" + "=" + encodeURIComponent(databaseFieldsSelect);
+		queryString = "queryName" + "=" + queryName;
 	
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();
@@ -188,8 +187,8 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 		}
 	}
 	
-	var queryString = "queryName" + "=" + queryName + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue + "&" + "selectString" + "=" + encodeURIComponent(databaseFieldsSelect);
-	
+	var queryString = "queryName" + "=" + queryName + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue;
+		
 	window.getXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.getXmlHttpRequest.send();
 }
