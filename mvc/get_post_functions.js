@@ -3,15 +3,15 @@ window.getXmlHttpRequest = new XMLHttpRequest();
 window.postXmlHttpRequest = new XMLHttpRequest();
 
 function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, fieldsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue) {
-	
+		
 	var divTable = document.getElementById(divElement);
 	
 	window.gridXmlHttpRequest.onreadystatechange = function() {
 		
 		if (this.readyState == 4 && this.status == 200) {
 			
-			var response = JSON.parse(this.responseText);		
-						
+			var response = JSON.parse(this.responseText);
+			
 			divTable.innerHTML = "";
 			
 			var tbl = document.createElement("table");
@@ -180,7 +180,7 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 					
 					arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
 				}
-			}			
+			}	
 		}
 	}
 	

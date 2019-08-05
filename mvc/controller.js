@@ -26,15 +26,8 @@ function Controller() {
 		var inputCalendarTesting = document.getElementById("inputCalendarTesting").value;
 		var selectBuilding = document.getElementById("selectBuilding").value;
 		
-		//var building_input = document.getElementById("building_input").value;
-		//var tenant_input = document.getElementById("tenant_input").value;
-		
 		//var building_input = document.getElementById("building_input").getAttribute("rowAttributeValue");
 		var tenant_input = document.getElementById("tenant_input").getAttribute("rowAttributeValue");
-		//svar tenant_input_value = document.getElementById("tenant_input").value;
-		//alert(tenant_input);
-		//alert(tenant_input_value);
-		//return;
 		
 		var TenantValues = new Array();
 		

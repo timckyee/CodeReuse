@@ -24,6 +24,7 @@ function Tenant(inputValueArray,primaryKey) {
 	
 	htmlObjectFieldsSelect = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsSelect = "fieldPrimaryKey,field1,field2,field3,field4";
+	databaseFieldsSelectGrid = "fieldPrimaryKey,field1,field2,buildingId,suiteNumber,tenantName";
 	
 	htmlObjectFieldsUpdate = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsUpdate = "fieldPrimaryKey,field1,field2,field3,field4";
@@ -66,8 +67,8 @@ function Tenant(inputValueArray,primaryKey) {
 	};
 	
 	this.loadGridGetPost = function() {
-		
-		grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo(), sortTableHtmlObjectId, this.getSortFields());
+			
+		grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo(), sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value);
 		
 	};
 		

@@ -25,7 +25,11 @@
 		
 		if($queryName == "gridtable") {
 										
-			$result = $mysqli->query("select " . $_GET["selectString"] . " from tableGridGetPost2");
+			$buildingId = $_GET["building"];
+			
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingId from tableGridGetPostBuilding where buildingId = field3) as buildingId, (select concat(firstname,' ',lastname) as tenantName from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId);
+			
+			//$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, buildingId, suiteNumber, concat(firstname,' ',lastname) as tenantName from tableGridGetPost2 inner join tableGridGetPostSuite on tableGridGetPost2.field3 = tableGridGetPostSuite.buildingId inner join tableGridGetPostTenant on tableGridGetPost2.field4 = tableGridGetPostTenant.tenantId where buildingId=" . $buildingId);
 			
 		}
 		else 
