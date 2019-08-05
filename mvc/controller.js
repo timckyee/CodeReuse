@@ -10,12 +10,12 @@ function init() {
 	
 	controller = new Controller();
 	
-	controller.loadGridGetPost();
+	//controller.loadGridGetPost();
 	
 }
 
 function Controller() {
-	
+		
 	this.tenantSave = function() {
 				
 		var saveType;

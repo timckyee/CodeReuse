@@ -27,15 +27,19 @@
 										
 			$buildingId = $_GET["building"];
 			
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingId from tableGridGetPostBuilding where buildingId = field3) as buildingId, (select concat(firstname,' ',lastname) as tenantName from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId);
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId);
+			
+			//$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingId from tableGridGetPostBuilding where buildingId = field3) as buildingId, (select concat(firstname,' ',lastname) as tenantName from tableGsridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId);
 			
 			//$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, buildingId, suiteNumber, concat(firstname,' ',lastname) as tenantName from tableGridGetPost2 inner join tableGridGetPostSuite on tableGridGetPost2.field3 = tableGridGetPostSuite.buildingId inner join tableGridGetPostTenant on tableGridGetPost2.field4 = tableGridGetPostTenant.tenantId where buildingId=" . $buildingId);
 			
 		}
 		else 
 		if($queryName == "populate") {
-						
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2, field3, (select concat(suiteNumber,' ',concat(firstname, ' ', lastname)) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4display, field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
+			
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2, field3 as buildingName, (select concat(suiteNumber,' ',concat(firstname, ' ', lastname)) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as tenantNamedisplay, field4 as tenantName from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
+		
+			//$result = $mysqli->query("select fieldPrimaryKey,field1,field2, field3, (select concat(suiteNumber,' ',concat(firstname, ' ', lastname)) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4display, field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		
 		}
 		else if($queryName == "tenants") {

@@ -1,7 +1,7 @@
 arrayOldValuesTable = [];
 
 function Tenant(inputValueArray,primaryKey) {
-	
+		
 	var fieldPrimaryKey;
 	var field1;
 	var field2;
@@ -14,7 +14,7 @@ function Tenant(inputValueArray,primaryKey) {
 		{ name: "field2", dbType: "date", htmlObjectType: "calendar" },
 		{ name: "field3", dbType: "int", htmlObjectType: "select" },
 		{ name: "field4", dbType: "int", htmlObjectType: "autocomplete" }
-	];		
+	];
 		
 	var sortTableHtmlObjectId = "tableTenant";
 	
@@ -24,7 +24,7 @@ function Tenant(inputValueArray,primaryKey) {
 	
 	htmlObjectFieldsSelect = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsSelect = "fieldPrimaryKey,field1,field2,field3,field4";
-	databaseFieldsSelectGrid = "fieldPrimaryKey,field1,field2,buildingId,suiteNumber,tenantName";
+	gridSelectFields = "fieldPrimaryKey,field1,field2,buildingName,tenantName";
 	
 	htmlObjectFieldsUpdate = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsUpdate = "fieldPrimaryKey,field1,field2,field3,field4";
@@ -68,7 +68,10 @@ function Tenant(inputValueArray,primaryKey) {
 	
 	this.loadGridGetPost = function() {
 			
-		grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo(), sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value);
+		if(document.getElementById("selectBuilding").values != "")
+		{
+			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, gridSelectFields, this.getFieldsInfo(), sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value);
+		}
 		
 	};
 		
