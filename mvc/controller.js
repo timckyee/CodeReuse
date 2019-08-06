@@ -1,18 +1,3 @@
-var controller;
-
-window.addEventListener("load", function() {
-		
-	init();
-	
-});
-
-function init() {
-	
-	controller = new Controller();
-	
-	//controller.loadGridGetPost();
-	
-}
 
 function Controller() {
 		
@@ -61,19 +46,31 @@ function Controller() {
 				
 		this.refreshGridGetPost();
 	};
+	
+	this.resetTenantFields = function() {
+				
+		var htmlObjectFieldsSelectArray = htmlObjectFieldsSelect.split(",");
+		
+		for(i=0; i<htmlObjectFieldsSelectArray.length; i++)
+		{
+			document.getElementById(htmlObjectFieldsSelectArray[i]).value = "";
+		}
+		
+	}
 		
 	this.loadGridGetPost = function() {
 		
 		var tenantModel = new Tenant();
+		
 		tenantModel.loadGridGetPost();
 			
 	};
 		
 	this.refreshGridGetPost = function() {
-		
+				
 		var tenantModel = new Tenant();
+		
 		tenantModel.loadGridGetPost();
 			
 	};
-
 }

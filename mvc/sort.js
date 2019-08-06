@@ -1,9 +1,11 @@
 
+/*
 window.addEventListener("load", function() {
 	
 	//sortTable("tableTenant",0);
 	
 });
+*/
 
 function sortTable(tblId, column){				
 	

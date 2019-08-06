@@ -1,6 +1,3 @@
-window.gridXmlHttpRequest = new XMLHttpRequest();
-window.getXmlHttpRequest = new XMLHttpRequest();
-window.postXmlHttpRequest = new XMLHttpRequest();
 
 function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo) {
 		
@@ -127,29 +124,17 @@ function sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, 
 }
 
 function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo)
-{
+{		
 	var record = response[0];
 	
 	var htmlObjectFieldsArray = htmlObjectFieldsSelect.split(",");
 	var databaseFieldsArray = databaseFieldsSelect.split(",");
 	
 	for(i=0; i<htmlObjectFieldsArray.length; i++)
-	{
-		var fieldInfo;
-		
-		for(field=0; field<fieldsInfo.length; field++)
-		{
-			fieldInfo = fieldsInfo[field];
-			
-			if(fieldInfo.name == databaseFieldsArray[i])
-			{
-				break;
-			}
-		}
-		
-		if(fieldInfo.dbType == "date")
+	{		
+		if(fieldsInfo[i].dbType == "date")
 		{					
-			var dateFromDatabase = record[gridColumnsInfo[i].id];
+			var dateFromDatabase = record[databaseFieldsArray[i]];
 			
 			var dateFormat = convertDateFromDatabase(dateFromDatabase);
 			
@@ -159,19 +144,19 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo)
 		}
 		else
 		{
-			if(fieldInfo.htmlObjectType == "autocomplete")
+			if(fieldsInfo[i].htmlObjectType == "autocomplete")
 			{	
-				document.getElementById(htmlObjectFieldsArray[i]).value = record[gridColumnsInfo[i].id + "display"];
+				document.getElementById(htmlObjectFieldsArray[i]).value = record[databaseFieldsArray[i] + "display"];
 				
-				document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", record[gridColumnsInfo[i].id]);
+				document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", record[databaseFieldsArray[i]]);
 				
-				arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[gridColumnsInfo[i].id];
+				arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
 			}
 			else
 			{	
-				document.getElementById(htmlObjectFieldsArray[i]).value = record[gridColumnsInfo[i].id];
+				document.getElementById(htmlObjectFieldsArray[i]).value = record[databaseFieldsArray[i]];
 				
-				arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[gridColumnsInfo[i].id];
+				arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
 			}
 		}
 	}
@@ -206,6 +191,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 	
 	for(update=0; update<htmlObjectFieldsArray.length; update++)
 	{
+		/*
 		var fieldInfo;
 		
 		for(field=0; field<fieldsInfo.length; field++)
@@ -217,6 +203,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 				break;
 			}
 		}
+		*/
 		
 		var htmlObjectField = htmlObjectFieldsArray[update];
 		var htmlObjectFieldValue = htmlObjectFieldsValuesArray[update];
@@ -224,7 +211,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 				
 		if(htmlObjectFieldValue != arrayOldValuesTable[htmlObjectField])
 		{			
-			if(fieldInfo.dbType == "date")
+			if(fieldsInfo[update].dbType == "date")
 			{				
 				var dateFromSystem = htmlObjectFieldValue;
 												
@@ -295,6 +282,7 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlOb
 	
 	for(insert=0; insert<htmlObjectFieldsArray.length; insert++)
 	{	
+		/*
 		var fieldInfo;
 		
 		for(field=0; field<fieldsInfo.length; field++)
@@ -305,11 +293,12 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlOb
 			{
 				break;
 			}
-		}		
+		}
+		*/	
 
 		var htmlObjectFieldsArrayInsertValue = htmlObjectFieldsValuesArray[insert];
 	
-		if(fieldInfo.dbType == "date")
+		if(fieldsInfo[insert].dbType == "date")
 		{
 			var dateFromSystem = htmlObjectFieldsArrayInsertValue;
 											

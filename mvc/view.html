@@ -5,6 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="calendar.css">
 		<script src="config.js" type="text/javascript"></script>
 		<script src="controller.js" type="text/javascript"></script>
+		<script src="onload.js" type="text/javascript"></script>
 		<script src="model.js" type="text/javascript"></script>
 		<script src="get_post_functions.js" type="text/javascript"></script>
 		<script src="tenantGrid.js" type="text/javascript"></script>
@@ -20,7 +21,7 @@
 		<br>
 		<br>
 		<span>select</span>
-		<select id="selectBuilding" onchange="controller.refreshGridGetPost()">
+		<select id="selectBuilding" onchange="controller.refreshGridGetPost();controller.resetTenantFields();">
 			<option value="" selected>None</option>
 			<option value="1">building</option>
 			<option value="2">building2</option>

@@ -1,4 +1,3 @@
-arrayOldValuesTable = [];
 
 function Tenant(inputValueArray,primaryKey) {
 		

@@ -1,4 +1,5 @@
 
+/*
 window.addEventListener("load", function() {
 
 	//var building_input = document.getElementById("building_input");
@@ -20,6 +21,7 @@ window.addEventListener("load", function() {
 	oldValuesArray = Array();
 	
 });
+*/
 
 function positionAutcomplete(inputAutocompleteId, divListId) {
 	
