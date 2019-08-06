@@ -2,96 +2,94 @@ window.gridXmlHttpRequest = new XMLHttpRequest();
 window.getXmlHttpRequest = new XMLHttpRequest();
 window.postXmlHttpRequest = new XMLHttpRequest();
 
-function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, gridSelectFields, fieldsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue) {
+function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo) {
+		
+	divTable.innerHTML = "";
+	
+	var tbl = document.createElement("table");
+	tbl.id = sortTableHtmlObjectId;		
+								
+	var tableHeaderRow = document.createElement("tr");
+	
+	var tableHeader;
+	var tableHeaderText;		
+				
+	for(i=0; i<gridColumnsInfo.length; i++)
+	{				
+		tableHeader = document.createElement("th");
+			
+		tableHeader.onclick = sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, gridColumnsInfo, i);
+		
+		var columnName = gridColumnsInfo[i].colName;
+		
+		tableHeaderText = document.createTextNode(columnName);
+		tableHeader.appendChild(tableHeaderText);
+		tableHeaderRow.appendChild(tableHeader);				
+	}
+	
+	tbl.appendChild(tableHeaderRow);
+	
+	response.forEach(function(item) {
+	
+		var row = document.createElement("tr");
+		
+		row.className = "tableHover";
+		
+		row.onclick = function() {
+			var cellValue = this.cells[0].innerHTML;
+			
+			var rowAttributeValue = row.attributes["gridIdField"].value;		
+								
+			get_populateForm(phpFile, "populate", rowAttributeValue, htmlObjectFieldsSelect, databaseFieldsSelect, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, get_populateForm_callback);
+		};
+		
+		var cell;
+		var cellText;
+		
+		for(i=0; i<gridColumnsInfo.length; i++)
+		{	
+			cell = document.createElement("td");
+			
+			var colType = gridColumnsInfo[i].colType;
+			
+			if(colType == "date")
+			{	
+				var dateFromDatabase = item[gridColumnsInfo[i].id];
+				
+				var dateFormat = convertDateFromDatabase(dateFromDatabase);
+				
+				cellText = document.createTextNode(dateFormat);
+			}
+			else
+			{
+				cellText = document.createTextNode(item[gridColumnsInfo[i].id]);
+			}
+			
+			cell.appendChild(cellText);
+			row.appendChild(cell);				
+			row.setAttribute("gridIdField", item[gridIdField]);		
+		}
+		
+		tbl.appendChild(row);
+		
+	});
+	
+	divTable.appendChild(tbl);
+	
+}
+
+function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, fieldsInfo, gridColumnsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue, callback) {
 	
 	var divTable = document.getElementById(divElement);
 	
 	window.gridXmlHttpRequest.onreadystatechange = function() {
-		
+				
 		if (this.readyState == 4 && this.status == 200) {
 			
 			var response = JSON.parse(this.responseText);
-			
-			divTable.innerHTML = "";
-			
-			var tbl = document.createElement("table");
-			tbl.id = sortTableHtmlObjectId;		
-										
-			var tableHeaderRow = document.createElement("tr");
-			
-			var gridSelectFieldsArray = gridSelectFields.split(",");
-			
-			var tableHeader;
-			var tableHeaderText;
-			
-			for(i=0; i<gridSelectFieldsArray.length; i++)
-			{					
-				tableHeader = document.createElement("th");
-					
-				tableHeader.onclick = sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, gridSelectFieldsArray, i);
-				
-				tableHeaderText = document.createTextNode(gridSelectFieldsArray[i]);
-				tableHeader.appendChild(tableHeaderText);
-				tableHeaderRow.appendChild(tableHeader);				
-			}	
-			
-			tbl.appendChild(tableHeaderRow);
-			
-			response.forEach(function(item) {
-			
-				var row = document.createElement("tr");
-				
-				row.className = "tableHover";
-				
-				row.onclick = function() {
-					var cellValue = this.cells[0].innerHTML;
-					
-					var rowAttributeValue = row.attributes["gridIdField"].value;
-										
-					get_populateForm(phpFile, "populate", rowAttributeValue, htmlObjectFieldsSelect, databaseFieldsSelect, gridSelectFields, fieldsInfo, arrayOldValuesTable);
-				};
-				
-				var cell;
-				var cellText;
-				
-				for(i=0; i<gridSelectFieldsArray.length; i++)
-				{	
-					cell = document.createElement("td");
-					
-					var fieldInfo;
-					
-					for(field=0; field<fieldsInfo.length; field++)
-					{
-						fieldInfo = fieldsInfo[field];
-						if(fieldInfo.name == gridSelectFieldsArray[i])
-						{
-							break;
-						}
-					}
-					
-					if(fieldInfo.dbType == "date")
-					{	
-						var dateFromDatabase = item[gridSelectFieldsArray[i]];
 						
-						var dateFormat = convertDateFromDatabase(dateFromDatabase);
-						
-						cellText = document.createTextNode(dateFormat);
-					}
-					else
-					{
-						cellText = document.createTextNode(item[gridSelectFieldsArray[i]]);
-					}
+			callback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo);
 					
-					cell.appendChild(cellText);
-					row.appendChild(cell);				
-					row.setAttribute("gridIdField", item[gridIdField]);		
-				}
-				
-				tbl.appendChild(row);
-								
-			});
-			
-			divTable.appendChild(tbl);
 		}
 	};
 	
@@ -107,7 +105,7 @@ function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect,
 	
 }
 
-function sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, databaseFieldsSelectArray, column) {
+function sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, gridColumnsInfo, column) {
 	
 	return function() { 
 	
@@ -120,7 +118,7 @@ function sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, 
 			var sortFieldKey = sortFieldKeyValue[0];
 			var sortFieldValue = sortFieldKeyValue[1];
 			
-			if(sortFieldKey == databaseFieldsSelectArray[column])
+			if(sortFieldKey == gridColumnsInfo[column].id)
 			{
 				sortTable(sortTableHtmlObjectId, sortFieldValue);
 			}
@@ -128,7 +126,58 @@ function sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, 
 	};
 }
 
-function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObjectFieldsSelect, databaseFieldsSelect, gridSelectFields, fieldsInfo, arrayOldValuesTable)
+function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo)
+{
+	var record = response[0];
+	
+	var htmlObjectFieldsArray = htmlObjectFieldsSelect.split(",");
+	var databaseFieldsArray = databaseFieldsSelect.split(",");
+	
+	for(i=0; i<htmlObjectFieldsArray.length; i++)
+	{
+		var fieldInfo;
+		
+		for(field=0; field<fieldsInfo.length; field++)
+		{
+			fieldInfo = fieldsInfo[field];
+			
+			if(fieldInfo.name == databaseFieldsArray[i])
+			{
+				break;
+			}
+		}
+		
+		if(fieldInfo.dbType == "date")
+		{					
+			var dateFromDatabase = record[gridColumnsInfo[i].id];
+			
+			var dateFormat = convertDateFromDatabase(dateFromDatabase);
+			
+			document.getElementById(htmlObjectFieldsArray[i]).value = dateFormat;
+			
+			arrayOldValuesTable[htmlObjectFieldsArray[i]] = dateFormat;
+		}
+		else
+		{
+			if(fieldInfo.htmlObjectType == "autocomplete")
+			{	
+				document.getElementById(htmlObjectFieldsArray[i]).value = record[gridColumnsInfo[i].id + "display"];
+				
+				document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", record[gridColumnsInfo[i].id]);
+				
+				arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[gridColumnsInfo[i].id];
+			}
+			else
+			{	
+				document.getElementById(htmlObjectFieldsArray[i]).value = record[gridColumnsInfo[i].id];
+				
+				arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[gridColumnsInfo[i].id];
+			}
+		}
+	}
+}
+
+function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObjectFieldsSelect, databaseFieldsSelect, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, callback)
 {		
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -136,54 +185,8 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 			
 			var response = JSON.parse(this.responseText);
 			
-			var record = response[0];
-			
-			var htmlObjectFieldsArray = htmlObjectFieldsSelect.split(",");
-			var databaseFieldsArray = databaseFieldsSelect.split(",");
-			var gridSelectFieldsArray = gridSelectFields.split(",");
-			
-			for(i=0; i<htmlObjectFieldsArray.length; i++)
-			{
-				var fieldInfo;
-				
-				for(field=0; field<fieldsInfo.length; field++)
-				{
-					fieldInfo = fieldsInfo[field];
-					
-					if(fieldInfo.name == databaseFieldsArray[i])
-					{
-						break;
-					}
-				}
-				
-				if(fieldInfo.dbType == "date")
-				{					
-					var dateFromDatabase = record[gridSelectFieldsArray[i]];
-					
-					var dateFormat = convertDateFromDatabase(dateFromDatabase);
-					
-					document.getElementById(htmlObjectFieldsArray[i]).value = dateFormat;
-					
-					arrayOldValuesTable[htmlObjectFieldsArray[i]] = dateFormat;
-				}
-				else
-				{
-					if(fieldInfo.htmlObjectType == "autocomplete")
-					{	
-						document.getElementById(htmlObjectFieldsArray[i]).value = record[gridSelectFieldsArray[i] + "display"];
-						
-						document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", record[gridSelectFieldsArray[i]]);
-						
-						arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[gridSelectFieldsArray[i]];
-					}
-					else
-					{	
-						document.getElementById(htmlObjectFieldsArray[i]).value = record[gridSelectFieldsArray[i]];
-						
-						arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[gridSelectFieldsArray[i]];
-					}
-				}
-			}	
+			callback(response, fieldsInfo, gridColumnsInfo);
+		
 		}
 	}
 	
@@ -194,7 +197,7 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 }
 
 function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsUpdate, htmlObjectFieldsValuesUpdate, databaseFieldsUpdate, fieldsInfo, arrayOldValuesTable)
-{		
+{	
 	var htmlObjectFieldsArray = htmlObjectFieldsUpdate.split(",");
 	var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesUpdate.split(",");
 	var databaseFieldsArray = databaseFieldsUpdate.split(",");

@@ -24,7 +24,6 @@ function Tenant(inputValueArray,primaryKey) {
 	
 	htmlObjectFieldsSelect = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsSelect = "fieldPrimaryKey,field1,field2,field3,field4";
-	gridSelectFields = "fieldPrimaryKey,field1,field2,buildingName,tenantName";
 	
 	htmlObjectFieldsUpdate = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsUpdate = "fieldPrimaryKey,field1,field2,field3,field4";
@@ -67,18 +66,21 @@ function Tenant(inputValueArray,primaryKey) {
 	};
 	
 	this.loadGridGetPost = function() {
+		
+		var tenantGrid = new TenantGrid();
+		var tenantGridColumnsInfo = tenantGrid.getGridColumnsInfo();	
 			
 		if(document.getElementById("selectBuilding").values != "")
-		{
-			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, gridSelectFields, this.getFieldsInfo(), sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value);
+		{							
+			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo(), tenantGridColumnsInfo, sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value,gridCallback);
 		}
 		
 	};
 		
 	this.tenantUpdate = function() {
 		
-		var htmlObjectFieldsValuesUpdate = this.createCommaListOfInputValuesUpdate();
-				
+		var htmlObjectFieldsValuesUpdate = this.createCommaListOfInputValuesUpdate();		
+			
 		if(validateHtmlObjectFields(htmlObjectFieldsUpdate))
 		{							
 			post_updateForm(phpFile, "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsUpdate, htmlObjectFieldsValuesUpdate, databaseFieldsUpdate, this.getFieldsInfo(), arrayOldValuesTable);
