@@ -48,12 +48,14 @@ function Controller() {
 	};
 	
 	this.resetTenantFields = function() {
-				
-		var htmlObjectFieldsSelectArray = htmlObjectFieldsSelect.split(",");
 		
-		for(i=0; i<htmlObjectFieldsSelectArray.length; i++)
+		var tenantModel = new Tenant();
+		
+		var fieldsInfo = tenantModel.getFieldsInfo();
+		
+		for(i=0; i<fieldsInfo.length; i++)
 		{
-			document.getElementById(htmlObjectFieldsSelectArray[i]).value = "";
+			document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
 		}
 		
 	}

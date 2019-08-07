@@ -8,11 +8,11 @@ function Tenant(inputValueArray,primaryKey) {
 	var field4;
 		
 	fields = [
-		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectType: "primaryKey" },
-		{ name: "field1", dbType: "date", htmlObjectType: "calendar" },
-		{ name: "field2", dbType: "date", htmlObjectType: "calendar" },
-		{ name: "field3", dbType: "int", htmlObjectType: "select" },
-		{ name: "field4", dbType: "int", htmlObjectType: "autocomplete" }
+		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectId: "inputPrimaryKey", htmlObjectType: "primaryKey" },
+		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendar", htmlObjectType: "calendar" },
+		{ name: "field2", dbType: "date", htmlObjectId: "inputCalendarTesting", htmlObjectType: "calendar" },
+		{ name: "field3", dbType: "int", htmlObjectId: "selectBuilding", htmlObjectType: "select" },
+		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input", htmlObjectType: "autocomplete" }
 	];
 		
 	var sortTableHtmlObjectId = "tableTenant";
@@ -21,6 +21,7 @@ function Tenant(inputValueArray,primaryKey) {
 		
 	phpFile = "grid_get_post.php";
 	
+	/*
 	htmlObjectFieldsSelect = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsSelect = "fieldPrimaryKey,field1,field2,field3,field4";
 	
@@ -29,6 +30,7 @@ function Tenant(inputValueArray,primaryKey) {
 	
 	htmlObjectFieldsInsert = "inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
 	databaseFieldsInsert = "field1,field2,field3,field4";
+	*/
 		
 	this.getFieldsInfo = function() {
 		
@@ -52,6 +54,34 @@ function Tenant(inputValueArray,primaryKey) {
 		
 	};
 	
+	this.fieldsValuesUpate = function() {
+		
+		var fieldsValuesUpdateArray = [];
+		
+		fieldsValuesUpdateArray[0] = fieldPrimaryKey;
+		fieldsValuesUpdateArray[1] = field1;
+		fieldsValuesUpdateArray[2] = field2;
+		fieldsValuesUpdateArray[3] = field3;
+		fieldsValuesUpdateArray[4] = field4;
+		
+		return fieldsValuesUpdateArray;
+		
+	}
+	
+	this.fieldsValuesInsert = function() {
+		
+		var fieldsValuesInsertArray = [];
+		
+		fieldsValuesInsertArray[1] = field1;
+		fieldsValuesInsertArray[2] = field2;
+		fieldsValuesInsertArray[3] = field3;
+		fieldsValuesInsertArray[4] = field4;
+		
+		return fieldsValuesInsertArray;
+		
+	}	
+	
+	/*
 	this.createCommaListOfInputValuesUpdate = function() {
 	
 		return fieldPrimaryKey + "," + field1 + "," + field2 + "," + field3 + "," + field4;
@@ -63,6 +93,7 @@ function Tenant(inputValueArray,primaryKey) {
 		return field1 + "," + field2 + "," + field3 + "," + field4;
 			
 	};
+	*/
 	
 	this.loadGridGetPost = function() {
 		
@@ -71,29 +102,29 @@ function Tenant(inputValueArray,primaryKey) {
 			
 		if(document.getElementById("selectBuilding").values != "")
 		{							
-			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", databaseFieldsSelect, this.getFieldsInfo(), tenantGridColumnsInfo, sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value,gridCallback);
+			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", this.getFieldsInfo(), tenantGridColumnsInfo, sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value,gridCallback);
 		}
 		
 	};
 		
 	this.tenantUpdate = function() {
-		
-		var htmlObjectFieldsValuesUpdate = this.createCommaListOfInputValuesUpdate();		
 			
-		if(validateHtmlObjectFields(htmlObjectFieldsUpdate))
+		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpate();
+				
+		if(validateHtmlObjectFields(fields))
 		{							
-			post_updateForm(phpFile, "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsUpdate, htmlObjectFieldsValuesUpdate, databaseFieldsUpdate, this.getFieldsInfo(), arrayOldValuesTable);
+			post_updateForm(phpFile, "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable);
 		}
 		
 	};
 	
 	this.tenantInsert = function() {
 	
-		var htmlObjectFieldsValuesInsert = this.createCommaListOfInputValuesInsert();
-		
-		if(validateHtmlObjectFields(htmlObjectFieldsInsert))
+		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();
+				
+		if(validateHtmlObjectFields(fields))
 		{
-			post_insertRecordForm(phpFile, "createRecordTableGridGetPost", htmlObjectFieldsInsert, htmlObjectFieldsValuesInsert, databaseFieldsInsert, this.getFieldsInfo(), "inputPrimaryKey");
+			post_insertRecordForm(phpFile, "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey");
 		}	
 	
 	};

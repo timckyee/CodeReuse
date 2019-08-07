@@ -37,7 +37,7 @@ function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumn
 			
 			var rowAttributeValue = row.attributes["gridIdField"].value;		
 								
-			get_populateForm(phpFile, "populate", rowAttributeValue, htmlObjectFieldsSelect, databaseFieldsSelect, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, get_populateForm_callback);
+			get_populateForm(phpFile, "populate", rowAttributeValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, get_populateForm_callback);
 		};
 		
 		var cell;
@@ -75,7 +75,7 @@ function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumn
 	
 }
 
-function grid(divElement, phpFile, queryName, gridIdField, databaseFieldsSelect, fieldsInfo, gridColumnsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue, callback) {
+function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue, callback) {
 	
 	var divTable = document.getElementById(divElement);
 	
@@ -127,42 +127,42 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo)
 {		
 	var record = response[0];
 	
-	var htmlObjectFieldsArray = htmlObjectFieldsSelect.split(",");
-	var databaseFieldsArray = databaseFieldsSelect.split(",");
+	//var htmlObjectFieldsArray = htmlObjectFieldsSelect.split(",");
+	//var databaseFieldsArray = databaseFieldsSelect.split(",");
 	
-	for(i=0; i<htmlObjectFieldsArray.length; i++)
+	for(i=0; i<fieldsInfo.length; i++)
 	{		
 		if(fieldsInfo[i].dbType == "date")
 		{					
-			var dateFromDatabase = record[databaseFieldsArray[i]];
-			
+			var dateFromDatabase = record[fieldsInfo[i].name];
+						
 			var dateFormat = convertDateFromDatabase(dateFromDatabase);
 			
-			document.getElementById(htmlObjectFieldsArray[i]).value = dateFormat;
+			document.getElementById(fieldsInfo[i].htmlObjectId).value = dateFormat;
 			
-			arrayOldValuesTable[htmlObjectFieldsArray[i]] = dateFormat;
+			arrayOldValuesTable[fieldsInfo[i].htmlObjectId] = dateFormat;
 		}
 		else
 		{
 			if(fieldsInfo[i].htmlObjectType == "autocomplete")
 			{	
-				document.getElementById(htmlObjectFieldsArray[i]).value = record[databaseFieldsArray[i] + "display"];
+				document.getElementById(fieldsInfo[i].htmlObjectId).value = record[fieldsInfo[i].name + "display"];
 				
-				document.getElementById(htmlObjectFieldsArray[i]).setAttribute("rowAttributeValue", record[databaseFieldsArray[i]]);
+				document.getElementById(fieldsInfo[i].htmlObjectId).setAttribute("rowAttributeValue", record[fieldsInfo[i].name]);
 				
-				arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
+				arrayOldValuesTable[fieldsInfo[i].htmlObjectId] = record[fieldsInfo[i].name];
 			}
 			else
 			{	
-				document.getElementById(htmlObjectFieldsArray[i]).value = record[databaseFieldsArray[i]];
+				document.getElementById(fieldsInfo[i].htmlObjectId).value = record[fieldsInfo[i].name];
 				
-				arrayOldValuesTable[htmlObjectFieldsArray[i]] = record[databaseFieldsArray[i]];
+				arrayOldValuesTable[fieldsInfo[i].htmlObjectId] = record[fieldsInfo[i].name];
 			}
 		}
 	}
 }
 
-function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObjectFieldsSelect, databaseFieldsSelect, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, callback)
+function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, callback)
 {		
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -181,15 +181,15 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, htmlObj
 	window.getXmlHttpRequest.send();
 }
 
-function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsUpdate, htmlObjectFieldsValuesUpdate, databaseFieldsUpdate, fieldsInfo, arrayOldValuesTable)
+function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable)
 {	
-	var htmlObjectFieldsArray = htmlObjectFieldsUpdate.split(",");
-	var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesUpdate.split(",");
-	var databaseFieldsArray = databaseFieldsUpdate.split(",");
+	//var htmlObjectFieldsArray = htmlObjectFieldsUpdate.split(",");
+	//var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesUpdate.split(",");
+	//var databaseFieldsArray = databaseFieldsUpdate.split(",");
 			
 	var updateString = "";
 	
-	for(update=0; update<htmlObjectFieldsArray.length; update++)
+	for(update=0; update<fieldsInfo.length; update++)
 	{
 		/*
 		var fieldInfo;
@@ -205,9 +205,9 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 		}
 		*/
 		
-		var htmlObjectField = htmlObjectFieldsArray[update];
-		var htmlObjectFieldValue = htmlObjectFieldsValuesArray[update];
-		var databaseField = databaseFieldsArray[update];		
+		var htmlObjectField = fieldsInfo[update].htmlObjectId;
+		var htmlObjectFieldValue = htmlObjectFieldsValuesUpdate[update];
+		var databaseField = fieldsInfo[update].name;
 				
 		if(htmlObjectFieldValue != arrayOldValuesTable[htmlObjectField])
 		{			
@@ -239,9 +239,9 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 			
 			if (this.readyState == 4 && this.status == 200) {
 				
-				for(update=0; update<htmlObjectFieldsArray.length; update++)
+				for(update=0; update<fieldsInfo.length; update++)
 				{					
-					arrayOldValuesTable[htmlObjectFieldsArray[update]] = htmlObjectFieldsValuesArray[update];
+					arrayOldValuesTable[fieldsInfo[update].htmlObjectId] = htmlObjectFieldsValuesUpdate[update];
 				}
 			}
 		}
@@ -254,11 +254,11 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 	}
 }
 
-function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlObjectFieldsValuesInsert, databaseFieldsInsert, fieldsInfo, inputPrimaryKey)
+function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey)
 {	
-	var htmlObjectFieldsArray = htmlObjectFieldsInsert.split(",");
-	var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesInsert.split(",");
-	var databaseFieldsArray = databaseFieldsInsert.split(",");
+	//var htmlObjectFieldsArray = htmlObjectFieldsInsert.split(",");
+	//var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesInsert.split(",");
+	//var databaseFieldsArray = databaseFieldsInsert.split(",");
 	
 	if(!confirm('Confirm to create new record?'))
 	{
@@ -269,9 +269,10 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlOb
 	
 	insertString = insertString + "(";
 	
-	for(insert=0; insert<databaseFieldsArray.length; insert++)
+	for(insert=0; insert<fieldsInfo.length; insert++)
 	{
-		insertString = insertString + databaseFieldsArray[insert] + ",";
+		if(fieldsInfo[insert].htmlObjectType != "primaryKey")
+			insertString = insertString + fieldsInfo[insert].name + ",";
 	}
 	
 	insertString = insertString.substr(0, insertString.length - 1);
@@ -280,7 +281,7 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlOb
 	
 	insertString = insertString + " values (";
 	
-	for(insert=0; insert<htmlObjectFieldsArray.length; insert++)
+	for(insert=1; insert<fieldsInfo.length; insert++)
 	{	
 		/*
 		var fieldInfo;
@@ -296,19 +297,22 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlOb
 		}
 		*/	
 
-		var htmlObjectFieldsArrayInsertValue = htmlObjectFieldsValuesArray[insert];
-	
-		if(fieldsInfo[insert].dbType == "date")
+		if(fieldsInfo[insert].htmlObjectType != "primaryKey")
 		{
-			var dateFromSystem = htmlObjectFieldsArrayInsertValue;
-											
-			var dateFormat = convertDateFromSystem(dateFromSystem);
-			
-			insertString = insertString + "'" + dateFormat + "',";
-		}
-		else
-		{
-			insertString = insertString + "'" + htmlObjectFieldsArrayInsertValue + "',";
+			var htmlObjectValueInsert = htmlObjectFieldsValuesInsert[insert];
+		
+			if(fieldsInfo[insert].dbType == "date")
+			{
+				var dateFromSystem = htmlObjectValueInsert;
+												
+				var dateFormat = convertDateFromSystem(dateFromSystem);
+				
+				insertString = insertString + "'" + dateFormat + "',";
+			}
+			else
+			{
+				insertString = insertString + "'" + htmlObjectValueInsert + "',";
+			}
 		}
 	}
 	
@@ -326,10 +330,12 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlOb
 			
 			arrayOldValuesTable[inputPrimaryKey] = insertId;
 			
-			for(insert=0; insert<htmlObjectFieldsArray.length; insert++)
+			for(insert=0; insert<fieldsInfo.length; insert++)
 			{									
-				arrayOldValuesTable[htmlObjectFieldsArray[insert]] = htmlObjectFieldsValuesArray[insert];
+				if(fieldsInfo[insert].htmlObjectType != "primaryKey")				
+					arrayOldValuesTable[fieldsInfo[insert].htmlObjectId] = htmlObjectFieldsValuesInsert[insert];
 			}
+
 		}
 	}	
 	
@@ -340,16 +346,17 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsInsert, htmlOb
 	window.postXmlHttpRequest.send(formVariables);
 }
 
-function validateHtmlObjectFields(htmlObjectFields)
+function validateHtmlObjectFields(fieldsInfo)
 {
-	var htmlObjectFieldsArray = htmlObjectFields.split(",");
-	
-	for(validate=0; validate<htmlObjectFieldsArray.length; validate++)
+	for(validate=0; validate<fieldsInfo.length; validate++)
 	{
-		if(document.getElementById(htmlObjectFieldsArray[validate]).value == "")
+		if(fieldsInfo[validate].htmlObjectType != "primaryKey")
 		{
-			alert(htmlObjectFieldsArray[validate] + ' ' + 'cannot be empty');
-			return false;
+			if(document.getElementById(fieldsInfo[validate].htmlObjectId).value == "")
+			{
+				alert(fieldsInfo[validate].htmlObjectId + ' ' + 'cannot be empty');
+				return false;
+			}
 		}
 	}
 	
