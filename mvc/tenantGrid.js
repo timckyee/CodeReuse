@@ -14,4 +14,7 @@ function TenantGrid()
 		
 		return columns;
 	};
+		
+	this.rowOnClick = TenantGridOnClick;
+	
 }

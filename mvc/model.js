@@ -98,11 +98,17 @@ function Tenant(inputValueArray,primaryKey) {
 	this.loadGridGetPost = function() {
 		
 		var tenantGrid = new TenantGrid();
-		var tenantGridColumnsInfo = tenantGrid.getGridColumnsInfo();	
+		var tenantGridColumnsInfo = tenantGrid.getGridColumnsInfo();
 			
-		if(document.getElementById("selectBuilding").values != "")
-		{							
-			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", this.getFieldsInfo(), tenantGridColumnsInfo, sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value,gridCallback);
+		var tenantGridRowOnClick = tenantGrid.rowOnClick;
+		
+		if(document.getElementById("selectBuilding").value != "")
+		{
+			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", this.getFieldsInfo(), tenantGridColumnsInfo, sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value, gridCallback, tenantGridRowOnClick);
+		}
+		else
+		{
+			gridHide("gridGetPost");
 		}
 		
 	};

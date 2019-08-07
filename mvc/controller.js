@@ -55,7 +55,8 @@ function Controller() {
 		
 		for(i=0; i<fieldsInfo.length; i++)
 		{
-			document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
+			if(fieldsInfo[i].htmlObjectType != "select")
+				document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
 		}
 		
 	}

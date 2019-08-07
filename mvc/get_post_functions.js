@@ -1,5 +1,5 @@
 
-function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo) {
+function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick) {
 		
 	divTable.innerHTML = "";
 	
@@ -32,6 +32,9 @@ function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumn
 		
 		row.className = "tableHover";
 		
+		row.onclick = tenantGridRowOnClick(row, fieldsInfo, gridColumnsInfo);
+		
+		/*
 		row.onclick = function() {
 			var cellValue = this.cells[0].innerHTML;
 			
@@ -39,6 +42,7 @@ function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumn
 								
 			get_populateForm(phpFile, "populate", rowAttributeValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, get_populateForm_callback);
 		};
+		*/
 		
 		var cell;
 		var cellText;
@@ -75,7 +79,25 @@ function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumn
 	
 }
 
-function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue, callback) {
+function TenantGridOnClick(row, fieldsInfo, gridColumnsInfo) {
+	
+	return function() {
+		
+		var rowAttributeValue = row.attributes["gridIdField"].value;			
+							
+		get_populateForm(phpFile, "populate", rowAttributeValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, get_populateForm_callback);
+	}
+	
+}
+
+function gridHide(divElement)
+{
+	var divTable = document.getElementById(divElement);
+	
+	divTable.innerHTML = "";
+}
+
+function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick) {
 	
 	var divTable = document.getElementById(divElement);
 	
@@ -85,7 +107,7 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 			
 			var response = JSON.parse(this.responseText);
 						
-			callback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo);
+			callback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick);
 					
 		}
 	};
@@ -103,7 +125,7 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 }
 
 function sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, gridColumnsInfo, column) {
-	
+		
 	return function() { 
 	
 		var sortTableColumnsCount = sortTableColumns.split(",").length;
