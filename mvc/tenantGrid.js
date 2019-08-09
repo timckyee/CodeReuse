@@ -1,6 +1,8 @@
 
 function TenantGrid()
 {	
+	var tableHtmlObjectId = "tableTenant";
+		
 	columns = [
 		
 		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int" },
@@ -14,7 +16,26 @@ function TenantGrid()
 		
 		return columns;
 	};
+	
+	this.getSortFields = function() {
 		
+		return sortTableColumns;
+		
+	};	
+		
+	this.loadTenantGrid = function(fieldsInfo) {
+	
+		if(document.getElementById("selectBuilding").value != "")
+		{
+			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), tableHtmlObjectId, "building", document.getElementById("selectBuilding").value, gridCallback, this.rowOnClick);
+		}
+		else
+		{
+			gridHide("gridGetPost");
+		}	
+		
+	};
+	
 	this.rowOnClick = TenantGridOnClick;
 	
 }

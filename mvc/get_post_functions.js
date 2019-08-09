@@ -1,21 +1,21 @@
 
-function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick) {
+function gridCallback(response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick) {
 		
 	divTable.innerHTML = "";
 	
 	var tbl = document.createElement("table");
-	tbl.id = sortTableHtmlObjectId;		
+	tbl.id = tableHtmlObjectId;		
 								
 	var tableHeaderRow = document.createElement("tr");
 	
 	var tableHeader;
 	var tableHeaderText;		
-				
+	
 	for(i=0; i<gridColumnsInfo.length; i++)
 	{				
 		tableHeader = document.createElement("th");
 			
-		tableHeader.onclick = sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, gridColumnsInfo, i);
+		tableHeader.onclick = sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
 		
 		var columnName = gridColumnsInfo[i].colName;
 		
@@ -33,16 +33,6 @@ function gridCallback(response, divTable, sortTableHtmlObjectId, sortTableColumn
 		row.className = "tableHover";
 		
 		row.onclick = tenantGridRowOnClick(row, fieldsInfo, gridColumnsInfo);
-		
-		/*
-		row.onclick = function() {
-			var cellValue = this.cells[0].innerHTML;
-			
-			var rowAttributeValue = row.attributes["gridIdField"].value;		
-								
-			get_populateForm(phpFile, "populate", rowAttributeValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, get_populateForm_callback);
-		};
-		*/
 		
 		var cell;
 		var cellText;
@@ -97,7 +87,7 @@ function gridHide(divElement)
 	divTable.innerHTML = "";
 }
 
-function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, sortTableHtmlObjectId, sortTableColumns, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick) {
+function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick) {
 	
 	var divTable = document.getElementById(divElement);
 	
@@ -107,7 +97,7 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 			
 			var response = JSON.parse(this.responseText);
 						
-			callback(response, divTable, sortTableHtmlObjectId, sortTableColumns, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick);
+			callback(response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick);
 					
 		}
 	};
@@ -124,34 +114,19 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 	
 }
 
-function sortTableColumnOnclickHandler(sortTableHtmlObjectId, sortTableColumns, gridColumnsInfo, column) {
+function sortTableColumnOnclickHandler(sortTableHtmlObjectId, gridColumnsInfo, column) {
 		
 	return function() { 
-	
-		var sortTableColumnsCount = sortTableColumns.split(",").length;
 
-		for(sort=0; sort<sortTableColumnsCount; sort++)
-		{
-			var sortFieldArray = sortTableColumns.split(",");
-			var sortFieldKeyValue = sortFieldArray[sort].split("=");
-			var sortFieldKey = sortFieldKeyValue[0];
-			var sortFieldValue = sortFieldKeyValue[1];
+		sortTable(sortTableHtmlObjectId, column);
 			
-			if(sortFieldKey == gridColumnsInfo[column].id)
-			{
-				sortTable(sortTableHtmlObjectId, sortFieldValue);
-			}
-		};			
 	};
 }
 
 function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo)
 {		
 	var record = response[0];
-	
-	//var htmlObjectFieldsArray = htmlObjectFieldsSelect.split(",");
-	//var databaseFieldsArray = databaseFieldsSelect.split(",");
-	
+		
 	for(i=0; i<fieldsInfo.length; i++)
 	{		
 		if(fieldsInfo[i].dbType == "date")
@@ -204,29 +179,11 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsI
 }
 
 function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable)
-{	
-	//var htmlObjectFieldsArray = htmlObjectFieldsUpdate.split(",");
-	//var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesUpdate.split(",");
-	//var databaseFieldsArray = databaseFieldsUpdate.split(",");
-			
+{				
 	var updateString = "";
 	
 	for(update=0; update<fieldsInfo.length; update++)
-	{
-		/*
-		var fieldInfo;
-		
-		for(field=0; field<fieldsInfo.length; field++)
-		{
-			fieldInfo = fieldsInfo[field];
-			
-			if(fieldInfo.name == databaseFieldsArray[update])
-			{
-				break;
-			}
-		}
-		*/
-		
+	{		
 		var htmlObjectField = fieldsInfo[update].htmlObjectId;
 		var htmlObjectFieldValue = htmlObjectFieldsValuesUpdate[update];
 		var databaseField = fieldsInfo[update].name;
@@ -277,11 +234,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 }
 
 function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey)
-{	
-	//var htmlObjectFieldsArray = htmlObjectFieldsInsert.split(",");
-	//var htmlObjectFieldsValuesArray = htmlObjectFieldsValuesInsert.split(",");
-	//var databaseFieldsArray = databaseFieldsInsert.split(",");
-	
+{		
 	if(!confirm('Confirm to create new record?'))
 	{
 		return;
@@ -303,22 +256,8 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 	
 	insertString = insertString + " values (";
 	
-	for(insert=1; insert<fieldsInfo.length; insert++)
+	for(insert=0; insert<fieldsInfo.length; insert++)
 	{	
-		/*
-		var fieldInfo;
-		
-		for(field=0; field<fieldsInfo.length; field++)
-		{
-			fieldInfo = fieldsInfo[field];
-			
-			if(fieldInfo.name == databaseFieldsArray[insert])
-			{
-				break;
-			}
-		}
-		*/	
-
 		if(fieldsInfo[insert].htmlObjectType != "primaryKey")
 		{
 			var htmlObjectValueInsert = htmlObjectFieldsValuesInsert[insert];

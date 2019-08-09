@@ -55,7 +55,7 @@ function Controller() {
 		
 		for(i=0; i<fieldsInfo.length; i++)
 		{
-			if(fieldsInfo[i].htmlObjectType != "select")
+			if(fieldsInfo[i].htmlObjectId != "selectBuilding")
 				document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
 		}
 		

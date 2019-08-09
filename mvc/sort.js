@@ -1,31 +1,9 @@
 
-/*
-window.addEventListener("load", function() {
-	
-	//sortTable("tableTenant",0);
-	
-});
-*/
-
 function sortTable(tblId, column){				
 	
     var table = document.getElementById(tblId);
     
     var Arr = [];
-    
-    /*
-    for(var i=1, ln=table.rows.length; i<ln; i++){
-	    
-        var row = table.rows[i];
-        var firstCell = row.cells[0].textContent;
-        var secondCell = row.cells[1].textContent;
-        var thirdCell = row.cells[2].textContent;
-        var fourthCell = row.cells[3].textContent;
-        var fifthCell = row.cells[4].textContent;
-        
-		Arr.push([firstCell, secondCell, thirdCell, fourthCell, fifthCell, row]);  //temporary arrays
-    }
-    */
     
     for(var i=1, ln=table.rows.length; i<ln; i++){
 	    

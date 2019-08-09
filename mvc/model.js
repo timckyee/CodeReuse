@@ -14,23 +14,8 @@ function Tenant(inputValueArray,primaryKey) {
 		{ name: "field3", dbType: "int", htmlObjectId: "selectBuilding", htmlObjectType: "select" },
 		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input", htmlObjectType: "autocomplete" }
 	];
-		
-	var sortTableHtmlObjectId = "tableTenant";
-	
-	var sortTableColumns = "field1=1,field2=2,field3=3,field4=4";
-		
+			
 	phpFile = "grid_get_post.php";
-	
-	/*
-	htmlObjectFieldsSelect = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
-	databaseFieldsSelect = "fieldPrimaryKey,field1,field2,field3,field4";
-	
-	htmlObjectFieldsUpdate = "inputPrimaryKey,inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
-	databaseFieldsUpdate = "fieldPrimaryKey,field1,field2,field3,field4";
-	
-	htmlObjectFieldsInsert = "inputCalendar,inputCalendarTesting,selectBuilding,tenant_input";
-	databaseFieldsInsert = "field1,field2,field3,field4";
-	*/
 		
 	this.getFieldsInfo = function() {
 		
@@ -79,38 +64,14 @@ function Tenant(inputValueArray,primaryKey) {
 		
 		return fieldsValuesInsertArray;
 		
-	}	
-	
-	/*
-	this.createCommaListOfInputValuesUpdate = function() {
-	
-		return fieldPrimaryKey + "," + field1 + "," + field2 + "," + field3 + "," + field4;
-			
-	};	
-	
-	this.createCommaListOfInputValuesInsert = function() {
-	
-		return field1 + "," + field2 + "," + field3 + "," + field4;
-			
-	};
-	*/
+	}
 	
 	this.loadGridGetPost = function() {
 		
 		var tenantGrid = new TenantGrid();
-		var tenantGridColumnsInfo = tenantGrid.getGridColumnsInfo();
-			
-		var tenantGridRowOnClick = tenantGrid.rowOnClick;
 		
-		if(document.getElementById("selectBuilding").value != "")
-		{
-			grid("gridGetPost", phpFile, "gridtable", "fieldPrimaryKey", this.getFieldsInfo(), tenantGridColumnsInfo, sortTableHtmlObjectId, this.getSortFields(), "building", document.getElementById("selectBuilding").value, gridCallback, tenantGridRowOnClick);
-		}
-		else
-		{
-			gridHide("gridGetPost");
-		}
-		
+		tenantGrid.loadTenantGrid(this.getFieldsInfo());
+				
 	};
 		
 	this.tenantUpdate = function() {
