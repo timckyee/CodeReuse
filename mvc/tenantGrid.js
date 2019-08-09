@@ -16,12 +16,6 @@ function TenantGrid()
 		
 		return columns;
 	};
-	
-	this.getSortFields = function() {
-		
-		return sortTableColumns;
-		
-	};	
 		
 	this.loadTenantGrid = function(fieldsInfo) {
 	
