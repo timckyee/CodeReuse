@@ -26,7 +26,7 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 	
 }
 
-function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, callback)
+function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback)
 {		
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -34,7 +34,7 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsI
 			
 			var response = JSON.parse(this.responseText);
 			
-			callback(response, fieldsInfo, gridColumnsInfo);
+			callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs);
 		
 		}
 	}

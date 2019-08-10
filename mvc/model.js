@@ -15,11 +15,23 @@ function Tenant(inputValueArray,primaryKey) {
 		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input", htmlObjectType: "autocomplete" }
 	];
 	
+	var autocomplete_inputs = [
+	
+		{ htmlObjectId: "tenant_input", value: "field4" , display: "field4display" }	
+		
+	];
+	
 	var phpFileGridGetPost = "grid_get_post.php";
 		
 	this.getFieldsInfo = function() {
 		
 		return fields;
+	};
+	
+	this.getAutocompleteInputs = function() {
+	
+		return autocomplete_inputs;
+		
 	};
 	
 	this.getPhpFile = function() {

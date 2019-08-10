@@ -1,35 +1,4 @@
 
-window.addEventListener("load", function() {
-
-	monthsArray = Array();
-	
-	populateMonthsArray();
-
-	var divCalendarId = "calendarId";
-	
-	document.onclick = function(e) {
-
-		var calendarId = document.getElementById(divCalendarId);
-		
-		if(e.target.id == "" && e.target.id != "back" && e.target.id != "forward") {
-			calendarId.style.display = "none";
-		}
-		
-	};
-
-	var inputCalendar = document.getElementById('inputCalendar');
-	
-	var inputCalendarTesting = document.getElementById('inputCalendarTesting');
-	
-	inputCalendar.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendar', divCalendarId)});
-	
-	inputCalendar.placeholder = "dd-mmm-yy";
-	
-	inputCalendarTesting.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendarTesting', divCalendarId)});
-	
-	inputCalendarTesting.placeholder = "dd-mmm-yy";
-});
-
 function removeCalendarTable(divCalendarId) {
 	
 	document.getElementById(divCalendarId).innerHTML = "";

@@ -69,7 +69,7 @@ function gridCallback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo
 	
 }
 
-function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo)
+function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs)
 {		
 	
 	var record = response[0];
@@ -90,9 +90,16 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo)
 		{
 			if(fieldsInfo[i].htmlObjectType == "autocomplete")
 			{	
-				document.getElementById(fieldsInfo[i].htmlObjectId).value = record[fieldsInfo[i].name + "display"];
+				var autocompleteInputs;
 				
-				//var autocomplete_inputs = 
+				for(input=0; input<autocompleteInputs.length; input++)
+				{
+					if(fieldsInfo[i].name == autocompleteInputs[input].value)
+					{
+						document.getElementById(fieldsInfo[i].htmlObjectId).value = record[autocompleteInputs[input].display];
+						break;
+					}
+				}
 				
 				document.getElementById(fieldsInfo[i].htmlObjectId).setAttribute("rowAttributeValue", record[fieldsInfo[i].name]);
 				

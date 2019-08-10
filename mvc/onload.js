@@ -1,6 +1,4 @@
-window.addEventListener("load", function() {
-			
-	phpFile = "grid_get_post.php";		
+window.addEventListener("load", function() {	
 			
 	controller = new Controller();
 	

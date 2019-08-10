@@ -4,7 +4,10 @@ function TenantGridOnClickHandler(phpFile, row, fieldsInfo, gridColumnsInfo) {
 		
 		var rowAttributeValue = row.attributes["gridIdField"].value;
 
-		get_populateForm(phpFile, "populate", rowAttributeValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, get_populateForm_callback);
+		var tenantModel = new Tenant();
+		var autocompleteInputs = tenantModel.getAutocompleteInputs();
+
+		get_populateForm(phpFile, "populate", rowAttributeValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, get_populateForm_callback);
 	}
 	
 }
