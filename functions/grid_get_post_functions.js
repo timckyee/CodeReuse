@@ -34,7 +34,7 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsI
 			
 			var response = JSON.parse(this.responseText);
 			
-			callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs);
+			callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable);
 		
 		}
 	}
@@ -54,7 +54,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 		var htmlObjectField = fieldsInfo[update].htmlObjectId;
 		var htmlObjectFieldValue = htmlObjectFieldsValuesUpdate[update];
 		var databaseField = fieldsInfo[update].name;
-				
+		
 		if(htmlObjectFieldValue != arrayOldValuesTable[htmlObjectField])
 		{			
 			if(fieldsInfo[update].dbType == "date")
@@ -79,7 +79,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 			return;
 		}
 					
-		updateString = updateString.substr(0, updateString.length - 1)
+		updateString = updateString.substr(0, updateString.length - 1);
 						
 		window.postXmlHttpRequest.onreadystatechange = function() {
 			
@@ -100,7 +100,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 	}
 }
 
-function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey)
+function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey, arrayOldValuesTable)
 {		
 	if(!confirm('Confirm to create new record?'))
 	{

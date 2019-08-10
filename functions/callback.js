@@ -69,7 +69,7 @@ function gridCallback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo
 	
 }
 
-function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs)
+function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable)
 {		
 	
 	var record = response[0];

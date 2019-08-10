@@ -1,5 +1,5 @@
-window.addEventListener("load", function() {	
-			
+window.addEventListener("load", function() {
+	
 	controller = new Controller();
 	
 	arrayOldValuesTable = [];

@@ -6,7 +6,7 @@ function Tenant(inputValueArray,primaryKey) {
 	var field2;
 	var field3;
 	var field4;
-		
+	
 	var fields = [
 		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectId: "inputPrimaryKey", htmlObjectType: "primaryKey" },
 		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendar", htmlObjectType: "calendar" },
@@ -21,7 +21,7 @@ function Tenant(inputValueArray,primaryKey) {
 		
 	];
 	
-	var phpFileGridGetPost = "grid_get_post.php";
+	var phpFileGridGetPost = "php/grid_get_post.php";
 		
 	this.getFieldsInfo = function() {
 		
@@ -103,7 +103,7 @@ function Tenant(inputValueArray,primaryKey) {
 				
 		if(validateHtmlObjectFields(fields))
 		{
-			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey");
+			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", arrayOldValuesTable);
 		}	
 	
 	};
