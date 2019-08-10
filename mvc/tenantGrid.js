@@ -17,7 +17,7 @@ function TenantGrid()
 		return columns;
 	};
 		
-	this.loadTenantGrid = function(fieldsInfo) {
+	this.loadTenantGrid = function(phpFile, fieldsInfo) {
 	
 		if(document.getElementById("selectBuilding").value != "")
 		{
@@ -30,6 +30,6 @@ function TenantGrid()
 		
 	};
 	
-	this.rowOnClick = TenantGridOnClick;
+	this.rowOnClick = TenantGridOnClickHandler;
 	
 }

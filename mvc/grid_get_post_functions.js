@@ -1,92 +1,4 @@
 
-function gridCallback(response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick) {
-		
-	divTable.innerHTML = "";
-	
-	var tbl = document.createElement("table");
-	tbl.id = tableHtmlObjectId;		
-								
-	var tableHeaderRow = document.createElement("tr");
-	
-	var tableHeader;
-	var tableHeaderText;		
-	
-	for(i=0; i<gridColumnsInfo.length; i++)
-	{				
-		tableHeader = document.createElement("th");
-			
-		tableHeader.onclick = sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
-		
-		var columnName = gridColumnsInfo[i].colName;
-		
-		tableHeaderText = document.createTextNode(columnName);
-		tableHeader.appendChild(tableHeaderText);
-		tableHeaderRow.appendChild(tableHeader);				
-	}
-	
-	tbl.appendChild(tableHeaderRow);
-	
-	response.forEach(function(item) {
-	
-		var row = document.createElement("tr");
-		
-		row.className = "tableHover";
-		
-		row.onclick = tenantGridRowOnClick(row, fieldsInfo, gridColumnsInfo);
-		
-		var cell;
-		var cellText;
-		
-		for(i=0; i<gridColumnsInfo.length; i++)
-		{	
-			cell = document.createElement("td");
-			
-			var colType = gridColumnsInfo[i].colType;
-			
-			if(colType == "date")
-			{	
-				var dateFromDatabase = item[gridColumnsInfo[i].id];
-				
-				var dateFormat = convertDateFromDatabase(dateFromDatabase);
-				
-				cellText = document.createTextNode(dateFormat);
-			}
-			else
-			{
-				cellText = document.createTextNode(item[gridColumnsInfo[i].id]);
-			}
-			
-			cell.appendChild(cellText);
-			row.appendChild(cell);				
-			row.setAttribute("gridIdField", item[gridIdField]);		
-		}
-		
-		tbl.appendChild(row);
-		
-	});
-	
-	divTable.appendChild(tbl);
-	
-}
-
-function TenantGridOnClick(row, fieldsInfo, gridColumnsInfo) {
-	
-	return function() {
-		
-		var rowAttributeValue = row.attributes["gridIdField"].value;			
-							
-		get_populateForm(phpFile, "populate", rowAttributeValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, get_populateForm_callback);
-	}
-	
-}
-
-function gridHide(divElement)
-{
-	var divTable = document.getElementById(divElement);
-	
-	divTable.innerHTML = "";
-}
-
 function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick) {
 	
 	var divTable = document.getElementById(divElement);
@@ -97,7 +9,7 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 			
 			var response = JSON.parse(this.responseText);
 						
-			callback(response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick);
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick);
 					
 		}
 	};
@@ -112,51 +24,6 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();
 	
-}
-
-function sortTableColumnOnclickHandler(sortTableHtmlObjectId, gridColumnsInfo, column) {
-		
-	return function() { 
-
-		sortTable(sortTableHtmlObjectId, column);
-			
-	};
-}
-
-function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo)
-{		
-	var record = response[0];
-		
-	for(i=0; i<fieldsInfo.length; i++)
-	{		
-		if(fieldsInfo[i].dbType == "date")
-		{					
-			var dateFromDatabase = record[fieldsInfo[i].name];
-						
-			var dateFormat = convertDateFromDatabase(dateFromDatabase);
-			
-			document.getElementById(fieldsInfo[i].htmlObjectId).value = dateFormat;
-			
-			arrayOldValuesTable[fieldsInfo[i].htmlObjectId] = dateFormat;
-		}
-		else
-		{
-			if(fieldsInfo[i].htmlObjectType == "autocomplete")
-			{	
-				document.getElementById(fieldsInfo[i].htmlObjectId).value = record[fieldsInfo[i].name + "display"];
-				
-				document.getElementById(fieldsInfo[i].htmlObjectId).setAttribute("rowAttributeValue", record[fieldsInfo[i].name]);
-				
-				arrayOldValuesTable[fieldsInfo[i].htmlObjectId] = record[fieldsInfo[i].name];
-			}
-			else
-			{	
-				document.getElementById(fieldsInfo[i].htmlObjectId).value = record[fieldsInfo[i].name];
-				
-				arrayOldValuesTable[fieldsInfo[i].htmlObjectId] = record[fieldsInfo[i].name];
-			}
-		}
-	}
 }
 
 function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, arrayOldValuesTable, callback)
@@ -305,76 +172,4 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 	window.postXmlHttpRequest.open("POST", phpFile, true);
 	window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	window.postXmlHttpRequest.send(formVariables);
-}
-
-function validateHtmlObjectFields(fieldsInfo)
-{
-	for(validate=0; validate<fieldsInfo.length; validate++)
-	{
-		if(fieldsInfo[validate].htmlObjectType != "primaryKey")
-		{
-			if(document.getElementById(fieldsInfo[validate].htmlObjectId).value == "")
-			{
-				alert(fieldsInfo[validate].htmlObjectId + ' ' + 'cannot be empty');
-				return false;
-			}
-		}
-	}
-	
-	return true;
-}
-
-function convertDateFromDatabase(date)
-{	
-	var dateFromDatabase = date;
-	
-	var year = dateFromDatabase.substring(0,4);
-	var month = dateFromDatabase.substring(5,7);
-	var day = dateFromDatabase.substring(8,10);
-	
-	var dateFormat = day + "-" + dateMonthNumberToStringConversion(month) + "-" + year;
-	
-	return dateFormat;
-
-}
-
-function convertDateFromSystem(date)
-{	
-	var dateFromSystem = date;
-	
-	var day = dateFromSystem.substring(0,2);
-	var month = dateFromSystem.substring(3,6);
-	var year = dateFromSystem.substring(7,11);
-	
-	var dateFormat = year + "-" + dateMonthStringToNumberConversion(month) + "-" + day;
-	
-	return dateFormat;
-
-}
-
-function dateMonthStringToNumberConversion(monthString)
-{
-	var monthArray = [];
-	
-	monthArray["jan"] = "01";
-	monthArray["feb"] = "02";
-	monthArray["mar"] = "03";
-	monthArray["apr"] = "04";
-	monthArray["may"] = "05";
-	monthArray["jun"] = "06";
-	monthArray["jul"] = "07";
-	monthArray["aug"] = "08";
-	monthArray["sep"] = "09";
-	monthArray["oct"] = "10";
-	monthArray["nov"] = "11";
-	monthArray["dec"] = "12";
-	
-	return monthArray[monthString];
-}
-
-function dateMonthNumberToStringConversion(monthNumber)
-{
-	var monthArray = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-	
-	return monthArray[parseInt(monthNumber) - 1];
 }

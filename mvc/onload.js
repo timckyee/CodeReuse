@@ -1,5 +1,7 @@
 window.addEventListener("load", function() {
 			
+	phpFile = "grid_get_post.php";		
+			
 	controller = new Controller();
 	
 	arrayOldValuesTable = [];
@@ -22,6 +24,9 @@ function init_gridGetPost_xmlHttpRequests() {
 function init_autocomplete_inputs() {
 	
 	window.autocompleteXmlHttpRequest = new XMLHttpRequest();
+	
+	var tenantModel = new Tenant();
+	var phpFile = tenantModel.getPhpFile();
 	
 	var tenant_input = document.getElementById("tenant_input");
 	

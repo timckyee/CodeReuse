@@ -7,24 +7,24 @@ function Tenant(inputValueArray,primaryKey) {
 	var field3;
 	var field4;
 		
-	fields = [
+	var fields = [
 		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectId: "inputPrimaryKey", htmlObjectType: "primaryKey" },
 		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendar", htmlObjectType: "calendar" },
 		{ name: "field2", dbType: "date", htmlObjectId: "inputCalendarTesting", htmlObjectType: "calendar" },
 		{ name: "field3", dbType: "int", htmlObjectId: "selectBuilding", htmlObjectType: "select" },
 		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input", htmlObjectType: "autocomplete" }
 	];
-			
-	phpFile = "grid_get_post.php";
+	
+	var phpFileGridGetPost = "grid_get_post.php";
 		
 	this.getFieldsInfo = function() {
 		
 		return fields;
 	};
 	
-	this.getSortFields = function() {
+	this.getPhpFile = function() {
 		
-		return sortTableColumns;
+		return phpFileGridGetPost;	
 		
 	};
 	
@@ -70,7 +70,7 @@ function Tenant(inputValueArray,primaryKey) {
 		
 		var tenantGrid = new TenantGrid();
 		
-		tenantGrid.loadTenantGrid(this.getFieldsInfo());
+		tenantGrid.loadTenantGrid(this.getPhpFile(),this.getFieldsInfo());
 				
 	};
 		
@@ -80,7 +80,7 @@ function Tenant(inputValueArray,primaryKey) {
 				
 		if(validateHtmlObjectFields(fields))
 		{							
-			post_updateForm(phpFile, "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable);
+			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable);
 		}
 		
 	};
@@ -91,7 +91,7 @@ function Tenant(inputValueArray,primaryKey) {
 				
 		if(validateHtmlObjectFields(fields))
 		{
-			post_insertRecordForm(phpFile, "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey");
+			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey");
 		}	
 	
 	};

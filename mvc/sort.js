@@ -5,22 +5,13 @@ function sortTable(tblId, column){
     
     var Arr = [];
     
+	var header = table.rows[0];
+	    
     for(var i=1, ln=table.rows.length; i<ln; i++){
 	    
         var row = table.rows[i];
-        
-        var pushValues = "";
-        
-        for(cell=0; cell<row.cells.length; cell++)
-        {
-	        pushValues = pushValues + "\"" + row.cells[cell].textContent + "\",";
-        }
-        
-		pushValues = pushValues.substr(0, pushValues.length - 1);
-				
-		var pushValuesRemoveQuotes = pushValues.slice(1, -1);
 		
-        Arr.push([pushValuesRemoveQuotes, row]);
+        Arr.push([row]);
         
     }
     
@@ -29,9 +20,9 @@ function sortTable(tblId, column){
 		if(b == null)
 			return;
 		
-		var x = a[0].split(",")[column];
-		var y = b[0].split(",")[column];
-				
+		var x = a[0].cells[column].innerHTML;
+		var y = b[0].cells[column].innerHTML;
+						
 		if (x < y) {return -1;}
 		if (x > y) {return 1;}
 		return 0;
@@ -39,9 +30,12 @@ function sortTable(tblId, column){
 	}
 	
 	Arr.sort(sortingFunctionColumn);
-	
+
+	table.innerHTML = "";
+	table.appendChild(header);
+
     for(var i=0, ln=Arr.length; i<ln; i++){
-		table.appendChild(Arr[i][1]);
+		table.appendChild(Arr[i][0]);
     }
     
     Arr = null;
