@@ -27,24 +27,25 @@
 			<option value="" selected>None</option>
 			<option value="1">building</option>
 			<option value="2">building2</option>
-		</select>		
+		</select>
 		<br>
 		<span>input</span>
-	    <input type="text" name="tenant" id="tenant_input">
+	    <input type="text" name="tenant" id="tenant_input" style="width: 200">
 		<div id="tenantSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div>
 	    <br>		
 		<span>input date</span>
-		<input type="text" id="inputCalendar" style="position: absolute; z-index: 1; background-color: white" />
+		<input type="text" id="inputCalendar" style="position: absolute; z-index: 1; background-color: white; width: 142" />
 		<br>
 		<span>input date</span>
-		<input type="text" id="inputCalendarTesting" style="position: absolute; z-index: 1; background-color: white" />
+		<input type="text" id="inputCalendarTesting" style="position: absolute; z-index: 1; background-color: white; width: 142" />
 		<div id="calendarId" style="position: absolute; display: none; z-index: 2; background-color: white"></div>
 		<br>
 		<br>
 		<div id="gridGetPost">
 		</div>
-		
-		<input type="submit" onclick="controller.tenantSave()" />
+		<br>
+		<input type="submit" value="Save" onclick="controller.tenantSave()" />
+		<input type="submit" value="New" onclick="controller.resetTenantFields()" />
 		
 	</body>	
 	
