@@ -89,6 +89,10 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 				{					
 					arrayOldValuesTable[fieldsInfo[update].htmlObjectId] = htmlObjectFieldsValuesUpdate[update];
 				}
+				
+				var tenantModel = new Tenant();
+				
+				tenantModel.loadGridGetPost();
 			}
 		}
 	
@@ -163,6 +167,10 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 				if(fieldsInfo[insert].htmlObjectType != "primaryKey")				
 					arrayOldValuesTable[fieldsInfo[insert].htmlObjectId] = htmlObjectFieldsValuesInsert[insert];
 			}
+			
+			var tenantModel = new Tenant();
+			
+			tenantModel.loadGridGetPost();
 
 		}
 	}	

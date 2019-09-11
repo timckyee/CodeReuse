@@ -35,16 +35,16 @@ function Controller() {
 		if(saveType == "update")
 		{
 			tenantModel.setFieldValuesFromInputs(TenantValues, inputPrimaryKey);
-			tenantModel.tenantUpdate();	
+			tenantModel.tenantUpdate();
 		}
 		else
 		if(saveType == "insert")
 		{
 			tenantModel.setFieldValuesFromInputs(TenantValues, "");
-			tenantModel.tenantInsert();	
+			tenantModel.tenantInsert();
 		}
-				
-		this.refreshGridGetPost();
+		
+		//this.refreshGridGetPost();
 	};
 	
 	this.resetBuildingSelectField = function() {
@@ -69,7 +69,8 @@ function Controller() {
 		}
 		
 	};
-		
+	
+	/*
 	this.loadGridGetPost = function() {
 		
 		var tenantModel = new Tenant();
@@ -77,9 +78,10 @@ function Controller() {
 		tenantModel.loadGridGetPost();
 			
 	};
-		
+	*/
+	
 	this.refreshGridGetPost = function() {
-				
+		
 		var tenantModel = new Tenant();
 		
 		tenantModel.loadGridGetPost();

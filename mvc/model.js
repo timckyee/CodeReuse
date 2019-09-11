@@ -84,7 +84,7 @@ function Tenant(inputValueArray,primaryKey) {
 		var tenantGrid = new TenantGrid();
 		
 		tenantGrid.loadTenantGrid(this.getPhpFile(),this.getFieldsInfo());
-				
+		
 	};
 		
 	this.tenantUpdate = function() {
@@ -92,7 +92,7 @@ function Tenant(inputValueArray,primaryKey) {
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();
 		
 		if(validateHtmlObjectFields(fields))
-		{							
+		{						
 			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable);
 		}
 		

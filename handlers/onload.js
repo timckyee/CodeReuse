@@ -8,7 +8,7 @@ window.addEventListener("load", function() {
 	
 	init_autocomplete_inputs();
 	
-	init_calendar_inputs();	
+	init_calendar_inputs();
 });
 
 function init_gridGetPost_xmlHttpRequests() {
