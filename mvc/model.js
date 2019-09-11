@@ -11,13 +11,14 @@ function Tenant(inputValueArray,primaryKey) {
 		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectId: "inputPrimaryKey", htmlObjectType: "primaryKey" },
 		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendar", htmlObjectType: "calendar" },
 		{ name: "field2", dbType: "date", htmlObjectId: "inputCalendarTesting", htmlObjectType: "calendar" },
-		{ name: "field3", dbType: "int", htmlObjectId: "selectBuilding", htmlObjectType: "select" },
+		{ name: "field3", dbType: "int", htmlObjectId: "building_input", htmlObjectType: "autocomplete" },
 		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input", htmlObjectType: "autocomplete" }
 	];
 	
 	var autocomplete_inputs = [
 	
-		{ htmlObjectId: "tenant_input", value: "field4" , display: "field4display" }	
+		{ htmlObjectId: "building_input", value: "field3" , display: "field3display" },
+		{ htmlObjectId: "tenant_input", value: "field4" , display: "field4display" }
 		
 	];
 	
@@ -46,12 +47,12 @@ function Tenant(inputValueArray,primaryKey) {
 		
 		field1 = inputValueArray["inputCalendar"];
 		field2 = inputValueArray["inputCalendarTesting"];
-		field3 = inputValueArray["selectBuilding"];
+		field3 = inputValueArray["building_input"];
 		field4 = inputValueArray["tenant_input"];
 		
 	};
 	
-	this.fieldsValuesUpate = function() {
+	this.fieldsValuesUpdate = function() {
 		
 		var fieldsValuesUpdateArray = [];
 		
@@ -88,8 +89,8 @@ function Tenant(inputValueArray,primaryKey) {
 		
 	this.tenantUpdate = function() {
 			
-		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpate();
-				
+		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();
+		
 		if(validateHtmlObjectFields(fields))
 		{							
 			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable);

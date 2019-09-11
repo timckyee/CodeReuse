@@ -26,9 +26,16 @@ function init_autocomplete_inputs() {
 	var tenantModel = new Tenant();
 	var phpFile = tenantModel.getPhpFile();
 	
+	var building_input = document.getElementById("building_input");
+		
+	building_input.addEventListener("keyup", function(event){autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList")});
+	
+	building_input.addEventListener("focusout", function() { focusOutHide ("buildingSearchList"); });		
+	
+	
 	var tenant_input = document.getElementById("tenant_input");
 	
-	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("selectBuilding").value, "tenant_input", "tenantSearchList")});
+	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList")});
 	
 	tenant_input.addEventListener("focusout", function() { focusOutHide ("tenantSearchList"); });	
 	

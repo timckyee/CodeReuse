@@ -101,7 +101,7 @@ function resetInputFields(input)
 }
 
 function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {
-			
+				
 	var input = event.target;
 	
 	var searchList = document.getElementById(divElement);

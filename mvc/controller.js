@@ -11,14 +11,14 @@ function Controller() {
 		var inputCalendarTesting = document.getElementById("inputCalendarTesting").value;
 		var selectBuilding = document.getElementById("selectBuilding").value;
 		
-		//var building_input = document.getElementById("building_input").getAttribute("rowAttributeValue");
+		var building_input = document.getElementById("building_input").getAttribute("rowAttributeValue");
 		var tenant_input = document.getElementById("tenant_input").getAttribute("rowAttributeValue");
 		
 		var TenantValues = new Array();
 		
 		TenantValues["inputCalendar"] = inputCalendar;
 		TenantValues["inputCalendarTesting"] = inputCalendarTesting;
-		TenantValues["selectBuilding"] = selectBuilding;
+		TenantValues["building_input"] = building_input;
 		TenantValues["tenant_input"] = tenant_input;
 		
 		if(inputPrimaryKey != "")
@@ -39,12 +39,22 @@ function Controller() {
 		}
 		else
 		if(saveType == "insert")
-		{	
+		{
 			tenantModel.setFieldValuesFromInputs(TenantValues, "");
 			tenantModel.tenantInsert();	
 		}
 				
 		this.refreshGridGetPost();
+	};
+	
+	this.resetBuildingSelectField = function() {
+		
+		var selectFieldHtmlObjectId = "selectBuilding";
+		var gridGetPostDivElement = "gridGetPost";
+		
+		document.getElementById(selectFieldHtmlObjectId).selectedIndex = 0;
+		gridHide(gridGetPostDivElement);
+		
 	};
 	
 	this.resetTenantFields = function() {
@@ -55,11 +65,10 @@ function Controller() {
 		
 		for(i=0; i<fieldsInfo.length; i++)
 		{
-			if(fieldsInfo[i].htmlObjectId != "selectBuilding")
-				document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
+			document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
 		}
 		
-	}
+	};
 		
 	this.loadGridGetPost = function() {
 		
