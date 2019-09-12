@@ -44,7 +44,6 @@ function Controller() {
 			tenantModel.tenantInsert();
 		}
 		
-		//this.refreshGridGetPost();
 	};
 	
 	this.resetBuildingSelectField = function() {
@@ -70,21 +69,11 @@ function Controller() {
 		
 	};
 	
-	/*
-	this.loadGridGetPost = function() {
+	this.refreshSelectTenantGrid = function() {
 		
 		var tenantModel = new Tenant();
 		
-		tenantModel.loadGridGetPost();
-			
-	};
-	*/
-	
-	this.refreshGridGetPost = function() {
-		
-		var tenantModel = new Tenant();
-		
-		tenantModel.loadGridGetPost();
+		tenantModel.refreshSelectTenantGrid();
 			
 	};
 }

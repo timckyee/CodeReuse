@@ -74,7 +74,7 @@ function refreshGridCallback()
 	
 	var tenantModel = new Tenant();
 	
-	tenantModel.loadGridGetPost();	
+	tenantModel.refreshTenantGrid();	
 	
 }
 

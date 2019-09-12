@@ -18,18 +18,24 @@ function TenantGrid()
 		return columns;
 	};
 		
-	this.loadTenantGrid = function(phpFile, fieldsInfo) {
+	this.refreshTenantGrid = function(phpFile, fieldsInfo) {
 		
-		if(document.getElementById("selectBuilding").value != "")
-		{
-			grid(gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), tableHtmlObjectId, "building", document.getElementById("selectBuilding").value, gridCallback, this.rowOnClick);
-		}
-		else if(document.getElementById("building_input").getAttribute("rowAttributeValue") != "")
-		{
-			grid(gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), tableHtmlObjectId, "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), gridCallback, this.rowOnClick);
-		}
+		grid(gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), tableHtmlObjectId, "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), gridCallback, this.rowOnClick);
 		
 	};
+	
+	this.refreshSelectTenantGrid = function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
+		
+		if(selectBuildingHtmlObjectValue != "")
+		{
+			grid(gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), tableHtmlObjectId, "building", selectBuildingHtmlObjectValue, gridCallback, this.rowOnClick);
+		}
+		else
+		{
+			gridHide(gridGetPostDivElement);
+		}
+		
+	};	
 	
 	this.rowOnClick = TenantGridOnClickHandler;
 	

@@ -79,13 +79,21 @@ function Tenant(inputValueArray,primaryKey) {
 		
 	}
 	
-	this.loadGridGetPost = function() {
+	this.refreshTenantGrid = function() {
 		
 		var tenantGrid = new TenantGrid();
 		
-		tenantGrid.loadTenantGrid(this.getPhpFile(),this.getFieldsInfo());
+		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo());
 		
 	};
+		
+	this.refreshSelectTenantGrid = function() {
+		
+		var tenantGrid = new TenantGrid();
+		
+		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuilding").value);
+		
+	};		
 		
 	this.tenantUpdate = function() {
 			
