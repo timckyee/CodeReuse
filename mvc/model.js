@@ -93,7 +93,7 @@ function Tenant(inputValueArray,primaryKey) {
 		
 		if(validateHtmlObjectFields(fields))
 		{						
-			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable);
+			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable, refreshGridCallback);
 		}
 		
 	};
@@ -104,7 +104,7 @@ function Tenant(inputValueArray,primaryKey) {
 				
 		if(validateHtmlObjectFields(fields))
 		{
-			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", arrayOldValuesTable);
+			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", arrayOldValuesTable, refreshGridCallback);
 		}	
 	
 	};

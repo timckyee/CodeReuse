@@ -45,7 +45,7 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsI
 	window.getXmlHttpRequest.send();
 }
 
-function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable)
+function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback)
 {				
 	var updateString = "";
 	
@@ -90,9 +90,9 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 					arrayOldValuesTable[fieldsInfo[update].htmlObjectId] = htmlObjectFieldsValuesUpdate[update];
 				}
 				
-				var tenantModel = new Tenant();
+				if(refreshGridCallback != undefined)
+					refreshGridCallback();
 				
-				tenantModel.loadGridGetPost();
 			}
 		}
 	
@@ -104,7 +104,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 	}
 }
 
-function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey, arrayOldValuesTable)
+function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey, arrayOldValuesTable, refreshGridCallback)
 {		
 	if(!confirm('Confirm to create new record?'))
 	{
@@ -168,9 +168,8 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 					arrayOldValuesTable[fieldsInfo[insert].htmlObjectId] = htmlObjectFieldsValuesInsert[insert];
 			}
 			
-			var tenantModel = new Tenant();
-			
-			tenantModel.loadGridGetPost();
+			if(refreshGridCallback != undefined)
+				refreshGridCallback();
 
 		}
 	}	

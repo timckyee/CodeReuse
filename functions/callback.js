@@ -69,6 +69,15 @@ function gridCallback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo
 	
 }
 
+function refreshGridCallback()
+{
+	
+	var tenantModel = new Tenant();
+	
+	tenantModel.loadGridGetPost();	
+	
+}
+
 function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable)
 {		
 	var record = response[0];
