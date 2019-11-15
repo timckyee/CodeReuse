@@ -1,5 +1,5 @@
 
-function Tenant(inputValueArray,primaryKey) {
+function Tenant() {
 		
 	var fieldPrimaryKey;
 	var field1;
