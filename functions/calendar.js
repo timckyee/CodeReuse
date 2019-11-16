@@ -5,6 +5,16 @@ function removeCalendarTable(divCalendarId) {
 
 };
 
+function documentOnclick(e, divCalendarId) {
+
+	var calendarId = document.getElementById(divCalendarId);
+	
+	if(e.target.id == "" && e.target.id != "back" && e.target.id != "forward") {
+		calendarId.style.display = "none";
+	}
+
+};
+
 function positionCalendar(inputCalendarId, divCalendarId) {
 	
 	var positionInputCalendar = document.getElementById(inputCalendarId);
@@ -184,19 +194,15 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 }
 
 function showHideCalendar(event, showOrHide, inputCalendarId, divCalendarId) {
-
+	
+	var calendarId = document.getElementById(divCalendarId);	
+	
 	if(showOrHide == "show")
 	{		
-		var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
-	
-		inputCalendarObject = document.getElementById(inputCalendarId);
-	
-		if(inputCalendarObject.value != "")
+		if(validateDate(inputCalendarId) == false)
 		{
-			if(!inputCalendarObject.value.match(regularExpressionValidation))
-			{
-				return;
-			}
+			calendarId.style.display = "none";
+			return;
 		}
 	}
 
@@ -231,6 +237,42 @@ function showHideCalendar(event, showOrHide, inputCalendarId, divCalendarId) {
 		calendar(calendarDate.getMonth(), calendarDate.getFullYear(), inputCalendarId, divCalendarId);
 	}
 
+}
+
+function validateDate(inputCalendarId)
+{
+	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
+
+	inputCalendarObject = document.getElementById(inputCalendarId);
+
+	if(inputCalendarObject.value != "")
+	{
+		if(!inputCalendarObject.value.match(regularExpressionValidation))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+}
+
+function validateDateFromString(dateString)
+{
+	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
+
+	if(dateString != "")
+	{
+		if(!dateString.match(regularExpressionValidation))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 }
 
 function getInputCalendarValue(dayMonthOrYear, inputCalendarId) {

@@ -61,7 +61,13 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 			{				
 				var dateFromSystem = htmlObjectFieldValue;
 												
-				var dateFormat = convertDateFromSystem(dateFromSystem);				
+				var dateFormat = convertDateFromSystem(dateFromSystem);
+				
+				if(validateDateFromString(dateFormat) == false)
+				{
+					alert("input format has to be dd-mmm-yyyy");
+					return;
+				}
 				
 				updateString = updateString + databaseField + "='" + dateFormat + "',";
 			}
@@ -138,6 +144,12 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 				var dateFromSystem = htmlObjectValueInsert;
 												
 				var dateFormat = convertDateFromSystem(dateFromSystem);
+				
+				if(validateDateFromString(dateFormat) == false)
+				{
+					alert("input format has to be dd-mmm-yyyy");
+					return;
+				}				
 				
 				insertString = insertString + "'" + dateFormat + "',";
 			}

@@ -51,14 +51,10 @@ function init_calendar_inputs() {
 	var divCalendarId = "calendarId";
 	
 	document.onclick = function(e) {
-
-		var calendarId = document.getElementById(divCalendarId);
 		
-		if(e.target.id == "" && e.target.id != "back" && e.target.id != "forward") {
-			calendarId.style.display = "none";
-		}
+		documentOnclick(e, divCalendarId);
 		
-	};
+	}
 
 	var inputCalendar = document.getElementById('inputCalendar');
 	
@@ -66,10 +62,31 @@ function init_calendar_inputs() {
 	
 	inputCalendar.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendar', divCalendarId)});
 	
-	inputCalendar.placeholder = "dd-mmm-yy";
+	inputCalendar.addEventListener("blur", function(event){
+		
+			if(validateDate(this.id) == false)
+			{
+				alert("input format has to be dd-mmm-yyyy");
+			}
+		}
+		
+	);
+	
+	inputCalendar.placeholder = "dd-mmm-yyyy";
+	
 	
 	inputCalendarTesting.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendarTesting', divCalendarId)});
 	
-	inputCalendarTesting.placeholder = "dd-mmm-yy";
+	inputCalendarTesting.addEventListener("blur", function(event){
+		
+			if(validateDate(this.id) == false)
+			{
+				alert("input format has to be dd-mmm-yyyy");
+			}
+		}
+		
+	);	
+	
+	inputCalendarTesting.placeholder = "dd-mmm-yyyy";
 	
 }
