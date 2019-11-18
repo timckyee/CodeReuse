@@ -97,9 +97,7 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autoco
 		else
 		{
 			if(fieldsInfo[i].htmlObjectType == "autocomplete")
-			{	
-				var autocompleteInputs;
-				
+			{
 				for(input=0; input<autocompleteInputs.length; input++)
 				{
 					if(fieldsInfo[i].name == autocompleteInputs[input].value)
