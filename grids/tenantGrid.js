@@ -1,10 +1,10 @@
 
-function TenantGrid()
-{	
-	var gridGetPostDivElement = "gridGetPost";
-	var tableHtmlObjectId = "tableTenant";
+var TenantGrid = function() {
+	
+	this.gridGetPostDivElement = "gridGetPost";
+	this.tableHtmlObjectId = "tableTenant";
 		
-	columns = [
+	this.columns = [
 		
 		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int" },
 		{ colName: "field1", id: "field1", colType: "date" },
@@ -13,30 +13,34 @@ function TenantGrid()
 		{ colName: "Tenant Name", id: "tenantName", colType: "string" }
 	];
 	
-	this.getGridColumnsInfo = function() {
-		
-		return columns;
-	};
-		
-	this.refreshTenantGrid = function(phpFile, fieldsInfo) {
-		
-		grid(gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), tableHtmlObjectId, "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), gridCallback, this.rowOnClick);
-		
-	};
+	this.rowOnClick =  TenantGridOnClickHandler;
+
+};
+
+TenantGrid.prototype = {
 	
-	this.refreshSelectTenantGrid = function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
+	getGridColumnsInfo: function() {
+		
+		return this.columns;
+	},
+		
+	refreshTenantGrid: function(phpFile, fieldsInfo) {
+		
+		grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), gridCallback, this.rowOnClick);
+		
+	},
+	
+	refreshSelectTenantGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
 		
 		if(selectBuildingHtmlObjectValue != "")
 		{
-			grid(gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), tableHtmlObjectId, "building", selectBuildingHtmlObjectValue, gridCallback, this.rowOnClick);
+			grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", selectBuildingHtmlObjectValue, gridCallback, this.rowOnClick);
 		}
 		else
 		{
-			gridHide(gridGetPostDivElement);
+			gridHide(this.gridGetPostDivElement);
 		}
 		
-	};	
+	}
 	
-	this.rowOnClick = TenantGridOnClickHandler;
-	
-}
+};

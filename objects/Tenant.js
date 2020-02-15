@@ -1,13 +1,13 @@
 
-function Tenant() {
+var Tenant = function() {
 		
-	var fieldPrimaryKey;
-	var field1;
-	var field2;
-	var field3;
-	var field4;
+	this.fieldPrimaryKey;
+	this.field1;
+	this.field2;
+	this.field3;
+	this.field4;
 	
-	var fields = [
+	this.fields = [
 		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectId: "inputPrimaryKey", htmlObjectType: "primaryKey" },
 		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendar", htmlObjectType: "calendar" },
 		{ name: "field2", dbType: "date", htmlObjectId: "inputCalendarTesting", htmlObjectType: "calendar" },
@@ -15,33 +15,37 @@ function Tenant() {
 		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input", htmlObjectType: "autocomplete" }
 	];
 	
-	var autocomplete_inputs = [
+	this.autocomplete_inputs = [
 	
 		{ htmlObjectId: "building_input", value: "field3" , display: "field3display" },
 		{ htmlObjectId: "tenant_input", value: "field4" , display: "field4display" }
 		
 	];
 	
-	var phpFileGridGetPost = "php/grid_get_post.php";
-		
-	this.getFieldsInfo = function() {
-		
-		return fields;
-	};
+	this.phpFileGridGetPost = "php/grid_get_post.php";
 	
-	this.getAutocompleteInputs = function() {
+};
+
+Tenant.prototype = {
 	
-		return autocomplete_inputs;
+	getFieldsInfo: function() {
 		
-	};
+		return this.fields;
+	},
 	
-	this.getPhpFile = function() {
-		
-		return phpFileGridGetPost;	
-		
-	};
+	getAutocompleteInputs: function() {
 	
-	this.setFieldValuesFromInputs = function(inputValueArray, primaryKey) {
+		return this.autocomplete_inputs;
+		
+	},
+	
+	getPhpFile: function() {
+		
+		return this.phpFileGridGetPost;	
+		
+	},
+	
+	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
 		fieldPrimaryKey = primaryKey;
 		
@@ -50,9 +54,9 @@ function Tenant() {
 		field3 = inputValueArray["building_input"];
 		field4 = inputValueArray["tenant_input"];
 		
-	};
+	},
 	
-	this.fieldsValuesUpdate = function() {
+	fieldsValuesUpdate: function() {
 		
 		var fieldsValuesUpdateArray = [];
 		
@@ -64,9 +68,9 @@ function Tenant() {
 		
 		return fieldsValuesUpdateArray;
 		
-	}
+	},
 	
-	this.fieldsValuesInsert = function() {
+	fieldsValuesInsert: function() {
 		
 		var fieldsValuesInsertArray = [];
 		
@@ -77,43 +81,43 @@ function Tenant() {
 		
 		return fieldsValuesInsertArray;
 		
-	}
+	},
 	
-	this.refreshTenantGrid = function() {
+	refreshTenantGrid: function() {
 		
 		var tenantGrid = new TenantGrid();
 		
 		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo());
 		
-	};
-		
-	this.refreshSelectTenantGrid = function() {
+	},
+	
+	refreshSelectTenantGrid: function() {
 		
 		var tenantGrid = new TenantGrid();
 		
 		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuilding").value);
 		
-	};		
+	},
 		
-	this.tenantUpdate = function() {
+	tenantUpdate: function() {
 			
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();
 		
-		if(validateHtmlObjectFields(fields))
-		{						
+		if(validateHtmlObjectFields(this.fields))
+		{	
 			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable, refreshGridCallback);
 		}
 		
-	};
+	},
 	
-	this.tenantInsert = function() {
+	tenantInsert: function() {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();
 				
-		if(validateHtmlObjectFields(fields))
+		if(validateHtmlObjectFields(this.fields))
 		{
 			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", arrayOldValuesTable, refreshGridCallback);
 		}	
 	
-	};
+	}
 }

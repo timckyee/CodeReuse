@@ -58,12 +58,12 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 		if(htmlObjectFieldValue != arrayOldValuesTable[htmlObjectField])
 		{			
 			if(fieldsInfo[update].dbType == "date")
-			{				
+			{	
 				var dateFromSystem = htmlObjectFieldValue;
 												
 				var dateFormat = convertDateFromSystem(dateFromSystem);
 				
-				if(validateDateFromString(dateFormat) == false)
+				if(validateDateFromString(dateFromSystem) == false)
 				{
 					alert("input format has to be dd-mmm-yyyy");
 					return;
@@ -145,7 +145,7 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 												
 				var dateFormat = convertDateFromSystem(dateFromSystem);
 				
-				if(validateDateFromString(dateFormat) == false)
+				if(validateDateFromString(dateFromSystem) == false)
 				{
 					alert("input format has to be dd-mmm-yyyy");
 					return;

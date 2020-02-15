@@ -1,3 +1,4 @@
+
 window.addEventListener("load", function() {
 	
 	controller = new Controller();
@@ -9,13 +10,14 @@ window.addEventListener("load", function() {
 	init_autocomplete_inputs();
 	
 	init_calendar_inputs();
+
 });
 
 function init_gridGetPost_xmlHttpRequests() {
 	
 	window.gridXmlHttpRequest = new XMLHttpRequest();
 	window.getXmlHttpRequest = new XMLHttpRequest();
-	window.postXmlHttpRequest = new XMLHttpRequest();		
+	window.postXmlHttpRequest = new XMLHttpRequest();
 	
 }
 
