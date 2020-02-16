@@ -3,8 +3,6 @@ window.addEventListener("load", function() {
 	
 	controller = new Controller();
 	
-	arrayOldValuesTable = [];
-	
 	init_gridGetPost_xmlHttpRequests();
 	
 	init_autocomplete_inputs();

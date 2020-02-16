@@ -79,9 +79,9 @@ function refreshGridCallback()
 }
 
 function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable)
-{		
+{	
 	var record = response[0];
-		
+			
 	for(i=0; i<fieldsInfo.length; i++)
 	{		
 		if(fieldsInfo[i].dbType == "date")
@@ -92,7 +92,7 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autoco
 			
 			document.getElementById(fieldsInfo[i].htmlObjectId).value = dateFormat;
 			
-			arrayOldValuesTable[fieldsInfo[i].htmlObjectId] = dateFormat;
+			arrayOldValuesTable[fieldsInfo[i].htmlObjectId] = dateFormat;	
 		}
 		else
 		{
@@ -119,4 +119,8 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autoco
 			}
 		}
 	}
+	
+	var tenantModel = new Tenant();
+	tenantModel.arrayOldValuesTable = arrayOldValuesTable;
+	
 }

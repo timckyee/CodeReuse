@@ -2,7 +2,7 @@
 function Controller() {
 		
 	this.tenantSave = function() {
-				
+		
 		var saveType;
 		
 		var inputPrimaryKey = document.getElementById("inputPrimaryKey").value;

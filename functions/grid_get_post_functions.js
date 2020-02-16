@@ -27,7 +27,7 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 }
 
 function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback)
-{		
+{	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
 		if (this.readyState == 4 && this.status == 200) {
@@ -46,19 +46,19 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsI
 }
 
 function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback)
-{				
+{
 	var updateString = "";
-	
+		
 	for(update=0; update<fieldsInfo.length; update++)
 	{		
 		var htmlObjectField = fieldsInfo[update].htmlObjectId;
 		var htmlObjectFieldValue = htmlObjectFieldsValuesUpdate[update];
 		var databaseField = fieldsInfo[update].name;
-		
+				
 		if(htmlObjectFieldValue != arrayOldValuesTable[htmlObjectField])
-		{			
+		{
 			if(fieldsInfo[update].dbType == "date")
-			{	
+			{				
 				var dateFromSystem = htmlObjectFieldValue;
 												
 				var dateFormat = convertDateFromSystem(dateFromSystem);
@@ -77,7 +77,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 			}
 		}
 	}
-	
+		
 	if(updateString != "")
 	{
 		if(!confirm('There are changes to the fields. Continue with the update?'))
@@ -90,11 +90,14 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 		window.postXmlHttpRequest.onreadystatechange = function() {
 			
 			if (this.readyState == 4 && this.status == 200) {
-				
+								
 				for(update=0; update<fieldsInfo.length; update++)
-				{					
+				{			
 					arrayOldValuesTable[fieldsInfo[update].htmlObjectId] = htmlObjectFieldsValuesUpdate[update];
 				}
+				
+				var tenantModel = new Tenant();
+				tenantModel.arrayOldValuesTable = arrayOldValuesTable;
 				
 				if(refreshGridCallback != undefined)
 					refreshGridCallback();
@@ -179,6 +182,9 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 				if(fieldsInfo[insert].htmlObjectType != "primaryKey")				
 					arrayOldValuesTable[fieldsInfo[insert].htmlObjectId] = htmlObjectFieldsValuesInsert[insert];
 			}
+			
+			var tenantModel = new Tenant();
+			tenantModel.arrayOldValuesTable = arrayOldValuesTable;			
 			
 			if(refreshGridCallback != undefined)
 				refreshGridCallback();

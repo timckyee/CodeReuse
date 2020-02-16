@@ -27,6 +27,8 @@ var Tenant = function() {
 };
 
 Tenant.prototype = {
+		
+	arrayOldValuesTable: [],
 	
 	getFieldsInfo: function() {
 		
@@ -102,10 +104,10 @@ Tenant.prototype = {
 	tenantUpdate: function() {
 			
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();
-		
+				
 		if(validateHtmlObjectFields(this.fields))
 		{	
-			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), arrayOldValuesTable, refreshGridCallback);
+			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, refreshGridCallback);
 		}
 		
 	},
@@ -116,7 +118,7 @@ Tenant.prototype = {
 				
 		if(validateHtmlObjectFields(this.fields))
 		{
-			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", arrayOldValuesTable, refreshGridCallback);
+			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", this.arrayOldValuesTable, refreshGridCallback);
 		}	
 	
 	}
