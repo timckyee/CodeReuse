@@ -30,7 +30,7 @@ function Controller() {
 			saveType = "insert";
 		}
 		
-		var tenantModel = new Tenant();
+		var tenantModel = new Tenant();	
 				
 		if(saveType == "update")
 		{

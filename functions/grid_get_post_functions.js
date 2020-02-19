@@ -46,7 +46,7 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsI
 }
 
 function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback)
-{
+{		
 	var updateString = "";
 		
 	for(update=0; update<fieldsInfo.length; update++)
@@ -77,7 +77,7 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 			}
 		}
 	}
-		
+	
 	if(updateString != "")
 	{
 		if(!confirm('There are changes to the fields. Continue with the update?'))
@@ -90,14 +90,11 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 		window.postXmlHttpRequest.onreadystatechange = function() {
 			
 			if (this.readyState == 4 && this.status == 200) {
-								
+												
 				for(update=0; update<fieldsInfo.length; update++)
 				{			
 					arrayOldValuesTable[fieldsInfo[update].htmlObjectId] = htmlObjectFieldsValuesUpdate[update];
 				}
-				
-				var tenantModel = new Tenant();
-				tenantModel.arrayOldValuesTable = arrayOldValuesTable;
 				
 				if(refreshGridCallback != undefined)
 					refreshGridCallback();
@@ -181,10 +178,7 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 			{									
 				if(fieldsInfo[insert].htmlObjectType != "primaryKey")				
 					arrayOldValuesTable[fieldsInfo[insert].htmlObjectId] = htmlObjectFieldsValuesInsert[insert];
-			}
-			
-			var tenantModel = new Tenant();
-			tenantModel.arrayOldValuesTable = arrayOldValuesTable;			
+			}		
 			
 			if(refreshGridCallback != undefined)
 				refreshGridCallback();

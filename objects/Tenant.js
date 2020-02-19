@@ -27,7 +27,7 @@ var Tenant = function() {
 };
 
 Tenant.prototype = {
-		
+			
 	arrayOldValuesTable: [],
 	
 	getFieldsInfo: function() {
@@ -103,8 +103,8 @@ Tenant.prototype = {
 		
 	tenantUpdate: function() {
 			
-		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();
-				
+		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();	
+												
 		if(validateHtmlObjectFields(this.fields))
 		{	
 			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, refreshGridCallback);
@@ -114,7 +114,7 @@ Tenant.prototype = {
 	
 	tenantInsert: function() {
 	
-		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();
+		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	
 				
 		if(validateHtmlObjectFields(this.fields))
 		{

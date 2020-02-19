@@ -32,7 +32,7 @@ function gridCallback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo
 		
 		row.className = "tableHover";
 		
-		row.onclick = tenantGridRowOnClick(phpFile, row, fieldsInfo, gridColumnsInfo);
+		row.onclick = function() { tenantGridRowOnClick(phpFile, row, fieldsInfo, gridColumnsInfo); };
 		
 		var cell;
 		var cellText;
@@ -81,7 +81,7 @@ function refreshGridCallback()
 function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable)
 {	
 	var record = response[0];
-			
+	
 	for(i=0; i<fieldsInfo.length; i++)
 	{		
 		if(fieldsInfo[i].dbType == "date")
@@ -119,8 +119,4 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autoco
 			}
 		}
 	}
-	
-	var tenantModel = new Tenant();
-	tenantModel.arrayOldValuesTable = arrayOldValuesTable;
-	
 }
