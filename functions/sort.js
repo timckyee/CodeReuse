@@ -1,5 +1,10 @@
+var Sort = function() {
+	
+};
 
-function sortTable(tblId, column){				
+Sort.prototype = {
+
+sortTable: function(tblId, column){				
 	
     var table = document.getElementById(tblId);
     
@@ -39,4 +44,6 @@ function sortTable(tblId, column){
     }
     
     Arr = null;
+}
+
 }

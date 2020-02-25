@@ -28,31 +28,39 @@ function init_autocomplete_inputs() {
 	
 	var building_input = document.getElementById("building_input");
 		
-	building_input.addEventListener("keyup", function(event){autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList")});
+	var autocomplete = new Autocomplete();		
+		
+	building_input.addEventListener("keyup", function(event){ 
+		
+		autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList")
+	});
 	
-	building_input.addEventListener("focusout", function() { focusOutHide ("buildingSearchList"); });		
-	
+	building_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });		
 	
 	var tenant_input = document.getElementById("tenant_input");
 	
-	tenant_input.addEventListener("keyup", function(event){autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList")});
+	tenant_input.addEventListener("keyup", function(event){
+			
+		autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList");
+		
+	});
 	
-	tenant_input.addEventListener("focusout", function() { focusOutHide ("tenantSearchList"); });	
+	tenant_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
 	
 	
 }
 
 function init_calendar_inputs() {
 	
-	monthsArray = Array();
+	var calendar = new Calendar();
 	
-	populateMonthsArray();
+	var monthsArray = calendar.populateMonthsArray();
 
 	var divCalendarId = "calendarId";
 	
 	document.onclick = function(e) {
 		
-		documentOnclick(e, divCalendarId);
+		calendar.documentOnclick(e, divCalendarId);
 		
 	}
 
@@ -60,11 +68,15 @@ function init_calendar_inputs() {
 	
 	var inputCalendarTesting = document.getElementById('inputCalendarTesting');
 	
-	inputCalendar.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendar', divCalendarId)});
+	inputCalendar.addEventListener("focus", function(event){
+		
+		calendar.showHideCalendar(event, 'show' ,'inputCalendar', divCalendarId, monthsArray)
+		
+	});
 	
 	inputCalendar.addEventListener("blur", function(event){
 		
-			if(validateDate(this.id) == false)
+			if(calendar.validateDate(this.id) == false)
 			{
 				alert("input format has to be dd-mmm-yyyy");
 			}
@@ -75,11 +87,15 @@ function init_calendar_inputs() {
 	inputCalendar.placeholder = "dd-mmm-yyyy";
 	
 	
-	inputCalendarTesting.addEventListener("focus", function(event){showHideCalendar(event, 'show' ,'inputCalendarTesting', divCalendarId)});
+	inputCalendarTesting.addEventListener("focus", function(event){
+		
+		calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting', divCalendarId, monthsArray)
+		
+	});
 	
 	inputCalendarTesting.addEventListener("blur", function(event){
 		
-			if(validateDate(this.id) == false)
+			if(calendar.validateDate(this.id) == false)
 			{
 				alert("input format has to be dd-mmm-yyyy");
 			}

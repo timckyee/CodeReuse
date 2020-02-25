@@ -1,7 +1,11 @@
 
-function Controller() {
+var Controller = function () {
 		
-	this.tenantSave = function() {
+};
+
+Controller.prototype = {
+	
+	tenantSave: function() {
 		
 		var saveType;
 		
@@ -44,19 +48,22 @@ function Controller() {
 			tenantModel.tenantInsert();
 		}
 		
-	};
+	},
 	
-	this.resetBuildingSelectField = function() {
+	resetBuildingSelectField: function() {
 		
 		var selectFieldHtmlObjectId = "selectBuilding";
 		var gridGetPostDivElement = "gridGetPost";
 		
 		document.getElementById(selectFieldHtmlObjectId).selectedIndex = 0;
-		gridHide(gridGetPostDivElement);
 		
-	};
+		var helper = new Helper();
+		
+		helper.gridHide(gridGetPostDivElement);
+		
+	},
 	
-	this.resetTenantFields = function() {
+	resetTenantFields: function() {
 		
 		var tenantModel = new Tenant();
 		
@@ -67,13 +74,13 @@ function Controller() {
 			document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
 		}
 		
-	};
+	},
 	
-	this.refreshSelectTenantGrid = function() {
+	refreshSelectTenantGrid: function() {
 		
 		var tenantModel = new Tenant();
 		
 		tenantModel.refreshSelectTenantGrid();
 			
-	};
+	}
 }

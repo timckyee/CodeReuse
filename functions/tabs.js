@@ -1,5 +1,10 @@
+var Tabs = function() {
+	
+};
 
-function changeTab(tab) {
+Tabs.prototype = {
+
+changeTab: function(tab) {
 
 	var currentTab = tab.id.substring(3, tab.id.length);
 	
@@ -20,4 +25,6 @@ function changeTab(tab) {
 			document.getElementById("tab" + otherTab).className = "tabOptions";
 		}
 	}
+}
+
 }

@@ -1,12 +1,17 @@
+var Helper = function() {
+	
+};
 
-function gridHide(divElement)
+Helper.prototype = {
+	
+gridHide: function(divElement)
 {
 	var divTable = document.getElementById(divElement);
 	
 	divTable.innerHTML = "";
-}
+},
 
-function validateHtmlObjectFields(fieldsInfo)
+validateHtmlObjectFields: function(fieldsInfo)
 {
 	for(validate=0; validate<fieldsInfo.length; validate++)
 	{
@@ -21,9 +26,9 @@ function validateHtmlObjectFields(fieldsInfo)
 	}
 	
 	return true;
-}
+},
 
-function convertDateFromDatabase(date)
+convertDateFromDatabase: function(date)
 {	
 	var dateFromDatabase = date;
 	
@@ -31,13 +36,13 @@ function convertDateFromDatabase(date)
 	var month = dateFromDatabase.substring(5,7);
 	var day = dateFromDatabase.substring(8,10);
 	
-	var dateFormat = day + "-" + dateMonthNumberToStringConversion(month) + "-" + year;
+	var dateFormat = day + "-" + this.dateMonthNumberToStringConversion(month) + "-" + year;
 	
 	return dateFormat;
 
-}
+},
 
-function convertDateFromSystem(date)
+convertDateFromSystem: function(date)
 {	
 	var dateFromSystem = date;
 	
@@ -45,13 +50,13 @@ function convertDateFromSystem(date)
 	var month = dateFromSystem.substring(3,6);
 	var year = dateFromSystem.substring(7,11);
 	
-	var dateFormat = year + "-" + dateMonthStringToNumberConversion(month) + "-" + day;
+	var dateFormat = year + "-" + this.dateMonthStringToNumberConversion(month) + "-" + day;
 	
 	return dateFormat;
 
-}
+},
 
-function dateMonthStringToNumberConversion(monthString)
+dateMonthStringToNumberConversion: function(monthString)
 {
 	var monthArray = [];
 	
@@ -69,11 +74,13 @@ function dateMonthStringToNumberConversion(monthString)
 	monthArray["dec"] = "12";
 	
 	return monthArray[monthString];
-}
+},
 
-function dateMonthNumberToStringConversion(monthNumber)
+dateMonthNumberToStringConversion: function(monthNumber)
 {
 	var monthArray = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 	
 	return monthArray[parseInt(monthNumber) - 1];
+}
+
 }

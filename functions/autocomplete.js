@@ -1,5 +1,11 @@
 
-function positionAutcomplete(inputAutocompleteId, divListId) {
+var Autocomplete = function() {
+		
+};
+
+Autocomplete.prototype = {
+
+positionAutocomplete: function(inputAutocompleteId, divListId) {
 	
 	var positionInputAutocomplete = document.getElementById(inputAutocompleteId);
 	
@@ -11,9 +17,9 @@ function positionAutcomplete(inputAutocompleteId, divListId) {
 	positionDivList.style.left = left;
 	positionDivList.style.top = top + positionInputAutocomplete.offsetHeight;
 	
-}
+},
 
-function focusOutHide(div) {
+focusOutHide: function(div) {
 	
 	if(div == "buildingSearchList")
 	{
@@ -32,9 +38,9 @@ function focusOutHide(div) {
 			return;
 		}
 	}
-}
+},
 
-function oldValues(saveOrGet, arrayItem, arrayValue) {
+oldValue: function(saveOrGet, arrayItem, arrayValue) {
 		
 	if(saveOrGet == "save")
 	{			
@@ -45,9 +51,9 @@ function oldValues(saveOrGet, arrayItem, arrayValue) {
 		return oldValuesArray[arrayItem];
 	}
 	
-}
+},
 
-function submitTest() {
+submitTest: function() {
 
 	var tenant_input_object = document.getElementById("tenant_input");
 	var tenant_input_old_values = oldValues("get", "tenant_input");
@@ -66,17 +72,19 @@ function submitTest() {
 	
 	oldValues("save", "tenant_input", tenant_input_object.value);
 	
-};
+},
 
-function resetInputFields(input)
+/*
+resetInputFields: function(queryName)
 {
-	if(input == "buildings")
+	if(queryName == "buildings")
 	{
 		document.getElementById("tenant_input").value = "";
-	}	
-}
+	}
+},
+*/
 
-function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {
+autocomplete: function(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {
 				
 	var input = event.target;
 	
@@ -88,6 +96,8 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 		return;
 	} else {
 		
+		this.positionAutocomplete(positionResultsListInput, positionResultsListDiv);
+		
 		window.autocompleteXmlHttpRequest.onreadystatechange = function() {
 			
 			
@@ -95,7 +105,7 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 				
 				var response = JSON.parse(this.responseText);
 				
-				positionAutcomplete(positionResultsListInput, positionResultsListDiv);
+				//this.positionAutocomplete(positionResultsListInput, positionResultsListDiv);
 				
 				searchList.innerHTML = "";
 				
@@ -126,9 +136,9 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 						input.setAttribute("rowAttributeValue", rowAttributeValue);
 						
 						if(queryName == "buildings")
-						{
-							resetInputFields("buildings");
-						}
+						{							
+							document.getElementById("tenant_input").value = "";
+						}						
 					};
 					
 					var colArray = itemColumns.split(",");
@@ -166,4 +176,6 @@ function autocomplete(event, divElement, itemColumns, valueField, httpGetOrPost,
 	window.autocompleteXmlHttpRequest.open(httpGetOrPost, phpFile + "?" + queryString, true);
 	window.autocompleteXmlHttpRequest.send();
 	
+}
+
 }

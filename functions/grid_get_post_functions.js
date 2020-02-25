@@ -1,5 +1,10 @@
+var Grid_Get_Post_Functions = function() {
+	
+};
 
-function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick) {
+Grid_Get_Post_Functions.prototype = {
+
+grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick) {
 	
 	var divTable = document.getElementById(divElement);
 	
@@ -24,9 +29,9 @@ function grid(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColum
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();
 	
-}
+},
 
-function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback)
+get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -43,9 +48,9 @@ function get_populateForm(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsI
 		
 	window.getXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.getXmlHttpRequest.send();
-}
+},
 
-function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback)
+post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback)
 {		
 	var updateString = "";
 		
@@ -60,10 +65,14 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 			if(fieldsInfo[update].dbType == "date")
 			{				
 				var dateFromSystem = htmlObjectFieldValue;
+								
+				var helper = new Helper();				
 												
-				var dateFormat = convertDateFromSystem(dateFromSystem);
+				var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 				
-				if(validateDateFromString(dateFromSystem) == false)
+				var calendar = new Calendar();
+				
+				if(calendar.validateDateFromString(dateFromSystem) == false)
 				{
 					alert("input format has to be dd-mmm-yyyy");
 					return;
@@ -108,9 +117,9 @@ function post_updateForm(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjec
 		window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		window.postXmlHttpRequest.send(formVariables);
 	}
-}
+},
 
-function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey, arrayOldValuesTable, refreshGridCallback)
+post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey, arrayOldValuesTable, refreshGridCallback)
 {		
 	if(!confirm('Confirm to create new record?'))
 	{
@@ -142,10 +151,14 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 			if(fieldsInfo[insert].dbType == "date")
 			{
 				var dateFromSystem = htmlObjectValueInsert;
+								
+				var helper = new Helper();				
 												
-				var dateFormat = convertDateFromSystem(dateFromSystem);
+				var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 				
-				if(validateDateFromString(dateFromSystem) == false)
+				var calendar = new Calendar();
+				
+				if(calendar.validateDateFromString(dateFromSystem) == false)
 				{
 					alert("input format has to be dd-mmm-yyyy");
 					return;
@@ -191,4 +204,6 @@ function post_insertRecordForm(phpFile, postType, htmlObjectFieldsValuesInsert, 
 	window.postXmlHttpRequest.open("POST", phpFile, true);
 	window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	window.postXmlHttpRequest.send(formVariables);
+}
+
 }

@@ -1,4 +1,3 @@
-
 var Tenant = function() {
 		
 	this.fieldPrimaryKey;
@@ -104,10 +103,16 @@ Tenant.prototype = {
 	tenantUpdate: function() {
 			
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();	
+										
+		var helper = new Helper();								
 												
-		if(validateHtmlObjectFields(this.fields))
+		if(helper.validateHtmlObjectFields(this.fields))
 		{	
-			post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, refreshGridCallback);
+			var grid_get_post_functions = new Grid_Get_Post_Functions();
+			
+			var callback = new Callback();
+			
+			grid_get_post_functions.post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallback);
 		}
 		
 	},
@@ -116,9 +121,15 @@ Tenant.prototype = {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	
 				
-		if(validateHtmlObjectFields(this.fields))
+		var helper = new Helper();		
+				
+		if(helper.validateHtmlObjectFields(this.fields))
 		{
-			post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", this.arrayOldValuesTable, refreshGridCallback);
+			var grid_get_post_functions = new Grid_Get_Post_Functions();
+			
+			var callback = new Callback();
+			
+			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", this.arrayOldValuesTable, callback.refreshGridCallback);
 		}	
 	
 	}

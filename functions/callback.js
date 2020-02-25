@@ -1,5 +1,10 @@
+var Callback = function() {
+	
+};
 
-function gridCallback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick) {
+Callback.prototype = {
+
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick) {
 		
 	divTable.innerHTML = "";
 	
@@ -15,7 +20,9 @@ function gridCallback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo
 	{				
 		tableHeader = document.createElement("th");
 			
-		tableHeader.onclick = sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
+		var handler = new Handler();	
+			
+		tableHeader.onclick = handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
 		
 		var columnName = gridColumnsInfo[i].colName;
 		
@@ -47,7 +54,9 @@ function gridCallback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo
 			{	
 				var dateFromDatabase = item[gridColumnsInfo[i].id];
 				
-				var dateFormat = convertDateFromDatabase(dateFromDatabase);
+				var helper = new Helper();
+				
+				var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
 				
 				cellText = document.createTextNode(dateFormat);
 			}
@@ -67,18 +76,18 @@ function gridCallback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo
 	
 	divTable.appendChild(tbl);
 	
-}
+},
 
-function refreshGridCallback()
+refreshGridCallback: function()
 {
 	
 	var tenantModel = new Tenant();
 	
 	tenantModel.refreshTenantGrid();	
 	
-}
+},
 
-function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable)
+get_populateForm_callback: function(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable)
 {	
 	var record = response[0];
 	
@@ -88,7 +97,9 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autoco
 		{					
 			var dateFromDatabase = record[fieldsInfo[i].name];
 						
-			var dateFormat = convertDateFromDatabase(dateFromDatabase);
+			var helper = new Helper();			
+						
+			var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
 			
 			document.getElementById(fieldsInfo[i].htmlObjectId).value = dateFormat;
 			
@@ -119,4 +130,6 @@ function get_populateForm_callback(response, fieldsInfo, gridColumnsInfo, autoco
 			}
 		}
 	}
+}
+
 }

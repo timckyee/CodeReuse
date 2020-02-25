@@ -1,11 +1,16 @@
+var Calendar = function() {
+		
+};
 
-function removeCalendarTable(divCalendarId) {
+Calendar.prototype = {
+	
+removeCalendarTable: function(divCalendarId) {
 	
 	document.getElementById(divCalendarId).innerHTML = "";
 
-};
+},
 
-function documentOnclick(e, divCalendarId) {
+documentOnclick: function(e, divCalendarId) {
 
 	var calendarId = document.getElementById(divCalendarId);
 	
@@ -13,9 +18,9 @@ function documentOnclick(e, divCalendarId) {
 		calendarId.style.display = "none";
 	}
 
-};
+},
 
-function positionCalendar(inputCalendarId, divCalendarId) {
+positionCalendar: function(inputCalendarId, divCalendarId) {
 	
 	var positionInputCalendar = document.getElementById(inputCalendarId);
 	
@@ -27,9 +32,9 @@ function positionCalendar(inputCalendarId, divCalendarId) {
 	positionDivCalendar.style.left = left;
 	positionDivCalendar.style.top = top + positionInputCalendar.offsetHeight;
 	
-}
+},
 
-function createCalendarTable(inputCalendarId, divCalendarId) {
+createCalendarTable: function(inputCalendarId, divCalendarId, moveCalendar, monthsArray) {
 	
 	var tbl = document.createElement("table");
 	tbl.id = "tableCalendarId";
@@ -42,7 +47,7 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 	var cell = document.createElement("td");
 	cell.id = "back";
 	cell.style.textAlign = "center";
-	cell.onclick = function() { moveCalendar('back',this, inputCalendarId, divCalendarId); };
+	cell.onclick = function() { moveCalendar('back', cell, inputCalendarId, divCalendarId, monthsArray); };
 	cellText = document.createTextNode("<");
 	
 	cell.appendChild(cellText);
@@ -58,7 +63,7 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 	cell = document.createElement("td");
 	cell.id = "forward";
 	cell.style.textAlign = "center";
-	cell.onclick = function() { moveCalendar('forward',this, inputCalendarId, divCalendarId); };
+	cell.onclick = function() { moveCalendar('forward', cell, inputCalendarId, divCalendarId, monthsArray); };
 	cellText = document.createTextNode(">");		
 	
 	cell.appendChild(cellText);
@@ -191,15 +196,15 @@ function createCalendarTable(inputCalendarId, divCalendarId) {
 	
 	calendarId.appendChild(tbl);
 	
-}
+},
 
-function showHideCalendar(event, showOrHide, inputCalendarId, divCalendarId) {
-	
+showHideCalendar: function(event, showOrHide, inputCalendarId, divCalendarId, monthsArray) {
+		
 	var calendarId = document.getElementById(divCalendarId);	
 	
 	if(showOrHide == "show")
 	{		
-		if(validateDate(inputCalendarId) == false)
+		if(this.validateDate(inputCalendarId) == false)
 		{
 			calendarId.style.display = "none";
 			return;
@@ -208,7 +213,7 @@ function showHideCalendar(event, showOrHide, inputCalendarId, divCalendarId) {
 
 	var calendarId = document.getElementById(divCalendarId);
 	
-	positionCalendar(inputCalendarId, divCalendarId);
+	this.positionCalendar(inputCalendarId, divCalendarId);
 	
 	if(showOrHide == "show")
 	{
@@ -223,23 +228,23 @@ function showHideCalendar(event, showOrHide, inputCalendarId, divCalendarId) {
 
 	var inputCalendar = document.getElementById(inputCalendarId);
 	
-	removeCalendarTable(divCalendarId);
-	createCalendarTable(inputCalendarId, divCalendarId);
+	this.removeCalendarTable(divCalendarId);
+	this.createCalendarTable(inputCalendarId, divCalendarId, this.moveCalendar, monthsArray);
 	
 	if(inputCalendar.value != "")
 	{
-		calendar(getInputCalendarValue("month", inputCalendarId),getInputCalendarValue("year", inputCalendarId), inputCalendarId, divCalendarId);
+		this.calendar(this.getInputCalendarValue("month", inputCalendarId, monthsArray),this.getInputCalendarValue("year", inputCalendarId, monthsArray), inputCalendarId, divCalendarId, monthsArray);
 	}
 	else
 	{
 		var calendarDate = new Date();
 		
-		calendar(calendarDate.getMonth(), calendarDate.getFullYear(), inputCalendarId, divCalendarId);
+		this.calendar(calendarDate.getMonth(), calendarDate.getFullYear(), inputCalendarId, divCalendarId, monthsArray);
 	}
 
-}
+},
 
-function validateDate(inputCalendarId)
+validateDate: function(inputCalendarId)
 {
 	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
 
@@ -256,9 +261,9 @@ function validateDate(inputCalendarId)
 			return true;
 		}
 	}
-}
+},
 
-function validateDateFromString(dateString)
+validateDateFromString: function(dateString)
 {
 	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
 
@@ -273,9 +278,9 @@ function validateDateFromString(dateString)
 			return true;
 		}
 	}
-}
+},
 
-function getInputCalendarValue(dayMonthOrYear, inputCalendarId) {
+getInputCalendarValue: function(dayMonthOrYear, inputCalendarId, monthsArray) {
 	
 	var inputCalendar = document.getElementById(inputCalendarId);
 	
@@ -319,10 +324,26 @@ function getInputCalendarValue(dayMonthOrYear, inputCalendarId) {
 	{
 		return "";
 	}
-}
+},
 
-function populateMonthsArray() {
+populateMonthsArray: function() {
+
+	monthsArray = new Array();
 	
+	monthsArray[0] = "Jan";
+	monthsArray[1] = "Feb";
+	monthsArray[2] = "Mar";
+	monthsArray[3] = "Apr";
+	monthsArray[4] = "May";
+	monthsArray[5] = "Jun";
+	monthsArray[6] = "Jul";
+	monthsArray[7] = "Aug";
+	monthsArray[8] = "Sep";
+	monthsArray[9] = "Oct";
+	monthsArray[10] = "Nov";
+	monthsArray[11] = "Dec";	
+	
+	/*
 	monthsArray[0] = "January";
 	monthsArray[1] = "February";
 	monthsArray[2] = "March";
@@ -335,12 +356,15 @@ function populateMonthsArray() {
 	monthsArray[9] = "October";
 	monthsArray[10] = "November";
 	monthsArray[11] = "December";
+	*/
 	
-}
+	return monthsArray;
+	
+},
 
-function calendar(month, year, inputCalendarId, divCalendarId) {
+calendar: function(month, year, inputCalendarId, divCalendarId, monthsArray) {
 	
-	clearCalendar();
+	this.clearCalendar();
 	
 	var calendarDate = new Date();
 				
@@ -350,7 +374,7 @@ function calendar(month, year, inputCalendarId, divCalendarId) {
 	
 	document.getElementById('monthYear').innerHTML = monthsArray[month] + ' ' + year;
 	
-	var days = daysInMonth(calendarDate.getMonth() + 1, calendarDate.getFullYear());
+	var days = this.daysInMonth(calendarDate.getMonth() + 1, calendarDate.getFullYear());
 	var calendarDayStart = calendarDate.getDay();
 	
 	var calendarDayEnd;
@@ -422,9 +446,9 @@ function calendar(month, year, inputCalendarId, divCalendarId) {
 	var calendarCurrentMonth = calendarCurrentDate.getMonth();
 	var calendarCurrentYear = calendarCurrentDate.getFullYear();	
 	
-	var selectedDay = getInputCalendarValue("day",inputCalendarId);
-	var selectedMonth = getInputCalendarValue("month",inputCalendarId);
-	var selectedYear = getInputCalendarValue("year",inputCalendarId);	
+	var selectedDay = this.getInputCalendarValue("day",inputCalendarId, monthsArray);
+	var selectedMonth = this.getInputCalendarValue("month",inputCalendarId, monthsArray);
+	var selectedYear = this.getInputCalendarValue("year",inputCalendarId, monthsArray);	
 	
 	for(i=1; i<=42; i++)
 	{
@@ -451,17 +475,17 @@ function calendar(month, year, inputCalendarId, divCalendarId) {
 			}
 		}
 	}
-}
+},
 
-function daysInMonth(month, year) {
+daysInMonth: function(month, year) {
 	
 	return new Date(year, month, 0).getDate();
 	
-}
+},
 
-function moveCalendar(backOrForward, obj, inputCalendarId, divCalendarId) {
+moveCalendar: function(backOrForward, obj, inputCalendarId, divCalendarId, monthsArray) {
 	
-	var monthYear = obj.parentElement.cells[1].innerHTML;
+	var monthYear = obj.parentElement.parentElement.rows[0].cells[1].innerHTML;
 	var monthYearArray = monthYear.split(" ");
 	
 	var month = monthYearArray[0];
@@ -512,11 +536,13 @@ function moveCalendar(backOrForward, obj, inputCalendarId, divCalendarId) {
 
 	obj.parentElement.cells[1].innerHTML = monthsArray[newMonth] + ' ' + newYear;
 	
-	calendar(newMonth, newYear, inputCalendarId, divCalendarId);
+	var calendar = new Calendar();
+	
+	calendar.calendar(newMonth, newYear, inputCalendarId, divCalendarId, monthsArray);
 
-}
+},
 
-function clearCalendar() {
+clearCalendar: function() {
 	
 	for(calCellDay=1; calCellDay<=42; calCellDay++)
 	{
@@ -531,4 +557,6 @@ function clearCalendar() {
 		calCell.className = "normalDay";		
 	}
 	
+}
+
 }

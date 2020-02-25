@@ -1,4 +1,3 @@
-
 var TenantGrid = function() {
 	
 	this.gridGetPostDivElement = "gridGetPost";
@@ -13,7 +12,9 @@ var TenantGrid = function() {
 		{ colName: "Tenant Name", id: "tenantName", colType: "string" }
 	];
 	
-	this.rowOnClick =  TenantGridOnClickHandler;
+	var handler = new Handler();
+	
+	this.rowOnClick =  handler.TenantGridOnClickHandler;
 
 };
 
@@ -26,19 +27,27 @@ TenantGrid.prototype = {
 		
 	refreshTenantGrid: function(phpFile, fieldsInfo) {
 		
-		grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), gridCallback, this.rowOnClick);
+		grid_get_post_functions = new Grid_Get_Post_Functions();
+		var callback = new Callback();
+		
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), callback.gridCallback, this.rowOnClick);
 		
 	},
 	
-	refreshSelectTenantGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
+	refreshSelectTenantGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {		
 		
 		if(selectBuildingHtmlObjectValue != "")
 		{
-			grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", selectBuildingHtmlObjectValue, gridCallback, this.rowOnClick);
+			grid_get_post_functions = new Grid_Get_Post_Functions();
+			callback = new Callback();			
+					
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", selectBuildingHtmlObjectValue, callback.gridCallback, this.rowOnClick);
 		}
 		else
 		{
-			gridHide(this.gridGetPostDivElement);
+			var helper = new Helper();
+			
+			helper.gridHide(this.gridGetPostDivElement);
 		}
 		
 	}
