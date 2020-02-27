@@ -1,9 +1,9 @@
 
-var Autocomplete = function() {
+CodeReuse.Autocomplete = function() {
 		
 };
 
-Autocomplete.prototype = {
+CodeReuse.Autocomplete.prototype = {
 
 positionAutocomplete: function(inputAutocompleteId, divListId) {
 	

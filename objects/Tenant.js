@@ -1,4 +1,4 @@
-var Tenant = function() {
+CodeReuse.Tenant = function() {
 		
 	this.fieldPrimaryKey;
 	this.field1;
@@ -25,7 +25,7 @@ var Tenant = function() {
 	
 };
 
-Tenant.prototype = {
+CodeReuse.Tenant.prototype = {
 			
 	arrayOldValuesTable: [],
 	
@@ -86,7 +86,7 @@ Tenant.prototype = {
 	
 	refreshTenantGrid: function() {
 		
-		var tenantGrid = new TenantGrid();
+		var tenantGrid = new CodeReuse.TenantGrid();
 		
 		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo());
 		
@@ -94,7 +94,7 @@ Tenant.prototype = {
 	
 	refreshSelectTenantGrid: function() {
 		
-		var tenantGrid = new TenantGrid();
+		var tenantGrid = new CodeReuse.TenantGrid();
 		
 		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuilding").value);
 		
@@ -104,13 +104,13 @@ Tenant.prototype = {
 			
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();	
 										
-		var helper = new Helper();								
+		var helper = new CodeReuse.Helper();								
 												
 		if(helper.validateHtmlObjectFields(this.fields))
 		{	
-			var grid_get_post_functions = new Grid_Get_Post_Functions();
+			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
-			var callback = new Callback();
+			var callback = new CodeReuse.Callback();
 			
 			grid_get_post_functions.post_updateForm(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallback);
 		}
@@ -121,13 +121,13 @@ Tenant.prototype = {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	
 				
-		var helper = new Helper();		
+		var helper = new CodeReuse.Helper();		
 				
 		if(helper.validateHtmlObjectFields(this.fields))
 		{
-			var grid_get_post_functions = new Grid_Get_Post_Functions();
+			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
-			var callback = new Callback();
+			var callback = new CodeReuse.Callback();
 			
 			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPost", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", this.arrayOldValuesTable, callback.refreshGridCallback);
 		}	

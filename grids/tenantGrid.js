@@ -1,4 +1,4 @@
-var TenantGrid = function() {
+CodeReuse.TenantGrid = function() {
 	
 	this.gridGetPostDivElement = "gridGetPost";
 	this.tableHtmlObjectId = "tableTenant";
@@ -12,13 +12,13 @@ var TenantGrid = function() {
 		{ colName: "Tenant Name", id: "tenantName", colType: "string" }
 	];
 	
-	var handler = new Handler();
+	var handler = new CodeReuse.Handler();
 	
 	this.rowOnClick =  handler.TenantGridOnClickHandler;
 
 };
 
-TenantGrid.prototype = {
+CodeReuse.TenantGrid.prototype = {
 	
 	getGridColumnsInfo: function() {
 		
@@ -27,8 +27,9 @@ TenantGrid.prototype = {
 		
 	refreshTenantGrid: function(phpFile, fieldsInfo) {
 		
-		grid_get_post_functions = new Grid_Get_Post_Functions();
-		var callback = new Callback();
+		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+		
+		var callback = new CodeReuse.Callback();
 		
 		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), callback.gridCallback, this.rowOnClick);
 		
@@ -38,14 +39,15 @@ TenantGrid.prototype = {
 		
 		if(selectBuildingHtmlObjectValue != "")
 		{
-			grid_get_post_functions = new Grid_Get_Post_Functions();
-			callback = new Callback();			
+			grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+			
+			callback = new CodeReuse.Callback();			
 					
 			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", selectBuildingHtmlObjectValue, callback.gridCallback, this.rowOnClick);
 		}
 		else
 		{
-			var helper = new Helper();
+			var helper = new CodeReuse.Helper();
 			
 			helper.gridHide(this.gridGetPostDivElement);
 		}

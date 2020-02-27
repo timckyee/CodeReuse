@@ -1,8 +1,8 @@
-var Callback = function() {
+CodeReuse.Callback = function() {
 	
 };
 
-Callback.prototype = {
+CodeReuse.Callback.prototype = {
 
 gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick) {
 		
@@ -20,7 +20,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	{				
 		tableHeader = document.createElement("th");
 			
-		var handler = new Handler();	
+		var handler = new CodeReuse.Handler();	
 			
 		tableHeader.onclick = handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
 		
@@ -54,7 +54,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			{	
 				var dateFromDatabase = item[gridColumnsInfo[i].id];
 				
-				var helper = new Helper();
+				var helper = new CodeReuse.Helper();
 				
 				var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
 				
@@ -81,7 +81,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 refreshGridCallback: function()
 {
 	
-	var tenantModel = new Tenant();
+	var tenantModel = new CodeReuse.Tenant();
 	
 	tenantModel.refreshTenantGrid();	
 	
@@ -97,7 +97,7 @@ get_populateForm_callback: function(response, fieldsInfo, gridColumnsInfo, autoc
 		{					
 			var dateFromDatabase = record[fieldsInfo[i].name];
 						
-			var helper = new Helper();			
+			var helper = new CodeReuse.Helper();			
 						
 			var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
 			

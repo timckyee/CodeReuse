@@ -1,8 +1,8 @@
-var Grid_Get_Post_Functions = function() {
+CodeReuse.Grid_Get_Post_Functions = function() {
 	
 };
 
-Grid_Get_Post_Functions.prototype = {
+CodeReuse.Grid_Get_Post_Functions.prototype = {
 
 grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick) {
 	
@@ -66,11 +66,11 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 			{				
 				var dateFromSystem = htmlObjectFieldValue;
 								
-				var helper = new Helper();				
+				var helper = new CodeReuse.Helper();				
 												
 				var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 				
-				var calendar = new Calendar();
+				var calendar = new CodeReuse.Calendar();
 				
 				if(calendar.validateDateFromString(dateFromSystem) == false)
 				{
@@ -152,11 +152,11 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 			{
 				var dateFromSystem = htmlObjectValueInsert;
 								
-				var helper = new Helper();				
+				var helper = new CodeReuse.Helper();				
 												
 				var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 				
-				var calendar = new Calendar();
+				var calendar = new CodeReuse.Calendar();
 				
 				if(calendar.validateDateFromString(dateFromSystem) == false)
 				{

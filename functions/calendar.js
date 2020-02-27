@@ -1,8 +1,8 @@
-var Calendar = function() {
+CodeReuse.Calendar = function() {
 		
 };
 
-Calendar.prototype = {
+CodeReuse.Calendar.prototype = {
 	
 removeCalendarTable: function(divCalendarId) {
 	
@@ -536,7 +536,7 @@ moveCalendar: function(backOrForward, obj, inputCalendarId, divCalendarId, month
 
 	obj.parentElement.cells[1].innerHTML = monthsArray[newMonth] + ' ' + newYear;
 	
-	var calendar = new Calendar();
+	var calendar = new CodeReuse.Calendar();
 	
 	calendar.calendar(newMonth, newYear, inputCalendarId, divCalendarId, monthsArray);
 

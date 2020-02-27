@@ -1,9 +1,9 @@
 
-var Controller = function () {
+CodeReuse.Controller = function () {
 		
 };
 
-Controller.prototype = {
+CodeReuse.Controller.prototype = {
 	
 	tenantSave: function() {
 		
@@ -34,7 +34,7 @@ Controller.prototype = {
 			saveType = "insert";
 		}
 		
-		var tenantModel = new Tenant();	
+		var tenantModel = new CodeReuse.Tenant();	
 				
 		if(saveType == "update")
 		{
@@ -57,7 +57,7 @@ Controller.prototype = {
 		
 		document.getElementById(selectFieldHtmlObjectId).selectedIndex = 0;
 		
-		var helper = new Helper();
+		var helper = new CodeReuse.Helper();
 		
 		helper.gridHide(gridGetPostDivElement);
 		
@@ -65,7 +65,7 @@ Controller.prototype = {
 	
 	resetTenantFields: function() {
 		
-		var tenantModel = new Tenant();
+		var tenantModel = new CodeReuse.Tenant();
 		
 		var fieldsInfo = tenantModel.getFieldsInfo();
 		
@@ -78,7 +78,7 @@ Controller.prototype = {
 	
 	refreshSelectTenantGrid: function() {
 		
-		var tenantModel = new Tenant();
+		var tenantModel = new CodeReuse.Tenant();
 		
 		tenantModel.refreshSelectTenantGrid();
 			

@@ -1,8 +1,10 @@
-var Tabs = function() {
+var CodeReuse = {};
+
+CodeReuse.Tabs = function() {
 	
 };
 
-Tabs.prototype = {
+CodeReuse.Tabs.prototype = {
 
 changeTab: function(tab) {
 

@@ -1,7 +1,8 @@
+var CodeReuse = {};
 
 window.addEventListener("load", function() {
 	
-	controller = new Controller();
+	controller = new CodeReuse.Controller();
 	
 	init_gridGetPost_xmlHttpRequests();
 	
@@ -23,12 +24,12 @@ function init_autocomplete_inputs() {
 	
 	window.autocompleteXmlHttpRequest = new XMLHttpRequest();
 	
-	var tenantModel = new Tenant();
+	var tenantModel = new CodeReuse.Tenant();
 	var phpFile = tenantModel.getPhpFile();
 	
 	var building_input = document.getElementById("building_input");
 		
-	var autocomplete = new Autocomplete();		
+	var autocomplete = new CodeReuse.Autocomplete();		
 		
 	building_input.addEventListener("keyup", function(event){ 
 		
@@ -52,7 +53,7 @@ function init_autocomplete_inputs() {
 
 function init_calendar_inputs() {
 	
-	var calendar = new Calendar();
+	var calendar = new CodeReuse.Calendar();
 	
 	var monthsArray = calendar.populateMonthsArray();
 

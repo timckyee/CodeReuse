@@ -1,8 +1,8 @@
-var Sort = function() {
+CodeReuse.Sort = function() {
 	
 };
 
-Sort.prototype = {
+CodeReuse.Sort.prototype = {
 
 sortTable: function(tblId, column){				
 	

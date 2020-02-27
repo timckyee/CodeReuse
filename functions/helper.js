@@ -1,8 +1,8 @@
-var Helper = function() {
+CodeReuse.Helper = function() {
 	
 };
 
-Helper.prototype = {
+CodeReuse.Helper.prototype = {
 	
 gridHide: function(divElement)
 {
