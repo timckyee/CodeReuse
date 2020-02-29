@@ -1,4 +1,4 @@
-var CodeReuse = {};
+var CodeReuse = CodeReuse || {};
 
 window.addEventListener("load", function() {
 	
