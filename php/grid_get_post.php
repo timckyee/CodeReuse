@@ -1,5 +1,5 @@
 <?php
-	
+		
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type,x-prototype-version,x-requested-with');
@@ -28,27 +28,42 @@
 			$buildingId = $_GET["building"];
 			
 			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId);
-			
-			//$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingId from tableGridGetPostBuilding where buildingId = field3) as buildingId, (select concat(firstname,' ',lastname) as tenantName from tableGsridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId);
-			
-			//$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, buildingId, suiteNumber, concat(firstname,' ',lastname) as tenantName from tableGridGetPost2 inner join tableGridGetPostSuite on tableGridGetPost2.field3 = tableGridGetPostSuite.buildingId inner join tableGridGetPostTenant on tableGridGetPost2.field4 = tableGridGetPostTenant.tenantId where buildingId=" . $buildingId);
-			
+						
 		}
-		else 
+		else
+		if($queryName == "gridtablehome") {
+		
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2");
+		}
+		else
+		if($queryName == "gridtablehome") {
+		
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2");
+		}
+		else
+		if($queryName == "populateSuite") {
+			
+			$result = $mysqli->query("select suiteId, suiteNumber, buildingId, location from tableGridGetPostSuite where suiteId = " . $_GET["htmlObjectPrimaryKeyValue"]);
+		
+		}
+		else
 		if($queryName == "populate") {
 			
 			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as field3display, (select concat(suiteNumber,' ',concat(firstname, ' ', lastname)) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4display, field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		
-			//$result = $mysqli->query("select fieldPrimaryKey,field1,field2, field3, (select concat(suiteNumber,' ',concat(firstname, ' ', lastname)) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4display, field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
-		
 		}
 		else if($queryName == "buildings") {
 		
-		$filter = $_GET["filter"];		
-			
-        $result = $mysqli->query("select buildingId, buildingName from tableGridGetPostBuilding where buildingName like '%" . $filter. "%' order by buildingName");			
+			$filter = $_GET["filter"];		
+				
+	        $result = $mysqli->query("select buildingId, buildingName from tableGridGetPostBuilding where buildingName like '%" . $filter. "%' order by buildingName");			
 			
 		}
+		else if($queryName == "suites") {
+						
+	        $result = $mysqli->query("select suiteId, suiteNumber, buildingId, location from tableGridGetPostSuite where buildingId = " . $_GET["building"]);
+			
+		}		
 		else if($queryName == "tenants") {
 
 		$buildingId = $_GET["building"];
@@ -74,6 +89,20 @@
     }
     else if($_SERVER["REQUEST_METHOD"] == "POST") {
 	 
+		if($_POST["postType"] == "updateTableGridGetPostSuite")
+	    {   		    
+			$result = $mysqli->query("update tableGridGetPostSuite set " . $_POST["updateString"] . " where " . "suiteId = " . $_POST["htmlObjectPrimaryKeyValue"]);
+	    }
+	    else
+		if($_POST["postType"] == "createRecordTableGridGetPostSuite")
+	    {   		    
+            if($mysqli->query("insert into tableGridGetPostSuite " . $_POST["insertString"]) === true);
+            {
+            	$last_id = $mysqli->insert_id;
+				echo $last_id;
+			}
+	    }
+	    else	    
 		if($_POST["postType"] == "updateTableGridGetPost")
 	    {   		    
 			$result = $mysqli->query("update tableGridGetPost2 set " . $_POST["updateString"] . " where " . "fieldPrimaryKey = " . $_POST["htmlObjectPrimaryKeyValue"]);

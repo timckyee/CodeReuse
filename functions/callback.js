@@ -5,7 +5,7 @@ CodeReuse.Callback = function() {
 CodeReuse.Callback.prototype = {
 
 gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick) {
-		
+				
 	divTable.innerHTML = "";
 	
 	var tbl = document.createElement("table");
@@ -39,7 +39,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
 		row.className = "tableHover";
 		
-		row.onclick = function() { tenantGridRowOnClick(phpFile, row, fieldsInfo, gridColumnsInfo); };
+		row.onclick = function() {
+				
+			tenantGridRowOnClick(phpFile, row, fieldsInfo, gridColumnsInfo); 
+			
+		};
 		
 		var cell;
 		var cellText;
@@ -66,7 +70,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			}
 			
 			cell.appendChild(cellText);
-			row.appendChild(cell);				
+			row.appendChild(cell);
+				
 			row.setAttribute("gridIdField", item[gridIdField]);		
 		}
 		
@@ -75,6 +80,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	});
 	
 	divTable.appendChild(tbl);
+		
+},
+
+refreshGridCallbackSuite: function()
+{
+	
+	var suiteModel = new CodeReuse.Suite();
+	
+	suiteModel.refreshSuiteGrid();
 	
 },
 

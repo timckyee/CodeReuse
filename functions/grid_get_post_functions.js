@@ -5,27 +5,27 @@ CodeReuse.Grid_Get_Post_Functions = function() {
 CodeReuse.Grid_Get_Post_Functions.prototype = {
 
 grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick) {
-	
+		
 	var divTable = document.getElementById(divElement);
 	
 	window.gridXmlHttpRequest.onreadystatechange = function() {
 				
 		if (this.readyState == 4 && this.status == 200) {
-			
+						
 			var response = JSON.parse(this.responseText);
 						
-			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick);
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick);			
 					
 		}
 	};
 	
 	var queryString;
 	
-	if(additionalArgs != undefined)
+	if(additionalArgs != "")
 		queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue;
 	else
 		queryString = "queryName" + "=" + queryName;
-	
+		
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();
 	
@@ -45,7 +45,7 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
 	}
 	
 	var queryString = "queryName" + "=" + queryName + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue;
-		
+	
 	window.getXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.getXmlHttpRequest.send();
 },
@@ -86,6 +86,8 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 			}
 		}
 	}
+	
+	alert(updateString);
 	
 	if(updateString != "")
 	{

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 11, 2019 at 05:00 AM
+-- Generation Time: Mar 10, 2020 at 04:44 AM
 -- Server version: 5.6.38
 -- PHP Version: 7.2.1
 
@@ -78,18 +78,19 @@ INSERT INTO `tableGridGetPostBuilding` (`buildingId`, `buildingName`) VALUES
 CREATE TABLE `tableGridGetPostSuite` (
   `suiteId` int(11) NOT NULL,
   `suiteNumber` varchar(10) NOT NULL,
-  `buildingId` int(11) NOT NULL
+  `buildingId` int(11) NOT NULL,
+  `location` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tableGridGetPostSuite`
 --
 
-INSERT INTO `tableGridGetPostSuite` (`suiteId`, `suiteNumber`, `buildingId`) VALUES
-(1, '101', 1),
-(2, '102', 1),
-(3, '101', 2),
-(4, '102', 2);
+INSERT INTO `tableGridGetPostSuite` (`suiteId`, `suiteNumber`, `buildingId`, `location`) VALUES
+(1, '101', 1, ''),
+(2, '102', 1, ''),
+(3, '101', 2, ''),
+(4, '102', 2, '');
 
 -- --------------------------------------------------------
 

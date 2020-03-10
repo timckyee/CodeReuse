@@ -31,6 +31,7 @@ td.calendar {
 }
 */
 
+/*
 td:hover {
 	
 	background-color: lightgray;
@@ -38,6 +39,7 @@ td:hover {
 	user-select: none;
 
 }
+*/
 
 .currentDay {
 	
@@ -48,6 +50,12 @@ td:hover {
 .normalDay {
 	
 	background-color: transparent;
+	
+}
+
+.normalDay:hover {
+	
+	background-color: lightgray;
 	
 }
 

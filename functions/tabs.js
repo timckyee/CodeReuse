@@ -1,5 +1,3 @@
-var CodeReuse = {};
-
 CodeReuse.Tabs = function() {
 	
 };
@@ -27,6 +25,14 @@ changeTab: function(tab) {
 			document.getElementById("tab" + otherTab).className = "tabOptions";
 		}
 	}
+},
+
+loadHomeTenantGrid: function() {
+	
+	var tenant = new CodeReuse.Tenant();
+	
+	tenant.refreshTenantGridHome();
+	
 }
 
 }

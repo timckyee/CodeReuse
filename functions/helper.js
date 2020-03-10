@@ -3,15 +3,51 @@ CodeReuse.Helper = function() {
 };
 
 CodeReuse.Helper.prototype = {
+
+gridShow: function(divElement)
+{
+	var divTable = document.getElementById(divElement);
+	
+	if(document.getElementById(divElement).style.display == "none")
+	{
+		document.getElementById(divElement).style.display = "block";
+	}
+	
+},
 	
 gridHide: function(divElement)
 {
 	var divTable = document.getElementById(divElement);
 	
-	divTable.innerHTML = "";
+	if(document.getElementById(divElement).style.display == "block")
+	{
+		document.getElementById(divElement).style.display = "none";
+	}
+	
+	//divTable.innerHTML = "";
 },
 
-validateHtmlObjectFields: function(fieldsInfo)
+validateHtmlObjectFieldsSuite: function(fieldsInfo)
+{
+	for(validate=0; validate<fieldsInfo.length; validate++)
+	{
+		if(fieldsInfo[validate].htmlObjectType != "primaryKey")
+		{
+			if(fieldsInfo[validate].htmlObjectId != "inputLocation")
+			{
+				if(document.getElementById(fieldsInfo[validate].htmlObjectId).value == "")
+				{
+					alert(fieldsInfo[validate].htmlObjectId + ' ' + 'cannot be empty');
+					return false;
+				}
+			}
+		}
+	}
+	
+	return true;
+},
+
+validateHtmlObjectFieldsTenant: function(fieldsInfo)
 {
 	for(validate=0; validate<fieldsInfo.length; validate++)
 	{

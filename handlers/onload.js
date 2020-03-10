@@ -29,11 +29,18 @@ function init_autocomplete_inputs() {
 	
 	var building_input = document.getElementById("building_input");
 		
-	var autocomplete = new CodeReuse.Autocomplete();		
+	var autocomplete = new CodeReuse.Autocomplete();
 		
 	building_input.addEventListener("keyup", function(event){ 
 		
-		autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList")
+		if(document.getElementById("building_input").value == "")
+		{
+			document.getElementById("buildingSearchList").innerHTML = "";
+		}
+		else
+		{
+			autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList");
+		}
 	});
 	
 	building_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });		
@@ -42,7 +49,14 @@ function init_autocomplete_inputs() {
 	
 	tenant_input.addEventListener("keyup", function(event){
 			
-		autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList");
+		if(document.getElementById("tenant_input").value == "")
+		{
+			document.getElementById("tenantSearchList").innerHTML = "";			
+		}
+		else
+		{
+			autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList");
+		}
 		
 	});
 	

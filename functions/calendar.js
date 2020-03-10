@@ -20,8 +20,8 @@ documentOnclick: function(e, divCalendarId) {
 
 },
 
-positionCalendar: function(inputCalendarId, divCalendarId) {
-	
+positionCalendar: function(inputCalendarId, divCalendarId) {	
+		
 	var positionInputCalendar = document.getElementById(inputCalendarId);
 	
 	var left = positionInputCalendar.offsetLeft;
@@ -199,7 +199,7 @@ createCalendarTable: function(inputCalendarId, divCalendarId, moveCalendar, mont
 },
 
 showHideCalendar: function(event, showOrHide, inputCalendarId, divCalendarId, monthsArray) {
-		
+	
 	var calendarId = document.getElementById(divCalendarId);	
 	
 	if(showOrHide == "show")
@@ -212,7 +212,7 @@ showHideCalendar: function(event, showOrHide, inputCalendarId, divCalendarId, mo
 	}
 
 	var calendarId = document.getElementById(divCalendarId);
-	
+		
 	this.positionCalendar(inputCalendarId, divCalendarId);
 	
 	if(showOrHide == "show")

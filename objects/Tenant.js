@@ -48,12 +48,12 @@ CodeReuse.Tenant.prototype = {
 	
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
-		fieldPrimaryKey = primaryKey;
+		this.fieldPrimaryKey = primaryKey;
 		
-		field1 = inputValueArray["inputCalendar"];
-		field2 = inputValueArray["inputCalendarTesting"];
-		field3 = inputValueArray["building_input"];
-		field4 = inputValueArray["tenant_input"];
+		this.field1 = inputValueArray["inputCalendar"];
+		this.field2 = inputValueArray["inputCalendarTesting"];
+		this.field3 = inputValueArray["building_input"];
+		this.field4 = inputValueArray["tenant_input"];
 		
 	},
 	
@@ -61,11 +61,11 @@ CodeReuse.Tenant.prototype = {
 		
 		var fieldsValuesUpdateArray = [];
 		
-		fieldsValuesUpdateArray[0] = fieldPrimaryKey;
-		fieldsValuesUpdateArray[1] = field1;
-		fieldsValuesUpdateArray[2] = field2;
-		fieldsValuesUpdateArray[3] = field3;
-		fieldsValuesUpdateArray[4] = field4;
+		fieldsValuesUpdateArray[0] = this.fieldPrimaryKey;
+		fieldsValuesUpdateArray[1] = this.field1;
+		fieldsValuesUpdateArray[2] = this.field2;
+		fieldsValuesUpdateArray[3] = this.field3;
+		fieldsValuesUpdateArray[4] = this.field4;
 		
 		return fieldsValuesUpdateArray;
 		
@@ -75,10 +75,10 @@ CodeReuse.Tenant.prototype = {
 		
 		var fieldsValuesInsertArray = [];
 		
-		fieldsValuesInsertArray[1] = field1;
-		fieldsValuesInsertArray[2] = field2;
-		fieldsValuesInsertArray[3] = field3;
-		fieldsValuesInsertArray[4] = field4;
+		fieldsValuesInsertArray[1] = this.field1;
+		fieldsValuesInsertArray[2] = this.field2;
+		fieldsValuesInsertArray[3] = this.field3;
+		fieldsValuesInsertArray[4] = this.field4;
 		
 		return fieldsValuesInsertArray;
 		
@@ -96,9 +96,25 @@ CodeReuse.Tenant.prototype = {
 		
 		var tenantGrid = new CodeReuse.TenantGrid();
 		
-		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuilding").value);
+		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuildingTenant").value);
 		
 	},
+	
+	refreshTenantGridHome: function() {
+		
+		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
+		
+		homeTenantGrid.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo());
+		
+	},
+	
+	refreshSelectTenantGridHome: function() {
+		
+		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
+		
+		homeTenantGrid.refreshSelectTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuildingTenant").value);
+		
+	},	
 		
 	tenantUpdate: function() {
 			
@@ -106,7 +122,7 @@ CodeReuse.Tenant.prototype = {
 										
 		var helper = new CodeReuse.Helper();								
 												
-		if(helper.validateHtmlObjectFields(this.fields))
+		if(helper.validateHtmlObjectFieldsTenant(this.fields))
 		{	
 			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
@@ -123,7 +139,7 @@ CodeReuse.Tenant.prototype = {
 				
 		var helper = new CodeReuse.Helper();		
 				
-		if(helper.validateHtmlObjectFields(this.fields))
+		if(helper.validateHtmlObjectFieldsTenant(this.fields))
 		{
 			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
