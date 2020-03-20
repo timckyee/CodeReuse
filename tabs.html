@@ -67,6 +67,12 @@ div.pageContentsForm {
 		
 }
 
+.underline {
+    text-decoration: underline;
+   	cursor: default;
+	user-select: none;
+}
+
 </style>
 
 </head>
@@ -81,14 +87,13 @@ div.pageContentsForm {
 <div id="tabRentRollAndReports" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this)">Rent Roll & Reports Tab 4</div>
 	
 </div>
-
+	
 <div id="pageContentHome" class="pageContentsForm" style="display:block">
 <br>
 <br>
 <br>
 <br>
 <center><div id="gridGetPostHome" style="display:block"></div></center>
-</div>
 
 </div>
 
@@ -176,7 +181,7 @@ div.pageContentsForm {
 	
 	<tr>
 	<td><span>input</span></td>
-    <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 200">
+    <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 200"></td>
 	</tr>
     
     <tr>
@@ -191,14 +196,9 @@ div.pageContentsForm {
 
 	</table>
 
-	<div id="tenantSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div>
-	<div id="buildingSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div></td>
-
-	<div id="calendarId" style="position: absolute; display: none; z-index: 2; background-color: white"></div>
 	<br>
 	<br>
-	<div id="gridGetPost" style="display:block">
-	</div>
+	<div id="gridGetPost" style="display:block"></div>
 	<br>
 	<input type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
 	<input type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }" />
@@ -211,6 +211,10 @@ div.pageContentsForm {
 <br>
 <span>&nbsp&nbsp Rent Roll & Reports</span>
 </div>
+
+<div id="tenantSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div>
+<div id="buildingSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div>
+<div id="calendarId" style="position: absolute; display: none; z-index: 2; background-color: white"></div>
 
 </body>
 

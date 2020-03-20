@@ -1,5 +1,6 @@
 CodeReuse.SuiteGrid = function() {
 	
+	this.gridName = "SuiteGrid";
 	this.gridGetPostDivElement = "gridGetPostSuite";
 	this.tableHtmlObjectId = "tableSuite";
 		
@@ -20,6 +21,12 @@ CodeReuse.SuiteGrid = function() {
 
 CodeReuse.SuiteGrid.prototype = {
 	
+	getGridName: function() {
+		
+		return this.gridName;
+		
+	},
+	
 	getGridColumnsInfo: function() {
 		
 		return this.columns;
@@ -31,7 +38,7 @@ CodeReuse.SuiteGrid.prototype = {
 		
 		var callback = new CodeReuse.Callback();
 				
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick);
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit");
 						
 	},
 	
@@ -43,7 +50,7 @@ CodeReuse.SuiteGrid.prototype = {
 			
 			callback = new CodeReuse.Callback();			
 					
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick);
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit");
 				
 		}
 		

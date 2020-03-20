@@ -35,7 +35,7 @@ positionCalendar: function(inputCalendarId, divCalendarId) {
 },
 
 createCalendarTable: function(inputCalendarId, divCalendarId, moveCalendar, monthsArray) {
-	
+		
 	var tbl = document.createElement("table");
 	tbl.id = "tableCalendarId";
 	tbl.className = "calendar";
@@ -148,7 +148,7 @@ createCalendarTable: function(inputCalendarId, divCalendarId, moveCalendar, mont
 	tbl.appendChild(row);
 	
 	row = document.createElement("tr");
-	
+
 	for(i=15; i<=21; i++)
 	{
 		cell = document.createElement("td");
@@ -225,14 +225,14 @@ showHideCalendar: function(event, showOrHide, inputCalendarId, divCalendarId, mo
 		calendarId.style.display = "none";
 		return;
 	}
-
+	
 	var inputCalendar = document.getElementById(inputCalendarId);
 	
 	this.removeCalendarTable(divCalendarId);
-	this.createCalendarTable(inputCalendarId, divCalendarId, this.moveCalendar, monthsArray);
-	
+	this.createCalendarTable(inputCalendarId, divCalendarId, this.moveCalendar, monthsArray);	
+		
 	if(inputCalendar.value != "")
-	{
+	{	
 		this.calendar(this.getInputCalendarValue("month", inputCalendarId, monthsArray),this.getInputCalendarValue("year", inputCalendarId, monthsArray), inputCalendarId, divCalendarId, monthsArray);
 	}
 	else
@@ -257,7 +257,7 @@ validateDate: function(inputCalendarId)
 			return false;
 		}
 		else
-		{
+		{			
 			return true;
 		}
 	}
@@ -363,9 +363,9 @@ populateMonthsArray: function() {
 },
 
 calendar: function(month, year, inputCalendarId, divCalendarId, monthsArray) {
-	
+		
 	this.clearCalendar();
-	
+
 	var calendarDate = new Date();
 				
 	calendarDate.setDate(1);

@@ -1,5 +1,6 @@
 CodeReuse.TenantGrid = function() {
 	
+	this.gridName = "TenantGrid";
 	this.gridGetPostDivElement = "gridGetPost";
 	this.tableHtmlObjectId = "tableTenant";
 		
@@ -20,6 +21,12 @@ CodeReuse.TenantGrid = function() {
 
 CodeReuse.TenantGrid.prototype = {
 	
+	getGridName: function() {
+		
+		return this.gridName;
+		
+	},
+	
 	getGridColumnsInfo: function() {
 		
 		return this.columns;
@@ -31,7 +38,7 @@ CodeReuse.TenantGrid.prototype = {
 		
 		var callback = new CodeReuse.Callback();
 		
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick);
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit");
 		
 	},
 	
@@ -43,7 +50,7 @@ CodeReuse.TenantGrid.prototype = {
 			
 			callback = new CodeReuse.Callback();			
 					
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick);
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit");
 		}
 		
 		/*

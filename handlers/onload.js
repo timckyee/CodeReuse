@@ -9,6 +9,9 @@ window.addEventListener("load", function() {
 	init_autocomplete_inputs();
 	
 	init_calendar_inputs();
+	
+	var tabs = new CodeReuse.Tabs();
+	tabs.loadHomeTenantGrid();
 
 });
 

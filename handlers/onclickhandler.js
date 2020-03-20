@@ -45,7 +45,7 @@ TenantGridOnClickHandler: function(phpFile, row, fieldsInfo, gridColumnsInfo) {
 sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, column) {
 			
 	return function() {
-
+		
 		var sort = new CodeReuse.Sort();
 
 		sort.sortTable(sortTableHtmlObjectId, column);

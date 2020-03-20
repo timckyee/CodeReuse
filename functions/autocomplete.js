@@ -6,20 +6,11 @@ CodeReuse.Autocomplete = function() {
 CodeReuse.Autocomplete.prototype = {
 
 positionAutocomplete: function(inputAutocompleteId, divListId) {
-	
-	//debugger
-	
+		
 	var positionInputAutocomplete = document.getElementById(inputAutocompleteId);
 	
 	var left = positionInputAutocomplete.offsetLeft;
 	var top = positionInputAutocomplete.offsetTop;
-	
-	/*
-	const rect = positionInputAutocomplete.getBoundingClientRect();
-	
-	var left = rect.left;
-	var top = rect.top;
-	*/
 	
 	var positionDivList = document.getElementById(divListId);
 	
@@ -93,8 +84,8 @@ resetInputFields: function(queryName)
 },
 */
 
-autocomplete: function(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {
-				
+autocomplete: function(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {		
+					
 	var input = event.target;
 	
 	var searchList = document.getElementById(divElement);

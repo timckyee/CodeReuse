@@ -92,6 +92,44 @@ CodeReuse.Controller.prototype = {
 		
 	},
 	
+	homeTenantGridSave: function() {
+				
+		var saveType;
+		
+		var inputPrimaryKey_grid = document.getElementById("inputPrimaryKey_grid").innerHTML;
+		
+		var inputCalendar_grid = document.getElementById("inputCalendar_grid").value;
+		var inputCalendarTesting_grid = document.getElementById("inputCalendarTesting_grid").value;
+		
+		var building_input_grid = document.getElementById("building_input_grid").getAttribute("rowAttributeValue");
+		var tenant_input_grid = document.getElementById("tenant_input_grid").getAttribute("rowAttributeValue");
+				
+		var HomeTenantGridValues = new Array();
+		
+		HomeTenantGridValues["inputCalendar_grid"] = inputCalendar_grid;
+		HomeTenantGridValues["inputCalendarTesting_grid"] = inputCalendarTesting_grid;
+		HomeTenantGridValues["building_input_grid"] = building_input_grid;
+		HomeTenantGridValues["tenant_input_grid"] = tenant_input_grid;
+		
+		var homeTenantGrid = new CodeReuse.HomeTenantGrid();	
+		
+		if(inputPrimaryKey != "")
+		{
+			saveType = "update";
+		}
+		else
+		{
+			saveType = "insert";
+		}
+					
+		if(saveType == "update")
+		{				
+			homeTenantGrid.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey_grid);
+			homeTenantGrid.homeTenantGridUpdate();
+		}
+		
+	},	
+	
 	resetBuildingSelectField: function(selectFieldHtmlObjectId, gridGetPostDivElement) {
 		
 		//var selectFieldHtmlObjectId = "selectBuilding";

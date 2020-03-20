@@ -4,7 +4,7 @@ CodeReuse.Sort = function() {
 
 CodeReuse.Sort.prototype = {
 
-sortTable: function(tblId, column){				
+sortTable: function(tblId, column){
 	
     var table = document.getElementById(tblId);
     
@@ -20,13 +20,22 @@ sortTable: function(tblId, column){
         
     }
     
-	var sortingFunctionColumn = function(a,b) {
+    if(tblId == "tableHomeTenant")
+    {
+	   	sortingFunctionCompareColumn = column + 1;
+    }
+    else
+    {
+	    sortingFunctionCompareColumn = column;
+    }
+    
+	var sortingFunction = function(a,b) {
 				
 		if(b == null)
 			return;
 		
-		var x = a[0].cells[column].innerHTML;
-		var y = b[0].cells[column].innerHTML;
+		var x = a[0].cells[sortingFunctionCompareColumn].innerHTML;
+		var y = b[0].cells[sortingFunctionCompareColumn].innerHTML;
 						
 		if (x < y) {return -1;}
 		if (x > y) {return 1;}
@@ -34,7 +43,7 @@ sortTable: function(tblId, column){
 		
 	}
 	
-	Arr.sort(sortingFunctionColumn);
+	Arr.sort(sortingFunction);
 
 	table.innerHTML = "";
 	table.appendChild(header);

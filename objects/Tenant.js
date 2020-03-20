@@ -118,7 +118,7 @@ CodeReuse.Tenant.prototype = {
 		
 	tenantUpdate: function() {
 			
-		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();	
+		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();				
 										
 		var helper = new CodeReuse.Helper();								
 												

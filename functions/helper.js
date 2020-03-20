@@ -64,6 +64,23 @@ validateHtmlObjectFieldsTenant: function(fieldsInfo)
 	return true;
 },
 
+validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
+{
+	for(validate=0; validate<columnsInfo.length; validate++)
+	{
+		if(columnsInfo[validate].id != "fieldPrimaryKey")
+		{
+			if(document.getElementById(columnsInfo[validate].htmlObjectId).value == "")
+			{
+				alert(columnsInfo[validate].htmlObjectId + ' ' + 'cannot be empty');
+				return false;
+			}
+		}
+	}
+	
+	return true;
+},
+
 convertDateFromDatabase: function(date)
 {	
 	var dateFromDatabase = date;
