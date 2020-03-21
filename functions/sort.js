@@ -11,19 +11,29 @@ sortTable: function(tblId, column){
 	//return;
 	
 	
-	var sortDirection = localStorage.getItem("arraySortDirection");	
+	var sortDirection;
 	
-	if(sortDirection != null)
+	if(localStorage.getItem("sortTableId") != tblId)
 	{
-		if(sortDirection == "asc")
-			localStorage.setItem("arraySortDirection", "desc");	
-		else
-		if(sortDirection == "desc")
-			localStorage.setItem("arraySortDirection", "asc");
-	}
+		localStorage.setItem("sortTableId", tblId);
+		localStorage.setItem("arraySortDirection", "desc");
+	}	
 	else
 	{
-		localStorage.setItem("arraySortDirection", "desc");
+		sortDirection = localStorage.getItem("arraySortDirection");	
+		
+		if(sortDirection != null)
+		{
+			if(sortDirection == "asc")
+				localStorage.setItem("arraySortDirection", "desc");	
+			else
+			if(sortDirection == "desc")
+				localStorage.setItem("arraySortDirection", "asc");
+		}
+		else
+		{
+			localStorage.setItem("arraySortDirection", "desc");
+		}
 	}
 	
 	
