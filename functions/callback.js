@@ -137,7 +137,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 		var handler = new CodeReuse.Handler();	
 			
-		tableHeader.onclick = handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
+		//tableHeader.onclick = handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
 		
 		var columnName = gridColumnsInfo[i].colName;
 		
