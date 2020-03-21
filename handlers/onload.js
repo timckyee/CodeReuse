@@ -30,10 +30,11 @@ function init_autocomplete_inputs() {
 	var tenantModel = new CodeReuse.Tenant();
 	var phpFile = tenantModel.getPhpFile();
 	
-	var building_input = document.getElementById("building_input");
+	//var building_input = document.getElementById("building_input");
 		
 	var autocomplete = new CodeReuse.Autocomplete();
-		
+	
+	/*	
 	building_input.addEventListener("keyup", function(event){ 
 		
 		if(document.getElementById("building_input").value == "")
@@ -46,7 +47,8 @@ function init_autocomplete_inputs() {
 		}
 	});
 	
-	building_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });		
+	building_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });
+	*/		
 	
 	var tenant_input = document.getElementById("tenant_input");
 	
@@ -58,7 +60,7 @@ function init_autocomplete_inputs() {
 		}
 		else
 		{
-			autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input").getAttribute("rowAttributeValue"), "tenant_input", "tenantSearchList");
+			autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_option").value, "tenant_input", "tenantSearchList");
 		}
 		
 	});

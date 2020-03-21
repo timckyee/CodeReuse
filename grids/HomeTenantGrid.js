@@ -13,15 +13,16 @@ CodeReuse.HomeTenantGrid = function() {
 	this.columns = [
 		
 		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", dbField: "fieldPrimaryKey", htmlObjectId: "inputPrimaryKey_grid" },
-		{ colName: "field1", id: "field1", colType: "date", dbField: "field1", htmlObjectId: "inputCalendar_grid" },
-		{ colName: "field2", id: "field2", colType: "date", dbField: "field2", htmlObjectId: "inputCalendarTesting_grid" },
-		{ colName: "Building Name", id: "buildingName", colType: "string", dbField: "field3", htmlObjectId: "building_input_grid" },
-		{ colName: "Tenant Name", id: "tenantName", colType: "string", dbField: "field4", htmlObjectId: "tenant_input_grid" }
+		{ colName: "Building Name", id: "buildingName", colType: "int", dbField: "field3", htmlObjectId: "building_option_grid" },
+		{ colName: "Tenant Name", id: "tenantName", colType: "string", dbField: "field4", htmlObjectId: "tenant_input_grid" },
+		{ colName: "Field Date", id: "field1", colType: "date", dbField: "field1", htmlObjectId: "inputCalendar_grid" },
+		{ colName: "Field Date", id: "field2", colType: "date", dbField: "field2", htmlObjectId: "inputCalendarTesting_grid" },
+		
 	];
 	
 	this.autocomplete_inputs = [
 	
-		{ htmlObjectId: "building_input", value: "field3" , display: "field3display" },
+		//{ htmlObjectId: "building_input", value: "field3" , display: "field3display" },
 		{ htmlObjectId: "tenant_input", value: "field4" , display: "field4display" }
 		
 	];
@@ -83,7 +84,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 		this.field1 = inputValueArray["inputCalendar_grid"];
 		this.field2 = inputValueArray["inputCalendarTesting_grid"];
-		this.field3 = inputValueArray["building_input_grid"];
+		this.field3 = inputValueArray["building_option_grid"];
 		this.field4 = inputValueArray["tenant_input_grid"];
 		
 	},	
@@ -93,10 +94,10 @@ CodeReuse.HomeTenantGrid.prototype = {
 		var fieldsValuesUpdateArray = [];
 		
 		fieldsValuesUpdateArray[0] = this.fieldPrimaryKey;
-		fieldsValuesUpdateArray[1] = this.field1;
-		fieldsValuesUpdateArray[2] = this.field2;
-		fieldsValuesUpdateArray[3] = this.field3;
-		fieldsValuesUpdateArray[4] = this.field4;
+		fieldsValuesUpdateArray[1] = this.field3;
+		fieldsValuesUpdateArray[2] = this.field4;
+		fieldsValuesUpdateArray[3] = this.field1;
+		fieldsValuesUpdateArray[4] = this.field2;
 		
 		return fieldsValuesUpdateArray;
 		

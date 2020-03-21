@@ -10,13 +10,14 @@ CodeReuse.Tenant = function() {
 		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectId: "inputPrimaryKey", htmlObjectType: "primaryKey" },
 		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendar", htmlObjectType: "calendar" },
 		{ name: "field2", dbType: "date", htmlObjectId: "inputCalendarTesting", htmlObjectType: "calendar" },
-		{ name: "field3", dbType: "int", htmlObjectId: "building_input", htmlObjectType: "autocomplete" },
+		//{ name: "field3", dbType: "int", htmlObjectId: "building_input", htmlObjectType: "autocomplete" },
+		{ name: "field3", dbType: "int", htmlObjectId: "building_option", htmlObjectType: "select" },
 		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input", htmlObjectType: "autocomplete" }
 	];
 	
 	this.autocomplete_inputs = [
 	
-		{ htmlObjectId: "building_input", value: "field3" , display: "field3display" },
+		//{ htmlObjectId: "building_input", value: "field3" , display: "field3display" },
 		{ htmlObjectId: "tenant_input", value: "field4" , display: "field4display" }
 		
 	];
@@ -52,7 +53,7 @@ CodeReuse.Tenant.prototype = {
 		
 		this.field1 = inputValueArray["inputCalendar"];
 		this.field2 = inputValueArray["inputCalendarTesting"];
-		this.field3 = inputValueArray["building_input"];
+		this.field3 = inputValueArray["building_option"];
 		this.field4 = inputValueArray["tenant_input"];
 		
 	},

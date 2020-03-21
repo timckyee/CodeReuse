@@ -55,16 +55,17 @@ CodeReuse.Controller.prototype = {
 		
 		var inputCalendar = document.getElementById("inputCalendar").value;
 		var inputCalendarTesting = document.getElementById("inputCalendarTesting").value;
-		var selectBuilding = document.getElementById("selectBuildingTenant").value;
+		//var selectBuilding = document.getElementById("selectBuildingTenant").value;
 		
-		var building_input = document.getElementById("building_input").getAttribute("rowAttributeValue");
+		//var building_input = document.getElementById("building_input").getAttribute("rowAttributeValue");
+		var building_option = document.getElementById("building_option").value;
 		var tenant_input = document.getElementById("tenant_input").getAttribute("rowAttributeValue");
 		
 		var TenantValues = new Array();
 		
 		TenantValues["inputCalendar"] = inputCalendar;
 		TenantValues["inputCalendarTesting"] = inputCalendarTesting;
-		TenantValues["building_input"] = building_input;
+		TenantValues["building_option"] = building_option;
 		TenantValues["tenant_input"] = tenant_input;
 		
 		if(inputPrimaryKey != "")
@@ -99,16 +100,19 @@ CodeReuse.Controller.prototype = {
 		var inputPrimaryKey_grid = document.getElementById("inputPrimaryKey_grid").innerHTML;
 		
 		var inputCalendar_grid = document.getElementById("inputCalendar_grid").value;
+		
 		var inputCalendarTesting_grid = document.getElementById("inputCalendarTesting_grid").value;
 		
-		var building_input_grid = document.getElementById("building_input_grid").getAttribute("rowAttributeValue");
+		//var building_input_grid = document.getElementById("building_input_grid").getAttribute("rowAttributeValue");
+		
+		var building_option_grid = document.getElementById("building_option_grid").selectedIndex;
 		var tenant_input_grid = document.getElementById("tenant_input_grid").getAttribute("rowAttributeValue");
 				
 		var HomeTenantGridValues = new Array();
 		
 		HomeTenantGridValues["inputCalendar_grid"] = inputCalendar_grid;
 		HomeTenantGridValues["inputCalendarTesting_grid"] = inputCalendarTesting_grid;
-		HomeTenantGridValues["building_input_grid"] = building_input_grid;
+		HomeTenantGridValues["building_option_grid"] = building_option_grid;
 		HomeTenantGridValues["tenant_input_grid"] = tenant_input_grid;
 		
 		var homeTenantGrid = new CodeReuse.HomeTenantGrid();	

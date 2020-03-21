@@ -104,17 +104,17 @@ div.pageContentsForm {
 	<br>
 	<br>
 	<center>
-	<table>
-	<tr>
-	<td><span>select</span></td>
 	
-	<td><select id="selectBuildingSuite" onchange="if(this.value == ''){ document.getElementById('gridGetPostSuite').style.display = 'none'; } else { document.getElementById('gridGetPostSuite').style.display = 'block'; controller.refreshSelectSuiteGrid();controller.resetSuiteFields(); }">
-		<option value="" selected>None</option>
-		<option value="1">building</option>
-		<option value="2">building2</option>
+	<span>select</span>
+	<select id="selectBuildingSuite" onchange="if(this.value == ''){ document.getElementById('gridGetPostSuite').style.display = 'none'; } else { document.getElementById('gridGetPostSuite').style.display = 'block'; controller.refreshSelectSuiteGrid();controller.resetSuiteFields(); }">
+			<option value="" selected>None</option>
+			<option value="1">building</option>
+			<option value="2">building2</option>
 	</select>
-	</td>
-	</tr>
+	<br>
+	<br>
+	
+	<table>
 
 	<tr>
 	<td><span>primary key</span></td>
@@ -156,41 +156,52 @@ div.pageContentsForm {
 	<br>
 	<br>
 	<center>
-	<table>
-	
-	<tr>
-	<td><span>select</span></td>
-	<td>
+
+	<span>select</span>
 	<select id="selectBuildingTenant" onchange="if(this.value == ''){ document.getElementById('gridGetPost').style.display = 'none'; } else { document.getElementById('gridGetPost').style.display = 'block'; controller.refreshSelectTenantGrid();controller.resetTenantFields(); }">
 		<option value="" selected>None</option>
 		<option value="1">building</option>
 		<option value="2">building2</option>
 	</select>
-	</td>
-	</tr>
+	<br>
+	<br>
+	
+	<table>
 	
 	<tr>
 	<td><span>primary key</span></td>
 	<td><input "text" id="inputPrimaryKey" readonly /></td>
 	</tr>
 
+	<!--
 	<tr>
 	<td><span>input</span></td>
     <td><input type="text" name="building" id="building_input" style="position: relative; z-index: 1; background-color: white; width: 200"></td>
     </tr>
+    -->
 	
 	<tr>
-	<td><span>input</span></td>
+	<td><span>building</span></td>
+	<td><select id="building_option">
+		<option value ""</option>
+		<option value="1">building</option>
+		<option value="2">building2</option>
+		</select>	
+	</td>	
+	</tr>
+	
+	<tr>
+	<td><span>tenant</span></td>
     <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 200"></td>
 	</tr>
     
     <tr>
-	<td><span>input date</span></td>
+	<td><span>field date</span></td>
 	<td><input type="text" id="inputCalendar" style="position: relative; z-index: 1; background-color: white; width: 142" /></td>
     </tr>
 
 	<tr>
-	<td><span>input date</span></td>
+	<td><span>field date</span></td>
 	<td><input type="text" id="inputCalendarTesting" style="position: relative; z-index: 1; background-color: white; width: 142" /></td>
 	</tr>
 

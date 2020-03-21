@@ -213,6 +213,93 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			inputPrimaryKey.id = "inputPrimaryKey_grid";
 			inputPrimaryKey.innerHTML = rowId;
 			cell.appendChild(inputPrimaryKey);
+					
+			
+			cell = row.insertCell();
+			
+			building_option_grid = document.createElement("select");
+			option = document.createElement("option");
+			option.text = "";
+			building_option_grid.options.add(option,"");			
+			option = document.createElement("option");
+			option.text = "building";
+			building_option_grid.options.add(option,1);
+			option = document.createElement("option");
+			option.text = "building2";
+			building_option_grid.options.add(option,2);
+			
+			building_option_grid.id = "building_option_grid";
+						
+			//building_option_grid.value = item["field3"];
+		
+			building_option_grid.selectedIndex = item["field3"];
+		
+			cell.appendChild(building_option_grid);
+			
+			/*
+			building_input_grid = document.createElement("input");
+			building_input_grid.id = "building_input_grid";
+			
+			building_input_grid.value = item["buildingName"];
+			building_input_grid.setAttribute("rowAttributeValue", item["field3"]);
+						
+			building_input_grid.style.position = "relative";
+			building_input_grid.style.zIndex = "1";
+			building_input_grid.style.backgroundColor = "white";
+			building_input_grid.width = "200";			
+			
+			var autocomplete = new CodeReuse.Autocomplete();
+				
+			building_input_grid.addEventListener("keyup", function(event){ 
+				
+				if(document.getElementById("building_input_grid").value == "")
+				{
+					document.getElementById("buildingSearchList").innerHTML = "";
+				}
+				else
+				{
+					autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input_grid", "buildingSearchList");
+				}
+			});
+			
+			building_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });			
+			
+			cell.appendChild(building_input_grid);
+			*/
+			
+			
+			cell = row.insertCell();
+			
+			tenant_input_grid = document.createElement("input");
+			tenant_input_grid.id = "tenant_input_grid";
+			
+			tenant_input_grid.value = item["tenantName"];
+			tenant_input_grid.setAttribute("rowAttributeValue", item["field4"]);
+			
+			tenant_input_grid.style.position = "relative";
+			tenant_input_grid.style.zIndex = "1";
+			tenant_input_grid.style.backgroundColor = "white";
+			tenant_input_grid.width = "200";				
+			
+			var autocomplete = new CodeReuse.Autocomplete();
+			
+			tenant_input_grid.addEventListener("keyup", function(event){
+					
+				if(document.getElementById("tenant_input_grid").value == "")
+				{
+					document.getElementById("tenantSearchList").innerHTML = "";			
+				}
+				else
+				{
+					autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
+				}
+				
+			});		
+			
+			tenant_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
+			
+			cell.appendChild(tenant_input_grid);
+			
 			
 			cell = row.insertCell();
 			
@@ -278,68 +365,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			});			
 			
 			inputCalendarTesting_grid.value = dateFormatCalendarTesting;
-			cell.appendChild(inputCalendarTesting_grid);			
+			cell.appendChild(inputCalendarTesting_grid);
 			
-			cell = row.insertCell();
-			
-			building_input_grid = document.createElement("input");
-			building_input_grid.id = "building_input_grid";
-			
-			building_input_grid.value = item["buildingName"];
-			building_input_grid.setAttribute("rowAttributeValue", item["field3"]);
-						
-			building_input_grid.style.position = "relative";
-			building_input_grid.style.zIndex = "1";
-			building_input_grid.style.backgroundColor = "white";
-			building_input_grid.width = "200";			
-			
-			var autocomplete = new CodeReuse.Autocomplete();
-				
-			building_input_grid.addEventListener("keyup", function(event){ 
-				
-				if(document.getElementById("building_input_grid").value == "")
-				{
-					document.getElementById("buildingSearchList").innerHTML = "";
-				}
-				else
-				{
-					autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input_grid", "buildingSearchList");
-				}
-			});
-			
-			building_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });			
-			
-			cell.appendChild(building_input_grid);
-			
-			cell = row.insertCell();
-			
-			tenant_input_grid = document.createElement("input");
-			tenant_input_grid.id = "tenant_input_grid";
-			
-			tenant_input_grid.value = item["tenantName"];
-			tenant_input_grid.setAttribute("rowAttributeValue", item["field4"]);
-			
-			tenant_input_grid.style.position = "relative";
-			tenant_input_grid.style.zIndex = "1";
-			tenant_input_grid.style.backgroundColor = "white";
-			tenant_input_grid.width = "200";				
-			
-			tenant_input_grid.addEventListener("keyup", function(event){
-					
-				if(document.getElementById("tenant_input_grid").value == "")
-				{
-					document.getElementById("tenantSearchList").innerHTML = "";			
-				}
-				else
-				{
-					autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_input_grid").getAttribute("rowAttributeValue"), "tenant_input_grid", "tenantSearchList");
-				}
-				
-			});		
-			
-			tenant_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
-			
-			cell.appendChild(tenant_input_grid);
 			
 			row.appendChild(cell);
 		}	
