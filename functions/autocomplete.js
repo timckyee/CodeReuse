@@ -110,6 +110,7 @@ autocomplete: function(event, divElement, itemColumns, valueField, httpGetOrPost
 				searchList.innerHTML = "";
 				
 				var tbl = document.createElement("table");
+				tbl.className = "autocomplete";
 											
 				response.forEach(function(item) {
 				

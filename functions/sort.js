@@ -10,7 +10,6 @@ sortTable: function(tblId, column){
 	
 	//return;
 	
-	
 	var sortDirection;
 	
 	if(localStorage.getItem("sortTableId") != tblId)

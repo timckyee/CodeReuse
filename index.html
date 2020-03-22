@@ -73,6 +73,46 @@ div.pageContentsForm {
 	user-select: none;
 }
 
+/*
+table {
+  table-layout: fixed;
+  width: 70%;
+}
+*/
+
+table.homeGrid {
+  table-layout: fixed;
+  width: 70%;
+}
+
+table.tenantGrid {
+  table-layout: fixed;
+  width: 70%;
+}
+
+table.suiteGrid {
+  table-layout: fixed;
+  width: 40%;
+}
+
+table.autocomplete {
+  table-layout: fixed;
+  width: 140px;
+}
+
+table.formGrid {
+  table-layout: fixed;
+  width: 32%;
+}
+
+td.grid {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
 </style>
 
 </head>
@@ -114,7 +154,7 @@ div.pageContentsForm {
 	<br>
 	<br>
 	
-	<table>
+	<table class="formGrid">
 
 	<tr>
 	<td><span>primary key</span></td>
@@ -166,7 +206,7 @@ div.pageContentsForm {
 	<br>
 	<br>
 	
-	<table>
+	<table class="formGrid">
 	
 	<tr>
 	<td><span>primary key</span></td>
@@ -192,7 +232,7 @@ div.pageContentsForm {
 	
 	<tr>
 	<td><span>tenant</span></td>
-    <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 200"></td>
+    <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 142" /></td>
 	</tr>
     
     <tr>
@@ -211,6 +251,7 @@ div.pageContentsForm {
 	<br>
 	<div id="gridGetPost" style="display:block"></div>
 	<br>
+	
 	<input type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
 	<input type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }" />
 	

@@ -5,11 +5,23 @@ CodeReuse.Callback = function() {
 CodeReuse.Callback.prototype = {
 
 gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn) {		
-				
 	divTable.innerHTML = "";
 	
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
+	
+	if(tableHtmlObjectId == "tableHomeTenant")
+	{
+		tbl.className = "homeGrid";
+	}
+	else if(tableHtmlObjectId == "tableSuite")
+	{
+		tbl.className = "suiteGrid";
+	}
+	else if(tableHtmlObjectId == "tableTenant")
+	{
+		tbl.className = "tenantGrid";
+	}
 								
 	var tableHeaderRow = document.createElement("tr");
 	
@@ -19,7 +31,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	if(showEditColumn == "showEdit")
 	{
 		tableHeader = document.createElement("th");
-		tableHeader.className = "edit";
+		
+		tableHeader.style.width = "70px";
+		
 		tableHeaderRow.appendChild(tableHeader);
 	}
 	
@@ -58,6 +72,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		if(showEditColumn == "showEdit")
 		{			
 			cell = document.createElement("td");
+			//cell.className = "homeGridEdit";
+			
+			cell.style.paddingLeft = "10px";
+			
 			cellText = document.createTextNode("edit");
 			
 			var tenantModel = new CodeReuse.Tenant();
@@ -73,6 +91,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell.className = "underline";	
 			cell.appendChild(cellText);
 			
+			cell.height = 25;
+			
 			row.appendChild(cell);
 		}
 		
@@ -81,6 +101,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		{	
 			
 			cell = document.createElement("td");
+			cell.className = "grid";
 					
 			var colType = gridColumnsInfo[i].colType;
 			
@@ -121,6 +142,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
+	tbl.className = "homeGrid";
 								
 	var tableHeaderRow = document.createElement("tr");
 	
@@ -128,7 +150,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	var tableHeaderText;		
 	
 	tableHeader = document.createElement("th");
-	tableHeader.className = "edit";
+	tableHeader.style.width = "70px";
+	
 	tableHeaderRow.appendChild(tableHeader);	
 	
 	for(i=0; i<gridColumnsInfo.length; i++)
@@ -162,6 +185,11 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		if(item["fieldPrimaryKey"] == rowId)
 		{
 			cell = document.createElement("td");
+			
+			//cell.className = "grid";
+			
+			cell.style.paddingLeft = "10px";
+			
 			cellText = document.createTextNode("save");
 			
 			var tenantModel = new CodeReuse.Tenant();
@@ -180,6 +208,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			cell.className = "underline";	
 			cell.appendChild(cellText);
 			
+			cell.height = 25;
+			
 			row.appendChild(cell);
 			
 			itemCurrent = item;
@@ -187,6 +217,11 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		else
 		{
 			cell = document.createElement("td");
+			
+			//cell.className = "grid";
+			
+			cell.style.paddingLeft = "10px";
+			
 			cellText = document.createTextNode("edit");
 			
 			var tenantModel = new CodeReuse.Tenant();
@@ -202,20 +237,25 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			cell.className = "underline";	
 			cell.appendChild(cellText);
 			
+			cell.height = 25;
+			
 			row.appendChild(cell);
-		}			
+		}
 		
 		if(item["fieldPrimaryKey"] == rowId)
 		{
 			cell = row.insertCell();
+			cell.className = "grid";
 			
 			inputPrimaryKey = document.createElement("span");
 			inputPrimaryKey.id = "inputPrimaryKey_grid";
 			inputPrimaryKey.innerHTML = rowId;
+			
 			cell.appendChild(inputPrimaryKey);
 					
 			
 			cell = row.insertCell();
+			cell.className = "grid";
 			
 			building_option_grid = document.createElement("select");
 			option = document.createElement("option");
@@ -269,6 +309,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 			
 			cell = row.insertCell();
+			cell.className = "grid";
 			
 			tenant_input_grid = document.createElement("input");
 			tenant_input_grid.id = "tenant_input_grid";
@@ -302,6 +343,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 			
 			cell = row.insertCell();
+			cell.className = "grid";
 			
 			var helper = new CodeReuse.Helper();			
 			var dateFormatCalendar = helper.convertDateFromDatabase(item["field1"]);
@@ -334,9 +376,12 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			});
 			
 			inputCalendar_grid.value = dateFormatCalendar;
+			
 			cell.appendChild(inputCalendar_grid);
 			
+			
 			cell = row.insertCell();
+			cell.className = "grid";
 			
 			var dateFormatCalendarTesting = helper.convertDateFromDatabase(item["field2"]);
 			
@@ -365,6 +410,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			});			
 			
 			inputCalendarTesting_grid.value = dateFormatCalendarTesting;
+			
 			cell.appendChild(inputCalendarTesting_grid);
 			
 			
@@ -376,6 +422,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			{	
 				
 				cell = document.createElement("td");
+				
+				cell.className = "grid";
 				
 				var colType = gridColumnsInfo[i].colType;
 				
