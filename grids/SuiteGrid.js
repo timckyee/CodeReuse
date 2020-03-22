@@ -8,7 +8,7 @@ CodeReuse.SuiteGrid = function() {
 		
 		{ colName: "Primary Key", id: "suiteId", colType: "int" },
 		{ colName: "Suite Number", id: "suiteNumber", colType: "string" },
-		{ colName: "Building", id: "buildingId", colType: "int" },
+		{ colName: "Building", id: "buildingName", colType: "string" },
 		{ colName: "Location", id: "location", colType: "string" }
 
 	];

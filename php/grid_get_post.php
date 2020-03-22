@@ -43,7 +43,7 @@
 		else
 		if($queryName == "populateSuite") {
 			
-			$result = $mysqli->query("select suiteId, suiteNumber, buildingId, location from tableGridGetPostSuite where suiteId = " . $_GET["htmlObjectPrimaryKeyValue"]);
+			$result = $mysqli->query("select suiteId, suiteNumber, tableGridGetPostSuite.buildingId, buildingName, location from tableGridGetPostSuite inner join tableGridGetPostBuilding on tableGridGetPostSuite.buildingId = tableGridGetPostBuilding.buildingId where suiteId = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		
 		}
 		else
@@ -61,7 +61,7 @@
 		}
 		else if($queryName == "suites") {
 						
-	        $result = $mysqli->query("select suiteId, suiteNumber, buildingId, location from tableGridGetPostSuite where buildingId = " . $_GET["building"]);
+	        $result = $mysqli->query("select suiteId, suiteNumber, tableGridGetPostSuite.buildingId, buildingName, location from tableGridGetPostSuite inner join tableGridGetPostBuilding on tableGridGetPostSuite.buildingId = tableGridGetPostBuilding.buildingId where tableGridGetPostBuilding.buildingId = " . $_GET["building"]);
 			
 		}		
 		else if($queryName == "tenants") {
