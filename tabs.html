@@ -102,7 +102,7 @@ table.autocomplete {
 
 table.formGrid {
   table-layout: fixed;
-  width: 32%;
+  width: 40%;
 }
 
 td.grid {
@@ -122,8 +122,8 @@ td.grid {
 <div id="tabPanel" style="border:1px solid black; float:left; height:100%">
 
 <div id="tabHome" class="tabOptionsSelect" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this); tabs.loadHomeTenantGrid();">Home Tab 1</div>
-<div id="tabSuites" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this)">Suites Tab 2</div>
-<div id="tabTenants" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this)">Tenants Tab 3</div>
+<div id="tabSuites" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this); tabs.loadSuiteGrid()">Suites Tab 2</div>
+<div id="tabTenants" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this); tabs.loadTenantGrid()">Tenants Tab 3</div>
 <div id="tabRentRollAndReports" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this)">Rent Roll & Reports Tab 4</div>
 	
 </div>

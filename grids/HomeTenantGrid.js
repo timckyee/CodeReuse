@@ -45,6 +45,12 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 	},
 	
+	getRowOnClick: function() {
+		
+		return this.rowOnClick;
+		
+	},
+	
 	getColumnsInfo: function() {
 		
 		return this.columns;
@@ -104,24 +110,73 @@ CodeReuse.HomeTenantGrid.prototype = {
 	},	
 	
 	refreshTenantHomeGrid: function(phpFile, fieldsInfo) {
-				
+		
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var callback = new CodeReuse.Callback();
 		
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit");
+		var sortDirection = localStorage.getItem("arraySortDirection");
+		
+		var sortColumn = localStorage.getItem("arraySortColumn");		
+		
+		if(sortColumn != "fieldPrimaryKey" && sortColumn != "")		
+		{		
+			if(this.tableHtmlObjectId != localStorage.getItem("sortTableId"))
+			{
+				if(sortColumn == "fieldPrimaryKey")
+				{
+					localStorage.setItem("arraySortDirection", "asc");
+				}
+				else
+				{
+					localStorage.setItem("arraySortDirection", "desc");
+				}
+					
+				localStorage.setItem("sortTableId", this.tableHtmlObjectId);		
+			}
+			else
+			{		
+				if(sortDirection == "asc")
+				{
+					localStorage.setItem("arraySortDirection", "desc");	
+				}
+				else
+				{
+					localStorage.setItem("arraySortDirection", "asc");
+				}
+			}
+		}
+		else
+		{
+			localStorage.setItem("arraySortDirection", "asc");
+		}		
+		
+		
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, localStorage.getItem("arraySortDirection"));
 		
 	},
 	
-	refreshSelectTenantHomeGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {		
-		
+	refreshSelectTenantHomeGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {			
+						
 		if(selectBuildingHtmlObjectValue != "")
 		{
 			grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
 			callback = new CodeReuse.Callback();			
 					
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit");
+		var sortDirection = localStorage.getItem("arraySortDirection");
+		
+		if(sortDirection == "asc")
+		{
+			localStorage.setItem("arraySortDirection", "desc");	
+		}
+		else
+		{
+			localStorage.setItem("arraySortDirection", "asc");
+		}
+							
+					
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", "fieldPrimaryKey", localStorage.getItem("arraySortDirection"));
 		}
 		
 		/*

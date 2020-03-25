@@ -43,12 +43,84 @@ TenantGridOnClickHandler: function(phpFile, row, fieldsInfo, gridColumnsInfo) {
 },
 
 sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, column) {
-			
+				
 	return function() {
 		
 		var sort = new CodeReuse.Sort();
 
-		sort.sortTable(sortTableHtmlObjectId, column);
+		sort.sortTable(sortTableHtmlObjectId, column, gridColumnsInfo);
+			
+	};
+},
+
+sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gridColumnsInfo, column) {
+	
+	return function() {
+	
+		tenantModel = new CodeReuse.Tenant();
+		
+		home_tenant_grid = new CodeReuse.HomeTenantGrid();
+		
+		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+		
+		var callback = new CodeReuse.Callback();
+		
+		var sortColumn = gridColumnsInfo[column].dbField;		
+		
+		var sortDirection = localStorage.getItem("arraySortDirection");	
+		
+		if(sortColumn != localStorage.getItem("arraySortColumn"))
+		{
+			if(sortDirection == "asc")
+			{
+				localStorage.setItem("arraySortDirection", "asc");
+			}
+			else
+			{
+				if(sortTableHtmlObjectId != localStorage.getItem("sortTableId"))
+				{
+					if(sortColumn == "fieldPrimaryKey")
+					{
+						localStorage.setItem("arraySortDirection", "desc");
+					}
+					else
+					{
+						localStorage.setItem("arraySortDirection", "asc");
+					}
+						
+					localStorage.setItem("sortTableId", sortTableHtmlObjectId);
+				}
+				else
+				{
+					if(sortDirection == "asc")
+					{
+						localStorage.setItem("arraySortDirection", "desc");	
+					}
+					else
+					{
+						if(sortDirection == "desc")
+							localStorage.setItem("arraySortDirection", "asc");
+					}
+				}
+			}
+		}
+		else
+		{
+			if(sortDirection == "asc")
+			{
+				localStorage.setItem("arraySortDirection", "desc");	
+			}
+			else
+			{
+				if(sortDirection == "desc")
+					localStorage.setItem("arraySortDirection", "asc");
+			}			
+		}
+			
+		localStorage.setItem("arraySortColumn", sortColumn);
+
+		
+		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", sortColumn, localStorage.getItem("arraySortDirection"));
 			
 	};
 }

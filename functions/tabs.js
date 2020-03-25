@@ -33,6 +33,45 @@ loadHomeTenantGrid: function() {
 	
 	tenant.refreshTenantGridHome();
 	
+	//localStorage.clear();
+	
+	//return;
+	
+	localStorage.setItem("sortTableId", "");
+	
+	localStorage.setItem("arraySortColumn", "");
+	
+	localStorage.setItem("arraySortDirection", "desc");
+	
+},
+
+loadSuiteGrid: function() {
+	
+	var suite = new CodeReuse.Suite();
+	
+	suite.refreshSuiteGrid();	
+	
+	localStorage.setItem("sortTableId", "");
+	
+	localStorage.setItem("arraySortColumn", "");
+	
+	localStorage.setItem("arraySortDirection", "desc");	
+	
+},
+
+loadTenantGrid: function() {
+	
+	var tenant = new CodeReuse.Tenant();
+	
+	tenant.refreshTenantGrid();
+	
+	localStorage.setItem("sortTableId", "");
+	
+	localStorage.setItem("arraySortColumn", "");
+	
+	localStorage.setItem("arraySortDirection", "desc");	
+	
 }
+
 
 }

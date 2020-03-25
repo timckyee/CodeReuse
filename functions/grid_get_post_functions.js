@@ -4,9 +4,25 @@ CodeReuse.Grid_Get_Post_Functions = function() {
 
 CodeReuse.Grid_Get_Post_Functions.prototype = {
 
-grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, showEditColumn) {
+grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection) {
 		
 	var divTable = document.getElementById(divElement);
+	
+	if(sortColumn == "")
+	{
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			sortColumn = "fieldPrimaryKey";
+		}
+		else if(tableHomeTenant == "tableSuite")
+		{
+			sortColumn = "suiteId";
+		}
+		else if(tableHomeTenant == "tableTenant")
+		{
+			sortColumn = "fieldPrimaryKey";
+		}
+	}
 	
 	window.gridXmlHttpRequest.onreadystatechange = function() {
 				
@@ -14,7 +30,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 						
 			var response = JSON.parse(this.responseText);
 						
-			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn);
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection);
 					
 		}
 	};
@@ -22,19 +38,23 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 	var queryString;
 	
 	if(additionalArgs != "")
-		queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue;
+	{
+		queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
+	}
 	else
-		queryString = "queryName" + "=" + queryName;
+	{
+		queryString = "queryName" + "=" + queryName + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
+	}	
 		
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();
 	
 },
 	
-gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, rowId) {
-			
+gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, rowId, sortColumn, sortDirection) {
+	
 	return function() {
-					
+							
 		var divTable = document.getElementById(divElement);
 		
 		window.gridXmlHttpRequest.onreadystatechange = function() {
@@ -43,7 +63,7 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 				
 				var response = JSON.parse(this.responseText);
 							
-				callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId);			
+				callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection);			
 				
 			}
 		};
@@ -51,9 +71,14 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 		var queryString;
 		
 		if(additionalArgs != "")
-			queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue;
+		{
+			queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
+		}
 		else
-			queryString = "queryName" + "=" + queryName;
+		{
+			queryString = "queryName" + "=" + queryName + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
+		}
+	
 			
 		window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 		window.gridXmlHttpRequest.send();		

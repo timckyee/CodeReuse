@@ -10,9 +10,12 @@ window.addEventListener("load", function() {
 	
 	init_calendar_inputs();
 	
+	//localStorage.setItem("sortTableId", "tableHomeTenant");
+	//localStorage.setItem("arraySortDirection", "desc");	
+	
 	var tabs = new CodeReuse.Tabs();
 	tabs.loadHomeTenantGrid();
-
+	
 });
 
 function init_gridGetPost_xmlHttpRequests() {

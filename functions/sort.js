@@ -4,37 +4,73 @@ CodeReuse.Sort = function() {
 
 CodeReuse.Sort.prototype = {
 
-sortTable: function(tblId, column){
+sortTable: function(tblId, column, gridColumnsInfo){
 	
-	//localStorage.removeItem("arraySortDirection");
+	var sortColumn = gridColumnsInfo[column].dbField;	
 	
-	//return;
+	var sortDirection = localStorage.getItem("arraySortDirection");
 	
-	var sortDirection;
-	
-	if(localStorage.getItem("sortTableId") != tblId)
+	if(sortColumn != localStorage.getItem("arraySortColumn"))
 	{
-		localStorage.setItem("sortTableId", tblId);
-		localStorage.setItem("arraySortDirection", "desc");
-	}	
-	else
-	{
-		sortDirection = localStorage.getItem("arraySortDirection");	
-		
-		if(sortDirection != null)
+		if(sortDirection == "asc")
 		{
-			if(sortDirection == "asc")
-				localStorage.setItem("arraySortDirection", "desc");	
-			else
-			if(sortDirection == "desc")
-				localStorage.setItem("arraySortDirection", "asc");
+			localStorage.setItem("arraySortDirection", "asc");
 		}
 		else
 		{
-			localStorage.setItem("arraySortDirection", "desc");
+			if(tblId != localStorage.getItem("sortTableId"))
+			{
+				var sortColumnTablePrimaryKey;
+				
+				if(tblId == "tableSuite")
+				{
+					sortColumnTablePrimaryKey = "suiteId";
+				}
+				else
+				{
+					sortColumnTablePrimaryKey = "fieldPrimaryKey";
+				}
+				
+				if(sortColumn == sortColumnTablePrimaryKey)
+				{
+					localStorage.setItem("arraySortDirection", "desc");
+				}
+				else
+				{
+					localStorage.setItem("arraySortDirection", "asc");
+				}
+					
+				localStorage.setItem("sortTableId", tblId);
+			}
+			else
+			{
+				if(sortDirection == "asc")
+				{
+					localStorage.setItem("arraySortDirection", "desc");	
+				}
+				else
+				{
+					if(sortDirection == "desc")
+						localStorage.setItem("arraySortDirection", "asc");
+				}
+			}
 		}
 	}
-	
+	else
+	{
+		if(sortDirection == "asc")
+		{
+			localStorage.setItem("arraySortDirection", "desc");	
+		}
+		else
+		{
+			if(sortDirection == "desc")
+				localStorage.setItem("arraySortDirection", "asc");
+		}			
+	}
+		
+	localStorage.setItem("arraySortColumn", sortColumn);
+		
 	
 	
     var table = document.getElementById(tblId);
@@ -53,13 +89,13 @@ sortTable: function(tblId, column){
     
     if(tblId == "tableHomeTenant")
     {
-	   	sortingFunctionCompareColumn = column + 1;
+	   	sortingFunctionCompareColumn = parseInt(column) + 1;
     }
     else
     {
 	    sortingFunctionCompareColumn = column;
     }
-    
+        
     var sortingFunction;
     	
  	sortDirection = localStorage.getItem("arraySortDirection");	 	
@@ -67,12 +103,12 @@ sortTable: function(tblId, column){
     if(sortDirection == "asc")
     {
 		var sortingFunction = function(a,b) {
-							
+			
 			if(b == null)
 				return;
 			
-			var x = a[0].cells[sortingFunctionCompareColumn].innerHTML;
-			var y = b[0].cells[sortingFunctionCompareColumn].innerHTML;			
+			var x = a[0].cells[sortingFunctionCompareColumn].innerText;
+			var y = b[0].cells[sortingFunctionCompareColumn].innerText;			
 						
 			if (x < y) {return -1;}
 			if (x > y) {return 1;}
@@ -87,8 +123,8 @@ sortTable: function(tblId, column){
 			if(b == null)
 				return;
 			
-			var x = a[0].cells[sortingFunctionCompareColumn].innerHTML;
-			var y = b[0].cells[sortingFunctionCompareColumn].innerHTML;			
+			var x = a[0].cells[sortingFunctionCompareColumn].innerText;
+			var y = b[0].cells[sortingFunctionCompareColumn].innerText;	
 						
 			if (x > y) {return -1;}
 			if (x < y) {return 1;}

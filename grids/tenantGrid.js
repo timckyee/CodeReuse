@@ -6,11 +6,11 @@ CodeReuse.TenantGrid = function() {
 		
 	this.columns = [
 		
-		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int" },
-		{ colName: "field1", id: "field1", colType: "date" },
-		{ colName: "field2", id: "field2", colType: "date" },
-		{ colName: "Building Name", id: "buildingName", colType: "string" },
-		{ colName: "Tenant Name", id: "tenantName", colType: "string" }
+		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", dbField: "fieldPrimaryKey" },
+		{ colName: "field1", id: "field1", colType: "date", dbField: "field1" },
+		{ colName: "field2", id: "field2", colType: "date", dbField: "field2" },
+		{ colName: "Building Name", id: "buildingName", colType: "string", dbField: "field3" },
+		{ colName: "Tenant Name", id: "tenantName", colType: "string", dbField:"field4" }
 	];
 	
 	var handler = new CodeReuse.Handler();
@@ -27,6 +27,12 @@ CodeReuse.TenantGrid.prototype = {
 		
 	},
 	
+	getGridGetPostDivElement: function() {
+	
+		return this.gridGetPostDivElement;
+		
+	},
+	
 	getGridColumnsInfo: function() {
 		
 		return this.columns;
@@ -38,7 +44,10 @@ CodeReuse.TenantGrid.prototype = {
 		
 		var callback = new CodeReuse.Callback();
 		
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit");
+		//localStorage.setItem("arraySortDirection", "desc");
+		
+		if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", "fieldPrimaryKey", localStorage.getItem("arraySortDirection"));
 		
 	},
 	
@@ -48,9 +57,10 @@ CodeReuse.TenantGrid.prototype = {
 		{
 			grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
-			callback = new CodeReuse.Callback();			
-					
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit");
+			callback = new CodeReuse.Callback();
+			
+			if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", "fieldPrimaryKey", "asc");
 		}
 		
 		/*
