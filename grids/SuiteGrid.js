@@ -39,7 +39,7 @@ CodeReuse.SuiteGrid.prototype = {
 		var callback = new CodeReuse.Callback();
 				
 		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)			
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", "suiteId", "asc");
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", "suiteId", localStorage.getItem("arraySortDirection"));
 						
 	},
 	
@@ -49,10 +49,10 @@ CodeReuse.SuiteGrid.prototype = {
 		{
 			grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
-			callback = new CodeReuse.Callback();		
+			callback = new CodeReuse.Callback();
 			
 			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)	
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", "suiteId", localStorage.getItem("arraySortDirection"));
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", "suiteId", "asc");
 				
 		}
 		

@@ -5,75 +5,73 @@ CodeReuse.Sort = function() {
 CodeReuse.Sort.prototype = {
 
 sortTable: function(tblId, column, gridColumnsInfo){
+		
+	var sortColumn = gridColumnsInfo[column].dbField;
 	
-	var sortColumn = gridColumnsInfo[column].dbField;	
-	
-	var sortDirection = localStorage.getItem("arraySortDirection");
-	
-	if(sortColumn != localStorage.getItem("arraySortColumn"))
+	if(tblId == "tableSuite")
 	{
-		if(sortDirection == "asc")
+		var sortDirection_suite = localStorage.getItem("arraySortDirection_suite");	
+		
+		if(sortColumn != localStorage.getItem("arraySortColumn_suite"))
 		{
-			localStorage.setItem("arraySortDirection", "asc");
-		}
-		else
-		{
-			if(tblId != localStorage.getItem("sortTableId"))
+			
+			if(sortColumn == "suiteId")
 			{
-				var sortColumnTablePrimaryKey;
-				
-				if(tblId == "tableSuite")
-				{
-					sortColumnTablePrimaryKey = "suiteId";
-				}
-				else
-				{
-					sortColumnTablePrimaryKey = "fieldPrimaryKey";
-				}
-				
-				if(sortColumn == sortColumnTablePrimaryKey)
-				{
-					localStorage.setItem("arraySortDirection", "desc");
-				}
-				else
-				{
-					localStorage.setItem("arraySortDirection", "asc");
-				}
-					
-				localStorage.setItem("sortTableId", tblId);
+				localStorage.setItem("arraySortDirection_suite", "desc");
 			}
 			else
 			{
-				if(sortDirection == "asc")
-				{
-					localStorage.setItem("arraySortDirection", "desc");	
-				}
-				else
-				{
-					if(sortDirection == "desc")
-						localStorage.setItem("arraySortDirection", "asc");
-				}
+				localStorage.setItem("arraySortDirection_suite", "asc");
 			}
 		}
+		else
+		{	
+			if(sortDirection_suite == "asc")
+			{
+				localStorage.setItem("arraySortDirection_suite", "desc");	
+			}
+			else
+			{
+				if(sortDirection_suite == "desc")
+					localStorage.setItem("arraySortDirection_suite", "asc");
+			}			
+		}
+		
+		localStorage.setItem("arraySortColumn_suite", sortColumn);
+		
 	}
-	else
+	else if(tblId == "tableTenant")
 	{
-		if(sortDirection == "asc")
+		var sortDirection_tenant = localStorage.getItem("arraySortDirection_tenant");	
+		
+		if(sortColumn != localStorage.getItem("arraySortColumn_tenant"))
 		{
-			localStorage.setItem("arraySortDirection", "desc");	
+			if(sortColumn == "fieldPrimaryKey")
+			{
+				localStorage.setItem("arraySortDirection_tenant", "desc");
+			}
+			else
+			{
+				localStorage.setItem("arraySortDirection_tenant", "asc");
+			}
 		}
 		else
-		{
-			if(sortDirection == "desc")
-				localStorage.setItem("arraySortDirection", "asc");
-		}			
+		{	
+			if(sortDirection_tenant == "asc")
+			{
+				localStorage.setItem("arraySortDirection_tenant", "desc");	
+			}
+			else
+			{
+				if(sortDirection_tenant == "desc")
+					localStorage.setItem("arraySortDirection_tenant", "asc");
+			}			
+		}
+		
+		localStorage.setItem("arraySortColumn_tenant", sortColumn);
 	}
-		
-	localStorage.setItem("arraySortColumn", sortColumn);
-		
 	
-	
-    var table = document.getElementById(tblId);
+	var table = document.getElementById(tblId);
     
     var Arr = [];
     
@@ -98,7 +96,14 @@ sortTable: function(tblId, column, gridColumnsInfo){
         
     var sortingFunction;
     	
- 	sortDirection = localStorage.getItem("arraySortDirection");	 	
+    if(tblId == "tableSuite")
+    {
+    	sortDirection = localStorage.getItem("arraySortDirection_suite");
+    }
+    else if(tblId == "tableTenant")
+    {
+	    sortDirection = localStorage.getItem("arraySortDirection_tenant");
+    }	 	
     	
     if(sortDirection == "asc")
     {

@@ -8,21 +8,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 		
 	var divTable = document.getElementById(divElement);
 	
-	if(sortColumn == "")
-	{
-		if(tableHtmlObjectId == "tableHomeTenant")
-		{
-			sortColumn = "fieldPrimaryKey";
-		}
-		else if(tableHomeTenant == "tableSuite")
-		{
-			sortColumn = "suiteId";
-		}
-		else if(tableHomeTenant == "tableTenant")
-		{
-			sortColumn = "fieldPrimaryKey";
-		}
-	}
+	//debugger
 	
 	window.gridXmlHttpRequest.onreadystatechange = function() {
 				
@@ -53,7 +39,9 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 	
 gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, rowId, sortColumn, sortDirection) {
 	
-	return function() {
+	return function() {			
+				
+		//debugger		
 							
 		var divTable = document.getElementById(divElement);
 		
@@ -234,8 +222,10 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 					arrayOldValuesTableGridEdit[columnsInfo[update].id] = htmlObjectFieldsValuesUpdate[update];
 				}
 								
-				if(refreshGridCallbackEditGrid != undefined)
-					refreshGridCallbackEditGrid();
+				//debugger				
+								
+				//if(refreshGridCallbackEditGrid != undefined)
+				//	refreshGridCallbackEditGrid();			
 				
 			}
 		}

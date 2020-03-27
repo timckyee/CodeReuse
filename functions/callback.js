@@ -8,8 +8,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	//debugger
 	
-	//divTable.innerHTML = "";
-	
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
 	
@@ -79,7 +77,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		if(showEditColumn == "showEdit")
 		{			
 			cell = document.createElement("td");
-			//cell.className = "homeGridEdit";
 			
 			cell.style.paddingLeft = "10px";
 						
@@ -91,29 +88,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
 			
-			var callback = new CodeReuse.Callback();
-								
-			/*	
-			var sortColumn = "fieldPrimaryKey";
-			
-			var sortDirection = localStorage.getItem("arraySortDirection");
-			
-			if(sortDirection == "asc")
-			{
-				localStorage.setItem("arraySortDirection", "desc");	
-			}
-			else
-			{
-				localStorage.setItem("arraySortDirection", "asc");
-			}
-			*/				
-									
-			//cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, '', "showEdit", sortColumn, localStorage.getItem("arraySortDirection"));							
+			var callback = new CodeReuse.Callback();		
 									
 			cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), item["fieldPrimaryKey"], sortColumn, sortDirection);				
 				
 				
-			cell.className = "underline";	
+			cell.className = "underline";
 			cell.appendChild(cellText);
 			
 			cell.height = 25;
@@ -164,6 +144,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 
 gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection) {
+				
+	//debugger			
 					
 	divTable.innerHTML = "";
 	
@@ -212,9 +194,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		if(item["fieldPrimaryKey"] == rowId)
 		{
 			cell = document.createElement("td");
-			
-			//cell.className = "grid";
-			
+						
 			cell.style.paddingLeft = "10px";
 			
 			cellText = document.createTextNode("save");
@@ -230,6 +210,17 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			cell.onclick = function() {
 				
 				controller.homeTenantGridSave();
+				
+				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+				
+				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+				
+				var tenantModel = new CodeReuse.Tenant();
+				
+				var callback = new CodeReuse.Callback();
+				
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, tableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", sortColumn, localStorage.getItem("arraySortDirection"));
+			
 			};
 				
 			cell.className = "underline";	
@@ -245,8 +236,6 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		{
 			cell = document.createElement("td");
 			
-			//cell.className = "grid";
-			
 			cell.style.paddingLeft = "10px";
 			
 			cellText = document.createTextNode("edit");
@@ -259,24 +248,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 			var callback = new CodeReuse.Callback();
 							
-			/*		
-			var sortColumn = "fieldPrimaryKey";
-			
-			var sortDirection = localStorage.getItem("arraySortDirection");
-			
-			if(sortDirection == "asc")
-			{
-				localStorage.setItem("arraySortDirection", "desc");	
-			}
-			else
-			{
-				localStorage.setItem("arraySortDirection", "asc");
-			}
-			*/									
-												
-			//cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.rowOnClick, item["fieldPrimaryKey"], sortColumn, sortDirection);
-							
-			cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), item["fieldPrimaryKey"], sortColumn, sortDirection);								
+			cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), item["fieldPrimaryKey"], localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));								
 												
 			cell.className = "underline";	
 			cell.appendChild(cellText);
@@ -313,8 +285,6 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			building_option_grid.options.add(option,2);
 			
 			building_option_grid.id = "building_option_grid";
-						
-			//building_option_grid.value = item["field3"];
 		
 			building_option_grid.selectedIndex = item["field3"];
 		
@@ -526,24 +496,6 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	document.body.appendChild(tenantSearchListGrid);
 	*/
-	
-	//debugger
-	
-	//console.dir(localStorage.getItem("sortTableColumn"));
-	
-	var handler = new CodeReuse.Handler();	
-		
-	//handler.sortTableColumnOnclickHandlerTest("tableHomeTenant", gridColumnsInfo, (localStorage.getItem("sortTableColumn")));	
-	
-	//handler.sortTableColumnOnclickHandlerResortDirection("tableHomeTenant", gridColumnsInfo, localStorage.getItem("sortTableColumn"));
-	
-	//debugger
-	
-	//alert(localStorage.getItem("sortTableColumn"));
-	
-	//handler.sortTableColumnOnclickHandlerResortDirection("tableHomeTenant", gridColumnsInfo, 1);	
-	
-	//localStorage.setItem("arraySortDirection", "asc");
 		
 	
 	var record = itemCurrent;
@@ -564,31 +516,17 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 						
 			var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
 			
-			//document.getElementById(fieldsInfo[i].htmlObjectId).value = dateFormat;
-			
 			arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = dateFormat;	
 		}
 		else
 		{
 			if(gridColumnsInfo[i].htmlObjectId == "autocomplete")
 			{
-				for(input=0; input<autocompleteInputs.length; input++)
-				{
-					if(gridColumnsInfo[i].name == autocompleteInputs[input].value)
-					{
-						//document.getElementById(fieldsInfo[i].htmlObjectId).value = record[autocompleteInputs[input].display];
-						//break;
-					}
-				}
-				
-				//document.getElementById(fieldsInfo[i].htmlObjectId).setAttribute("rowAttributeValue", record[fieldsInfo[i].name]);
 				
 				arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = record[gridColumnsInfo[i].dbField];
 			}
 			else
 			{	
-				//document.getElementById(fieldsInfo[i].htmlObjectId).value = record[fieldsInfo[i].name];
-				
 				arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = record[gridColumnsInfo[i].dbField];
 			}
 		}

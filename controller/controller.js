@@ -127,7 +127,8 @@ CodeReuse.Controller.prototype = {
 		}
 					
 		if(saveType == "update")
-		{				
+		{			
+					
 			homeTenantGrid.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey_grid);
 			homeTenantGrid.homeTenantGridUpdate();
 		}

@@ -105,7 +105,7 @@ CodeReuse.Tenant.prototype = {
 		
 		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
 		
-		homeTenantGrid.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo());
+		homeTenantGrid.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
 		
 	},
 	

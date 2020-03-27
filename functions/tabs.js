@@ -27,6 +27,7 @@ changeTab: function(tab) {
 	}
 },
 
+/*
 loadHomeTenantGrid: function() {
 	
 	var tenant = new CodeReuse.Tenant();
@@ -37,39 +38,40 @@ loadHomeTenantGrid: function() {
 	
 	//return;
 	
-	localStorage.setItem("sortTableId", "");
+	//debugger
 	
 	localStorage.setItem("arraySortColumn", "");
 	
 	localStorage.setItem("arraySortDirection", "desc");
 	
 },
+*/
 
 loadSuiteGrid: function() {
 	
+	/*
 	var suite = new CodeReuse.Suite();
 	
-	suite.refreshSuiteGrid();	
-	
-	localStorage.setItem("sortTableId", "");
+	suite.refreshSuiteGrid();
 	
 	localStorage.setItem("arraySortColumn", "");
 	
-	localStorage.setItem("arraySortDirection", "desc");	
+	localStorage.setItem("arraySortDirection", "desc");
+	*/
 	
 },
 
 loadTenantGrid: function() {
 	
+	/*
 	var tenant = new CodeReuse.Tenant();
 	
 	tenant.refreshTenantGrid();
 	
-	localStorage.setItem("sortTableId", "");
-	
 	localStorage.setItem("arraySortColumn", "");
 	
-	localStorage.setItem("arraySortDirection", "desc");	
+	localStorage.setItem("arraySortDirection", "desc");
+	*/
 	
 }
 

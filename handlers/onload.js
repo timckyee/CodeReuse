@@ -10,11 +10,30 @@ window.addEventListener("load", function() {
 	
 	init_calendar_inputs();
 	
-	//localStorage.setItem("sortTableId", "tableHomeTenant");
-	//localStorage.setItem("arraySortDirection", "desc");	
+	//localStorage.clear();
 	
-	var tabs = new CodeReuse.Tabs();
-	tabs.loadHomeTenantGrid();
+	//return;
+	
+	localStorage.setItem("arraySortColumn", "");
+	
+	localStorage.setItem("arraySortDirection", "");
+	
+	localStorage.setItem("arraySortColumn_suite", "");
+	
+	localStorage.setItem("arraySortDirection_suite", "");
+	
+	localStorage.setItem("arraySortColumn_tenant", "");
+	
+	localStorage.setItem("arraySortDirection_tenant", "");			
+	
+		
+	var tenant = new CodeReuse.Tenant();
+	
+	tenant.refreshTenantGridHome();
+	
+	
+	//var tabs = new CodeReuse.Tabs();
+	//tabs.loadHomeTenantGrid();
 	
 });
 

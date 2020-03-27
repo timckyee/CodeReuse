@@ -109,41 +109,17 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 	},	
 	
-	refreshTenantHomeGrid: function(phpFile, fieldsInfo) {
+	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection) {
 		
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var callback = new CodeReuse.Callback();
 		
-		var sortDirection = localStorage.getItem("arraySortDirection");
-		
-		var sortColumn = localStorage.getItem("arraySortColumn");		
-		
-		if(sortColumn != "fieldPrimaryKey" && sortColumn != "")		
+		if(sortColumn != "")		
 		{		
-			if(this.tableHtmlObjectId != localStorage.getItem("sortTableId"))
+			if(sortColumn == "fieldPrimaryKey")
 			{
-				if(sortColumn == "fieldPrimaryKey")
-				{
-					localStorage.setItem("arraySortDirection", "asc");
-				}
-				else
-				{
-					localStorage.setItem("arraySortDirection", "desc");
-				}
-					
-				localStorage.setItem("sortTableId", this.tableHtmlObjectId);		
-			}
-			else
-			{		
-				if(sortDirection == "asc")
-				{
-					localStorage.setItem("arraySortDirection", "desc");	
-				}
-				else
-				{
-					localStorage.setItem("arraySortDirection", "asc");
-				}
+				localStorage.setItem("arraySortDirection", "asc");
 			}
 		}
 		else
@@ -151,42 +127,23 @@ CodeReuse.HomeTenantGrid.prototype = {
 			localStorage.setItem("arraySortDirection", "asc");
 		}		
 		
-		
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, localStorage.getItem("arraySortDirection"));
-		
-	},
-	
-	refreshSelectTenantHomeGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {			
-						
-		if(selectBuildingHtmlObjectValue != "")
+		if(sortColumn == "")
 		{
-			grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-			
-			callback = new CodeReuse.Callback();			
-					
-		var sortDirection = localStorage.getItem("arraySortDirection");
-		
-		if(sortDirection == "asc")
-		{
-			localStorage.setItem("arraySortDirection", "desc");	
-		}
-		else
-		{
-			localStorage.setItem("arraySortDirection", "asc");
-		}
-							
-					
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", "fieldPrimaryKey", localStorage.getItem("arraySortDirection"));
+			if(this.tableHtmlObjectId == "tableHomeTenant")
+			{
+				sortColumn = "fieldPrimaryKey";
+			}
+			else if(this.tableHtmlObjectId == "tableSuite")
+			{
+				sortColumn = "suiteId";
+			}
+			else if(this.tableHtmlObjectId == "tableTenant")
+			{
+				sortColumn = "fieldPrimaryKey";
+			}
 		}
 		
-		/*
-		else
-		{
-			var helper = new CodeReuse.Helper();
-			
-			helper.gridHide(this.gridGetPostDivElement);
-		}
-		*/
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, sortDirection);
 		
 	},
 	

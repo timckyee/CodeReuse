@@ -57,6 +57,8 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 	
 	return function() {
 	
+		debugger
+	
 		tenantModel = new CodeReuse.Tenant();
 		
 		home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -70,38 +72,14 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 		var sortDirection = localStorage.getItem("arraySortDirection");	
 		
 		if(sortColumn != localStorage.getItem("arraySortColumn"))
-		{
-			if(sortDirection == "asc")
+		{		
+			if(sortColumn == "fieldPrimaryKey")
 			{
-				localStorage.setItem("arraySortDirection", "asc");
+				localStorage.setItem("arraySortDirection", "desc");
 			}
 			else
 			{
-				if(sortTableHtmlObjectId != localStorage.getItem("sortTableId"))
-				{
-					if(sortColumn == "fieldPrimaryKey")
-					{
-						localStorage.setItem("arraySortDirection", "desc");
-					}
-					else
-					{
-						localStorage.setItem("arraySortDirection", "asc");
-					}
-						
-					localStorage.setItem("sortTableId", sortTableHtmlObjectId);
-				}
-				else
-				{
-					if(sortDirection == "asc")
-					{
-						localStorage.setItem("arraySortDirection", "desc");	
-					}
-					else
-					{
-						if(sortDirection == "desc")
-							localStorage.setItem("arraySortDirection", "asc");
-					}
-				}
+				localStorage.setItem("arraySortDirection", "asc");
 			}
 		}
 		else
