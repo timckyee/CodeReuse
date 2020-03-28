@@ -4,9 +4,7 @@ CodeReuse.Callback = function() {
 
 CodeReuse.Callback.prototype = {
 
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection) {
-	
-	//debugger
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection, tableRowNumber, tableFieldsValue) {
 	
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -57,84 +55,188 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	}
 	
 	tbl.appendChild(tableHeaderRow);
+
 	
-	response.forEach(function(item) {
+	tableRowNumber = tableRowNumber - 1;
+
+	var tableRowCount;
 	
-		var row = document.createElement("tr");
+	var tableRowFlag = false;
+
+	for(tableRowCount=0; tableRowCount<response.length; tableRowCount++)
+	{
+	//response.forEach(function(item) 
+	//{
 		
-		row.className = "tableHover";
-		
-		row.onclick = function() {
-				
-			if(tableHtmlObjectId != "tableHomeTenant")
-				tenantGridRowOnClick(phpFile, row, fieldsInfo, gridColumnsInfo); 
-			
-		};
-		
-		var cell;
-		var cellText;
-		
-		if(showEditColumn == "showEdit")
+		if(tableRowCount == tableRowNumber && tableRowFlag == false)
 		{			
+			var row = document.createElement("tr");
+			
+			row.className = "tableHover";
+			
+			if(showEditColumn == "showEdit")
+			{			
+				cell = document.createElement("td");
+				
+				cell.style.paddingLeft = "10px";
+							
+				cellText = document.createTextNode("edit");
+				
+				var tenantModel = new CodeReuse.Tenant();
+				
+				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+				
+				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+				
+				var callback = new CodeReuse.Callback();
+				
+				cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), response[tableRowCount]["fieldPrimaryKey"], sortColumn, sortDirection);				
+					
+					
+				cell.className = "underline";
+				cell.appendChild(cellText);
+				
+				cell.height = 25;
+				
+				row.appendChild(cell);
+			}		
+			
+			var cell;
+			var cellText;	
+				
 			cell = document.createElement("td");
+			cell.className = "grid";
+			cellText = document.createTextNode(tableFieldsValue["fieldPrimaryKey"]);
 			
-			cell.style.paddingLeft = "10px";
-						
-			cellText = document.createTextNode("edit");
-			
-			var tenantModel = new CodeReuse.Tenant();
-			
-			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-			
-			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-			
-			var callback = new CodeReuse.Callback();		
-									
-			cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), item["fieldPrimaryKey"], sortColumn, sortDirection);				
-				
-				
-			cell.className = "underline";
 			cell.appendChild(cellText);
 			
-			cell.height = 25;
-			
 			row.appendChild(cell);
-		}
-		
-		
-		for(i=0; i<gridColumnsInfo.length; i++)
-		{	
 			
 			cell = document.createElement("td");
 			cell.className = "grid";
-					
-			var colType = gridColumnsInfo[i].colType;
-			
-			if(colType == "date")
-			{	
-				var dateFromDatabase = item[gridColumnsInfo[i].id];
-				
-				var helper = new CodeReuse.Helper();
-				
-				var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-				
-				cellText = document.createTextNode(dateFormat);
-			}
-			else
-			{
-				cellText = document.createTextNode(item[gridColumnsInfo[i].id]);
-			}
+			cellText = document.createTextNode(tableFieldsValue["buildingName"]);
 			
 			cell.appendChild(cellText);
 			
 			row.appendChild(cell);
+			
+			cell = document.createElement("td");
+			cell.className = "grid";
+			cellText = document.createTextNode(tableFieldsValue["tenantName"]);
+			
+			cell.appendChild(cellText);
+			
+			row.appendChild(cell);
+			
+			cell = document.createElement("td");
+			cell.className = "grid";
+			cellText = document.createTextNode(tableFieldsValue["field1"]);
+			
+			cell.appendChild(cellText);
+			
+			row.appendChild(cell);			
 				
-			row.setAttribute("gridIdField", item[gridIdField]);		
+			cell = document.createElement("td");
+			cell.className = "grid";
+			cellText = document.createTextNode(tableFieldsValue["field2"]);
+			
+			cell.appendChild(cellText);
+			
+			row.appendChild(cell);					
+							
+			row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);
+			
+			tableRowCount = tableRowCount - 1;
+			
+			tableRowFlag = true;
+		}
+		else
+		{	
+						
+			if(tableFieldsValue != undefined)
+			{
+				if(tableFieldsValue["fieldPrimaryKey"] == response[tableRowCount]["fieldPrimaryKey"])
+				{
+					continue;
+				}
+			}
+			
+			var row = document.createElement("tr");
+			
+			row.className = "tableHover";
+			
+			row.onclick = function() {
+					
+				if(tableHtmlObjectId != "tableHomeTenant")
+					tenantGridRowOnClick(phpFile, row, fieldsInfo, gridColumnsInfo); 
+				
+			};
+			
+			var cell;
+			var cellText;
+			
+			if(showEditColumn == "showEdit")
+			{			
+				cell = document.createElement("td");
+				
+				cell.style.paddingLeft = "10px";
+							
+				cellText = document.createTextNode("edit");
+				
+				var tenantModel = new CodeReuse.Tenant();
+				
+				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+				
+				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+				
+				var callback = new CodeReuse.Callback();				
+				
+				cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), response[tableRowCount]["fieldPrimaryKey"], sortColumn, sortDirection);				
+					
+					
+				cell.className = "underline";
+				cell.appendChild(cellText);
+				
+				cell.height = 25;
+				
+				row.appendChild(cell);
+			}
+			
+			
+			for(i=0; i<gridColumnsInfo.length; i++)
+			{	
+				
+				cell = document.createElement("td");
+				cell.className = "grid";
+						
+				var colType = gridColumnsInfo[i].colType;
+				
+				if(colType == "date")
+				{
+						var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
+						
+						var helper = new CodeReuse.Helper();
+						
+						var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
+						
+						cellText = document.createTextNode(dateFormat);
+				}
+				else
+				{
+					cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
+				}
+				
+				cell.appendChild(cellText);
+				
+				row.appendChild(cell);
+					
+				row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);		
+			}
 		}
 		
 		tbl.appendChild(row);
 		
-	});
+	}
 	
 	divTable.innerHTML = "";
 	
@@ -143,9 +245,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 },
 
 
-gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection) {
-				
-	//debugger			
+gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection) {		
 					
 	divTable.innerHTML = "";
 	

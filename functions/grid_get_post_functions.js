@@ -4,7 +4,7 @@ CodeReuse.Grid_Get_Post_Functions = function() {
 
 CodeReuse.Grid_Get_Post_Functions.prototype = {
 
-grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection) {
+grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection, tableRowNumber, tableFieldsValues) {
 		
 	var divTable = document.getElementById(divElement);
 	
@@ -14,9 +14,9 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 				
 		if (this.readyState == 4 && this.status == 200) {
 						
-			var response = JSON.parse(this.responseText);
+			var response = JSON.parse(this.responseText);				
 						
-			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection);
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection, tableRowNumber, tableFieldsValues);
 					
 		}
 	};
@@ -40,9 +40,9 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, rowId, sortColumn, sortDirection) {
 	
 	return function() {			
-				
-		//debugger		
-							
+		
+		//debugger
+									
 		var divTable = document.getElementById(divElement);
 		
 		window.gridXmlHttpRequest.onreadystatechange = function() {
@@ -165,8 +165,8 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	}
 },
 
-post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, columnsInfo, arrayOldValuesTableGridEdit, refreshGridCallbackEditGrid)
-{			
+post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, columnsInfo, arrayOldValuesTableGridEdit, refreshGridCallbackEditGrid, tableRowNumber, tableFieldsValue)
+{		
 	var updateString = "";
 	
 	for(update=0; update<columnsInfo.length; update++)
@@ -225,7 +225,17 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 				//debugger				
 								
 				//if(refreshGridCallbackEditGrid != undefined)
-				//	refreshGridCallbackEditGrid();			
+				//	refreshGridCallbackEditGrid();
+				
+				grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+				
+				tenantModel = new CodeReuse.Tenant();
+				
+				home_tenant_grid = new CodeReuse.HomeTenantGrid();
+				
+				var callback = new CodeReuse.Callback();				
+				
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit",  localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue);		
 				
 			}
 		}

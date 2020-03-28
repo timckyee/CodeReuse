@@ -57,7 +57,7 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 	
 	return function() {
 	
-		debugger
+		//debugger
 	
 		tenantModel = new CodeReuse.Tenant();
 		

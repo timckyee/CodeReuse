@@ -14,9 +14,9 @@ window.addEventListener("load", function() {
 	
 	//return;
 	
-	localStorage.setItem("arraySortColumn", "");
+	localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
 	
-	localStorage.setItem("arraySortDirection", "");
+	localStorage.setItem("arraySortDirection", "asc");
 	
 	localStorage.setItem("arraySortColumn_suite", "");
 	
