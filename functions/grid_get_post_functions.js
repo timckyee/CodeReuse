@@ -4,11 +4,8 @@ CodeReuse.Grid_Get_Post_Functions = function() {
 
 CodeReuse.Grid_Get_Post_Functions.prototype = {
 
-grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection, tableRowNumber, tableFieldsValues) {
-		
+grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, showEditColumn, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValues) {			
 	var divTable = document.getElementById(divElement);
-	
-	//debugger
 	
 	window.gridXmlHttpRequest.onreadystatechange = function() {
 				
@@ -16,7 +13,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 						
 			var response = JSON.parse(this.responseText);				
 						
-			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection, tableRowNumber, tableFieldsValues);
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValues);
 					
 		}
 	};
@@ -37,12 +34,61 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 	
 },
 	
-gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, rowId, sortColumn, sortDirection) {
+gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue) {
 	
-	return function() {			
+	
+	//return function() {
+			
+			var tableObject = document.getElementById(tableHtmlObjectId);
+			
 		
-		//debugger
-									
+			var tablePrimaryKey = parseInt(rowId);
+			
+			var tableHomeTenant = document.getElementById("tableHomeTenant");
+			
+			var tableHomeTenantRows = tableHomeTenant.rows;
+			
+			var tableRowNumber = 0;
+			
+			var building_option_grid;
+			var buildingSelectOption;
+			var tenant_input_grid;
+			var tenant_input_grid_value;
+			var inputCalendar_grid;
+			var inputCalendarTesting_grid;
+			
+			for(var i=1; i<tableHomeTenantRows.length; i++)
+			{
+				var tableHomeTenantRowsCellValue = parseInt(tableHomeTenantRows[i].cells[1].innerText);
+				
+				if(tableHomeTenantRowsCellValue == tablePrimaryKey)
+				{
+					tableRowNumber = i;
+					
+					building_option_grid = tableHomeTenantRows[i].cells[2].innerText;			
+					buildingSelectOption = tableHomeTenantRows[i].cells[2].value				
+					tenant_input_grid = tableHomeTenantRows[i].cells[3].innerText;
+					tenant_input_grid_value = tableHomeTenantRows[i].cells[3].value;					
+					inputCalendar_grid = tableHomeTenantRows[i].cells[4].innerText;
+					inputCalendarTesting_grid = tableHomeTenantRows[i].cells[5].innerText;
+					break;
+				}
+			}		
+					
+			var tableFieldsValue = [];
+			
+			tableFieldsValue["fieldPrimaryKey"] = tablePrimaryKey;
+			tableFieldsValue["buildingName"] = building_option_grid;
+			tableFieldsValue["buildingId"] = buildingSelectOption;
+			tableFieldsValue["tenantName"] = tenant_input_grid;
+			tableFieldsValue["tenantId"] = tenant_input_grid_value;
+			tableFieldsValue["field1"] = inputCalendar_grid;
+			tableFieldsValue["field2"] = inputCalendarTesting_grid;
+
+		
+			tableRowNumber = i;
+						
+		
 		var divTable = document.getElementById(divElement);
 		
 		window.gridXmlHttpRequest.onreadystatechange = function() {
@@ -51,7 +97,7 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 				
 				var response = JSON.parse(this.responseText);
 							
-				callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection);			
+				callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue);			
 				
 			}
 		};
@@ -71,7 +117,7 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 		window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 		window.gridXmlHttpRequest.send();		
 		
-	}
+	//}
 	
 },
 
@@ -166,7 +212,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 },
 
 post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, columnsInfo, arrayOldValuesTableGridEdit, refreshGridCallbackEditGrid, tableRowNumber, tableFieldsValue)
-{		
+{			
 	var updateString = "";
 	
 	for(update=0; update<columnsInfo.length; update++)
@@ -175,30 +221,43 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		var htmlObjectFieldValue = htmlObjectFieldsValuesUpdate[update];
 		var databaseField = columnsInfo[update].dbField;		
 				
-		if(htmlObjectFieldValue != arrayOldValuesTableGridEdit[htmlObjectField])
-		{
-			if(columnsInfo[update].colType == "date")
-			{				
-				var dateFromSystem = htmlObjectFieldValue;
-								
-				var helper = new CodeReuse.Helper();				
-												
-				var dateFormat = helper.convertDateFromSystem(dateFromSystem);
+		var hiddenFieldFlag = columnsInfo[update].hasIdHiddenField;
+		var hiddenField = columnsInfo[update].idDbField;	
 				
-				var calendar = new CodeReuse.Calendar();
-				
-				if(calendar.validateDateFromString(dateFromSystem) == false)
-				{
-					alert("input format has to be dd-mmm-yyyy");
-					return;
-				}
-				
-				updateString = updateString + databaseField + "='" + dateFormat + "',";
-			}
-			else
+		if(hiddenFieldFlag == true)
+		{			
+			if(htmlObjectFieldValue != arrayOldValuesTableGridEdit[hiddenField])
 			{
-				updateString = updateString + databaseField + "='" + htmlObjectFieldValue + "',";
+				updateString = updateString + hiddenField + "='" + htmlObjectFieldValue + "',";
 			}
+		}
+		else
+		{
+			if(htmlObjectFieldValue != arrayOldValuesTableGridEdit[htmlObjectField])
+			{
+				if(columnsInfo[update].colType == "date")
+				{				
+					var dateFromSystem = htmlObjectFieldValue;
+									
+					var helper = new CodeReuse.Helper();				
+													
+					var dateFormat = helper.convertDateFromSystem(dateFromSystem);
+					
+					var calendar = new CodeReuse.Calendar();
+					
+					if(calendar.validateDateFromString(dateFromSystem) == false)
+					{
+						alert("input format has to be dd-mmm-yyyy");
+						return;
+					}
+					
+					updateString = updateString + databaseField + "='" + dateFormat + "',";
+				}
+				else
+				{
+					updateString = updateString + databaseField + "='" + htmlObjectFieldValue + "',";
+				}
+			}			
 		}
 	}
 	
@@ -235,8 +294,9 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 				
 				var callback = new CodeReuse.Callback();				
 				
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit",  localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue);		
+				alert('post_updateGrid');
 				
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue);				
 			}
 		}
 	

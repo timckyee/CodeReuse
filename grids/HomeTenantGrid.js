@@ -8,13 +8,13 @@ CodeReuse.HomeTenantGrid = function() {
 	this.field1;
 	this.field2;
 	this.field3;
-	this.field4;		
+	this.field4;	
 		
 	this.columns = [
 		
-		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", dbField: "fieldPrimaryKey", htmlObjectId: "inputPrimaryKey_grid" },
-		{ colName: "Building Name", id: "buildingName", colType: "int", dbField: "field3", htmlObjectId: "building_option_grid" },
-		{ colName: "Tenant Name", id: "tenantName", colType: "string", dbField: "field4", htmlObjectId: "tenant_input_grid" },
+		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", dbField: "fieldPrimaryKey", htmlObjectId: "inputPrimaryKey_grid"},
+		{ colName: "Building Name", id: "buildingName", colType: "int", dbField: "buildingName", htmlObjectId: "building_option_grid", hasIdHiddenField: true, idDbField: "field3" },
+		{ colName: "Tenant Name", id: "tenantName", colType: "string", dbField: "tenantName", htmlObjectId: "tenant_input_grid", hasIdHiddenField: true, idDbField: "field4" },
 		{ colName: "Field Date", id: "field1", colType: "date", dbField: "field1", htmlObjectId: "inputCalendar_grid" },
 		{ colName: "Field Date", id: "field2", colType: "date", dbField: "field2", htmlObjectId: "inputCalendarTesting_grid" },
 		
@@ -111,6 +111,8 @@ CodeReuse.HomeTenantGrid.prototype = {
 	
 	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection) {
 		
+		//debugger
+		
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var callback = new CodeReuse.Callback();
@@ -143,7 +145,9 @@ CodeReuse.HomeTenantGrid.prototype = {
 			}
 		}
 		
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, sortDirection);
+		alert('homeTenantGrid');
+		
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", null, sortColumn, sortDirection);
 		
 	},
 	

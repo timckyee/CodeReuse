@@ -118,16 +118,21 @@ autocomplete: function(event, divElement, itemColumns, valueField, httpGetOrPost
 					
 					row.onclick = function() {
 						
+						/*
 						var cellsCount = this.cells.length;
 						var cellValue = "";
 						
 						if(cellsCount == 1)
 							cellValue = this.cells[0].innerHTML;
-						else {
+						else 
+						{
 														
 							for(i=0; i<this.cells.length; i++)
 								cellValue = cellValue + this.cells[i].innerHTML + ' ';
 						}
+						*/
+						
+						var cellValue = this.cells[1].innerHTML;
 												
 						input.value = cellValue.trim();
 						searchList.innerHTML = "";

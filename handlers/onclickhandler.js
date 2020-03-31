@@ -8,9 +8,10 @@ TenantHomeGridOnClickHandler: function(phpFile, row, fieldsInfo, gridColumnsInfo
 	
 },
 
-SuiteGridOnClickHandler: function(phpFile, row, fieldsInfo, gridColumnsInfo) {
+
+SuiteGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInfo) {
 			
-	var rowAttributeValue = row.attributes["gridIdField"].value;
+	//var rowAttributeValue = row.attributes["gridIdField"].value;
 
 	var suiteModel = new CodeReuse.Suite();
 	
@@ -20,13 +21,13 @@ SuiteGridOnClickHandler: function(phpFile, row, fieldsInfo, gridColumnsInfo) {
 	
 	var callback = new CodeReuse.Callback();
 	
-	grid_get_post_functions.get_populateForm(phpFile, "populateSuite", rowAttributeValue, fieldsInfo, gridColumnsInfo, '', arrayOldValuesTable, callback.get_populateForm_callback);
+	grid_get_post_functions.get_populateForm(phpFile, "populateSuite", gridRowId, fieldsInfo, gridColumnsInfo, '', arrayOldValuesTable, callback.get_populateForm_callback);
 	
 },
 
-TenantGridOnClickHandler: function(phpFile, row, fieldsInfo, gridColumnsInfo) {
+TenantGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInfo) {
 		
-	var rowAttributeValue = row.attributes["gridIdField"].value;
+	//var rowAttributeValue = row.attributes["gridIdField"].value;
 
 	var tenantModel = new CodeReuse.Tenant();
 	
@@ -38,7 +39,7 @@ TenantGridOnClickHandler: function(phpFile, row, fieldsInfo, gridColumnsInfo) {
 	
 	var callback = new CodeReuse.Callback();
 	
-	grid_get_post_functions.get_populateForm(phpFile, "populate", rowAttributeValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
+	grid_get_post_functions.get_populateForm(phpFile, "populate", gridRowId, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
 	
 },
 
@@ -97,8 +98,9 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 			
 		localStorage.setItem("arraySortColumn", sortColumn);
 
+		alert('sort');
 		
-		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", sortColumn, localStorage.getItem("arraySortDirection"));
+		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", null, sortColumn, localStorage.getItem("arraySortDirection"));
 			
 	};
 }

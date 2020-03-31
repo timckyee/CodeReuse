@@ -10,9 +10,8 @@ window.addEventListener("load", function() {
 	
 	init_calendar_inputs();
 	
-	//localStorage.clear();
+	localStorage.clear();
 	
-	//return;
 	
 	localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
 	
@@ -26,7 +25,6 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("arraySortDirection_tenant", "");			
 	
-		
 	var tenant = new CodeReuse.Tenant();
 	
 	tenant.refreshTenantGridHome();

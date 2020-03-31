@@ -4,7 +4,7 @@ CodeReuse.Callback = function() {
 
 CodeReuse.Callback.prototype = {
 
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, showEditColumn, sortColumn, sortDirection, tableRowNumber, tableFieldsValue) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue) {
 	
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -68,6 +68,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	//response.forEach(function(item) 
 	//{
 		
+		var cell;
+		var cellText;
+		
 		if(tableRowCount == tableRowNumber && tableRowFlag == false)
 		{			
 			var row = document.createElement("tr");
@@ -82,6 +85,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 							
 				cellText = document.createTextNode("edit");
 				
+				cell.value = tableFieldsValue["fieldPrimaryKey"];
+				
 				var tenantModel = new CodeReuse.Tenant();
 				
 				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -90,8 +95,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				var callback = new CodeReuse.Callback();
 				
-				cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), response[tableRowCount]["fieldPrimaryKey"], sortColumn, sortDirection);				
+				var tableRowPrimaryKey = tableFieldsValue["fieldPrimaryKey"];			
+
+				cell.onclick = function(tablePrimaryKey) { 
 					
+					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;				
+					
+					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, tableRowNumber, tableFieldsValue);
+					
+				}	
 					
 				cell.className = "underline";
 				cell.appendChild(cellText);
@@ -99,10 +111,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				cell.height = 25;
 				
 				row.appendChild(cell);
-			}		
-			
-			var cell;
-			var cellText;	
+			}
 				
 			cell = document.createElement("td");
 			cell.className = "grid";
@@ -115,6 +124,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell = document.createElement("td");
 			cell.className = "grid";
 			cellText = document.createTextNode(tableFieldsValue["buildingName"]);
+			cell.value = tableFieldsValue["buildingId"];
 			
 			cell.appendChild(cellText);
 			
@@ -123,6 +133,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell = document.createElement("td");
 			cell.className = "grid";
 			cellText = document.createTextNode(tableFieldsValue["tenantName"]);
+			cell.value = tableFieldsValue["tenantId"];			
 			
 			cell.appendChild(cellText);
 			
@@ -152,7 +163,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		}
 		else
 		{	
-						
+				
 			if(tableFieldsValue != undefined)
 			{
 				if(tableFieldsValue["fieldPrimaryKey"] == response[tableRowCount]["fieldPrimaryKey"])
@@ -165,10 +176,13 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			row.className = "tableHover";
 			
-			row.onclick = function() {
+			
+			row.onclick = function(rowValues) {
 					
+				var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+									
 				if(tableHtmlObjectId != "tableHomeTenant")
-					tenantGridRowOnClick(phpFile, row, fieldsInfo, gridColumnsInfo); 
+					rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
 				
 			};
 			
@@ -183,16 +197,23 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 							
 				cellText = document.createTextNode("edit");
 				
+				cell.value = response[tableRowCount]["fieldPrimaryKey"];
+				
 				var tenantModel = new CodeReuse.Tenant();
 				
 				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 				
 				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
 				
-				var callback = new CodeReuse.Callback();				
+				var callback = new CodeReuse.Callback();
 				
-				cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), response[tableRowCount]["fieldPrimaryKey"], sortColumn, sortDirection);				
+				cell.onclick = function(tablePrimaryKey) 
+				{
+					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;
 					
+					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, tableRowNumber, tableFieldsValue);	
+				
+				}					
 					
 				cell.className = "underline";
 				cell.appendChild(cellText);
@@ -200,29 +221,34 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				cell.height = 25;
 				
 				row.appendChild(cell);
-			}
+			}			
 			
-			
-			for(i=0; i<gridColumnsInfo.length; i++)
+			for(var i=0; i<gridColumnsInfo.length; i++)
 			{	
 				
 				cell = document.createElement("td");
 				cell.className = "grid";
-						
+				
 				var colType = gridColumnsInfo[i].colType;
 				
 				if(colType == "date")
-				{
-						var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
-						
-						var helper = new CodeReuse.Helper();
-						
-						var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-						
-						cellText = document.createTextNode(dateFormat);
+				{	
+					var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
+					
+					var helper = new CodeReuse.Helper();
+					
+					var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
+					
+					cellText = document.createTextNode(dateFormat);
 				}
 				else
 				{
+					if(gridColumnsInfo[i].hasIdHiddenField == true)
+					{						
+						cell.value = response[tableRowCount][gridColumnsInfo[i].idDbField];
+						
+					}						
+					
 					cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
 				}
 				
@@ -230,12 +256,13 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				row.appendChild(cell);
 					
-				row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);		
+				row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);
 			}
 		}
 		
 		tbl.appendChild(row);
 		
+		//debugger
 	}
 	
 	divTable.innerHTML = "";
@@ -245,15 +272,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 },
 
 
-gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection) {		
-					
-	divTable.innerHTML = "";
+gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue) {
 	
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
 	tbl.className = "homeGrid";
 								
-	var tableHeaderRow = document.createElement("tr");
+	var tableHeaderRow = tbl.insertRow();					
+								
+	//var tableHeaderRow = document.createElement("tr");
 	
 	var tableHeader;
 	var tableHeaderText;		
@@ -280,24 +307,35 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	tbl.appendChild(tableHeaderRow);
 	
+	
+	tableRowNumber = tableRowNumber - 1;
+
+	var tableRowCount;
+	
+	var tableRowFlag = false;
+
+	for(tableRowCount=0; tableRowCount<response.length; tableRowCount++)
+	{
+	
 	var itemCurrent;
 	
-	response.forEach(function(item) {
-					
-		var row = tbl.insertRow();
-		
-		row.className = "tableHover";
-				
+	//response.forEach(function(item) {
+			
 		var cell;
 		var cellText;
+							
+		var row = tbl.insertRow();
+		row.className = "tableHover";
 		
-		if(item["fieldPrimaryKey"] == rowId)
-		{
-			cell = document.createElement("td");
+		if(tableRowCount == tableRowNumber && tableRowFlag == false)
+		{			
+			cell = row.insertCell();
 						
 			cell.style.paddingLeft = "10px";
 			
 			cellText = document.createTextNode("save");
+			
+			cell.value = response[tableRowCount]["fieldPrimaryKey"];
 			
 			var tenantModel = new CodeReuse.Tenant();
 			
@@ -307,8 +345,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 			var callback = new CodeReuse.Callback();
 			
-			cell.onclick = function() {
-				
+			cell.onclick = function(tablePrimaryKey)
+			{	
 				controller.homeTenantGridSave();
 				
 				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -319,8 +357,12 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				
 				var callback = new CodeReuse.Callback();
 				
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, tableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", sortColumn, localStorage.getItem("arraySortDirection"));
-			
+				var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;
+
+				alert('callback');
+				
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, tableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", tablePrimaryKeyValue, sortColumn, localStorage.getItem("arraySortDirection"));
+
 			};
 				
 			cell.className = "underline";	
@@ -329,43 +371,13 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			cell.height = 25;
 			
 			row.appendChild(cell);
-			
-			itemCurrent = item;
-		}
-		else
-		{
-			cell = document.createElement("td");
-			
-			cell.style.paddingLeft = "10px";
-			
-			cellText = document.createTextNode("edit");
-			
-			var tenantModel = new CodeReuse.Tenant();
-			
-			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-			
-			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-			
-			var callback = new CodeReuse.Callback();
-							
-			cell.onclick = grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), item["fieldPrimaryKey"], localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));								
-												
-			cell.className = "underline";	
-			cell.appendChild(cellText);
-			
-			cell.height = 25;
-			
-			row.appendChild(cell);
-		}
-		
-		if(item["fieldPrimaryKey"] == rowId)
-		{
+				
 			cell = row.insertCell();
 			cell.className = "grid";
 			
 			inputPrimaryKey = document.createElement("span");
 			inputPrimaryKey.id = "inputPrimaryKey_grid";
-			inputPrimaryKey.innerHTML = rowId;
+			inputPrimaryKey.innerHTML = tableFieldsValue["fieldPrimaryKey"];
 			
 			cell.appendChild(inputPrimaryKey);
 					
@@ -386,41 +398,12 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 			building_option_grid.id = "building_option_grid";
 		
-			building_option_grid.selectedIndex = item["field3"];
+			alert('gridEditCallback_save');
+		
+			building_option_grid.selectedIndex = tableFieldsValue["buildingId"];
 		
 			cell.appendChild(building_option_grid);
-			
-			/*
-			building_input_grid = document.createElement("input");
-			building_input_grid.id = "building_input_grid";
-			
-			building_input_grid.value = item["buildingName"];
-			building_input_grid.setAttribute("rowAttributeValue", item["field3"]);
-						
-			building_input_grid.style.position = "relative";
-			building_input_grid.style.zIndex = "1";
-			building_input_grid.style.backgroundColor = "white";
-			building_input_grid.width = "200";			
-			
-			var autocomplete = new CodeReuse.Autocomplete();
-				
-			building_input_grid.addEventListener("keyup", function(event){ 
-				
-				if(document.getElementById("building_input_grid").value == "")
-				{
-					document.getElementById("buildingSearchList").innerHTML = "";
-				}
-				else
-				{
-					autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input_grid", "buildingSearchList");
-				}
-			});
-			
-			building_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });			
-			
-			cell.appendChild(building_input_grid);
-			*/
-			
+							
 			
 			cell = row.insertCell();
 			cell.className = "grid";
@@ -428,8 +411,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			tenant_input_grid = document.createElement("input");
 			tenant_input_grid.id = "tenant_input_grid";
 			
-			tenant_input_grid.value = item["tenantName"];
-			tenant_input_grid.setAttribute("rowAttributeValue", item["field4"]);
+			tenant_input_grid.value = tableFieldsValue["tenantName"];
+			tenant_input_grid.setAttribute("rowAttributeValue", tableFieldsValue["tenantId"]);
 			
 			tenant_input_grid.style.position = "relative";
 			tenant_input_grid.style.zIndex = "1";
@@ -459,8 +442,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			cell = row.insertCell();
 			cell.className = "grid";
 			
-			var helper = new CodeReuse.Helper();			
-			var dateFormatCalendar = helper.convertDateFromDatabase(item["field1"]);
+			//var helper = new CodeReuse.Helper();			
+			//var dateFormatCalendar = helper.convertDateFromDatabase(tableFieldsValue["field1"]);
 			
 			inputCalendar_grid = document.createElement("input");
 			inputCalendar_grid.id = "inputCalendar_grid";
@@ -489,7 +472,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				}
 			});
 			
-			inputCalendar_grid.value = dateFormatCalendar;
+			inputCalendar_grid.value = tableFieldsValue["field1"];
 			
 			cell.appendChild(inputCalendar_grid);
 			
@@ -497,7 +480,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			cell = row.insertCell();
 			cell.className = "grid";
 			
-			var dateFormatCalendarTesting = helper.convertDateFromDatabase(item["field2"]);
+			//var dateFormatCalendarTesting = helper.convertDateFromDatabase(tableFieldsValue["field2"]);
 			
 			inputCalendarTesting_grid = document.createElement("input");
 			inputCalendarTesting_grid.id = "inputCalendarTesting_grid";
@@ -523,50 +506,286 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				}
 			});			
 			
-			inputCalendarTesting_grid.value = dateFormatCalendarTesting;
+			inputCalendarTesting_grid.value = tableFieldsValue["field2"];
 			
 			cell.appendChild(inputCalendarTesting_grid);
 			
 			
 			row.appendChild(cell);
-		}	
+			
+		
+			itemCurrent = response[tableRowCount];
+			
+			//tableRowCount = tableRowCount - 1;
+			
+			tableRowFlag = true;			
+				
+		}
 		else
 		{
-			for(i=0; i<gridColumnsInfo.length; i++)
-			{	
-				
+			if(response[tableRowCount]["fieldPrimaryKey"] != rowId)
+			{
 				cell = document.createElement("td");
 				
-				cell.className = "grid";
+				cell.style.paddingLeft = "10px";
 				
-				var colType = gridColumnsInfo[i].colType;
+				cellText = document.createTextNode("edit");
 				
-				if(colType == "date")
-				{	
-					var dateFromDatabase = item[gridColumnsInfo[i].id];
-					
-					var helper = new CodeReuse.Helper();
-					
-					var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-					
-					cellText = document.createTextNode(dateFormat);
-				}
-				else
-				{
-					cellText = document.createTextNode(item[gridColumnsInfo[i].id]);
-				}
+				cell.value = response[tableRowCount]["fieldPrimaryKey"];
 				
+				var tenantModel = new CodeReuse.Tenant();
+				
+				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+				
+				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+				
+				var callback = new CodeReuse.Callback();
+								
+				cell.onclick = function(tablePrimaryKey) {							
+					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;		
+					
+					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
+				
+				}					
+													
+				cell.className = "underline";	
 				cell.appendChild(cellText);
 				
+				cell.height = 25;
+				
 				row.appendChild(cell);
+			}
+			
+			
+			if(response[tableRowCount]["fieldPrimaryKey"] == rowId)
+			{
+				
+				if(tableFieldsValue != undefined)
+				{
+					if(tableFieldsValue["fieldPrimaryKey"] == parseInt(response[tableRowCount]["fieldPrimaryKey"]))
+					{
+						continue;
+					}
+				}
+				
+				/*
+				building_input_grid = document.createElement("input");
+				building_input_grid.id = "building_input_grid";
+				
+				building_input_grid.value = item["buildingName"];
+				building_input_grid.setAttribute("rowAttributeValue", item["field3"]);
+							
+				building_input_grid.style.position = "relative";
+				building_input_grid.style.zIndex = "1";
+				building_input_grid.style.backgroundColor = "white";
+				building_input_grid.width = "200";			
+				
+				var autocomplete = new CodeReuse.Autocomplete();
 					
-				row.setAttribute("gridIdField", item[gridIdField]);		
+				building_input_grid.addEventListener("keyup", function(event){ 
+					
+					if(document.getElementById("building_input_grid").value == "")
+					{
+						document.getElementById("buildingSearchList").innerHTML = "";
+					}
+					else
+					{
+						autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input_grid", "buildingSearchList");
+					}
+				});
+				
+				building_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });			
+				cell.appendChild(building_input_grid);
+				*/
+				
+				cell = row.insertCell();
+				cell.className = "grid";
+				
+				inputPrimaryKey = document.createElement("span");
+				inputPrimaryKey.id = "inputPrimaryKey_grid";
+				inputPrimaryKey.innerHTML = rowId;
+				
+				cell.appendChild(inputPrimaryKey);
+						
+				
+				cell = row.insertCell();
+				cell.className = "grid";
+				
+				building_option_grid = document.createElement("select");
+				option = document.createElement("option");
+				option.text = "";
+				building_option_grid.options.add(option,"");			
+				option = document.createElement("option");
+				option.text = "building";
+				building_option_grid.options.add(option,1);
+				option = document.createElement("option");
+				option.text = "building2";
+				building_option_grid.options.add(option,2);
+				
+				building_option_grid.id = "building_option_grid";
+			
+				alert('gridEditCallback');
+			
+				building_option_grid.selectedIndex = response[tableRowCount]["field3"];
+			
+				cell.appendChild(building_option_grid);				
+				
+				
+				cell = row.insertCell();
+				cell.className = "grid";
+				
+				tenant_input_grid = document.createElement("input");
+				tenant_input_grid.id = "tenant_input_grid";
+				
+				tenant_input_grid.value = response[tableRowCount]["tenantName"];
+				tenant_input_grid.setAttribute("rowAttributeValue", response[tableRowCount]["field4"]);
+				
+				tenant_input_grid.style.position = "relative";
+				tenant_input_grid.style.zIndex = "1";
+				tenant_input_grid.style.backgroundColor = "white";
+				tenant_input_grid.width = "200";				
+				
+				var autocomplete = new CodeReuse.Autocomplete();
+				
+				tenant_input_grid.addEventListener("keyup", function(event){
+						
+					if(document.getElementById("tenant_input_grid").value == "")
+					{
+						document.getElementById("tenantSearchList").innerHTML = "";			
+					}
+					else
+					{
+						autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
+					}
+					
+				});		
+				
+				tenant_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
+				
+				cell.appendChild(tenant_input_grid);
+				
+				
+				cell = row.insertCell();
+				cell.className = "grid";
+				
+				var helper = new CodeReuse.Helper();			
+				var dateFormatCalendar = helper.convertDateFromDatabase(response[tableRowCount]["field1"]);
+				
+				inputCalendar_grid = document.createElement("input");
+				inputCalendar_grid.id = "inputCalendar_grid";
+				
+				inputCalendar_grid.style.position = "relative";
+				inputCalendar_grid.style.zIndex = "1";
+				inputCalendar_grid.style.backgroundColor = "white";
+				inputCalendar_grid.style.width = "142";
+				
+				var calendar = new CodeReuse.Calendar();
+				
+				inputCalendar_grid.addEventListener("focus", function(event){
+					
+					var calendar = new CodeReuse.Calendar();
+					calendar.showHideCalendar(event, 'show' ,'inputCalendar_grid', "calendarId", monthsArray)
+				
+				});
+				
+				inputCalendar_grid.addEventListener("blur", function(event){
+				
+					var calendar = new CodeReuse.Calendar();
+					
+					if(calendar.validateDate(this.id) == false)
+					{
+						alert("input format has to be dd-mmm-yyyy");
+					}
+				});
+				
+				inputCalendar_grid.value = dateFormatCalendar;
+				
+				cell.appendChild(inputCalendar_grid);
+				
+				
+				cell = row.insertCell();
+				cell.className = "grid";
+				
+				var dateFormatCalendarTesting = helper.convertDateFromDatabase(response[tableRowCount]["field2"]);
+				
+				inputCalendarTesting_grid = document.createElement("input");
+				inputCalendarTesting_grid.id = "inputCalendarTesting_grid";
+				
+				inputCalendarTesting_grid.style.position = "relative";
+				inputCalendarTesting_grid.style.zIndex = "1";
+				inputCalendarTesting_grid.style.backgroundColor = "white";
+				inputCalendarTesting_grid.width = "142";			
+				
+				inputCalendarTesting_grid.addEventListener("focus", function(event){
+					
+					var calendar = new CodeReuse.Calendar();
+					calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
+				
+				});
+				
+				inputCalendarTesting_grid.addEventListener("blur", function(event){
+				
+					var calendar = new CodeReuse.Calendar();
+					if(calendar.validateDate(this.id) == false)
+					{
+						alert("input format has to be dd-mmm-yyyy");
+					}
+				});			
+				
+				inputCalendarTesting_grid.value = dateFormatCalendarTesting;
+				
+				cell.appendChild(inputCalendarTesting_grid);
+				
+				
+				row.appendChild(cell);
+			}
+			else
+			{					
+				for(i=0; i<gridColumnsInfo.length; i++)
+				{	
+					
+					cell = document.createElement("td");
+					
+					cell.className = "grid";
+						
+					var colType = gridColumnsInfo[i].colType;
+					
+					if(colType == "date")
+					{	
+						var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
+						
+						var helper = new CodeReuse.Helper();
+						
+						var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
+						
+						cellText = document.createTextNode(dateFormat);
+					}
+					else
+					{
+						if(gridColumnsInfo[i].hasIdHiddenField == true)
+						{				
+							cell.value = response[tableRowCount][gridColumnsInfo[i].idDbField];
+						}						
+						
+						cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
+					}
+					
+					cell.appendChild(cellText);
+					
+					row.appendChild(cell);
+						
+					row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);		
+				}
 			}
 		}
+
 		
 		tbl.appendChild(row);
-		
-	});
+	
+		//debugger	
+	}
+	
+	divTable.innerHTML = "";
 	
 	divTable.appendChild(tbl);
 	
@@ -606,27 +825,28 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 	var arrayOldValuesTableGridEdit = home_tenant_grid.arrayOldValuesTableGridEdit;
 	
+	
 	for(i=0; i<gridColumnsInfo.length; i++)
 	{			
-		if(gridColumnsInfo[i].colType == "date")
-		{					
-			var dateFromDatabase = record[gridColumnsInfo[i].dbField];
-			
-			var helper = new CodeReuse.Helper();			
-						
-			var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-			
-			arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = dateFormat;	
+		
+		if(gridColumnsInfo[i].hasIdHiddenField == true)
+		{
+			arrayOldValuesTableGridEdit[gridColumnsInfo[i].idDbField] = record[gridColumnsInfo[i].idDbField];
 		}
 		else
 		{
-			if(gridColumnsInfo[i].htmlObjectId == "autocomplete")
-			{
+			if(gridColumnsInfo[i].colType == "date")
+			{					
+				var dateFromDatabase = record[gridColumnsInfo[i].dbField];
 				
-				arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = record[gridColumnsInfo[i].dbField];
+				var helper = new CodeReuse.Helper();			
+							
+				var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
+				
+				arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = dateFormat;	
 			}
 			else
-			{	
+			{
 				arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = record[gridColumnsInfo[i].dbField];
 			}
 		}

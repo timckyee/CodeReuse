@@ -33,7 +33,7 @@
 		else
 		if($queryName == "gridtablehome") {
 		
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2" . " order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"]);
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2" . " order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"]);
 		}
 		/*
 		else
