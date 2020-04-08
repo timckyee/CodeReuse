@@ -32,8 +32,19 @@
 		}
 		else
 		if($queryName == "gridtablehome") {
-		
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2" . " order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"]);
+			
+			$pageNumber = $_GET["pageNumber"];
+
+			//$pageNumber = 2;
+
+			$pageSize = 4;
+
+			$pageLimitLower = ($pageNumber - 1) * $pageSize;
+			$pageLimitUpper = $pageNumber * $pageSize;
+
+			$result = $mysqli->query("select (@row_number:=@row_number + 1) AS num, fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"] . ", fieldPrimaryKey asc limit " . $pageLimitLower . "," . $pageLimitUpper);
+
+			//$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2" . " order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"] . ", fieldPrimaryKey asc");
 		}
 		/*
 		else

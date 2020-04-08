@@ -11,9 +11,10 @@ cd /Users/tim/work
 
 tar --exclude '.git' --exclude '.DS_Store' -czvf codereuse.tar.gz ./CodeReuse
 
+# make sure CodeReuse_tar is existing folder
 cp codereuse.tar.gz CodeReuse_tar
 
 cd makefile_codereuse
 
-sftp -P 1024 root@bms.closedarea.com < build_sftp.bat
-ssh -T root@bms.closedarea.com -p 1024 < build_ssh.bat
+sftp -P 49430 root@bms.closedarea.com < build_sftp.bat
+ssh -T root@bms.closedarea.com -p 49430 < build_ssh.bat

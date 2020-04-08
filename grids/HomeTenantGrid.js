@@ -109,7 +109,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 	},	
 	
-	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection) {
+	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection, pageNumber) {
 		
 		//debugger
 		
@@ -147,7 +147,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 		alert('homeTenantGrid');
 		
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", null, sortColumn, sortDirection);
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", null, sortColumn, sortDirection, pageNumber);
 		
 	},
 	

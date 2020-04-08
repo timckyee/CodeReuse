@@ -113,6 +113,17 @@ td.grid {
     padding-left: 10px;
 }
 
+.table-wrapper
+{
+	height: 40%;
+    overflow: auto;
+}
+
+.pagingElements
+{
+	padding: 10px;
+}
+
 </style>
 
 </head>
@@ -133,7 +144,14 @@ td.grid {
 <br>
 <br>
 <br>
-<center><div id="gridGetPostHome" style="display:block"></div></center>
+<center><div id="gridGetPostHome" class="table-wrapper" style="display:block"></div></center>
+
+<center><div id="gridGetPostHomePaging">
+<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('left',document.getElementById('gridGetPostHomePagingPageNumber').value)"><<</span>
+<span class="pagingElements">Page Number</span></span><input id="gridGetPostHomePagingPageNumber"/><button onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(document.getElementById('gridGetPostHomePagingPageNumber').value)">Go</button>
+<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('right',document.getElementById('gridGetPostHomePagingPageNumber').value)">>></span>
+</div>
+</center>
 
 </div>
 

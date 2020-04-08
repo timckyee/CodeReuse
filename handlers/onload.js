@@ -12,7 +12,12 @@ window.addEventListener("load", function() {
 	
 	localStorage.clear();
 	
-	
+	localStorage.setItem("homeTenantGridSelect","0");
+
+	localStorage.setItem("homeTenantGridPageNumber", "1");
+
+	document.getElementById("gridGetPostHomePagingPageNumber").value = "1";
+
 	localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
 	
 	localStorage.setItem("arraySortDirection", "asc");
@@ -23,7 +28,7 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("arraySortColumn_tenant", "");
 	
-	localStorage.setItem("arraySortDirection_tenant", "");			
+	localStorage.setItem("arraySortDirection_tenant", "");		
 	
 	var tenant = new CodeReuse.Tenant();
 	
