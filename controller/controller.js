@@ -164,9 +164,9 @@ CodeReuse.Controller.prototype = {
 			tableFieldsValue["tenantId"] = tenant_input_grid_rowAttributeValue;
 			tableFieldsValue["field1"] = inputCalendar_grid;
 			tableFieldsValue["field2"] = inputCalendarTesting_grid;	
-					
+			
 			homeTenantGrid.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey_grid);
-			homeTenantGrid.homeTenantGridUpdate(tableRowNumber, tableFieldsValue);	
+			homeTenantGrid.homeTenantGridUpdate(tableRowNumber, tableFieldsValue, localStorage.getItem("homeTenantGridPageNumber"));	
 			
 		}
 		

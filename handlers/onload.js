@@ -11,8 +11,6 @@ window.addEventListener("load", function() {
 	init_calendar_inputs();
 	
 	localStorage.clear();
-	
-	localStorage.setItem("homeTenantGridSelect","0");
 
 	localStorage.setItem("homeTenantGridPageNumber", "1");
 

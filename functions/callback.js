@@ -43,7 +43,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		var handler = new CodeReuse.Handler();	
 		
 		if(tableHtmlObjectId == "tableHomeTenant")
-			tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i);
+			tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
 		else
 			tableHeader.onclick = handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
 		
@@ -160,8 +160,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			tableRowCount = tableRowCount - 1;
 			
 			tableRowFlag = true;
-
-			localStorage.setItem("homeTenantGridSelect",tableFieldsValue["fieldPrimaryKey"]);
 		}
 		else
 		{	
@@ -263,8 +261,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		}
 		
 		tbl.appendChild(row);
-		
-		localStorage.setItem("homeTenantGridSelect",response[tableRowCount]["fieldPrimaryKey"]);
 	}
 	
 	divTable.innerHTML = "";
@@ -363,7 +359,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 				alert('callback');
 				
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, tableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", tablePrimaryKeyValue, sortColumn, localStorage.getItem("arraySortDirection"));
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, tableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", tablePrimaryKeyValue, sortColumn, localStorage.getItem("arraySortDirection"), '', '', pageNumber);
 
 			};
 				
