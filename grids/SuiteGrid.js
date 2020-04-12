@@ -39,8 +39,7 @@ CodeReuse.SuiteGrid.prototype = {
 		var callback = new CodeReuse.Callback();
 				
 		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)			
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", "suiteId", localStorage.getItem("arraySortDirection"));
-						
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", null, localStorage.getItem("arraySortDirection"));
 	},
 	
 	refreshSelectSuiteGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {

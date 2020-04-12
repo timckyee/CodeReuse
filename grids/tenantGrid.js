@@ -61,8 +61,6 @@ CodeReuse.TenantGrid.prototype = {
 			
 			callback = new CodeReuse.Callback();
 			
-			alert('tenantGridTesting');
-			
 			if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
 				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtable", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", null, "fieldPrimaryKey", "asc");
 		}
