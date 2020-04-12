@@ -59,8 +59,8 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 
 			for(var i=1; i<tableHomeTenantRows.length; i++)
 			{
-				//if(tableHomeTenantRows[i] != undefined)
-				//{
+				if(tableHomeTenantRows[i].cells[1] != undefined)
+				{
 					var tableHomeTenantRowsCellValue = parseInt(tableHomeTenantRows[i].cells[1].innerText);
 					
 					if(tableHomeTenantRowsCellValue == tablePrimaryKey)
@@ -75,7 +75,7 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 						inputCalendarTesting_grid = tableHomeTenantRows[i].cells[5].innerText;
 						break;
 					}
-				//}
+				}
 				
 			}
 
@@ -299,6 +299,8 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 				var callback = new CodeReuse.Callback();				
 				
 				alert('post_updateGrid');
+
+				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", document.getElementById("inputPrimaryKey_grid").innerHTML, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);
 
 				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);				
 			}

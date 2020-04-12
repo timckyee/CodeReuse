@@ -158,7 +158,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 							
 			row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);
 			
-			tableRowCount = tableRowCount - 1;
+			//tableRowCount = tableRowCount - 1;
 			
 			tableRowFlag = true;
 		}
@@ -277,8 +277,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 
 gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
-
-	debugger
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -522,7 +520,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		
 			itemCurrent = response[tableRowCount];
 			
-			tableRowCount = tableRowCount - 1;
+			//tableRowCount = tableRowCount - 1;
 			
 			tableRowFlag = true;			
 				
@@ -685,8 +683,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	document.body.appendChild(tenantSearchListGrid);
 	*/
-		
-	
+
 	var record = itemCurrent;
 	
 	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
