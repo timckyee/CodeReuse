@@ -273,17 +273,18 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		{
 			return;
 		}
-					
+		
 		updateString = updateString.substr(0, updateString.length - 1);
 						
 		window.postXmlHttpRequest.onreadystatechange = function() {
 			
 			if (this.readyState == 4 && this.status == 200) {
-												
+
+				/*
 				for(update=0; update<columnsInfo.length; update++)
 				{			
 					arrayOldValuesTableGridEdit[columnsInfo[update].id] = htmlObjectFieldsValuesUpdate[update];
-				}
+				}*/
 								
 				//debugger				
 								

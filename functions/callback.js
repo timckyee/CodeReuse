@@ -518,7 +518,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			row.appendChild(cell);
 			
 		
-			itemCurrent = response[tableRowCount];
+			//itemCurrent = response[tableRowCount];
 			
 			//tableRowCount = tableRowCount - 1;
 			
@@ -550,8 +550,14 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;		
 					
-					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
-				
+					if(tablePrimaryKey.srcElement != "save")
+					{
+						alert('Please click on save to leave save mode');
+					}
+					else
+					{
+						grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
+					}
 				};	
 													
 				cell.className = "underline";	
@@ -684,41 +690,62 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	document.body.appendChild(tenantSearchListGrid);
 	*/
 
-	var record = itemCurrent;
-	
-	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+	//var record = itemCurrent;
 
-	var autocompleteInputs = home_tenant_grid.getAutocompleteInputs();
 
-	var arrayOldValuesTableGridEdit = home_tenant_grid.arrayOldValuesTableGridEdit;
-	
-	
-	for(i=0; i<gridColumnsInfo.length; i++)
-	{			
-		
-		if(gridColumnsInfo[i].hasIdHiddenField == true)
+	var record;
+
+	var recordFound = false;
+
+	for(var i=0; i<response.length; i++)
+	{
+		if(response[i].fieldPrimaryKey == rowId)
 		{
-			arrayOldValuesTableGridEdit[gridColumnsInfo[i].idDbField] = record[gridColumnsInfo[i].idDbField];
-		}
-		else
-		{
-			if(gridColumnsInfo[i].colType == "date")
-			{					
-				var dateFromDatabase = record[gridColumnsInfo[i].dbField];
-				
-				var helper = new CodeReuse.Helper();			
-							
-				var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-				
-				arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = dateFormat;	
+			record = response[i];
+			recordFound = true;
+			break;
+		} 
+	}
+
+	if(recordFound == true)
+	{
+		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+		var autocompleteInputs = home_tenant_grid.getAutocompleteInputs();
+
+		var arrayOldValuesTableGridEdit = home_tenant_grid.arrayOldValuesTableGridEdit;
+
+		for(i=0; i<gridColumnsInfo.length; i++)
+		{			
+			
+			if(gridColumnsInfo[i].hasIdHiddenField == true)
+			{
+				arrayOldValuesTableGridEdit[gridColumnsInfo[i].idDbField] = record[gridColumnsInfo[i].idDbField];
 			}
 			else
 			{
-				arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = record[gridColumnsInfo[i].dbField];
+				if(gridColumnsInfo[i].colType == "date")
+				{					
+					var dateFromDatabase = record[gridColumnsInfo[i].dbField];
+					
+					var helper = new CodeReuse.Helper();			
+								
+					var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
+					
+					arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = dateFormat;	
+				}
+				else
+				{
+					arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = record[gridColumnsInfo[i].dbField];
+				}
 			}
 		}
 	}
-	
+
+
+	localStorage.setItem("arraySortColumn", sortColumn);
+	localStorage.setItem("arraySortDirection", sortDirection);
+
 	//console.dir('test');
 	//console.dir(arrayOldValuesTableGridEdit);
 	
