@@ -83,6 +83,12 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 
 updateGridPage: function(pageNumber)
 {
+	if(pageNumber == "")
+	{
+		alert('Page number has to be an integer');
+		return;
+	}
+
 	localStorage.setItem("homeTenantGridPageNumber", pageNumber);
 
 	var pageNumberUpdate = localStorage.getItem("homeTenantGridPageNumber");
@@ -100,6 +106,12 @@ updateGridPage: function(pageNumber)
 
 updateGridPageArrows: function(direction, pageNumber)
 {
+	if(pageNumber == "")
+	{
+		alert('Page number has to be an integer');
+		return;
+	}
+
 	var pageNumberUpdate;
 
 	if(direction == "left") {
