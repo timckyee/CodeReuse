@@ -96,10 +96,9 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 			
 		localStorage.setItem("arraySortColumn", sortColumn);
 
-		alert('sort');
+		//alert('sort: ' + sortColumn + ' ' + localStorage.getItem("arraySortDirection"));
 
 		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", null, sortColumn, localStorage.getItem("arraySortDirection"), '', '', pageNumber);
-			
 	};
 }
 

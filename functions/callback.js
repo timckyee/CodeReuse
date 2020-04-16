@@ -97,8 +97,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				var tableRowPrimaryKey = tableFieldsValue["fieldPrimaryKey"];			
 
-				cell.onclick = function(tablePrimaryKey) { 
-					
+				cell.onclick = function(tablePrimaryKey) {
+
 					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;				
 					
 					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '', '', pageNumber);
@@ -273,6 +273,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	divTable.appendChild(tbl);
 	
+	localStorage.setItem("arraySortColumn", sortColumn);
+	localStorage.setItem("arraySortDirection", sortDirection);
+
 },
 
 
@@ -363,7 +366,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				
 				var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;
 
-				alert('callback');
+				//alert('gridEditCallback');
 				
 				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, tableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", tablePrimaryKeyValue, sortColumn, localStorage.getItem("arraySortDirection"), '', '', pageNumber);
 
@@ -402,7 +405,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 			building_option_grid.id = "building_option_grid";
 		
-			alert('gridEditCallback_save');
+			//alert('gridEditCallback table row save');
 		
 			building_option_grid.selectedIndex = tableFieldsValue["buildingId"];
 		
@@ -740,15 +743,14 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				}
 			}
 		}
-	}
+	}	
 
-
-	localStorage.setItem("arraySortColumn", sortColumn);
-	localStorage.setItem("arraySortDirection", sortDirection);
+	//localStorage.setItem("arraySortColumn", sortColumn);
+	//localStorage.setItem("arraySortDirection", sortDirection);
 
 	//console.dir('test');
 	//console.dir(arrayOldValuesTableGridEdit);
-	
+
 },
 
 refreshGridCallbackSuite: function()
