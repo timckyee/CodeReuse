@@ -192,11 +192,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			
 			row.onclick = function(rowValues) {
-					
-				//var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+
+				var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
 									
-				//if(tableHtmlObjectId != "tableHomeTenant")
-				//	rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
+				if(tableHtmlObjectId != "tableHomeTenant")
+					rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
 				
 			};
 			
