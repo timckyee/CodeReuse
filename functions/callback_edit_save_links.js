@@ -83,17 +83,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				cell.style.paddingLeft = "10px";
 							
-				//cellText = document.createTextNode("edit");
+				cellText = document.createTextNode("edit");
 				
 				cell.value = tableFieldsValue["fieldPrimaryKey"];
 				
-				editButton = document.createElement("button");
-				editButton.type = "button";
-				//editButton.value = "edit";
-				editButton.innerText = "edit";
-				editButton.id = "editButton";
-				editButton.style.width = "50px";
-
 				var tenantModel = new CodeReuse.Tenant();
 				
 				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -104,22 +97,17 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				var tableRowPrimaryKey = tableFieldsValue["fieldPrimaryKey"];			
 
-				editButton.onclick = function(tablePrimaryKey) {
+				cell.onclick = function(tablePrimaryKey) {
 
-					if(!confirm("Would you like to edit this row?"))
-					{
-						return;
-					}
-
-					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;				
+					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;				
 					
 					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '', '', pageNumber);
 					
 					//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber);
 				}
-				
-				//cell.className = "underline";
-				cell.appendChild(editButton);
+					
+				cell.className = "underline";
+				cell.appendChild(cellText);
 				
 				cell.height = 25;
 				
@@ -193,10 +181,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			row.onclick = function(rowValues) {
 					
-				//var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+				var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
 									
-				//if(tableHtmlObjectId != "tableHomeTenant")
-				//	rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
+				if(tableHtmlObjectId != "tableHomeTenant")
+					rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
 				
 			};
 			
@@ -209,17 +197,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				cell.style.paddingLeft = "10px";
 							
-				//cellText = document.createTextNode("edit");
+				cellText = document.createTextNode("edit");
 				
 				cell.value = response[tableRowCount]["fieldPrimaryKey"];
 				
-				editButton = document.createElement("button");
-				editButton.type = "button";
-				//editButton.value = "edit";
-				editButton.innerText = "edit";
-				editButton.id = "editButton";
-				editButton.style.width = "50px";
-
 				var tenantModel = new CodeReuse.Tenant();
 				
 				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -228,23 +209,18 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				var callback = new CodeReuse.Callback();
 				
-				editButton.onclick = function(tablePrimaryKey) 
+				cell.onclick = function(tablePrimaryKey) 
 				{
-					if(!confirm("Would you like to edit this row?"))
-					{
-						return;
-					}
-
-					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
+					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;
 					
 					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '' , '', pageNumber);
 
 					//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber);
 				
-				}
-				
-				//cell.className = "underline";
-				cell.appendChild(editButton);
+				}					
+					
+				cell.className = "underline";
+				cell.appendChild(cellText);
 				
 				cell.height = 25;
 				
@@ -364,16 +340,9 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 						
 			cell.style.paddingLeft = "10px";
 			
-			//cellText = document.createTextNode("save");
+			cellText = document.createTextNode("save");
 			
 			cell.value = response[tableRowCount]["fieldPrimaryKey"];
-			
-			saveButton = document.createElement("button");
-			saveButton.type = "button";
-			//saveButton.value = "save";
-			saveButton.innerText = "save";
-			saveButton.id = "saveButton";
-			saveButton.style.width = "50px";
 			
 			var tenantModel = new CodeReuse.Tenant();
 			
@@ -383,13 +352,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 			var callback = new CodeReuse.Callback();
 			
-			saveButton.onclick = function(tablePrimaryKey)
+			cell.onclick = function(tablePrimaryKey)
 			{	
-				if(!confirm("Would you like to save this row?"))
-				{
-					return;
-				}
-
 				controller.homeTenantGridSave();
 				
 				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -400,7 +364,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				
 				var callback = new CodeReuse.Callback();
 				
-				var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
+				var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;
 
 				//alert('gridEditCallback');
 				
@@ -408,8 +372,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 			};
 				
-			//cell.className = "underline";	
-			cell.appendChild(saveButton);
+			cell.className = "underline";	
+			cell.appendChild(cellText);
 			
 			cell.height = 25;
 			
@@ -573,17 +537,10 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				
 				cell.style.paddingLeft = "10px";
 				
-				//cellText = document.createTextNode("edit");
+				cellText = document.createTextNode("edit");
 				
 				cell.value = response[tableRowCount]["fieldPrimaryKey"];
 				
-				editButton = document.createElement("button");
-				editButton.type = "button";
-				//editButton.value = "edit";
-				editButton.innerText = "edit";
-				editButton.id = "editButton";
-				editButton.style.width = "50px";
-
 				var tenantModel = new CodeReuse.Tenant();
 				
 				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -592,14 +549,9 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				
 				var callback = new CodeReuse.Callback();
 								
-				editButton.onclick = function(tablePrimaryKey) {
+				cell.onclick = function(tablePrimaryKey) {
 
-					if(!confirm("Would you like to edit this row?"))
-					{
-						return;
-					}
-
-					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
+					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.value;		
 					
 					if(tablePrimaryKey.srcElement != "save")
 					{
@@ -611,8 +563,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 					}
 				};	
 													
-				//cell.className = "underline";	
-				cell.appendChild(editButton);
+				cell.className = "underline";	
+				cell.appendChild(cellText);
 				
 				cell.height = 25;
 				
