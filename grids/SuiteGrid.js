@@ -6,10 +6,10 @@ CodeReuse.SuiteGrid = function() {
 		
 	this.columns = [
 		
-		{ colName: "Primary Key", id: "suiteId", colType: "int", dbField: "suiteId" },
-		{ colName: "Suite Number", id: "suiteNumber", colType: "string", dbField: "suiteNumber"},
-		{ colName: "Building", id: "buildingName", colType: "string", dbField: "buildingId" },
-		{ colName: "Location", id: "location", colType: "string", dbField: "location" }
+		{ colName: "Primary Key", id: "suiteId", colType: "int" },
+		{ colName: "Suite Number", id: "suiteNumber", colType: "string" },
+		{ colName: "Building", id: "buildingName", colType: "string" },
+		{ colName: "Location", id: "location", colType: "string" }
 
 	];
 	

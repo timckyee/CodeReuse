@@ -46,7 +46,7 @@ TenantGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsIn
 sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, column) {
 				
 	return function() {
-		
+
 		var sort = new CodeReuse.Sort();
 
 		sort.sortTable(sortTableHtmlObjectId, column, gridColumnsInfo);
@@ -66,7 +66,7 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 		
 		var callback = new CodeReuse.Callback();
 		
-		var sortColumn = gridColumnsInfo[column].dbField;		
+		var sortColumn = gridColumnsInfo[column].id;		
 		
 		var sortDirection = localStorage.getItem("arraySortDirection");	
 		

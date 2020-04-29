@@ -221,9 +221,9 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	
 	for(update=0; update<columnsInfo.length; update++)
 	{			
-		var htmlObjectField = columnsInfo[update].dbField;
+		var htmlObjectField = columnsInfo[update].id;
 		var htmlObjectFieldValue = htmlObjectFieldsValuesUpdate[update];
-		var databaseField = columnsInfo[update].dbField;		
+		var databaseField = columnsInfo[update].id;		
 				
 		var hiddenFieldFlag = columnsInfo[update].hasIdHiddenField;
 		var hiddenField = columnsInfo[update].idDbField;	

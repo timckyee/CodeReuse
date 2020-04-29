@@ -193,11 +193,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			row.onclick = function(rowValues) {
 
-				var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
-									
+				//var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+
+				//var rowPrimaryKey = rowValues.srcElement.parentNode.value;
+
 				if(tableHtmlObjectId != "tableHomeTenant")
+				{
+					var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
 					rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
-				
+				}
 			};
 			
 			var cell;
@@ -274,7 +278,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					if(gridColumnsInfo[i].hasIdHiddenField == true)
 					{						
 						cell.value = response[tableRowCount][gridColumnsInfo[i].idDbField];
-						
 					}						
 					
 					cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
@@ -776,18 +779,18 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			else
 			{
 				if(gridColumnsInfo[i].colType == "date")
-				{					
-					var dateFromDatabase = record[gridColumnsInfo[i].dbField];
+				{
+					var dateFromDatabase = record[gridColumnsInfo[i].id];
 					
 					var helper = new CodeReuse.Helper();			
 								
 					var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
 					
-					arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = dateFormat;	
+					arrayOldValuesTableGridEdit[gridColumnsInfo[i].id] = dateFormat;	
 				}
 				else
 				{
-					arrayOldValuesTableGridEdit[gridColumnsInfo[i].dbField] = record[gridColumnsInfo[i].dbField];
+					arrayOldValuesTableGridEdit[gridColumnsInfo[i].id] = record[gridColumnsInfo[i].id];
 				}
 			}
 		}

@@ -12,11 +12,11 @@ CodeReuse.HomeTenantGrid = function() {
 		
 	this.columns = [
 		
-		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", dbField: "fieldPrimaryKey", htmlObjectId: "inputPrimaryKey_grid"},
-		{ colName: "Building Name", id: "buildingName", colType: "int", dbField: "buildingName", htmlObjectId: "building_option_grid", hasIdHiddenField: true, idDbField: "field3" },
-		{ colName: "Tenant Name", id: "tenantName", colType: "string", dbField: "tenantName", htmlObjectId: "tenant_input_grid", hasIdHiddenField: true, idDbField: "field4" },
-		{ colName: "Field Date", id: "field1", colType: "date", dbField: "field1", htmlObjectId: "inputCalendar_grid" },
-		{ colName: "Field Date", id: "field2", colType: "date", dbField: "field2", htmlObjectId: "inputCalendarTesting_grid" },
+		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", htmlObjectId: "inputPrimaryKey_grid"},
+		{ colName: "Building Name", id: "buildingName", colType: "string", htmlObjectId: "building_option_grid", hasIdHiddenField: true, idDbField: "field3" },
+		{ colName: "Tenant Name", id: "tenantName", colType: "string", htmlObjectId: "tenant_input_grid", hasIdHiddenField: true, idDbField: "field4" },
+		{ colName: "Field Date", id: "field1", colType: "date", htmlObjectId: "inputCalendar_grid" },
+		{ colName: "Field Date", id: "field2", colType: "date", htmlObjectId: "inputCalendarTesting_grid" },
 		
 	];
 	

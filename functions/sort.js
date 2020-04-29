@@ -6,7 +6,7 @@ CodeReuse.Sort.prototype = {
 
 sortTable: function(tblId, column, gridColumnsInfo){
 		
-	var sortColumn = gridColumnsInfo[column].dbField;
+	var sortColumn = gridColumnsInfo[column].id;
 	
 	if(tblId == "tableSuite")
 	{

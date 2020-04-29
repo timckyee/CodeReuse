@@ -6,11 +6,11 @@ CodeReuse.TenantGrid = function() {
 		
 	this.columns = [
 		
-		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", dbField: "fieldPrimaryKey" },
-		{ colName: "Building Name", id: "buildingName", colType: "string", dbField: "field3" },
-		{ colName: "Tenant Name", id: "tenantName", colType: "string", dbField:"field4" },
-		{ colName: "field1", id: "field1", colType: "date", dbField: "field1" },
-		{ colName: "field2", id: "field2", colType: "date", dbField: "field2" }
+		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int" },
+		{ colName: "Building Name", id: "buildingName", colType: "string" },
+		{ colName: "Tenant Name", id: "tenantName", colType: "string" },
+		{ colName: "field1", id: "field1", colType: "date" },
+		{ colName: "field2", id: "field2", colType: "date" }
 	];
 	
 	var handler = new CodeReuse.Handler();
