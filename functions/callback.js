@@ -387,8 +387,9 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			var callback = new CodeReuse.Callback();
 			
 			saveButton.onclick = function(tablePrimaryKey)
-			{
-				if(document.getElementById('tenant_input_grid').value != tableFieldsValue["tenantName"])
+			{	
+
+				if(document.getElementById("tenantSearchList").innerHTML != "")
 				{
 					alert('Please select Tenant Name');
 					return;

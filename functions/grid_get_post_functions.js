@@ -193,6 +193,8 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		{
 			return;
 		}
+
+		alert(updateString);
 					
 		updateString = updateString.substr(0, updateString.length - 1);
 						
@@ -282,6 +284,8 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 			return;
 		}
 		
+		alert(updateString);
+
 		updateString = updateString.substr(0, updateString.length - 1);
 						
 		window.postXmlHttpRequest.onreadystatechange = function() {
