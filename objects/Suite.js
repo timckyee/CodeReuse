@@ -14,6 +14,9 @@ CodeReuse.Suite = function() {
 		
 	this.phpFileGridGetPost = "php/grid_get_post.php";
 	
+	this.suiteUpdateQueryName = "updateTableGridGetPostSuite";
+
+	this.suiteInsertQueryName = "createRecordTableGridGetPostSuite";
 };
 
 CodeReuse.Suite.prototype = {
@@ -29,6 +32,18 @@ CodeReuse.Suite.prototype = {
 		
 		return this.phpFileGridGetPost;	
 		
+	},
+
+	getSuiteUpdateQueryName: function() {
+
+		return this.suiteUpdateQueryName;
+
+	},
+
+	getSuiteInsertQueryName: function() {
+
+		return this.suiteInsertQueryName;
+
 	},
 	
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
@@ -94,7 +109,7 @@ CodeReuse.Suite.prototype = {
 			
 			var callback = new CodeReuse.Callback();
 			
-			grid_get_post_functions.post_updateForm(this.getPhpFile(), "updateTableGridGetPostSuite", document.getElementById("inputPrimaryKeySuite").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallbackSuite);
+			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getSuiteUpdateQueryName(), document.getElementById("inputPrimaryKeySuite").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallbackSuite);
 		}
 		
 	},
@@ -111,7 +126,7 @@ CodeReuse.Suite.prototype = {
 			
 			var callback = new CodeReuse.Callback();
 			
-			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), "createRecordTableGridGetPostSuite", htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeySuite", this.arrayOldValuesTable, callback.refreshGridCallbackSuite);
+			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getSuiteInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeySuite", this.arrayOldValuesTable, callback.refreshGridCallbackSuite);
 		}	
 	
 	}

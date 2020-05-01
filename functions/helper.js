@@ -83,6 +83,27 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 
 updateGridPage: function(pageNumber)
 {
+	var tableHomeTenant = document.getElementById('tableHomeTenant');
+
+	var tableRows = tableHomeTenant.rows[1];
+
+	var countSave = 0;
+
+	for(var i=1; i<tableHomeTenant.rows.length; i++)
+	{
+		if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+		{
+			countSave = countSave + 1;
+			break;
+		}
+	}
+
+	if(countSave == 1)
+	{
+		alert('Please click on save to leave save mode');
+		return;	
+	}
+
 	if(pageNumber == "")
 	{
 		alert('Page number has to be an integer');
@@ -106,6 +127,27 @@ updateGridPage: function(pageNumber)
 
 updateGridPageArrows: function(direction, pageNumber)
 {
+	var tableHomeTenant = document.getElementById('tableHomeTenant');
+
+	var tableRows = tableHomeTenant.rows[1];
+
+	var countSave = 0;
+
+	for(var i=1; i<tableHomeTenant.rows.length; i++)
+	{
+		if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+		{
+			countSave = countSave + 1;
+			break;
+		}
+	}
+
+	if(countSave == 1)
+	{
+		alert('Please click on save to leave save mode');
+		return;	
+	}
+
 	if(pageNumber == "")
 	{
 		alert('Page number has to be an integer');

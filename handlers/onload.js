@@ -100,11 +100,13 @@ function init_calendar_inputs() {
 
 	var divCalendarId = "calendarId";
 	
+	/*
 	document.onclick = function(e) {
 		
 		calendar.documentOnclick(e, divCalendarId);
 		
 	}
+	*/
 
 	var inputCalendar = document.getElementById('inputCalendar');
 	

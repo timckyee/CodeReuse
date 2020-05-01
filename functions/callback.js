@@ -395,6 +395,12 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 					return;
 				}
 
+				if(document.getElementById('calendarId').style.display == "block")
+				{
+					alert('Please select field date');
+					return;
+				}
+
 				if(!confirm("Would you like to save this row?"))
 				{
 					return;
@@ -603,7 +609,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				var callback = new CodeReuse.Callback();
 								
 				editButton.onclick = function(tablePrimaryKey) {
-
+					
 					if(!confirm("Would you like to edit this row?"))
 					{
 						return;

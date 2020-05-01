@@ -33,6 +33,9 @@ CodeReuse.HomeTenantGrid = function() {
 	
 	this.phpFileGridGetPost = "php/grid_get_post.php";
 
+	this.refreshHomeTenantGridQueryName = "gridtablehome";
+
+	this.homeTenantGridUpdateQueryName = "updateTableGridGetPost";
 };
 
 CodeReuse.HomeTenantGrid.prototype = {
@@ -79,6 +82,18 @@ CodeReuse.HomeTenantGrid.prototype = {
 		return this.columns;
 	},
 	
+	getRefreshHomeTenantGridQueryName: function () {
+
+		return this.refreshHomeTenantGridQueryName;
+
+	},
+	
+	getHomeTenantGridUpdateQueryName: function () {
+
+		return this.homeTenantGridUpdateQueryName;
+
+	},
+
 	getTableHtmlObjectId: function() {
 		
 		return this.tableHtmlObjectId;
@@ -145,7 +160,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 		//alert('homeTenantGrid onload');
 
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "gridtablehome", "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", null, sortColumn, sortDirection, '', '', pageNumber);
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", null, sortColumn, sortDirection, '', '', pageNumber);
 		
 	},
 	
@@ -167,7 +182,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 
 			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", document.getElementById("inputPrimaryKey_grid").innerHTML, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);
 
-			grid_get_post_functions.post_updateGrid(this.getPhpFile(), "updateTableGridGetPost", document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, tableRowNumber, tableFieldsValue, pageNumber);
+			grid_get_post_functions.post_updateGrid(this.getPhpFile(), this.getHomeTenantGridUpdateQueryName(), document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, tableRowNumber, tableFieldsValue, pageNumber);
 		}
 		
 	},

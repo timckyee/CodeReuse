@@ -17,6 +17,10 @@ CodeReuse.SuiteGrid = function() {
 	
 	this.rowOnClick =  handler.SuiteGridOnClickHandler;
 
+	this.refreshSuiteGridQueryName = "suites";
+
+	this.refreshSelectSuiteGridQueryName = "suites";	
+
 };
 
 CodeReuse.SuiteGrid.prototype = {
@@ -27,6 +31,19 @@ CodeReuse.SuiteGrid.prototype = {
 		
 	},
 	
+	getRefreshSuiteGridQueryName: function () {
+
+		return this.refreshSuiteGridQueryName;
+
+	},
+
+	getRefreshSelectSuiteGridQueryName: function () {
+
+		return this.refreshSelectSuiteGridQueryName;
+
+	},
+
+
 	getGridColumnsInfo: function() {
 		
 		return this.columns;
@@ -39,7 +56,7 @@ CodeReuse.SuiteGrid.prototype = {
 		var callback = new CodeReuse.Callback();
 				
 		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)			
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", null, localStorage.getItem("arraySortDirection"));
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", null, localStorage.getItem("arraySortDirection"));
 	},
 	
 	refreshSelectSuiteGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
@@ -51,7 +68,7 @@ CodeReuse.SuiteGrid.prototype = {
 			callback = new CodeReuse.Callback();
 			
 			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)	
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, "suites", "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", "suiteId", "asc");
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", "suiteId", "asc");
 				
 		}
 		
