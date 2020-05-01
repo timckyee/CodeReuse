@@ -387,11 +387,17 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			var callback = new CodeReuse.Callback();
 			
 			saveButton.onclick = function(tablePrimaryKey)
-			{	
+			{
+				if(document.getElementById('tenant_input_grid').value != tableFieldsValue["tenantName"])
+				{
+					alert('Please select Tenant Name');
+					return;
+				}
+
 				if(!confirm("Would you like to save this row?"))
 				{
 					return;
-				}
+				}				
 
 				controller.homeTenantGridSave();
 				

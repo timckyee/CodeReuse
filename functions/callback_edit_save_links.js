@@ -279,7 +279,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 },
 
 
-gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
+gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;

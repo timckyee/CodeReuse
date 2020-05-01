@@ -90,7 +90,6 @@ function init_autocomplete_inputs() {
 	
 	tenant_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
 	
-	
 }
 
 function init_calendar_inputs() {

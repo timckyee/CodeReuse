@@ -21,6 +21,7 @@ positionAutocomplete: function(inputAutocompleteId, divListId) {
 
 focusOutHide: function(div) {
 	
+	/*
 	if(div == "buildingSearchList")
 	{
 		if(document.getElementById("buildingSearchList").innerHTML != "")
@@ -29,7 +30,8 @@ focusOutHide: function(div) {
 			return;
 		}
 	}
-	else
+	*/
+
 	if(div == "tenantSearchList")
 	{
 		if(document.getElementById("tenantSearchList").innerHTML != "")
