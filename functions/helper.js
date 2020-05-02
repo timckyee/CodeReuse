@@ -264,7 +264,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 		modal.style.display = "none";
 	
-		if(buttonType == "confirm")
+		//if(buttonType == "confirm")
 			msgbox_callback(true);
 	
 	};
@@ -275,7 +275,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 		modal.style.display = "none";
 
-		if(buttonType == "confirm")
+		//if(buttonType == "confirm")
 			msgbox_callback(false);
 
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();

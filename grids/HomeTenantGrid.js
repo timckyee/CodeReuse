@@ -171,7 +171,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 		var helper = new CodeReuse.Helper();								
 												
 		if(helper.validateHtmlObjectFieldsHomeTenantGrid(this.columns))
-		{	
+		{
 			grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
 			tenantModel = new CodeReuse.Tenant();
@@ -179,8 +179,6 @@ CodeReuse.HomeTenantGrid.prototype = {
 			home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
 			var callback = new CodeReuse.Callback();
-
-			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", document.getElementById("inputPrimaryKey_grid").innerHTML, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);
 
 			grid_get_post_functions.post_updateGrid(this.getPhpFile(), this.getHomeTenantGridUpdateQueryName(), document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, tableRowNumber, tableFieldsValue, pageNumber);
 		}

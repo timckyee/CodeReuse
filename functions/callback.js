@@ -638,7 +638,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 							return;
 						}
 					});
-				};	
+				};
 													
 				//cell.className = "underline";	
 				cell.appendChild(editButton);

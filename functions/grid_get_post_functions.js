@@ -191,7 +191,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	}
 	
 	if(updateString != "")
-	{			
+	{
 		var helper = new CodeReuse.Helper();
 
 		helper.msgBox('confirm', 'There are changes to the fields. Continue with the update?', function (result) {
@@ -285,12 +285,31 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	if(updateString == "")
 	{
 		var helper = new CodeReuse.Helper();
+
+		helper.msgBox('confirm', 'There are no changes to this record', function (result) {
 		
-		helper.msgBox('alert','There are no changes to this record');
+			if(result == true)
+			{		
+				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+					
+				var tenantModel = new CodeReuse.Tenant();
+					
+				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 		
-		return;
+				var callback = new CodeReuse.Callback();
+		
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", document.getElementById("inputPrimaryKey_grid").innerHTML, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);
+
+				return;
+			}
+			else
+			if(result == false)
+			{
+				return;
+			}
+		});
 	}
-	
+
 	if(updateString != "")
 	{
 		var helper = new CodeReuse.Helper();
@@ -307,6 +326,16 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 					
 					if (this.readyState == 4 && this.status == 200) {
 				
+						grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+			
+						tenantModel = new CodeReuse.Tenant();
+							
+						home_tenant_grid = new CodeReuse.HomeTenantGrid();
+			
+						var callback = new CodeReuse.Callback();
+			
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", document.getElementById("inputPrimaryKey_grid").innerHTML, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);
+
 					}
 				}
 			
