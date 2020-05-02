@@ -183,11 +183,16 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	
 	if(updateString == "")
 	{
+		alert("There are no changes to this record");
+		return;
+
+		/*
 		var helper = new CodeReuse.Helper();
 		
 		helper.msgBox('alert','There are no changes to this record');
 		
 		return;
+		*/
 	}
 	
 	if(updateString != "")
