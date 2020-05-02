@@ -110,17 +110,17 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 					
-						if(result == 'false')
+						if(result == true)
+						{
+							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;				
+					
+							grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '', '', pageNumber);							
+						}
+						if(result == false)
 						{
 							return;
 						}
-					});						
-
-					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;				
-					
-					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '', '', pageNumber);
-					
-					//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber);
+					});
 				}
 				
 				//cell.className = "underline";
@@ -243,18 +243,18 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 					
+						if(result == true)
+						{
+							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
+					
+							grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '' , '', pageNumber);
+						}
+						else
 						if(result == false)
 						{
 							return;
 						}
-					});	
-
-					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
-					
-					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '' , '', pageNumber);
-
-					//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber);
-				
+					});
 				}
 				
 				//cell.className = "underline";
@@ -415,28 +415,18 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 				helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 				
+					if(result == true)
+					{
+						controller.homeTenantGridSave();
+					}
+					else
 					if(result == false)
 					{
 						return;
 					}
-				});			
-
-				controller.homeTenantGridSave();
+				});
 				
-				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-				
-				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-				
-				var tenantModel = new CodeReuse.Tenant();
-				
-				var callback = new CodeReuse.Callback();
-				
-				var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
-
-				//alert('gridEditCallback');
-				
-				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, tableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", tablePrimaryKeyValue, sortColumn, localStorage.getItem("arraySortDirection"), '', '', pageNumber);
-
+				//var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
 			};
 				
 			//cell.className = "underline";	
@@ -629,22 +619,25 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 					
+						if(result == true)
+						{
+							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
+					
+							if(tablePrimaryKey.srcElement != "save")
+							{
+								alert('Please click on save to leave save mode');
+							}
+							else
+							{
+								grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
+							}
+						}
+						else
 						if(result == false)
 						{
 							return;
 						}
-					});	
-
-					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
-					
-					if(tablePrimaryKey.srcElement != "save")
-					{
-						alert('Please click on save to leave save mode');
-					}
-					else
-					{
-						grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
-					}
+					});
 				};	
 													
 				//cell.className = "underline";	
