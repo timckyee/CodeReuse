@@ -235,6 +235,61 @@ dateMonthNumberToStringConversion: function(monthNumber)
 	var monthArray = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 	
 	return monthArray[parseInt(monthNumber) - 1];
+},
+
+msgBox: function (buttonType, msg, msgbox_callback) {
+
+	var modal = document.getElementById("myModal");
+	
+	//var btn = document.getElementById("myBtn");
+	
+	document.getElementById('popupText').innerHTML = msg;
+	
+	if(buttonType == 'alert')
+	{
+	document.getElementById('buttonOK').style.display = 'block';
+	document.getElementById('buttonCancel').style.display = 'none';
+	}  
+	else if(buttonType == 'confirm')
+	{
+	document.getElementById('buttonOK').style.display = 'block';
+	document.getElementById('buttonCancel').style.display = 'block';
+	}
+	
+	modal.style.display = "block";
+	
+	var buttonOK = document.getElementById("buttonOK");
+	
+	buttonOK.onclick = function() {
+
+		modal.style.display = "none";
+	
+		if(buttonType == "confirm")
+			msgbox_callback(true);
+	
+	};
+	
+	var buttonCancel = document.getElementById("buttonCancel");
+	
+	buttonCancel.onclick = function() {
+
+		modal.style.display = "none";
+
+		if(buttonType == "confirm")
+			msgbox_callback(false);
+
+		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+		
+		var tenantModel = new CodeReuse.Tenant();
+		
+		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+		
+		var callback = new CodeReuse.Callback();
+
+		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", '', localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', localStorage.getItem("homeTenantGridPageNumber"));
+		
+	};
+	
 }
 
 }

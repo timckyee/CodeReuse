@@ -106,10 +106,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 				editButton.onclick = function(tablePrimaryKey) {
 
-					if(!confirm("Would you like to edit this row?"))
-					{
-						return;
-					}
+					var helper = new CodeReuse.Helper();
+
+					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
+					
+						if(result == 'false')
+						{
+							return;
+						}
+					});						
 
 					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;				
 					
@@ -234,10 +239,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				editButton.onclick = function(tablePrimaryKey) 
 				{
-					if(!confirm("Would you like to edit this row?"))
-					{
-						return;
-					}
+					var helper = new CodeReuse.Helper();
+
+					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
+					
+						if(result == false)
+						{
+							return;
+						}
+					});	
 
 					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
 					
@@ -401,10 +411,15 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 					return;
 				}
 
-				if(!confirm("Would you like to save this row?"))
-				{
-					return;
-				}				
+				var helper = new CodeReuse.Helper();
+
+				helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
+				
+					if(result == false)
+					{
+						return;
+					}
+				});			
 
 				controller.homeTenantGridSave();
 				
@@ -609,11 +624,16 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				var callback = new CodeReuse.Callback();
 								
 				editButton.onclick = function(tablePrimaryKey) {
+
+					var helper = new CodeReuse.Helper();
+
+					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 					
-					if(!confirm("Would you like to edit this row?"))
-					{
-						return;
-					}
+						if(result == false)
+						{
+							return;
+						}
+					});	
 
 					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
 					
