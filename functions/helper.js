@@ -265,7 +265,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 		modal.style.display = "none";
 	
 		//if(buttonType == "confirm")
-			msgbox_callback(true);
+		msgbox_callback(true);
 	
 	};
 	
@@ -276,7 +276,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 		modal.style.display = "none";
 
 		//if(buttonType == "confirm")
-			msgbox_callback(false);
+		msgbox_callback(false);
 
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
@@ -287,8 +287,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 		var callback = new CodeReuse.Callback();
 
 		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", '', localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', localStorage.getItem("homeTenantGridPageNumber"));
-		
-	};
+	}
 	
 }
 

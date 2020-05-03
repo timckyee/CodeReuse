@@ -105,11 +105,35 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				var tableRowPrimaryKey = tableFieldsValue["fieldPrimaryKey"];			
 
 				editButton.onclick = function(tablePrimaryKey) {
+					
+					if(tablePrimaryKey.srcElement.innerText != "save")
+					{
+						var tableHomeTenant = document.getElementById('tableHomeTenant');
+
+						var tableRows = tableHomeTenant.rows[1];
+					
+						var countSave = 0;
+					
+						for(var i=1; i<tableHomeTenant.rows.length; i++)
+						{
+							if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+							{
+								countSave = countSave + 1;
+								break;
+							}
+						}
+					
+						if(countSave == 1)
+						{
+							alert('Please click on save to leave save mode');
+							return;	
+						}
+					}
 
 					var helper = new CodeReuse.Helper();
 
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-					
+
 						if(result == true)
 						{
 							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;				
@@ -239,10 +263,34 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				editButton.onclick = function(tablePrimaryKey) 
 				{
+					if(tablePrimaryKey.srcElement.innerText != "save")
+					{
+						var tableHomeTenant = document.getElementById('tableHomeTenant');
+
+						var tableRows = tableHomeTenant.rows[1];
+					
+						var countSave = 0;
+					
+						for(var i=1; i<tableHomeTenant.rows.length; i++)
+						{
+							if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+							{
+								countSave = countSave + 1;
+								break;
+							}
+						}
+					
+						if(countSave == 1)
+						{
+							alert('Please click on save to leave save mode');
+							return;	
+						}
+					}
+
 					var helper = new CodeReuse.Helper();
 
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-					
+
 						if(result == true)
 						{
 							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
@@ -398,7 +446,6 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 			saveButton.onclick = function(tablePrimaryKey)
 			{	
-
 				if(document.getElementById("tenantSearchList").innerHTML != "")
 				{
 					alert('Please select Tenant Name');
@@ -410,11 +457,35 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 					alert('Please select field date');
 					return;
 				}
+						
+				if(tablePrimaryKey.srcElement.innerText != "save")
+				{
+					var tableHomeTenant = document.getElementById('tableHomeTenant');
+
+					var tableRows = tableHomeTenant.rows[1];
+				
+					var countSave = 0;
+				
+					for(var i=1; i<tableHomeTenant.rows.length; i++)
+					{
+						if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+						{
+							countSave = countSave + 1;
+							break;
+						}
+					}
+				
+					if(countSave == 1)
+					{
+						alert('Please click on save to leave save mode');
+						return;	
+					}			
+				}	
 
 				var helper = new CodeReuse.Helper();
 
-				helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-				
+				helper.msgBox('confirm', 'Would you like to save this row?', function (result) {
+
 					if(result == true)
 					{
 						controller.homeTenantGridSave();
@@ -615,10 +686,34 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 								
 				editButton.onclick = function(tablePrimaryKey) {
 
+					if(tablePrimaryKey.srcElement.innerText != "save")
+					{
+						var tableHomeTenant = document.getElementById('tableHomeTenant');
+
+						var tableRows = tableHomeTenant.rows[1];
+					
+						var countSave = 0;
+					
+						for(var i=1; i<tableHomeTenant.rows.length; i++)
+						{
+							if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+							{
+								countSave = countSave + 1;
+								break;
+							}
+						}
+					
+						if(countSave == 1)
+						{
+							alert('Please click on save to leave save mode');
+							return;	
+						}
+					}
+
 					var helper = new CodeReuse.Helper();
 
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-					
+
 						if(result == true)
 						{
 							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
