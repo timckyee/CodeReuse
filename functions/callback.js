@@ -106,28 +106,25 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 				editButton.onclick = function(tablePrimaryKey) {
 					
-					if(tablePrimaryKey.srcElement.innerText != "save")
-					{
-						var tableHomeTenant = document.getElementById('tableHomeTenant');
+					var tableHomeTenant = document.getElementById('tableHomeTenant');
 
-						var tableRows = tableHomeTenant.rows[1];
-					
-						var countSave = 0;
-					
-						for(var i=1; i<tableHomeTenant.rows.length; i++)
+					var tableRows = tableHomeTenant.rows[1];
+				
+					var countSave = 0;
+				
+					for(var i=1; i<tableHomeTenant.rows.length; i++)
+					{
+						if(tableHomeTenant.rows[i].cells[0].innerText == "save")
 						{
-							if(tableHomeTenant.rows[i].cells[0].innerText == "save")
-							{
-								countSave = countSave + 1;
-								break;
-							}
+							countSave = countSave + 1;
+							break;
 						}
-					
-						if(countSave == 1)
-						{
-							alert('Please click on save to leave save mode');
-							return;	
-						}
+					}
+				
+					if(countSave == 1)
+					{
+						alert('Please click on save to leave save mode');
+						return;	
 					}
 
 					var helper = new CodeReuse.Helper();
@@ -263,28 +260,25 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				editButton.onclick = function(tablePrimaryKey) 
 				{
-					if(tablePrimaryKey.srcElement.innerText != "save")
-					{
-						var tableHomeTenant = document.getElementById('tableHomeTenant');
+					var tableHomeTenant = document.getElementById('tableHomeTenant');
 
-						var tableRows = tableHomeTenant.rows[1];
-					
-						var countSave = 0;
-					
-						for(var i=1; i<tableHomeTenant.rows.length; i++)
+					var tableRows = tableHomeTenant.rows[1];
+				
+					var countSave = 0;
+				
+					for(var i=1; i<tableHomeTenant.rows.length; i++)
+					{
+						if(tableHomeTenant.rows[i].cells[0].innerText == "save")
 						{
-							if(tableHomeTenant.rows[i].cells[0].innerText == "save")
-							{
-								countSave = countSave + 1;
-								break;
-							}
+							countSave = countSave + 1;
+							break;
 						}
-					
-						if(countSave == 1)
-						{
-							alert('Please click on save to leave save mode');
-							return;	
-						}
+					}
+				
+					if(countSave == 1)
+					{
+						alert('Please click on save to leave save mode');
+						return;	
 					}
 
 					var helper = new CodeReuse.Helper();
@@ -457,30 +451,6 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 					alert('Please select field date');
 					return;
 				}
-						
-				if(tablePrimaryKey.srcElement.innerText != "save")
-				{
-					var tableHomeTenant = document.getElementById('tableHomeTenant');
-
-					var tableRows = tableHomeTenant.rows[1];
-				
-					var countSave = 0;
-				
-					for(var i=1; i<tableHomeTenant.rows.length; i++)
-					{
-						if(tableHomeTenant.rows[i].cells[0].innerText == "save")
-						{
-							countSave = countSave + 1;
-							break;
-						}
-					}
-				
-					if(countSave == 1)
-					{
-						alert('Please click on save to leave save mode');
-						return;	
-					}			
-				}	
 
 				var helper = new CodeReuse.Helper();
 
@@ -686,28 +656,25 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 								
 				editButton.onclick = function(tablePrimaryKey) {
 
-					if(tablePrimaryKey.srcElement.innerText != "save")
-					{
-						var tableHomeTenant = document.getElementById('tableHomeTenant');
+					var tableHomeTenant = document.getElementById('tableHomeTenant');
 
-						var tableRows = tableHomeTenant.rows[1];
-					
-						var countSave = 0;
-					
-						for(var i=1; i<tableHomeTenant.rows.length; i++)
+					var tableRows = tableHomeTenant.rows[1];
+				
+					var countSave = 0;
+				
+					for(var i=1; i<tableHomeTenant.rows.length; i++)
+					{
+						if(tableHomeTenant.rows[i].cells[0].innerText == "save")
 						{
-							if(tableHomeTenant.rows[i].cells[0].innerText == "save")
-							{
-								countSave = countSave + 1;
-								break;
-							}
+							countSave = countSave + 1;
+							break;
 						}
-					
-						if(countSave == 1)
-						{
-							alert('Please click on save to leave save mode');
-							return;	
-						}
+					}
+				
+					if(countSave == 1)
+					{
+						alert('Please click on save to leave save mode');
+						return;	
 					}
 
 					var helper = new CodeReuse.Helper();
@@ -718,14 +685,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 						{
 							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
 					
-							if(tablePrimaryKey.srcElement != "save")
-							{
-								alert('Please click on save to leave save mode');
-							}
-							else
-							{
-								grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
-							}
+							grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
 						}
 						else
 						if(result == false)
