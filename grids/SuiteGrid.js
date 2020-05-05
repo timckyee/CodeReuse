@@ -14,6 +14,8 @@ CodeReuse.SuiteGrid = function() {
 	];
 	
 	var handler = new CodeReuse.Handler();
+
+	this.gridIdField = "suiteId";
 	
 	this.rowOnClick =  handler.SuiteGridOnClickHandler;
 
@@ -43,6 +45,10 @@ CodeReuse.SuiteGrid.prototype = {
 
 	},
 
+	getGridIdField: function() {
+
+		return this.gridIdField;
+	},
 
 	getGridColumnsInfo: function() {
 		
@@ -56,7 +62,7 @@ CodeReuse.SuiteGrid.prototype = {
 		var callback = new CodeReuse.Callback();
 				
 		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)			
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", null, localStorage.getItem("arraySortDirection"));
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick);
 	},
 	
 	refreshSelectSuiteGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
@@ -68,7 +74,7 @@ CodeReuse.SuiteGrid.prototype = {
 			callback = new CodeReuse.Callback();
 			
 			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)	
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), "suiteId", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", "suiteId", "asc");
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick);
 				
 		}
 		

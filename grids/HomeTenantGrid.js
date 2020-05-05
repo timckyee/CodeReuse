@@ -29,6 +29,8 @@ CodeReuse.HomeTenantGrid = function() {
 	
 	var handler = new CodeReuse.Handler();
 	
+	this.gridIdField = "fieldPrimaryKey";
+
 	this.rowOnClick =  handler.TenantHomeGridOnClickHandler;
 	
 	this.phpFileGridGetPost = "php/grid_get_post.php";
@@ -59,6 +61,11 @@ CodeReuse.HomeTenantGrid.prototype = {
 		return this.columns;
 	},
 	
+	getGridIdField: function() {
+
+		return this.gridIdField;
+	},
+
 	getAutocompleteInputs: function() {
 	
 		return this.autocomplete_inputs;
@@ -160,7 +167,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 		//alert('homeTenantGrid onload');
 
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", null, sortColumn, sortDirection, '', '', pageNumber);
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", null, sortColumn, sortDirection, '', '', pageNumber);
 		
 	},
 	

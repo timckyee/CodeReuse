@@ -15,6 +15,8 @@ CodeReuse.TenantGrid = function() {
 	
 	var handler = new CodeReuse.Handler();
 	
+	this.gridIdField = "fieldPrimaryKey";
+
 	this.rowOnClick =  handler.TenantGridOnClickHandler;
 
 	this.refreshTenantGridQueryName = "gridtable";
@@ -41,6 +43,11 @@ CodeReuse.TenantGrid.prototype = {
 		return this.columns;
 	},
 
+	getGridIdField: function() {
+
+		return this.gridIdField;
+	},
+
 	getRefreshTenantGridQueryName: function() {
 
 		return this.refreshTenantGridQueryName;
@@ -62,7 +69,7 @@ CodeReuse.TenantGrid.prototype = {
 		localStorage.setItem("arraySortDirection", "asc");
 		
 		if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshTenantGridQueryName(), "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", null, "fieldPrimaryKey", localStorage.getItem("arraySortDirection"));
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit");
 		
 	},
 	
@@ -75,7 +82,7 @@ CodeReuse.TenantGrid.prototype = {
 			callback = new CodeReuse.Callback();
 			
 			if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), "fieldPrimaryKey", fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", null, "fieldPrimaryKey", "asc");
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit");
 		}
 		
 		/*

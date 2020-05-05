@@ -352,7 +352,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	}
 },
 
-post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKey, arrayOldValuesTable, refreshGridCallback)
+post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKeyId, arrayOldValuesTable, refreshGridCallback)
 {	
 	var helper = new CodeReuse.Helper();
 
@@ -417,9 +417,9 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 				
 					var insertId = this.responseText;
 					
-					document.getElementById(inputPrimaryKey).value = insertId;
+					document.getElementById(inputPrimaryKeyId).value = insertId;
 					
-					arrayOldValuesTable[inputPrimaryKey] = insertId;
+					arrayOldValuesTable[inputPrimaryKeyId] = insertId;
 					
 					for(insert=0; insert<fieldsInfo.length; insert++)
 					{									
