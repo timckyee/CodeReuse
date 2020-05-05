@@ -71,7 +71,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		var cell;
 		var cellText;
 
-		if(tableRowCount == tableRowNumber && tableRowFlag == false && tableFieldsValue != undefined)
+		if(tableRowCount == tableRowNumber && tableRowFlag == false && tableFieldsValue != '')
 		{
 			var row = document.createElement("tr");
 			
@@ -204,7 +204,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		{	
 			//debugger	
 
-			if(tableFieldsValue != undefined)
+			if(tableFieldsValue != '')
 			{
 				if(tableFieldsValue["fieldPrimaryKey"] == response[tableRowCount]["fieldPrimaryKey"])
 				{

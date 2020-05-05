@@ -21,14 +21,29 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 	
 	var queryString;
 
-	if(additionalArgs != "")
+	if(tableHtmlObjectId == "tableHomeTenant")
 	{
-		queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection + "&" + "pageNumber=" + pageNumber;
+		if(additionalArgs != "")
+		{
+			queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection + "&" + "pageNumber=" + pageNumber;
+		}
+		else
+		{
+			queryString = "queryName" + "=" + queryName + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection + "&" + "pageNumber=" + pageNumber;
+		}
 	}
-	else
+	else if(tableHtmlObjectId == "tableSuite" || tableHtmlObjectId == "tableTenant")
 	{
-		queryString = "queryName" + "=" + queryName + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection + "&" + "pageNumber=" + pageNumber;
+		if(additionalArgs != "")
+		{
+			queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue;
+		}
+		else
+		{
+			queryString = "queryName" + "=" + queryName;
+		}
 	}
+
 
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();
