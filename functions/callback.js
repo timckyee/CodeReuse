@@ -352,8 +352,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	divTable.appendChild(tbl);
 	
-	localStorage.setItem("arraySortColumn", sortColumn);
-	localStorage.setItem("arraySortDirection", sortDirection);
+	//localStorage.setItem("arraySortColumn", sortColumn);
+	//localStorage.setItem("arraySortDirection", sortDirection);
 
 },
 
