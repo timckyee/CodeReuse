@@ -106,15 +106,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 				editButton.onclick = function(tablePrimaryKey) {
 					
-					var tableHomeTenant = document.getElementById('tableHomeTenant');
+					var tableHtml = document.getElementById(tableHtmlObjectId);
 
-					var tableRows = tableHomeTenant.rows[1];
+					var tableRows = tableHtml.rows[1];
 				
 					var countSave = 0;
 				
-					for(var i=1; i<tableHomeTenant.rows.length; i++)
+					for(var i=1; i<tableHtml.rows.length; i++)
 					{
-						if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+						if(tableHtml.rows[i].cells[0].innerText == "save")
 						{
 							countSave = countSave + 1;
 							break;
@@ -260,15 +260,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 				editButton.onclick = function(tablePrimaryKey) 
 				{
-					var tableHomeTenant = document.getElementById('tableHomeTenant');
+					var tableHtml = document.getElementById(tableHtmlObjectId);
 
-					var tableRows = tableHomeTenant.rows[1];
+					var tableRows = tableHtml.rows[1];
 				
 					var countSave = 0;
 				
-					for(var i=1; i<tableHomeTenant.rows.length; i++)
+					for(var i=1; i<tableHtml.rows.length; i++)
 					{
-						if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+						if(tableHtml.rows[i].cells[0].innerText == "save")
 						{
 							countSave = countSave + 1;
 							break;
@@ -382,6 +382,12 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 		var handler = new CodeReuse.Handler();	
 			
+		tableHeader.onclick = function() {
+
+			alert('Please click on save to leave save mode before sorting columns');
+
+		};
+		
 		//tableHeader.onclick = handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
 		
 		var columnName = gridColumnsInfo[i].colName;
@@ -466,8 +472,6 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 						return;
 					}
 				});
-				
-				//var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
 			};
 				
 			//cell.className = "underline";	
@@ -656,15 +660,15 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 								
 				editButton.onclick = function(tablePrimaryKey) {
 
-					var tableHomeTenant = document.getElementById('tableHomeTenant');
+					var tableHtml = document.getElementById(tableHtmlObjectId);
 
-					var tableRows = tableHomeTenant.rows[1];
+					var tableRows = tableHtml.rows[1];
 				
 					var countSave = 0;
 				
-					for(var i=1; i<tableHomeTenant.rows.length; i++)
+					for(var i=1; i<tableHtml.rows.length; i++)
 					{
-						if(tableHomeTenant.rows[i].cells[0].innerText == "save")
+						if(tableHtml.rows[i].cells[0].innerText == "save")
 						{
 							countSave = countSave + 1;
 							break;
