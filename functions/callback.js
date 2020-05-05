@@ -4,7 +4,7 @@ CodeReuse.Callback = function() {
 
 CodeReuse.Callback.prototype = {
 
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
