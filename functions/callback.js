@@ -56,291 +56,137 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	tbl.appendChild(tableHeaderRow);
 
-	
-	tableRowNumber = tableRowNumber - 1;
-
-	var tableRowCount;
-	
-	var tableRowFlag = false;
-
 	for(tableRowCount=0; tableRowCount<response.length; tableRowCount++)
 	{
-	//response.forEach(function(item) 
-	//{
+			
+		var row = document.createElement("tr");
 		
+		row.className = "tableHover";
+		
+		
+		row.onclick = function(rowValues) {
+
+			//var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+
+			//var rowPrimaryKey = rowValues.srcElement.parentNode.value;
+
+			if(tableHtmlObjectId != "tableHomeTenant")
+			{
+				var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+				rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
+			}
+		};
+			
 		var cell;
 		var cellText;
-
-		if(tableRowCount == tableRowNumber && tableRowFlag == false && tableFieldsValue != '')
-		{
-			var row = document.createElement("tr");
 			
-			row.className = "tableHover";
-			
-			if(showEditColumn == "showEdit")
-			{			
-				cell = document.createElement("td");
-				
-				cell.style.paddingLeft = "10px";
-							
-				//cellText = document.createTextNode("edit");
-				
-				cell.value = tableFieldsValue["fieldPrimaryKey"];
-				
-				editButton = document.createElement("button");
-				editButton.type = "button";
-				//editButton.value = "edit";
-				editButton.innerText = "edit";
-				editButton.id = "editButton";
-				editButton.style.width = "50px";
-
-				var tenantModel = new CodeReuse.Tenant();
-				
-				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-				
-				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-				
-				var callback = new CodeReuse.Callback();
-				
-				var tableRowPrimaryKey = tableFieldsValue["fieldPrimaryKey"];			
-
-				editButton.onclick = function(tablePrimaryKey) {
-					
-					var tableHtml = document.getElementById(tableHtmlObjectId);
-
-					var tableRows = tableHtml.rows[1];
-				
-					var countSave = 0;
-				
-					for(var i=1; i<tableHtml.rows.length; i++)
-					{
-						if(tableHtml.rows[i].cells[0].innerText == "save")
-						{
-							countSave = countSave + 1;
-							break;
-						}
-					}
-				
-					if(countSave == 1)
-					{
-						alert('Please click on save to leave save mode');
-						return;	
-					}
-
-					var helper = new CodeReuse.Helper();
-
-					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-						if(result == true)
-						{
-							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;				
-					
-							grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '', '', pageNumber);							
-						}
-						if(result == false)
-						{
-							return;
-						}
-					});
-				}
-				
-				//cell.className = "underline";
-				cell.appendChild(editButton);
-				
-				cell.height = 25;
-				
-				row.appendChild(cell);
-			}
-				
+		if(showEditColumn == "showEdit")
+		{			
 			cell = document.createElement("td");
-			cell.className = "grid";
-			cellText = document.createTextNode(tableFieldsValue["fieldPrimaryKey"]);
 			
-			cell.appendChild(cellText);
+			cell.style.paddingLeft = "10px";
+						
+			//cellText = document.createTextNode("edit");
 			
-			row.appendChild(cell);
+			cell.value = response[tableRowCount]["fieldPrimaryKey"];
 			
-			cell = document.createElement("td");
-			cell.className = "grid";
-			cellText = document.createTextNode(tableFieldsValue["buildingName"]);
-			cell.value = tableFieldsValue["buildingId"];
-			
-			cell.appendChild(cellText);
-			
-			row.appendChild(cell);
-			
-			cell = document.createElement("td");
-			cell.className = "grid";
-			cellText = document.createTextNode(tableFieldsValue["tenantName"]);
-			cell.value = tableFieldsValue["tenantId"];			
-			
-			cell.appendChild(cellText);
-			
-			row.appendChild(cell);
-			
-			cell = document.createElement("td");
-			cell.className = "grid";
-			cellText = document.createTextNode(tableFieldsValue["field1"]);
-			
-			cell.appendChild(cellText);
-			
-			row.appendChild(cell);			
-				
-			cell = document.createElement("td");
-			cell.className = "grid";
-			cellText = document.createTextNode(tableFieldsValue["field2"]);
-			
-			cell.appendChild(cellText);
-			
-			row.appendChild(cell);					
-							
-			row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);
-			
-			//tableRowCount = tableRowCount - 1;
-			
-			tableRowFlag = true;
-		}
-		else
-		{	
-			//debugger	
+			editButton = document.createElement("button");
+			editButton.type = "button";
+			//editButton.value = "edit";
+			editButton.innerText = "edit";
+			editButton.id = "editButton";
+			editButton.style.width = "50px";
 
-			if(tableFieldsValue != '')
+			var tenantModel = new CodeReuse.Tenant();
+			
+			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+			
+			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+			
+			var callback = new CodeReuse.Callback();
+			
+			editButton.onclick = function(tablePrimaryKey) 
 			{
-				if(tableFieldsValue["fieldPrimaryKey"] == response[tableRowCount]["fieldPrimaryKey"])
+				var tableHtml = document.getElementById(tableHtmlObjectId);
+
+				var tableRows = tableHtml.rows[1];
+			
+				var countSave = 0;
+			
+				for(var i=1; i<tableHtml.rows.length; i++)
 				{
-					continue;
+					if(tableHtml.rows[i].cells[0].innerText == "save")
+					{
+						countSave = countSave + 1;
+						break;
+					}
 				}
+			
+				if(countSave == 1)
+				{
+					alert('Please click on save to leave save mode');
+					return;	
+				}
+
+				var helper = new CodeReuse.Helper();
+
+				helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
+
+					if(result == true)
+					{
+						var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
+				
+						grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '' , '', pageNumber);
+					}
+					else
+					if(result == false)
+					{
+						return;
+					}
+				});
 			}
 			
-			var row = document.createElement("tr");
+			//cell.className = "underline";
+			cell.appendChild(editButton);
 			
-			row.className = "tableHover";
+			cell.height = 25;
 			
+			row.appendChild(cell);
+		}			
 			
-			row.onclick = function(rowValues) {
-
-				//var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
-
-				//var rowPrimaryKey = rowValues.srcElement.parentNode.value;
-
-				if(tableHtmlObjectId != "tableHomeTenant")
-				{
-					var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
-					rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
-				}
-			};
+		for(var i=0; i<gridColumnsInfo.length; i++)
+		{	
 			
-			var cell;
-			var cellText;
+			cell = document.createElement("td");
+			cell.className = "grid";
 			
-			if(showEditColumn == "showEdit")
-			{			
-				cell = document.createElement("td");
-				
-				cell.style.paddingLeft = "10px";
-							
-				//cellText = document.createTextNode("edit");
-				
-				cell.value = response[tableRowCount]["fieldPrimaryKey"];
-				
-				editButton = document.createElement("button");
-				editButton.type = "button";
-				//editButton.value = "edit";
-				editButton.innerText = "edit";
-				editButton.id = "editButton";
-				editButton.style.width = "50px";
-
-				var tenantModel = new CodeReuse.Tenant();
-				
-				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-				
-				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-				
-				var callback = new CodeReuse.Callback();
-				
-				editButton.onclick = function(tablePrimaryKey) 
-				{
-					var tableHtml = document.getElementById(tableHtmlObjectId);
-
-					var tableRows = tableHtml.rows[1];
-				
-					var countSave = 0;
-				
-					for(var i=1; i<tableHtml.rows.length; i++)
-					{
-						if(tableHtml.rows[i].cells[0].innerText == "save")
-						{
-							countSave = countSave + 1;
-							break;
-						}
-					}
-				
-					if(countSave == 1)
-					{
-						alert('Please click on save to leave save mode');
-						return;	
-					}
-
-					var helper = new CodeReuse.Helper();
-
-					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-						if(result == true)
-						{
-							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
-					
-							grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '' , '', pageNumber);
-						}
-						else
-						if(result == false)
-						{
-							return;
-						}
-					});
-				}
-				
-				//cell.className = "underline";
-				cell.appendChild(editButton);
-				
-				cell.height = 25;
-				
-				row.appendChild(cell);
-			}			
+			var colType = gridColumnsInfo[i].colType;
 			
-			for(var i=0; i<gridColumnsInfo.length; i++)
+			if(colType == "date")
 			{	
+				var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
 				
-				cell = document.createElement("td");
-				cell.className = "grid";
+				var helper = new CodeReuse.Helper();
 				
-				var colType = gridColumnsInfo[i].colType;
+				var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
 				
-				if(colType == "date")
-				{	
-					var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
-					
-					var helper = new CodeReuse.Helper();
-					
-					var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-					
-					cellText = document.createTextNode(dateFormat);
-				}
-				else
-				{
-					if(gridColumnsInfo[i].hasIdHiddenField == true)
-					{						
-						cell.value = response[tableRowCount][gridColumnsInfo[i].idDbField];
-					}						
-					
-					cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
-				}
-				
-				cell.appendChild(cellText);
-				
-				row.appendChild(cell);
-					
-				row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);
+				cellText = document.createTextNode(dateFormat);
 			}
+			else
+			{
+				if(gridColumnsInfo[i].hasIdHiddenField == true)
+				{						
+					cell.value = response[tableRowCount][gridColumnsInfo[i].idDbField];
+				}						
+				
+				cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
+			}
+			
+			cell.appendChild(cellText);
+			
+			row.appendChild(cell);
+				
+			row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);
 		}
 		
 		tbl.appendChild(row);
@@ -360,10 +206,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
 
+	localStorage.setItem("editMode", "true");
+
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
 	tbl.className = "homeGrid";
-								
+	
 	var tableHeaderRow = tbl.insertRow();					
 								
 	//var tableHeaderRow = document.createElement("tr");
@@ -380,16 +228,10 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	{				
 		tableHeader = document.createElement("th");
 			
-		var handler = new CodeReuse.Handler();	
-			
-		tableHeader.onclick = function() {
+		var handler = new CodeReuse.Handler();
 
-			alert('Please click on save to leave save mode before sorting columns');
+		tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, localStorage.getItem("homeTenantGridPageNumber"));
 
-		};
-		
-		//tableHeader.onclick = handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
-		
 		var columnName = gridColumnsInfo[i].colName;
 		
 		tableHeaderText = document.createTextNode(columnName);
@@ -399,487 +241,137 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	tbl.appendChild(tableHeaderRow);
 	
-	
-	tableRowNumber = tableRowNumber - 1;
-
 	var tableRowCount;
-	
-	var tableRowFlag = false;
 
 	for(tableRowCount=0; tableRowCount<response.length; tableRowCount++)
 	{
-	
-	var itemCurrent;
-	
-	//response.forEach(function(item) {
-			
-		var cell;
-		var cellText;
-
 		var row = tbl.insertRow();
-		row.className = "tableHover";
 
-		if(tableRowCount == tableRowNumber && tableRowFlag == false && tableFieldsValue != undefined)
-		{	
-			cell = row.insertCell();
-						
-			cell.style.paddingLeft = "10px";
-			
-			//cellText = document.createTextNode("save");
-			
-			cell.value = response[tableRowCount]["fieldPrimaryKey"];
-			
-			saveButton = document.createElement("button");
-			saveButton.type = "button";
-			//saveButton.value = "save";
-			saveButton.innerText = "save";
-			saveButton.id = "saveButton";
-			saveButton.style.width = "50px";
-			
-			var tenantModel = new CodeReuse.Tenant();
-			
-			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-			
-			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-			
-			var callback = new CodeReuse.Callback();
-			
-			saveButton.onclick = function(tablePrimaryKey)
-			{	
-				if(document.getElementById("tenantSearchList").innerHTML != "")
-				{
-					alert('Please select Tenant Name');
-					return;
-				}
-
-				if(document.getElementById('calendarId').style.display == "block")
-				{
-					alert('Please select field date');
-					return;
-				}
-
-				var helper = new CodeReuse.Helper();
-
-				helper.msgBox('confirm', 'Would you like to save this row?', function (result) {
-
-					if(result == true)
-					{
-						controller.homeTenantGridSave();
-					}
-					else
-					if(result == false)
-					{
-						return;
-					}
-				});
-			};
+		cell = document.createElement("td");
 				
-			//cell.className = "underline";	
-			cell.appendChild(saveButton);
-			
-			cell.height = 25;
-			
-			row.appendChild(cell);
-				
-			cell = row.insertCell();
-			cell.className = "grid";
-			
-			inputPrimaryKey = document.createElement("span");
-			inputPrimaryKey.id = "inputPrimaryKey_grid";
-			inputPrimaryKey.innerHTML = tableFieldsValue["fieldPrimaryKey"];
-			
-			cell.appendChild(inputPrimaryKey);
-					
-			
-			cell = row.insertCell();
-			cell.className = "grid";
-			
-			building_option_grid = document.createElement("select");
-			option = document.createElement("option");
-			option.text = "";
-			building_option_grid.options.add(option,"");			
-			option = document.createElement("option");
-			option.text = "building";
-			building_option_grid.options.add(option,1);
-			option = document.createElement("option");
-			option.text = "building2";
-			building_option_grid.options.add(option,2);
-			
-			building_option_grid.id = "building_option_grid";
+		cell.style.paddingLeft = "10px";
 		
-			//alert('gridEditCallback table row save');
+		cell.value = response[tableRowCount]["fieldPrimaryKey"];
 		
-			building_option_grid.selectedIndex = tableFieldsValue["buildingId"];
+		editButton = document.createElement("button");
+		editButton.type = "button";
+		editButton.innerText = "edit";
+		editButton.id = "editButton";
+		editButton.style.width = "50px";
+
+		var tenantModel = new CodeReuse.Tenant();
 		
-			cell.appendChild(building_option_grid);
-							
-			
-			cell = row.insertCell();
-			cell.className = "grid";
-			
-			tenant_input_grid = document.createElement("input");
-			tenant_input_grid.id = "tenant_input_grid";
-			
-			tenant_input_grid.value = tableFieldsValue["tenantName"];
-			tenant_input_grid.setAttribute("rowAttributeValue", tableFieldsValue["tenantId"]);
-			
-			tenant_input_grid.style.position = "relative";
-			tenant_input_grid.style.zIndex = "1";
-			tenant_input_grid.style.backgroundColor = "white";
-			tenant_input_grid.width = "200";				
-			
-			var autocomplete = new CodeReuse.Autocomplete();
-			
-			tenant_input_grid.addEventListener("keyup", function(event){
-					
-				if(document.getElementById("tenant_input_grid").value == "")
-				{
-					document.getElementById("tenantSearchList").innerHTML = "";			
-				}
-				else
-				{
-					autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
-				}
-				
-			});		
-			
-			tenant_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
-			
-			cell.appendChild(tenant_input_grid);
-			
-			
-			cell = row.insertCell();
-			cell.className = "grid";
-			
-			//var helper = new CodeReuse.Helper();			
-			//var dateFormatCalendar = helper.convertDateFromDatabase(tableFieldsValue["field1"]);
-			
-			inputCalendar_grid = document.createElement("input");
-			inputCalendar_grid.id = "inputCalendar_grid";
-			
-			inputCalendar_grid.style.position = "relative";
-			inputCalendar_grid.style.zIndex = "1";
-			inputCalendar_grid.style.backgroundColor = "white";
-			inputCalendar_grid.style.width = "142";
-			
-			var calendar = new CodeReuse.Calendar();
-			
-			inputCalendar_grid.addEventListener("focus", function(event){
-				
-				var calendar = new CodeReuse.Calendar();
-				calendar.showHideCalendar(event, 'show' ,'inputCalendar_grid', "calendarId", monthsArray)
-			
-			});
-			
-			inputCalendar_grid.addEventListener("blur", function(event){
-			
-				var calendar = new CodeReuse.Calendar();
-				
-				if(calendar.validateDate(this.id) == false)
-				{
-					alert("input format has to be dd-mmm-yyyy");
-				}
-			});
-			
-			inputCalendar_grid.value = tableFieldsValue["field1"];
-			
-			cell.appendChild(inputCalendar_grid);
-			
-			
-			cell = row.insertCell();
-			cell.className = "grid";
-			
-			//var dateFormatCalendarTesting = helper.convertDateFromDatabase(tableFieldsValue["field2"]);
-			
-			inputCalendarTesting_grid = document.createElement("input");
-			inputCalendarTesting_grid.id = "inputCalendarTesting_grid";
-			
-			inputCalendarTesting_grid.style.position = "relative";
-			inputCalendarTesting_grid.style.zIndex = "1";
-			inputCalendarTesting_grid.style.backgroundColor = "white";
-			inputCalendarTesting_grid.width = "142";			
-			
-			inputCalendarTesting_grid.addEventListener("focus", function(event){
-				
-				var calendar = new CodeReuse.Calendar();
-				calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
-			
-			});
-			
-			inputCalendarTesting_grid.addEventListener("blur", function(event){
-			
-				var calendar = new CodeReuse.Calendar();
-				if(calendar.validateDate(this.id) == false)
-				{
-					alert("input format has to be dd-mmm-yyyy");
-				}
-			});			
-			
-			inputCalendarTesting_grid.value = tableFieldsValue["field2"];
-			
-			cell.appendChild(inputCalendarTesting_grid);
-			
-			
-			row.appendChild(cell);
-			
-		
-			//itemCurrent = response[tableRowCount];
-			
-			//tableRowCount = tableRowCount - 1;
-			
-			tableRowFlag = true;			
-				
-		}
-		else
-		{
-
-			if(response[tableRowCount]["fieldPrimaryKey"] != rowId)
-			{
-				cell = document.createElement("td");
-				
-				cell.style.paddingLeft = "10px";
-				
-				//cellText = document.createTextNode("edit");
-				
-				cell.value = response[tableRowCount]["fieldPrimaryKey"];
-				
-				editButton = document.createElement("button");
-				editButton.type = "button";
-				//editButton.value = "edit";
-				editButton.innerText = "edit";
-				editButton.id = "editButton";
-				editButton.style.width = "50px";
-
-				var tenantModel = new CodeReuse.Tenant();
-				
-				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-				
-				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-				
-				var callback = new CodeReuse.Callback();
-								
-				editButton.onclick = function(tablePrimaryKey) {
-
-					var tableHtml = document.getElementById(tableHtmlObjectId);
-
-					var tableRows = tableHtml.rows[1];
-				
-					var countSave = 0;
-				
-					for(var i=1; i<tableHtml.rows.length; i++)
-					{
-						if(tableHtml.rows[i].cells[0].innerText == "save")
-						{
-							countSave = countSave + 1;
-							break;
-						}
-					}
-				
-					if(countSave == 1)
-					{
-						alert('Please click on save to leave save mode');
-						return;	
-					}
-
-					var helper = new CodeReuse.Helper();
-
-					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-						if(result == true)
-						{
-							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
-					
-							grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
-						}
-						else
-						if(result == false)
-						{
-							return;
-						}
-					});
-				};
-													
-				//cell.className = "underline";	
-				cell.appendChild(editButton);
-				
-				cell.height = 25;
-				
-				row.appendChild(cell);
-			}
-			
-			
-			if(response[tableRowCount]["fieldPrimaryKey"] == rowId)
-			{
-				
-				//debugger
-
-				if(tableFieldsValue != undefined)
-				{
-					if(tableFieldsValue["fieldPrimaryKey"] == parseInt(response[tableRowCount]["fieldPrimaryKey"]))
-					{
-						continue;
-					}
-				}
-				
-				/*
-				building_input_grid = document.createElement("input");
-				building_input_grid.id = "building_input_grid";
-				
-				building_input_grid.value = item["buildingName"];
-				building_input_grid.setAttribute("rowAttributeValue", item["field3"]);
-							
-				building_input_grid.style.position = "relative";
-				building_input_grid.style.zIndex = "1";
-				building_input_grid.style.backgroundColor = "white";
-				building_input_grid.width = "200";			
-				
-				var autocomplete = new CodeReuse.Autocomplete();
-					
-				building_input_grid.addEventListener("keyup", function(event){ 
-					
-					if(document.getElementById("building_input_grid").value == "")
-					{
-						document.getElementById("buildingSearchList").innerHTML = "";
-					}
-					else
-					{
-						autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input_grid", "buildingSearchList");
-					}
-				});
-				
-				building_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });			
-				cell.appendChild(building_input_grid);
-				*/
-				
-			}
-			else
-			{					
-				for(i=0; i<gridColumnsInfo.length; i++)
-				{	
-					
-					cell = document.createElement("td");
-					
-					cell.className = "grid";
-						
-					var colType = gridColumnsInfo[i].colType;
-					
-					if(colType == "date")
-					{	
-						var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
-						
-						var helper = new CodeReuse.Helper();
-						
-						var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-						
-						cellText = document.createTextNode(dateFormat);
-					}
-					else
-					{
-						if(gridColumnsInfo[i].hasIdHiddenField == true)
-						{				
-							cell.value = response[tableRowCount][gridColumnsInfo[i].idDbField];
-						}						
-						
-						cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
-					}
-					
-					cell.appendChild(cellText);
-					
-					row.appendChild(cell);
-						
-					row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);		
-				}
-			}
-		}
-
-		
-		tbl.appendChild(row);
-	
-		//debugger	
-	}
-	
-	divTable.innerHTML = "";
-	
-	divTable.appendChild(tbl);
-	
-	/*
-	var divCalendar = document.createElement("div");
-	divCalendar.id = "calendarIdTenantGrid";
-	divCalendar.style.position = "absolute";
-	divCalendar.style.display = "none";
-	divCalendar.style.zIndex = "2";
-	divCalendar.style.backgroundColor = "white";
-	
-	document.body.appendChild(divCalendar);
-
-	var buildingSearchListGrid = document.createElement("div");
-	buildingSearchListGrid.id = "buildingSearchListGrid";
-	buildingSearchListGrid.style.position = "absolute";
-	buildingSearchListGrid.style.zIndex = "2";
-	buildingSearchListGrid.style.backgroundColor = "white";
-	
-	document.body.appendChild(buildingSearchListGrid);	
-	
-	var tenantSearchListGrid = document.createElement("div");
-	tenantSearchListGrid.id = "tenantSearchListGrid";
-	tenantSearchListGrid.style.position = "absolute";
-	tenantSearchListGrid.style.zIndex = "2";
-	tenantSearchListGrid.style.backgroundColor = "white";
-	
-	document.body.appendChild(tenantSearchListGrid);
-	*/
-
-	//var record = itemCurrent;
-
-
-	var record;
-
-	var recordFound = false;
-
-	for(var i=0; i<response.length; i++)
-	{
-		if(response[i].fieldPrimaryKey == rowId)
-		{
-			record = response[i];
-			recordFound = true;
-			break;
-		} 
-	}
-
-	if(recordFound == true)
-	{
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+		
+		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+		
+		var callback = new CodeReuse.Callback();
+						
+		editButton.onclick = function(tablePrimaryKey) {
 
-		var autocompleteInputs = home_tenant_grid.getAutocompleteInputs();
+			var tableHtml = document.getElementById(tableHtmlObjectId);
 
-		var arrayOldValuesTableGridEdit = home_tenant_grid.arrayOldValuesTableGridEdit;
-
-		for(i=0; i<gridColumnsInfo.length; i++)
-		{			
-			
-			if(gridColumnsInfo[i].hasIdHiddenField == true)
+			var tableRows = tableHtml.rows[1];
+		
+			var countSave = 0;
+		
+			for(var i=1; i<tableHtml.rows.length; i++)
 			{
-				arrayOldValuesTableGridEdit[gridColumnsInfo[i].idDbField] = record[gridColumnsInfo[i].idDbField];
+				if(tableHtml.rows[i].cells[0].innerText == "save")
+				{
+					countSave = countSave + 1;
+					break;
+				}
+			}
+		
+			if(countSave == 1)
+			{
+				alert('Please click on save to leave save mode');
+				return;	
+			}
+
+			var helper = new CodeReuse.Helper();
+
+			helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
+
+				if(result == true)
+				{
+					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
+			
+					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
+				}
+				else
+				if(result == false)
+				{
+					return;
+				}
+			});
+		};
+											
+		//cell.className = "underline";	
+		cell.appendChild(editButton);
+		
+		cell.height = 25;
+		
+		row.appendChild(cell);
+
+
+		
+		for(i=0; i<gridColumnsInfo.length; i++)
+		{	
+			
+			cell = document.createElement("td");
+			
+			cell.className = "grid";
+				
+			var colType = gridColumnsInfo[i].colType;
+			
+			if(colType == "date")
+			{	
+				var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
+				
+				var helper = new CodeReuse.Helper();
+				
+				var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
+				
+				cellText = document.createTextNode(dateFormat);
 			}
 			else
 			{
-				if(gridColumnsInfo[i].colType == "date")
-				{
-					var dateFromDatabase = record[gridColumnsInfo[i].id];
-					
-					var helper = new CodeReuse.Helper();			
-								
-					var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-					
-					arrayOldValuesTableGridEdit[gridColumnsInfo[i].id] = dateFormat;	
-				}
-				else
-				{
-					arrayOldValuesTableGridEdit[gridColumnsInfo[i].id] = record[gridColumnsInfo[i].id];
-				}
+				if(gridColumnsInfo[i].hasIdHiddenField == true)
+				{				
+					cell.value = response[tableRowCount][gridColumnsInfo[i].idDbField];
+				}						
+				
+				cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
 			}
+			
+			cell.appendChild(cellText);
+			
+			row.appendChild(cell);
+				
+			row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);		
 		}
-	}	
+
+		tbl.appendChild(row);
+
+	}
+
+	var fieldPrimaryKey = response[tableRowNumber - 1]["fieldPrimaryKey"].toString();
+
+	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+
+	var tenantModel = new CodeReuse.Tenant();
+	
+	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+	var autocompleteInputs = tenantModel.getAutocompleteInputs();			
+	
+	var arrayOldValuesTable = tenantModel.arrayOldValuesTable;
+	
+	var callback = new CodeReuse.Callback();
+
+	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, tableRowNumber, fieldPrimaryKey);
 
 	//localStorage.setItem("arraySortColumn", sortColumn);
 	//localStorage.setItem("arraySortDirection", sortDirection);
@@ -887,6 +379,308 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	//console.dir('test');
 	//console.dir(arrayOldValuesTableGridEdit);
 
+},
+
+get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, tableRowNumber, fieldPrimaryKey) {
+
+	var record = response[0];
+
+	tableRowNumber = tableRowNumber - 1;
+
+	var tableEdit = tableHtml;
+
+	var rowReplace = tableEdit.rows[tableRowNumber + 1];
+
+	//var newRow = document.createElement("tr");
+
+	var newRow = tableEdit.insertRow(tableRowNumber);
+
+	var cell = document.createElement("td");
+						
+	cell.style.paddingLeft = "10px";
+
+	cell.value = fieldPrimaryKey;
+
+	saveButton = document.createElement("button");
+	saveButton.type = "button";
+	//saveButton.value = "save";
+	saveButton.innerText = "save";
+	saveButton.id = "saveButton";
+	saveButton.style.width = "50px";
+	
+	var tenantModel = new CodeReuse.Tenant();
+	
+	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+	
+	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+	
+	var callback = new CodeReuse.Callback();
+	
+	saveButton.onclick = function(tablePrimaryKey)
+	{	
+		if(document.getElementById("tenantSearchList").innerHTML != "")
+		{
+			alert('Please select Tenant Name');
+			return;
+		}
+
+		if(document.getElementById('calendarId').style.display == "block")
+		{
+			alert('Please select field date');
+			return;
+		}
+
+		var helper = new CodeReuse.Helper();
+
+		helper.msgBox('confirm', 'Would you like to save this row?', function (result) {
+
+			if(result == true)
+			{
+				controller.homeTenantGridSave();
+			}
+			else
+			if(result == false)
+			{
+				return;
+			}
+		});
+	};
+		
+	//cell.className = "underline";	
+	cell.appendChild(saveButton);
+	
+	cell.height = 25;
+	
+	newRow.appendChild(cell);
+		
+	
+	cell = document.createElement("td");
+
+	cell.className = "grid";
+	
+	inputPrimaryKey = document.createElement("span");
+	inputPrimaryKey.id = "inputPrimaryKey_grid";
+	inputPrimaryKey.innerHTML = fieldPrimaryKey;
+	
+	cell.appendChild(inputPrimaryKey);
+			
+	newRow.appendChild(cell);
+
+	
+	cell = document.createElement("td");
+	cell.className = "grid";
+	
+	building_option_grid = document.createElement("select");
+
+	building_option_grid.id = "building_option_grid";
+
+	option = document.createElement("option");
+	option.text = "";
+	building_option_grid.options.add(option,"");			
+	option = document.createElement("option");
+	option.text = "building";
+	building_option_grid.options.add(option,1);
+	option = document.createElement("option");
+	option.text = "building2";
+	building_option_grid.options.add(option,2);
+	
+	building_option_grid.id = "building_option_grid";
+
+	//alert('gridEditCallback table row save');
+
+	building_option_grid.selectedIndex = record["field3"];
+
+	cell.appendChild(building_option_grid);
+					
+	newRow.appendChild(cell);
+
+	
+	cell = document.createElement("td");
+	cell.className = "grid";
+	
+	tenant_input_grid = document.createElement("input");
+	tenant_input_grid.id = "tenant_input_grid";
+	
+	tenant_input_grid.value = record["field4display"];
+	tenant_input_grid.setAttribute("rowAttributeValue", record["field4"]);
+	
+	tenant_input_grid.style.position = "relative";
+	tenant_input_grid.style.zIndex = "1";
+	tenant_input_grid.style.backgroundColor = "white";
+	tenant_input_grid.width = "200";				
+	
+	var autocomplete = new CodeReuse.Autocomplete();
+	
+	tenant_input_grid.addEventListener("keyup", function(event){
+			
+		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+		if(document.getElementById("tenant_input_grid").value == "")
+		{
+			document.getElementById("tenantSearchList").innerHTML = "";			
+		}
+		else
+		{
+			autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", home_tenant_grid.getPhpFile(), "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
+		}
+		
+	});		
+	
+	tenant_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
+	
+	cell.appendChild(tenant_input_grid);
+	
+	newRow.appendChild(cell);
+
+	
+	cell = document.createElement("td");
+	cell.className = "grid";
+	
+	//var helper = new CodeReuse.Helper();			
+	//var dateFormatCalendar = helper.convertDateFromDatabase(tableFieldsValue["field1"]);
+	
+	inputCalendar_grid = document.createElement("input");
+	inputCalendar_grid.id = "inputCalendar_grid";
+	
+	inputCalendar_grid.style.position = "relative";
+	inputCalendar_grid.style.zIndex = "1";
+	inputCalendar_grid.style.backgroundColor = "white";
+	inputCalendar_grid.style.width = "142";
+	
+	var calendar = new CodeReuse.Calendar();
+	
+	inputCalendar_grid.addEventListener("focus", function(event){
+		
+		var calendar = new CodeReuse.Calendar();
+		calendar.showHideCalendar(event, 'show' ,'inputCalendar_grid', "calendarId", monthsArray)
+	
+	});
+	
+	inputCalendar_grid.addEventListener("blur", function(event){
+	
+		var calendar = new CodeReuse.Calendar();
+		
+		if(calendar.validateDate(this.id) == false)
+		{
+			alert("input format has to be dd-mmm-yyyy");
+		}
+	});
+	
+	var helper = new CodeReuse.Helper();
+				
+	var dateFormat = helper.convertDateFromDatabase(record["field1"]);
+
+	inputCalendar_grid.value = dateFormat;
+	
+	cell.appendChild(inputCalendar_grid);
+	
+	newRow.appendChild(cell);
+
+	
+	cell = document.createElement("td");
+	cell.className = "grid";
+	
+	//var dateFormatCalendarTesting = helper.convertDateFromDatabase(tableFieldsValue["field2"]);
+	
+	inputCalendarTesting_grid = document.createElement("input");
+	inputCalendarTesting_grid.id = "inputCalendarTesting_grid";
+	
+	inputCalendarTesting_grid.style.position = "relative";
+	inputCalendarTesting_grid.style.zIndex = "1";
+	inputCalendarTesting_grid.style.backgroundColor = "white";
+	inputCalendarTesting_grid.width = "142";			
+	
+	inputCalendarTesting_grid.addEventListener("focus", function(event){
+		
+		var calendar = new CodeReuse.Calendar();
+		calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
+	
+	});
+	
+	inputCalendarTesting_grid.addEventListener("blur", function(event){
+	
+		var calendar = new CodeReuse.Calendar();
+		if(calendar.validateDate(this.id) == false)
+		{
+			alert("input format has to be dd-mmm-yyyy");
+		}
+	});			
+	
+	var helper = new CodeReuse.Helper();
+				
+	var dateFormat = helper.convertDateFromDatabase(record["field2"]);
+
+	inputCalendarTesting_grid.value = dateFormat;
+	
+	cell.appendChild(inputCalendarTesting_grid);
+
+	newRow.appendChild(cell);
+	
+
+
+	rowReplace.parentNode.replaceChild(newRow, rowReplace);
+
+	//debugger
+
+	//rowReplace.parentNode.replaceWith(newRow);
+
+	var divTable = document.getElementById(divElement);
+
+	divTable.innerText = "";
+
+	divTable.appendChild(tableEdit);
+
+
+
+	var record = response[0];
+	
+	for(i=0; i<gridColumnsInfo.length; i++)
+	{
+		var hiddenFieldFlag = gridColumnsInfo[i].hasIdHiddenField;
+		var hiddenField = gridColumnsInfo[i].idDbField;	
+				
+		if(hiddenFieldFlag == true)
+		{			
+			arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].idDbField];
+		}
+		else
+		if(gridColumnsInfo[i].colType == "date")
+		{					
+			var dateFromDatabase = record[gridColumnsInfo[i].id];
+			
+			var helper = new CodeReuse.Helper();			
+						
+			var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
+			
+			//document.getElementById(gridColumnsInfo[i].htmlObjectId).value = dateFormat;
+			
+			arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = dateFormat;	
+		}
+		else
+		{
+			if(gridColumnsInfo[i].htmlObjectType == "autocomplete")
+			{
+				for(input=0; input<autocompleteInputs.length; input++)
+				{
+					if(gridColumnsInfo[i].id == autocompleteInputs[input].value)
+					{
+						//document.getElementById(gridColumnsInfo[i].htmlObjectId).value = record[autocompleteInputs[input].display];
+						//break;
+					}
+				}
+				
+				//document.getElementById(gridColumnsInfo[i].htmlObjectId).setAttribute("rowAttributeValue", record[gridColumnsInfo[i].id]);
+				
+				arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].id];
+			}
+			else
+			{	
+				//document.getElementById(gridColumnsInfo[i].htmlObjectId).value = record[gridColumnsInfo[i].id];
+				
+				arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].id];
+			}
+		}
+	}
 },
 
 refreshGridCallbackSuite: function()

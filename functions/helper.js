@@ -273,6 +273,8 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 	
 	buttonCancel.onclick = function() {
 
+		localStorage.setItem("editMode", "false");
+
 		modal.style.display = "none";
 
 		//if(buttonType == "confirm")
