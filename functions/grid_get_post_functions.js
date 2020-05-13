@@ -159,7 +159,7 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
 	window.getXmlHttpRequest.send();
 },
 
-get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, callback, tableHtml, tableRowNumber, fieldPrimaryKey)
+get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, callback, tableHtml, tableRowNumber, fieldPrimaryKey, tableHtmlObjectId)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -167,7 +167,7 @@ get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyV
 			
 			var response = JSON.parse(this.responseText);
 
-			callback(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, tableRowNumber, fieldPrimaryKey);
+			callback(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, tableRowNumber, fieldPrimaryKey, tableHtmlObjectId);
 		
 		}
 	}
@@ -195,7 +195,9 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 				var dateFromSystem = htmlObjectFieldValue;
 								
 				var helper = new CodeReuse.Helper();				
-												
+								
+				debugger
+
 				var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 				
 				var calendar = new CodeReuse.Calendar();
@@ -300,7 +302,9 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 					var dateFromSystem = htmlObjectFieldValue;
 									
 					var helper = new CodeReuse.Helper();				
-													
+										
+					debugger
+
 					var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 					
 					var calendar = new CodeReuse.Calendar();
@@ -343,7 +347,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 
 				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);
 
-				return;
+				//return;
 			}
 			else
 			if(result == false)
@@ -399,13 +403,64 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	}
 },
 
+
+onclickEditButtonGrid: function(tablePrimaryKey) {
+
+	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+	var tableHtmlEditButton = document.getElementById(home_tenant_grid.getTableHtmlObjectId());
+
+	var tableRows = tableHtmlEditButton.rows[1];
+
+	var countSave = 0;
+
+	for(var i=1; i<tableHtmlEditButton.rows.length; i++)
+	{
+		if(tableHtmlEditButton.rows[i].cells[0].innerText == "save")
+		{
+			countSave = countSave + 1;
+			break;
+		}
+	}
+
+	if(countSave == 1)
+	{
+		alert('Please click on save to leave save mode');
+		return;	
+	}
+
+	var helper = new CodeReuse.Helper();
+
+	helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
+
+		if(result == true)
+		{
+			var tablePrimaryKeyValue = tablePrimaryKey.parentNode.parentNode.childNodes[1].innerText;		
+	
+			var tenantModel = new CodeReuse.Tenant();
+
+			var callback = new CodeReuse.Callback();
+
+			grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', localStorage.getItem("homeTenantGridPageNumber"));
+		}
+		else
+		if(result == false)
+		{
+			return;
+		}
+	});
+},
+
+
 post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrimaryKey) {
 
 	localStorage.setItem("editMode", "false");
 
 	tableRowNumber = tableRowNumber - 1;
 
+
 	var tableEdit = document.getElementById(tableHtml);
+
 
 	var rowReplace = tableEdit.rows[tableRowNumber + 1];
 
@@ -505,6 +560,7 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 		});
 	};
 	*/
+
 		
 	//cell.className = "underline";	
 	cell.appendChild(editButton);
@@ -520,11 +576,11 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 	
 	cellText = document.createTextNode(fieldPrimaryKey);
 
-	/*
+
 	inputPrimaryKey = document.createElement("span");
 	inputPrimaryKey.id = "inputPrimaryKey_grid";
 	inputPrimaryKey.innerHTML = fieldPrimaryKey;
-	*/
+
 	
 	cell.appendChild(cellText);
 			
@@ -536,7 +592,7 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 	
 	cellText = document.createTextNode(document.getElementById("building_option_grid").value);
 
-	/*
+
 	building_option_grid = document.createElement("select");
 
 	building_option_grid.id = "building_option_grid";
@@ -555,8 +611,8 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 
 	//alert('gridEditCallback table row save');
 
-	building_option_grid.selectedIndex = record["field3"];
-	*/
+	//building_option_grid.selectedIndex = record["field3"];
+
 
 	cell.appendChild(cellText);
 					
@@ -568,12 +624,12 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 	
 	cellText = document.createTextNode(document.getElementById("tenant_input_grid").value);
 
-	/*
+
 	tenant_input_grid = document.createElement("input");
 	tenant_input_grid.id = "tenant_input_grid";
 	
-	tenant_input_grid.value = record["field4display"];
-	tenant_input_grid.setAttribute("rowAttributeValue", record["field4"]);
+	//tenant_input_grid.value = record["field4display"];
+	//tenant_input_grid.setAttribute("rowAttributeValue", record["field4"]);
 	
 	tenant_input_grid.style.position = "relative";
 	tenant_input_grid.style.zIndex = "1";
@@ -598,7 +654,7 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 	});		
 	
 	tenant_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
-	*/
+	
 
 
 	cell.appendChild(cellText);
@@ -614,7 +670,7 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 	//var helper = new CodeReuse.Helper();			
 	//var dateFormatCalendar = helper.convertDateFromDatabase(tableFieldsValue["field1"]);
 	
-	/*
+
 	inputCalendar_grid = document.createElement("input");
 	inputCalendar_grid.id = "inputCalendar_grid";
 	
@@ -644,10 +700,10 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 	
 	var helper = new CodeReuse.Helper();
 				
-	var dateFormat = helper.convertDateFromDatabase(record["field1"]);
+	//var dateFormat = helper.convertDateFromDatabase(record["field1"]);
 
-	inputCalendar_grid.value = dateFormat;
-	*/
+	//inputCalendar_grid.value = dateFormat;
+
 
 	cell.appendChild(cellText);
 	
@@ -661,7 +717,7 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 
 	//var dateFormatCalendarTesting = helper.convertDateFromDatabase(tableFieldsValue["field2"]);
 	
-	/*
+
 	inputCalendarTesting_grid = document.createElement("input");
 	inputCalendarTesting_grid.id = "inputCalendarTesting_grid";
 	
@@ -688,20 +744,17 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 	
 	var helper = new CodeReuse.Helper();
 				
-	var dateFormat = helper.convertDateFromDatabase(record["field2"]);
+	//var dateFormat = helper.convertDateFromDatabase(record["field2"]);
 
-	inputCalendarTesting_grid.value = dateFormat;
-	*/
+	//inputCalendarTesting_grid.value = dateFormat;
+
 
 	cell.appendChild(cellText);
 
 	newRow.appendChild(cell);
 	
 
-
 	rowReplace.parentNode.replaceChild(newRow, rowReplace);
-
-	//debugger
 
 	//rowReplace.parentNode.replaceWith(newRow);
 
@@ -711,6 +764,42 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 
 	divTable.appendChild(tableEdit);
 
+	/*
+	var row = document.getElementById(tableHtml).rows[tableRowNumber + 1];
+
+	var building_option; 
+	var building_option_text;
+	var tenant_input;
+	var inputCalendar;
+	var inputCalendarTesting;
+
+	building_option = document.getElementById("building_option_grid")[document.getElementById("building_option_grid").value];
+	building_option_text = building_option.innerHTML;
+	tenant_input = document.getElementById("tenant_input_grid").value;
+	inputCalendar = document.getElementById("inputCalendar_grid").value;
+	inputCalendarTesting = document.getElementById("inputCalendarTesting_grid").value;
+
+	var html = "<td height=\"25\" style=\"padding-left: 10px;\">" +
+	"<button id=\"editButton\" style=\"width: 50px;\"onclick =\"var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();grid_get_post_functions.onclickEditButtonGrid(this);\">edit</button>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<span id =\"inputPrimaryKey\">" + fieldPrimaryKey + "</span>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<span id =\"building_option\">" + building_option_text + "</span>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<span id =\"tenant_input\">" + tenant_input + "</span>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<span id =\"inputCalendar\">" + inputCalendar + "</span>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<span id =\"inputCalendarTesting\">" + inputCalendarTesting + "</span>" +
+	"</td>";
+
+	row.innerHTML = html;
+	*/
 
 },
 
@@ -749,7 +838,9 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 						var dateFromSystem = htmlObjectValueInsert;
 										
 						var helper = new CodeReuse.Helper();				
-														
+								
+						debugger
+
 						var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 						
 						var calendar = new CodeReuse.Calendar();

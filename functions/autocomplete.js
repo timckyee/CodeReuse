@@ -86,9 +86,18 @@ resetInputFields: function(queryName)
 },
 */
 
-autocomplete: function(event, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {		
-					
-	var input = event.target;
+autocomplete: function(event, object, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {		
+				
+	var input;
+
+	if(object == "gridInput")
+	{
+		input = event;
+	}
+	else if(object == "formInput")
+	{
+		input = event.target;
+	}
 	
 	var searchList = document.getElementById(divElement);
 	

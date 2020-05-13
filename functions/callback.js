@@ -156,7 +156,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 		for(var i=0; i<gridColumnsInfo.length; i++)
 		{	
-			
 			cell = document.createElement("td");
 			cell.className = "grid";
 			
@@ -371,7 +370,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	var callback = new CodeReuse.Callback();
 
-	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, tableRowNumber, fieldPrimaryKey);
+	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, tableRowNumber, fieldPrimaryKey, home_tenant_grid.getTableHtmlObjectId());
 
 	//localStorage.setItem("arraySortColumn", sortColumn);
 	//localStorage.setItem("arraySortDirection", sortDirection);
@@ -381,11 +380,117 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 },
 
-get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, tableRowNumber, fieldPrimaryKey) {
+onkeyupTenantInput: function(event){
+			
+	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+	if(document.getElementById("tenant_input_grid").value == "")
+	{
+		document.getElementById("tenantSearchList").innerHTML = "";			
+	}
+	else
+	{
+		var autocomplete = new CodeReuse.Autocomplete();
+
+		autocomplete.autocomplete(event, "gridInput", "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", home_tenant_grid.getPhpFile(), "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
+	}
+	
+},
+
+onfocusoutTenantInput: function() { 
+	
+	var autocomplete = new CodeReuse.Autocomplete();
+
+	autocomplete.focusOutHide ("tenantSearchList");
+ },
+
+onclickGridSaveButton: function(tablePrimaryKey)
+{
+	if(document.getElementById("tenantSearchList").innerHTML != "")
+	{
+		alert('Please select Tenant Name');
+		return;
+	}
+
+	if(document.getElementById('calendarId').style.display == "block")
+	{
+		alert('Please select field date');
+		return;
+	}
+
+	var helper = new CodeReuse.Helper();
+
+	helper.msgBox('confirm', 'Would you like to save this row?', function (result) {
+
+		if(result == true)
+		{
+			controller.homeTenantGridSave();
+		}
+		else
+		if(result == false)
+		{
+			return;
+		}
+	});
+
+},
+
+onfocusGridCalendarInput: function(event){
+
+	var calendar = new CodeReuse.Calendar();
+	calendar.showHideCalendar(event, 'show' ,'inputCalendar_grid', "calendarId", monthsArray)
+
+},
+
+onblurGridCalendarInput: function(event){
+
+	var calendar = new CodeReuse.Calendar();
+
+	if(calendar.validateDate(event.id) == false)
+	{
+		alert("input format has to be dd-mmm-yyyy");
+	}
+
+	/*
+	if(calendar.validateDate(this.id) == false)
+	{
+		alert("input format has to be dd-mmm-yyyy");
+	}
+	*/
+},
+
+onfocusGridCalendarInputTesting: function(event){
+
+	var calendar = new CodeReuse.Calendar();
+	calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
+
+},
+
+onblurGridCalendarInputTesting: function(event){
+
+	var calendar = new CodeReuse.Calendar();
+
+	if(calendar.validateDate(event.id) == false)
+	{
+		alert("input format has to be dd-mmm-yyyy");
+	}
+
+	/*
+	if(calendar.validateDate(this.id) == false)
+	{
+		alert("input format has to be dd-mmm-yyyy");
+	}
+	*/
+},
+
+get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, tableRowNumber, fieldPrimaryKey, tableHtmlObjectId) {
+
+	//debugger
 
 	var record = response[0];
 
 	tableRowNumber = tableRowNumber - 1;
+
 
 	var tableEdit = tableHtml;
 
@@ -445,7 +550,7 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 			}
 		});
 	};
-		
+
 	//cell.className = "underline";	
 	cell.appendChild(saveButton);
 	
@@ -511,6 +616,8 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	
 	var autocomplete = new CodeReuse.Autocomplete();
 	
+
+
 	tenant_input_grid.addEventListener("keyup", function(event){
 			
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -527,7 +634,8 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	});		
 	
 	tenant_input_grid.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
-	
+
+
 	cell.appendChild(tenant_input_grid);
 	
 	newRow.appendChild(cell);
@@ -547,6 +655,7 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	inputCalendar_grid.style.backgroundColor = "white";
 	inputCalendar_grid.style.width = "142";
 	
+
 	var calendar = new CodeReuse.Calendar();
 	
 	inputCalendar_grid.addEventListener("focus", function(event){
@@ -565,6 +674,7 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 			alert("input format has to be dd-mmm-yyyy");
 		}
 	});
+
 	
 	var helper = new CodeReuse.Helper();
 				
@@ -615,14 +725,10 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	cell.appendChild(inputCalendarTesting_grid);
 
 	newRow.appendChild(cell);
-	
+
 
 
 	rowReplace.parentNode.replaceChild(newRow, rowReplace);
-
-	//debugger
-
-	//rowReplace.parentNode.replaceWith(newRow);
 
 	var divTable = document.getElementById(divElement);
 
@@ -630,6 +736,76 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 
 	divTable.appendChild(tableEdit);
 
+
+	/*
+	var row = document.getElementById(tableHtmlObjectId).rows[parseInt(tableRowNumber) + 1];
+
+	var helper = new CodeReuse.Helper();
+				
+	var dateFormat_inputCalendar_grid = helper.convertDateFromDatabase(record["field1"]);
+	var dateFormat_inputCalendarTesting_grid = helper.convertDateFromDatabase(record["field2"]);
+	*/
+
+//<td height=\"25" style="padding-left: 10px;">
+//<button type="button" id="saveButton" style="width: 50px;" onclick="alert('test')">save</button>
+//</td>
+//<td class="grid"><span id="inputPrimaryKey_grid">1</span></td>
+//<td class="grid"><select id="building_option_grid"><option></option><option>building</option>
+//<option>building2</option></select></td>
+//<td class="grid">
+//<input id="tenant_input_grid" rowattributevalue="1" width="200" style="position: relative; z-index: 1; background-color: white;"></td>
+//<td class="grid"><input id="inputCalendar_grid" style="position: relative; z-index: 1; background-color: white; width: 142px;"></td>
+//<td class="grid"><input id="inputCalendarTesting_grid" width="142" style="position: relative; z-index: 1; background-color: white;"></td>
+	
+	/*
+	var selectOption = record["field3"];
+	var selectHtml;
+
+	if(selectOption == "1")
+	{
+		selectHtml = "<td class=\"grid\">" +
+	"<select id=\"building_option_grid\"><option value=\"\"></option><option value=\"1\" selected>building</option><option value=\"2\">building2</option></select>" +
+	"</td>";
+	}
+	else if(selectOption == "2")
+	{
+		selectHtml = "<td class=\"grid\">" +
+	"<select id=\"building_option_grid\"><option value=\"\"></option><option value=\"1\">building</option><option value=\"2\" selected>building2</option></select>" +
+	"</td>";		
+	}
+
+	var html = "<td height=\"25\" style=\"padding-left: 10px;\">" +
+	"<button id=\"saveButton\" style=\"width: 50px;\"onclick =\"var callback = new CodeReuse.Callback();callback.onclickGridSaveButton();\">save</button>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<span id =\"inputPrimaryKey_grid\">" + fieldPrimaryKey + "</span>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<select id=\"building_option_grid\"><option value=\"\"></option><option value=\"1\">building</option><option value=\"2\">building2</option></select>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<input id=\"tenant_input_grid\" rowattributevalue=\"" + record["field4"] +  "\" width=\"200\" style=\"position: relative; z-index: 1; background-color: white;\" onkeyup=\"var callback = new CodeReuse.Callback();callback.onkeyupTenantInput(this);\" onfocusout=\"var callback = new CodeReuse.Callback();callback.onfocusoutTenantInput();\" value=\"" + record["field4display"] + "\" />" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142px;\" onfocus=\"var callback = new CodeReuse.Callback();callback.onfocusGridCalendarInput(this);\" onblur=\"var callback = new CodeReuse.Callback();callback.onblurGridCalendarInput(this);\" value=\"" + dateFormat_inputCalendar_grid + "\"></td>" +
+	"</td>" +
+	"<td class=\"grid\">" +
+	"<input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142px;\" onfocus=\"var callback = new CodeReuse.Callback();callback.onfocusGridCalendarInputTesting(this);\" onblur=\"var callback = new CodeReuse.Callback();callback.onblurGridCalendarInputTesting(this);\" value=\"" + dateFormat_inputCalendarTesting_grid + "\"></td>" +
+	"</td>";
+
+	row.innerHTML = html;
+
+	document.getElementById("building_option_grid").selectedIndex = record["field3"];
+
+	*/
+
+	//row.innerHTML = newRow.innerHTML;
+
+	/*
+	var row = document.getElementById(tableHtmlObjectId).rows[2];
+
+	row.cells[1].innerHTML = "test";
+	*/
 
 
 	var record = response[0];

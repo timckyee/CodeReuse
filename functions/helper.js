@@ -198,6 +198,9 @@ convertDateFromDatabase: function(date)
 
 convertDateFromSystem: function(date)
 {	
+
+	debugger
+
 	var dateFromSystem = date;
 	
 	var day = dateFromSystem.substring(0,2);
@@ -288,7 +291,42 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 		
 		var callback = new CodeReuse.Callback();
 
+		//debugger
+		
 		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', localStorage.getItem("homeTenantGridPageNumber"));
+		
+		/*
+		var tablePrimaryKey;
+
+		if(document.getElementById("inputPrimaryKey_grid") != null)
+		{
+			tablePrimaryKey = document.getElementById("inputPrimaryKey_grid").innerText;
+		}
+		else
+		{
+			tablePrimaryKey = document.getElementById("inputPrimaryKey").innerText;
+		}
+			
+		var tableHomeTenant = document.getElementById("tableHomeTenant");
+		
+		var tableHomeTenantRows = tableHomeTenant.rows;
+		
+		var tableRowNumber = 0;
+		
+		for(var i=1; i<tableHomeTenantRows.length; i++)
+		{
+			var tableHomeTenantRowsCellValue = tableHomeTenantRows[i].cells[1].innerText;
+			
+			if(tableHomeTenantRowsCellValue == tablePrimaryKey)
+			{					
+				tableRowNumber = i
+				break;
+			}
+		}
+
+		grid_get_post_functions.post_updateGrid_reset(home_tenant_grid.getGridGetPostDivElement(), tableRowNumber, home_tenant_grid.getTableHtmlObjectId(), tablePrimaryKey);
+		
+		*/
 	}
 	
 }

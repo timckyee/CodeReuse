@@ -246,6 +246,9 @@ showHideCalendar: function(event, showOrHide, inputCalendarId, divCalendarId, mo
 
 validateDate: function(inputCalendarId)
 {
+
+	//debugger
+
 	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
 
 	inputCalendarObject = document.getElementById(inputCalendarId);

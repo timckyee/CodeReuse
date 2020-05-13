@@ -85,7 +85,7 @@ function init_autocomplete_inputs() {
 		}
 		else
 		{
-			autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_option").value, "tenant_input", "tenantSearchList");
+			autocomplete.autocomplete(event, "formInput", "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_option").value, "tenant_input", "tenantSearchList");
 		}
 		
 	});
