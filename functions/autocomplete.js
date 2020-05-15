@@ -87,7 +87,7 @@ resetInputFields: function(queryName)
 */
 
 autocomplete: function(event, object, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {		
-				
+	
 	var input;
 
 	if(object == "gridInput")

@@ -198,9 +198,6 @@ convertDateFromDatabase: function(date)
 
 convertDateFromSystem: function(date)
 {	
-
-	debugger
-
 	var dateFromSystem = date;
 	
 	var day = dateFromSystem.substring(0,2);

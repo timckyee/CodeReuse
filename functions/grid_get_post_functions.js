@@ -194,9 +194,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 			{				
 				var dateFromSystem = htmlObjectFieldValue;
 								
-				var helper = new CodeReuse.Helper();				
-								
-				debugger
+				var helper = new CodeReuse.Helper();
 
 				var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 				
@@ -301,9 +299,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 				{				
 					var dateFromSystem = htmlObjectFieldValue;
 									
-					var helper = new CodeReuse.Helper();				
-										
-					debugger
+					var helper = new CodeReuse.Helper();
 
 					var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 					
@@ -648,7 +644,7 @@ post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrim
 		}
 		else
 		{
-			autocomplete.autocomplete(event, "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", home_tenant_grid.getPhpFile(), "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
+			autocomplete.autocomplete(event, "formInput", "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", home_tenant_grid.getPhpFile(), "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
 		}
 		
 	});		
@@ -837,9 +833,7 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 					{
 						var dateFromSystem = htmlObjectValueInsert;
 										
-						var helper = new CodeReuse.Helper();				
-								
-						debugger
+						var helper = new CodeReuse.Helper();
 
 						var dateFormat = helper.convertDateFromSystem(dateFromSystem);
 						
