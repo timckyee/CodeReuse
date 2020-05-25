@@ -165,14 +165,16 @@ CodeReuse.HomeTenantGrid.prototype = {
 			}
 		}
 		
+		localStorage.setItem("arraySortColumn", sortColumn);
+		
 		//alert('homeTenantGrid onload');
 
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, sortDirection, '', '', pageNumber);
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);
 		
 	},
 	
-	homeTenantGridUpdate: function(tableRowNumber, tableFieldsValue, pageNumber) {
-
+	//homeTenantGridUpdate: function(tableRowNumber, tableFieldsValue, pageNumber) {
+	homeTenantGridUpdate: function(tableRowNumber) {	
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();
 		
 		var helper = new CodeReuse.Helper();								
@@ -186,8 +188,8 @@ CodeReuse.HomeTenantGrid.prototype = {
 			home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
 			var callback = new CodeReuse.Callback();
-
-			grid_get_post_functions.post_updateGrid(this.getPhpFile(), this.getHomeTenantGridUpdateQueryName(), document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, tableRowNumber, tableFieldsValue, pageNumber);
+			
+			grid_get_post_functions.post_updateGrid(this.getPhpFile(), this.getHomeTenantGridUpdateQueryName(), document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, tableRowNumber, localStorage.getItem("homeTenantGridPageNumber"));
 		}
 		
 	},

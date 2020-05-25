@@ -62,7 +62,7 @@ CodeReuse.SuiteGrid.prototype = {
 		var callback = new CodeReuse.Callback();
 				
 		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)			
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", '' ,'', '', '', '');
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", '' ,'', '');
 	},
 	
 	refreshSelectSuiteGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
@@ -74,7 +74,7 @@ CodeReuse.SuiteGrid.prototype = {
 			callback = new CodeReuse.Callback();
 			
 			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)	
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", '', '', '', '', '');
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", '', '', '');
 				
 		}
 		

@@ -115,61 +115,29 @@ CodeReuse.Controller.prototype = {
 		HomeTenantGridValues["building_option_grid"] = building_option_grid;
 		HomeTenantGridValues["tenant_input_grid"] = tenant_input_grid;
 		
-		var homeTenantGrid = new CodeReuse.HomeTenantGrid();	
+		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
 		
-		if(inputPrimaryKey != "")
+		var tablePrimaryKey = document.getElementById("inputPrimaryKey_grid").innerText;
+			
+		var tableHomeTenant = document.getElementById("tableHomeTenant");
+		
+		var tableHomeTenantRows = tableHomeTenant.rows;
+		
+		var tableRowNumber = 0;	
+		
+		for(var i=1; i<tableHomeTenantRows.length; i++)
 		{
-			saveType = "update";
-		}
-		else
-		{
-			saveType = "insert";
-		}
-					
-		if(saveType == "update")
-		{
-			var tablePrimaryKey = document.getElementById("inputPrimaryKey_grid").innerText;
+			var tableHomeTenantRowsCellValue = tableHomeTenantRows[i].cells[1].innerText;
 			
-			var tableHomeTenant = document.getElementById("tableHomeTenant");
-			
-			var tableHomeTenantRows = tableHomeTenant.rows;
-			
-			var tableRowNumber = 0;	
-			
-			for(var i=1; i<tableHomeTenantRows.length; i++)
-			{
-				var tableHomeTenantRowsCellValue = tableHomeTenantRows[i].cells[1].innerText;
-				
-				if(tableHomeTenantRowsCellValue == tablePrimaryKey)
-				{					
-					tableRowNumber = i
-					break;
-				}
+			if(tableHomeTenantRowsCellValue == tablePrimaryKey)
+			{					
+				tableRowNumber = i
+				break;
 			}
-
-			var building_option_grid = document.getElementById("building_option_grid").value;
-			var buildingSelectOption = document.getElementById("building_option_grid").selectedIndex.toString();
-			var tenant_input_grid = document.getElementById("tenant_input_grid").value;
-			var tenant_input_grid_rowAttributeValue = document.getElementById("tenant_input_grid").getAttribute("rowAttributeValue");
-			
-			var inputCalendar_grid = document.getElementById("inputCalendar_grid").value;
-			var inputCalendarTesting_grid = document.getElementById("inputCalendarTesting_grid").value;	
-					
-			var tableFieldsValue = [];
-			
-			tableFieldsValue["fieldPrimaryKey"] = tablePrimaryKey;
-			tableFieldsValue["buildingName"] = building_option_grid;
-			tableFieldsValue["buildingId"] = buildingSelectOption;
-			tableFieldsValue["tenantName"] = tenant_input_grid;
-			tableFieldsValue["tenantId"] = tenant_input_grid_rowAttributeValue;
-			tableFieldsValue["field1"] = inputCalendar_grid;
-			tableFieldsValue["field2"] = inputCalendarTesting_grid;
-			
-			homeTenantGrid.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey_grid);
-			homeTenantGrid.homeTenantGridUpdate(tableRowNumber, tableFieldsValue, localStorage.getItem("homeTenantGridPageNumber"));	
-			
 		}
 		
+		homeTenantGrid.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey_grid);
+		homeTenantGrid.homeTenantGridUpdate(tableRowNumber, localStorage.getItem("homeTenantGridPageNumber"));	
 	},	
 	
 	resetBuildingSelectField: function(selectFieldHtmlObjectId, gridGetPostDivElement) {

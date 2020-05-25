@@ -118,11 +118,7 @@ updateGridPage: function(pageNumber)
 
 	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
-	var sortColumn = localStorage.getItem("arraySortColumn");
-
-	var sortDirection = localStorage.getItem("arraySortDirection");
-
-	home_tenant_grid.refreshTenantHomeGrid(home_tenant_grid.getPhpFile(), tenantModel.getFieldsInfo(), sortColumn, sortDirection, pageNumberUpdate);
+	home_tenant_grid.refreshTenantHomeGrid(home_tenant_grid.getPhpFile(), tenantModel.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumberUpdate);
 },
 
 updateGridPageArrows: function(direction, pageNumber)
@@ -170,16 +166,12 @@ updateGridPageArrows: function(direction, pageNumber)
 	}
 
 	localStorage.setItem("homeTenantGridPageNumber", pageNumberUpdate.toString());
-
+	
 	var tenantModel = new CodeReuse.Tenant();
 
 	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
-	var sortColumn = localStorage.getItem("arraySortColumn");
-
-	var sortDirection = localStorage.getItem("arraySortDirection");
-
-	home_tenant_grid.refreshTenantHomeGrid(home_tenant_grid.getPhpFile(), tenantModel.getFieldsInfo(), sortColumn, sortDirection, pageNumberUpdate.toString());
+	home_tenant_grid.refreshTenantHomeGrid(home_tenant_grid.getPhpFile(), tenantModel.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumberUpdate.toString());
 },
 
 convertDateFromDatabase: function(date)
@@ -290,7 +282,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 		//debugger
 		
-		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', localStorage.getItem("homeTenantGridPageNumber"));
+		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"));
 		
 		/*
 		var tablePrimaryKey;

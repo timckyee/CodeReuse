@@ -4,7 +4,7 @@ CodeReuse.Callback = function() {
 
 CodeReuse.Callback.prototype = {
 
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -39,7 +39,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	for(i=0; i<gridColumnsInfo.length; i++)
 	{	
 		tableHeader = document.createElement("th");
-			
+		tableHeader.className = "underline";	
+
 		var handler = new CodeReuse.Handler();	
 		
 		if(tableHtmlObjectId == "tableHomeTenant")
@@ -72,7 +73,17 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 			if(tableHtmlObjectId != "tableHomeTenant")
 			{
-				var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+				var rowPrimaryKey;
+
+				if(rowValues.srcElement.parentNode.cells == undefined)
+				{
+					rowPrimaryKey = rowValues.srcElement.cells[0].innerText;
+				}
+				else
+				{
+					rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+				}
+
 				rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
 			}
 		};
@@ -136,7 +147,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					{
 						var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
 				
-						grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, '' , '', pageNumber);
+						grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
 					}
 					else
 					if(result == false)
@@ -202,8 +213,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 },
 
-
-gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
+//gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
+gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, pageNumber) {
 
 	localStorage.setItem("editMode", "true");
 
@@ -226,10 +237,12 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	for(i=0; i<gridColumnsInfo.length; i++)
 	{				
 		tableHeader = document.createElement("th");
-			
+		tableHeader.className = "underline";	
+
 		var handler = new CodeReuse.Handler();
 
-		tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, localStorage.getItem("homeTenantGridPageNumber"));
+		tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
+		//tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, localStorage.getItem("homeTenantGridPageNumber"));
 
 		var columnName = gridColumnsInfo[i].colName;
 		
@@ -297,7 +310,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				{
 					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
 			
-					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), "gridtablehome", "fieldPrimaryKey", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), '', '', pageNumber);
+					grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
+					//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);
 				}
 				else
 				if(result == false)
