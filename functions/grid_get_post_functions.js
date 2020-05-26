@@ -54,34 +54,13 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 	
 	var divTable = document.getElementById(divElement);
 
-	var homeTenantGrid = new CodeReuse.HomeTenantGrid();
-
-	var tablePrimaryKey = rowId;
-		
-	var tableObject = document.getElementById(tableHtmlObjectId);
-	
-	var tableHomeTenantRows = tableObject.rows;
-	
-	var tableRowNumber = 0;	
-	
-	for(var i=1; i<tableHomeTenantRows.length; i++)
-	{
-		var tableHomeTenantRowsCellValue = tableHomeTenantRows[i].cells[1].innerText;
-		
-		if(tableHomeTenantRowsCellValue == tablePrimaryKey)
-		{					
-			tableRowNumber = i
-			break;
-		}
-	}
-
 	window.gridXmlHttpRequest.onreadystatechange = function() {
 				
 		if (this.readyState == 4 && this.status == 200) {
 
 			var response = JSON.parse(this.responseText);
 						
-			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, pageNumber);			
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, rowId, sortColumn, sortDirection, pageNumber);			
 			
 		}
 	};
@@ -122,7 +101,7 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
 	window.getXmlHttpRequest.send();
 },
 
-get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, callback, tableHtml, tableRowNumber, fieldPrimaryKey, tableHtmlObjectId)
+get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, callback, tableHtml, fieldPrimaryKey, tableHtmlObjectId)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -130,7 +109,7 @@ get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyV
 			
 			var response = JSON.parse(this.responseText);
 
-			callback(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, tableRowNumber, fieldPrimaryKey, tableHtmlObjectId);
+			callback(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey, tableHtmlObjectId);
 		
 		}
 	}
@@ -291,7 +270,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		helper.msgBox('alert', 'There are no changes to this record', function (result) {
 		
 			if(result == true)
-			{		
+			{	
 				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 					
 				var tenantModel = new CodeReuse.Tenant();
@@ -300,9 +279,8 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		
 				var callback = new CodeReuse.Callback();
 
-				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);
+				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);
 
-				//return;
 			}
 			else
 			if(result == false)
@@ -336,9 +314,11 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 			
 						var callback = new CodeReuse.Callback();
 			
-						//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), tableRowNumber, tableFieldsValue, pageNumber);
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);
 
-						grid_get_post_functions.post_updateGrid_reset(home_tenant_grid.getGridGetPostDivElement(), tableRowNumber, home_tenant_grid.getTableHtmlObjectId(), htmlObjectPrimaryKeyValue);
+						localStorage.setItem("editMode", "false");
+
+						//grid_get_post_functions.post_updateGrid_reset(home_tenant_grid.getGridGetPostDivElement(), tableRowNumber, home_tenant_grid.getTableHtmlObjectId(), htmlObjectPrimaryKeyValue);
 
 					}
 				}
@@ -410,6 +390,18 @@ onclickEditButtonGrid: function(tablePrimaryKey) {
 post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrimaryKey) {
 
 	localStorage.setItem("editMode", "false");
+
+	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+		
+	var tenantModel = new CodeReuse.Tenant();
+	
+	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+	
+	var callback = new CodeReuse.Callback();
+
+
+	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"));
+
 
 	tableRowNumber = tableRowNumber - 1;
 

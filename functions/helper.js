@@ -117,7 +117,7 @@ updateGridPage: function(pageNumber)
 	var tenantModel = new CodeReuse.Tenant();
 
 	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
+	
 	home_tenant_grid.refreshTenantHomeGrid(home_tenant_grid.getPhpFile(), tenantModel.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumberUpdate);
 },
 

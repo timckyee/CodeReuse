@@ -66,8 +66,6 @@ CodeReuse.TenantGrid.prototype = {
 		
 		var callback = new CodeReuse.Callback();
 		
-		localStorage.setItem("arraySortDirection", "asc");
-		
 		if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
 			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", '', '', '');
 		

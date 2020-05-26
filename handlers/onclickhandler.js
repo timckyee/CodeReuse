@@ -71,21 +71,23 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var callback = new CodeReuse.Callback();
-		
+
 		var sortColumn = gridColumnsInfo[column].id;		
 		
 		var sortDirection = localStorage.getItem("arraySortDirection");	
 		
 		if(sortColumn != localStorage.getItem("arraySortColumn"))
-		{		
+		{
+			/*
 			if(sortColumn == "fieldPrimaryKey")
 			{
 				localStorage.setItem("arraySortDirection", "desc");
 			}
 			else
 			{
-				localStorage.setItem("arraySortDirection", "asc");
-			}
+			*/
+			
+			localStorage.setItem("arraySortDirection", "asc");
 		}
 		else
 		{

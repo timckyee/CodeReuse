@@ -22,6 +22,12 @@ tr.autocomplete:hover {
 	
 }
 
+.highlightRow {
+
+	background-color: lightgray;
+
+}
+
 /* The Modal (background) */
 .modal {
 	display: none; /* Hidden by default */

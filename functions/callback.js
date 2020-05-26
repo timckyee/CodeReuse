@@ -133,6 +133,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					}
 				}
 			
+				var highlightRow = i;
+
 				if(countSave == 1)
 				{
 					alert('Please click on save to leave save mode');
@@ -145,8 +147,21 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 					if(result == true)
 					{
+						//var table = document.getElementById(home_tenant_grid.getTableHtmlObjectId());
+
 						var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
 				
+						/*
+						for(var i=0; i<table.rows.length; i++)
+						{
+							if(table.rows[i].cells[1].innerText == tablePrimaryKeyValue)
+							{
+								table.rows[i].className = "highlightRow";
+								break;
+							}
+						}
+						*/
+
 						grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
 					}
 					else
@@ -207,14 +222,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	divTable.innerHTML = "";
 	
 	divTable.appendChild(tbl);
-	
-	//localStorage.setItem("arraySortColumn", sortColumn);
-	//localStorage.setItem("arraySortDirection", sortDirection);
 
 },
 
-//gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, tableFieldsValue, pageNumber) {
-gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, tableRowNumber, pageNumber) {
+gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, pageNumber) {
 
 	localStorage.setItem("editMode", "true");
 
@@ -370,7 +381,8 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 	}
 
-	var fieldPrimaryKey = response[tableRowNumber - 1]["fieldPrimaryKey"].toString();
+	//var fieldPrimaryKey = response[tableRowNumber - 1]["fieldPrimaryKey"].toString();
+	var fieldPrimaryKey = rowId;
 
 	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 
@@ -378,19 +390,11 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
-	var autocompleteInputs = tenantModel.getAutocompleteInputs();			
-	
-	var arrayOldValuesTable = tenantModel.arrayOldValuesTable;
+	var autocompleteInputs = tenantModel.getAutocompleteInputs();
 	
 	var callback = new CodeReuse.Callback();
-
-	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, tableRowNumber, fieldPrimaryKey, home_tenant_grid.getTableHtmlObjectId());
-
-	//localStorage.setItem("arraySortColumn", sortColumn);
-	//localStorage.setItem("arraySortDirection", sortDirection);
-
-	//console.dir('test');
-	//console.dir(arrayOldValuesTableGridEdit);
+	
+	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, fieldPrimaryKey, home_tenant_grid.getTableHtmlObjectId());
 
 },
 
@@ -497,22 +501,32 @@ onblurGridCalendarInputTesting: function(event){
 	*/
 },
 
-get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, tableRowNumber, fieldPrimaryKey, tableHtmlObjectId) {
-
-	//debugger
-
+get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey, tableHtmlObjectId) {
+	
 	var record = response[0];
 
-	tableRowNumber = tableRowNumber - 1;
+	//tableRowNumber = tableRowNumber - 1;
 
 
 	var tableEdit = tableHtml;
 
-	var rowReplace = tableEdit.rows[tableRowNumber + 1];
+	var rowReplace;
 
-	//var newRow = document.createElement("tr");
+	for(tableEditCount=0; tableEditCount<tableEdit.rows.length; tableEditCount++)
+	{		
+		row = tableEdit.rows[tableEditCount + 1];
+		if(row.cells[1].innerText == fieldPrimaryKey)
+		{
+			rowReplace = tableEdit.rows[tableEditCount + 1];
+			break;
+		}
+	}
 
-	var newRow = tableEdit.insertRow(tableRowNumber);
+	//var rowReplace = tableEdit.rows[tableRowNumber + 1];
+
+	var newRow = document.createElement("tr");
+
+	//var newRow = tableEdit.insertRow(tableEditCount);
 
 	var cell = document.createElement("td");
 						
