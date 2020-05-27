@@ -4,7 +4,7 @@ CodeReuse.Callback = function() {
 
 CodeReuse.Callback.prototype = {
 
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -64,7 +64,18 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
 		row.className = "tableHover";
 		
-		
+		if(highlightRowId != '')
+		{
+			if(response[tableRowCount]["fieldPrimaryKey"] == highlightRowId)
+			{
+				row.className = "tableHover highlightRow";
+			}
+		}
+		else
+		{
+			row.className = "tableHover";
+		}
+
 		row.onclick = function(rowValues) {
 
 			//var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
