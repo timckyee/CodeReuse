@@ -5,7 +5,7 @@ CodeReuse.Sort = function() {
 CodeReuse.Sort.prototype = {
 
 sortTable: function(tblId, column, gridColumnsInfo){
-		
+	
 	var sortColumn = gridColumnsInfo[column].id;
 	
 	if(tblId == "tableSuite")
@@ -14,15 +14,7 @@ sortTable: function(tblId, column, gridColumnsInfo){
 		
 		if(sortColumn != localStorage.getItem("arraySortColumn_suite"))
 		{
-			
-			if(sortColumn == "suiteId")
-			{
-				localStorage.setItem("arraySortDirection_suite", "desc");
-			}
-			else
-			{
-				localStorage.setItem("arraySortDirection_suite", "asc");
-			}
+			localStorage.setItem("arraySortDirection_suite", "asc");
 		}
 		else
 		{	
@@ -46,14 +38,7 @@ sortTable: function(tblId, column, gridColumnsInfo){
 		
 		if(sortColumn != localStorage.getItem("arraySortColumn_tenant"))
 		{
-			if(sortColumn == "fieldPrimaryKey")
-			{
-				localStorage.setItem("arraySortDirection_tenant", "desc");
-			}
-			else
-			{
-				localStorage.setItem("arraySortDirection_tenant", "asc");
-			}
+			localStorage.setItem("arraySortDirection_tenant", "asc");
 		}
 		else
 		{	

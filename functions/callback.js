@@ -44,10 +44,33 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		var handler = new CodeReuse.Handler();	
 		
 		if(tableHtmlObjectId == "tableHomeTenant")
-			tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
+		{
+			tableHeader.onclick = function(headerCell)
+			{
+				var columnText = headerCell.srcElement.innerText;
+				for(var i=0; i<gridColumnsInfo.length; i++)
+				{
+					if(gridColumnsInfo[i].colName == columnText)
+						break;
+				}
+
+				handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
+			}
+		}
 		else
-			tableHeader.onclick = handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
-		
+		{
+			tableHeader.onclick = function(headerCell)
+			{
+				var columnText = headerCell.srcElement.innerText;
+				for(var i=0; i<gridColumnsInfo.length; i++)
+				{
+					if(gridColumnsInfo[i].colName == columnText)
+						break;
+				}
+				handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
+			}
+		}
+
 		var columnName = gridColumnsInfo[i].colName;
 		
 		tableHeaderText = document.createTextNode(columnName);

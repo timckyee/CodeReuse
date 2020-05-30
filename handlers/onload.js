@@ -22,13 +22,13 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("arraySortDirection", "asc");
 	
-	localStorage.setItem("arraySortColumn_suite", "");
+	localStorage.setItem("arraySortColumn_suite", "suiteId");
 	
-	localStorage.setItem("arraySortDirection_suite", "");
+	localStorage.setItem("arraySortDirection_suite", "asc");
 	
-	localStorage.setItem("arraySortColumn_tenant", "");
+	localStorage.setItem("arraySortColumn_tenant", "fieldPrimaryKey");
 	
-	localStorage.setItem("arraySortDirection_tenant", "");		
+	localStorage.setItem("arraySortDirection_tenant", "asc");		
 	
 	var tenant = new CodeReuse.Tenant();
 	

@@ -44,70 +44,56 @@ TenantGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsIn
 },
 
 sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, column) {
-				
-	return function() {
+		
+	var sort = new CodeReuse.Sort();
 
-		var sort = new CodeReuse.Sort();
-
-		sort.sortTable(sortTableHtmlObjectId, column, gridColumnsInfo);
-			
-	};
+	sort.sortTable(sortTableHtmlObjectId, column, gridColumnsInfo);
+		
 },
 
 sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gridColumnsInfo, column, pageNumber) {
+		
+	if(localStorage.getItem("editMode") == "true")
+	{
+		alert('Please click on save to leave save mode before sorting columns');
+		return;
+	}
 	
-	return function() {
+	tenantModel = new CodeReuse.Tenant();
 	
-		if(localStorage.getItem("editMode") == "true")
-		{
-			alert('Please click on save to leave save mode before sorting columns');
-			return;
-		}
-		
-		tenantModel = new CodeReuse.Tenant();
-		
-		home_tenant_grid = new CodeReuse.HomeTenantGrid();
-		
-		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-		
-		var callback = new CodeReuse.Callback();
+	home_tenant_grid = new CodeReuse.HomeTenantGrid();
+	
+	grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+	
+	var callback = new CodeReuse.Callback();
 
-		var sortColumn = gridColumnsInfo[column].id;		
-		
-		var sortDirection = localStorage.getItem("arraySortDirection");	
-		
-		if(sortColumn != localStorage.getItem("arraySortColumn"))
+	var sortColumn = gridColumnsInfo[column].id;		
+	
+	var sortDirection = localStorage.getItem("arraySortDirection");	
+	
+	if(sortColumn != localStorage.getItem("arraySortColumn"))
+	{
+		localStorage.setItem("arraySortDirection", "asc");
+	}
+	else
+	{
+		if(sortDirection == "asc")
 		{
-			/*
-			if(sortColumn == "fieldPrimaryKey")
-			{
-				localStorage.setItem("arraySortDirection", "desc");
-			}
-			else
-			{
-			*/
-			
-			localStorage.setItem("arraySortDirection", "asc");
+			localStorage.setItem("arraySortDirection", "desc");	
 		}
 		else
 		{
-			if(sortDirection == "asc")
-			{
-				localStorage.setItem("arraySortDirection", "desc");	
-			}
-			else
-			{
-				if(sortDirection == "desc")
-					localStorage.setItem("arraySortDirection", "asc");
-			}			
-		}
-			
-		localStorage.setItem("arraySortColumn", sortColumn);
+			if(sortDirection == "desc")
+				localStorage.setItem("arraySortDirection", "asc");
+		}			
+	}
+		
+	localStorage.setItem("arraySortColumn", sortColumn);
 
-		//alert('sort: ' + sortColumn + ' ' + localStorage.getItem("arraySortDirection"));
+	//alert('sort: ' + sortColumn + ' ' + localStorage.getItem("arraySortDirection"));
 
-		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, '');
-	};
+	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, '');
+
 }
 
 }
