@@ -286,7 +286,26 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 		var handler = new CodeReuse.Handler();
 
-		tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
+		tableHeader.onclick = function(headerCell) {
+
+			if(localStorage.getItem("editMode") == "true")
+			{
+				alert('Please click on save to leave save mode before sorting columns');
+				return;
+			}
+			
+			var columnText = headerCell.srcElement.innerText;
+			for(var i=0; i<gridColumnsInfo.length; i++)
+			{
+				if(gridColumnsInfo[i].colName == columnText)
+					break;
+			}
+
+			handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
+
+		}
+
+		//tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
 		//tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, localStorage.getItem("homeTenantGridPageNumber"));
 
 		var columnName = gridColumnsInfo[i].colName;
