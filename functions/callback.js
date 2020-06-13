@@ -40,7 +40,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	{	
 		tableHeader = document.createElement("th");
 		tableHeader.className = "underline";
-		tableHeader.id = gridColumnsInfo[i].id;
+		tableHeader.id = gridColumnsInfo[i].id + "ColumnHeader";
 
 		var handler = new CodeReuse.Handler();	
 		
@@ -51,7 +51,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				var columnId = headerCell.srcElement.id;
 				for(var column=0; column<gridColumnsInfo.length; column++)
 				{
-					if(gridColumnsInfo[column].id == columnId)
+					if(gridColumnsInfo[column].id + "ColumnHeader" == columnId)
 						break;
 				}
 
@@ -65,7 +65,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				var columnId = headerCell.srcElement.id;
 				for(var column=0; column<gridColumnsInfo.length; column++)
 				{
-					if(gridColumnsInfo[column].id == columnId)
+					if(gridColumnsInfo[column].id + "ColumnHeader" == columnId)
 						break;
 				}
 				handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, column);
@@ -269,7 +269,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	{				
 		tableHeader = document.createElement("th");
 		tableHeader.className = "underline";	
-		tableHeader.id = gridColumnsInfo[i].id;
+		tableHeader.id = gridColumnsInfo[i].id + "ColumnHeader";
 
 		var handler = new CodeReuse.Handler();
 
