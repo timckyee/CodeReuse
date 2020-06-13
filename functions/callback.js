@@ -36,10 +36,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeaderRow.appendChild(tableHeader);
 	}
 	
-	for(i=0; i<gridColumnsInfo.length; i++)
+	for(var i=0; i<gridColumnsInfo.length; i++)
 	{	
 		tableHeader = document.createElement("th");
-		tableHeader.className = "underline";	
+		tableHeader.className = "underline";
+		tableHeader.id = gridColumnsInfo[i].id;
 
 		var handler = new CodeReuse.Handler();	
 		
@@ -47,27 +48,27 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		{
 			tableHeader.onclick = function(headerCell)
 			{
-				var columnText = headerCell.srcElement.innerText;
-				for(var i=0; i<gridColumnsInfo.length; i++)
+				var columnId = headerCell.srcElement.id;
+				for(var column=0; column<gridColumnsInfo.length; column++)
 				{
-					if(gridColumnsInfo[i].colName == columnText)
+					if(gridColumnsInfo[column].id == columnId)
 						break;
 				}
 
-				handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
+				handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column, pageNumber);
 			}
 		}
 		else
 		{
 			tableHeader.onclick = function(headerCell)
 			{
-				var columnText = headerCell.srcElement.innerText;
-				for(var i=0; i<gridColumnsInfo.length; i++)
+				var columnId = headerCell.srcElement.id;
+				for(var column=0; column<gridColumnsInfo.length; column++)
 				{
-					if(gridColumnsInfo[i].colName == columnText)
+					if(gridColumnsInfo[column].id == columnId)
 						break;
 				}
-				handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, i);
+				handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, column);
 			}
 		}
 
@@ -166,8 +167,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 						break;
 					}
 				}
-			
-				var highlightRow = i;
 
 				if(countSave == 1)
 				{
@@ -181,20 +180,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 					if(result == true)
 					{
-						//var table = document.getElementById(home_tenant_grid.getTableHtmlObjectId());
-
 						var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
-				
-						/*
-						for(var i=0; i<table.rows.length; i++)
-						{
-							if(table.rows[i].cells[1].innerText == tablePrimaryKeyValue)
-							{
-								table.rows[i].className = "highlightRow";
-								break;
-							}
-						}
-						*/
 
 						grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
 					}
@@ -279,34 +265,24 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	tableHeaderRow.appendChild(tableHeader);	
 	
-	for(i=0; i<gridColumnsInfo.length; i++)
+	for(var i=0; i<gridColumnsInfo.length; i++)
 	{				
 		tableHeader = document.createElement("th");
 		tableHeader.className = "underline";	
+		tableHeader.id = gridColumnsInfo[i].id;
 
 		var handler = new CodeReuse.Handler();
 
 		tableHeader.onclick = function(headerCell) {
-
+			
 			if(localStorage.getItem("editMode") == "true")
 			{
 				alert('Please click on save to leave save mode before sorting columns');
 				return;
 			}
-			
-			var columnText = headerCell.srcElement.innerText;
-			for(var i=0; i<gridColumnsInfo.length; i++)
-			{
-				if(gridColumnsInfo[i].colName == columnText)
-					break;
-			}
-
-			handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
-
 		}
 
 		//tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
-		//tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, localStorage.getItem("homeTenantGridPageNumber"));
 
 		var columnName = gridColumnsInfo[i].colName;
 		

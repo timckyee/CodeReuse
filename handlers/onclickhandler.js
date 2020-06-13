@@ -53,12 +53,6 @@ sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, 
 
 sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gridColumnsInfo, column, pageNumber) {
 		
-	if(localStorage.getItem("editMode") == "true")
-	{
-		alert('Please click on save to leave save mode before sorting columns');
-		return;
-	}
-	
 	tenantModel = new CodeReuse.Tenant();
 	
 	home_tenant_grid = new CodeReuse.HomeTenantGrid();
