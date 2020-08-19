@@ -40,7 +40,18 @@
 			$limit = $pageSize;
 			$offset = ($pageNumber - 1) * $pageSize;
 
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"] . ", fieldPrimaryKey asc limit " . $limit . " offset " . $offset);
+			$primaryKeySortDirection = '';
+
+			if($_GET["sortDirection"] == "asc")
+			{
+				$primaryKeySortDirection = "asc";
+			}
+			else if($_GET["sortDirection"] == "desc")
+			{
+				$primaryKeySortDirection = "desc";
+			}
+
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"] . ", fieldPrimaryKey " . $primaryKeySortDirection . " limit " . $limit . " offset " . $offset);
 		}
 		/*
 		else
