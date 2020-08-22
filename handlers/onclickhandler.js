@@ -52,7 +52,7 @@ sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, 
 },
 
 sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gridColumnsInfo, column, pageNumber) {
-		
+
 	tenantModel = new CodeReuse.Tenant();
 	
 	home_tenant_grid = new CodeReuse.HomeTenantGrid();

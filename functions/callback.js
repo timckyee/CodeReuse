@@ -35,51 +35,64 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
 		tableHeaderRow.appendChild(tableHeader);
 	}
-	
+
 	for(var i=0; i<gridColumnsInfo.length; i++)
 	{	
 		tableHeader = document.createElement("th");
-		tableHeader.className = "underline";
+
 		tableHeader.id = gridColumnsInfo[i].id + "ColumnHeader";
+		tableHeader.style.padding = "12";
+		tableHeader.style.textAlign = "left";
+		tableHeader.style.whiteSpace = "nowrap";
 
-		var handler = new CodeReuse.Handler();	
+        var columnName = gridColumnsInfo[i].colName;
+
+        tableHeaderSpan = document.createElement("span");
+        tableHeaderSpan.id = gridColumnsInfo[i].id + "Span";
+        tableHeaderSpan.innerHTML = columnName;
+        tableHeaderSpan.style.textDecoration = "underline";
+        tableHeaderSpan.style.userSelect = "none";
+        tableHeaderSpan.style.cursor = "pointer";
+        tableHeaderSpan.style.paddingRight = "10";
+        tableHeaderSpan.onclick = function(headerCellSpan) {
+
+            //var columnId = headerCellSpan.srcElement.parentElement.id;
+            var columnId = headerCellSpan.srcElement.id;
+            for(var column=0; column<gridColumnsInfo.length; column++)
+            {
+                if(gridColumnsInfo[column].id + "Span" == columnId)
+                    break;
+            }
+			
+			var handler = new CodeReuse.Handler();
+
+			handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column, pageNumber);
+
+        }
 		
-		if(tableHtmlObjectId == "tableHomeTenant")
-		{
-			tableHeader.onclick = function(headerCell)
-			{
-				var columnId = headerCell.srcElement.id;
-				for(var column=0; column<gridColumnsInfo.length; column++)
-				{
-					if(gridColumnsInfo[column].id + "ColumnHeader" == columnId)
-						break;
-				}
+        tableHeader.appendChild(tableHeaderSpan);
 
-				handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column, pageNumber);
-			}
-		}
-		else
-		{
-			tableHeader.onclick = function(headerCell)
-			{
-				var columnId = headerCell.srcElement.id;
-				for(var column=0; column<gridColumnsInfo.length; column++)
-				{
-					if(gridColumnsInfo[column].id + "ColumnHeader" == columnId)
-						break;
-				}
-				handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, column);
-			}
-		}
 
-		var columnName = gridColumnsInfo[i].colName;
-		
-		tableHeaderText = document.createTextNode(columnName);
-		tableHeader.appendChild(tableHeaderText);
-		tableHeaderRow.appendChild(tableHeader);				
+        tableHeaderIcon = document.createElement("img");
+        tableHeaderIcon.id = gridColumnsInfo[i].id + "ColumnHeaderIcon";
+		//tableHeaderIcon.src = "http://localhost:8888/codereuse/images/pngfuel.com.up.png";
+		//tableHeaderIcon.src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+
+        tableHeaderIcon.width = "0";
+        tableHeaderIcon.height = "0";
+
+        tableHeaderIcon.style.display = "none";
+
+        tableHeader.appendChild(tableHeaderIcon);
+
+
+
+        tableHeaderRow.appendChild(tableHeader);
+    
 	}
 	
 	tbl.appendChild(tableHeaderRow);
+
 
 	for(tableRowCount=0; tableRowCount<response.length; tableRowCount++)
 	{
@@ -242,6 +255,45 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	divTable.innerHTML = "";
 	
 	divTable.appendChild(tbl);
+
+
+	if(localStorage.getItem("gridLoad") == "false")
+	{
+		var column = localStorage.getItem("arraySortColumn");
+		var direction = localStorage.getItem("arraySortDirection");
+
+		for(var i=0; i<gridColumnsInfo.length; i++)
+		{
+			if(gridColumnsInfo[i].id + "ColumnHeaderIcon" == column + "ColumnHeaderIcon")
+			{
+				document.getElementById(column + "ColumnHeaderIcon").width = "14";
+				document.getElementById(column + "ColumnHeaderIcon").height = "14";
+
+				if(direction == "asc")
+				{
+					document.getElementById(column + "ColumnHeaderIcon").src = images[0].src;
+					//document.getElementById(column + "ColumnHeaderIcon").src = "http://localhost:8888/codereuse/images/pngfuel.com.up.png";
+					//document.getElementById(column + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+				}
+				else if(direction == "desc")
+				{
+					document.getElementById(column + "ColumnHeaderIcon").src = images[1].src;
+					//document.getElementById(column + "ColumnHeaderIcon").src = "http://localhost:8888/codereuse/images/pngfuel.com.down.png";
+					//document.getElementById(column + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
+				}
+				
+				document.getElementById(column + "ColumnHeaderIcon").style.display = "inline";
+			}
+			else
+			{
+				document.getElementById(gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
+			}
+		}
+	}
+	else
+	{
+		localStorage.setItem("gridLoad", "false");
+	}
 
 },
 

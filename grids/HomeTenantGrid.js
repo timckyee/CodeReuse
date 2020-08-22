@@ -15,8 +15,8 @@ CodeReuse.HomeTenantGrid = function() {
 		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", htmlObjectId: "inputPrimaryKey_grid", htmlObjectType: "primaryKey" },
 		{ colName: "Building Name", id: "buildingName", colType: "string", htmlObjectId: "building_option_grid", htmlObjectType: "select", hasIdHiddenField: true, idDbField: "field3" },
 		{ colName: "Tenant Name", id: "tenantName", colType: "string", htmlObjectId: "tenant_input_grid", htmlObjectType: "autocomplete", hasIdHiddenField: true, idDbField: "field4" },
-		{ colName: "Field Date First", id: "field1", colType: "date", htmlObjectId: "inputCalendar_grid", htmlObjectType: "calendar" },
-		{ colName: "Field Date Second", id: "field2", colType: "date", htmlObjectId: "inputCalendarTesting_grid", htmlObjectType: "calendar" },
+		{ colName: "Date First", id: "field1", colType: "date", htmlObjectId: "inputCalendar_grid", htmlObjectType: "calendar" },
+		{ colName: "Date Second", id: "field2", colType: "date", htmlObjectId: "inputCalendarTesting_grid", htmlObjectType: "calendar" },
 		
 	];
 	

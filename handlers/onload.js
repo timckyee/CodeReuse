@@ -1,4 +1,6 @@
-var CodeReuse = CodeReuse || {};
+//var CodeReuse = CodeReuse || {};
+
+var images = [];
 
 window.addEventListener("load", function() {
 	
@@ -22,6 +24,8 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("arraySortDirection", "asc");
 	
+	localStorage.setItem("gridLoad", "true");
+
 	localStorage.setItem("arraySortColumn_suite", "suiteId");
 	
 	localStorage.setItem("arraySortDirection_suite", "asc");
@@ -30,6 +34,18 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("arraySortDirection_tenant", "asc");		
 	
+	var helper = new CodeReuse.Helper();
+
+	helper.preload(
+		["http://staging.closedarea.com/images/pngfuel.com.up.png", 
+		"http://staging.closedarea.com/images/pngfuel.com.down.png"]
+	);
+
+	//helper.preload(
+	//	["http://localhost:8888/codereuse/images/pngfuel.com.up.png", 
+	//	"http://localhost:8888/codereuse/images/pngfuel.com.down.png"]
+	//);
+
 	var tenant = new CodeReuse.Tenant();
 	
 	tenant.refreshTenantGridHome();

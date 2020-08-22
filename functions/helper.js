@@ -1,3 +1,6 @@
+
+var CodeReuse = CodeReuse || {};
+
 CodeReuse.Helper = function() {
 	
 };
@@ -316,6 +319,14 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 		*/
 	}
 	
+},
+
+preload: function(preload) {
+
+	for (i = 0; i < preload.length; i++) {
+		images[i] = new Image();
+		images[i].src = preload[i];
+	}
 }
 
 }
