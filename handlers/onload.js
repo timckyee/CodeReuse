@@ -32,8 +32,8 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("arraySortColumn_tenant", "fieldPrimaryKey");
 	
-	localStorage.setItem("arraySortDirection_tenant", "asc");		
-	
+	localStorage.setItem("arraySortDirection_tenant", "asc");
+
 	var helper = new CodeReuse.Helper();
 
 	helper.preload(
@@ -41,16 +41,10 @@ window.addEventListener("load", function() {
 		"http://staging.closedarea.com/images/pngfuel.com.down.png"]
 	);
 
-	//helper.preload(
-	//	["http://localhost:8888/codereuse/images/pngfuel.com.up.png", 
-	//	"http://localhost:8888/codereuse/images/pngfuel.com.down.png"]
-	//);
-
 	var tenant = new CodeReuse.Tenant();
 	
 	tenant.refreshTenantGridHome();
-	
-	
+
 	//var tabs = new CodeReuse.Tabs();
 	//tabs.loadHomeTenantGrid();
 	

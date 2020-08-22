@@ -41,19 +41,28 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeader = document.createElement("th");
 
 		tableHeader.id = gridColumnsInfo[i].id + "ColumnHeader";
+
+		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
+		//{
+		//	tableHeader.className = "description";
+		//}
+
 		tableHeader.style.padding = "12";
 		tableHeader.style.textAlign = "left";
 		tableHeader.style.whiteSpace = "nowrap";
+		tableHeader.style.overflow = "hidden";
+		tableHeader.style.textOverflow = "ellipsis";
 
         var columnName = gridColumnsInfo[i].colName;
 
         tableHeaderSpan = document.createElement("span");
         tableHeaderSpan.id = gridColumnsInfo[i].id + "Span";
-        tableHeaderSpan.innerHTML = columnName;
+		tableHeaderSpan.innerHTML = columnName;
+		//tableHeaderSpan.className = "span";
         tableHeaderSpan.style.textDecoration = "underline";
         tableHeaderSpan.style.userSelect = "none";
         tableHeaderSpan.style.cursor = "pointer";
-        tableHeaderSpan.style.paddingRight = "10";
+		tableHeaderSpan.style.paddingRight = "10";
         tableHeaderSpan.onclick = function(headerCellSpan) {
 
             //var columnId = headerCellSpan.srcElement.parentElement.id;
@@ -72,20 +81,17 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
         tableHeader.appendChild(tableHeaderSpan);
 
+		tableHeaderIcon = document.createElement("img");
+		tableHeaderIcon.id = gridColumnsInfo[i].id + "ColumnHeaderIcon";
+		//tableHeaderIcon.className = "icon";
+				
+		tableHeaderIcon.src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+		tableHeaderIcon.width = "0";
+		tableHeaderIcon.height = "0";
 
-        tableHeaderIcon = document.createElement("img");
-        tableHeaderIcon.id = gridColumnsInfo[i].id + "ColumnHeaderIcon";
-		//tableHeaderIcon.src = "http://localhost:8888/codereuse/images/pngfuel.com.up.png";
-		//tableHeaderIcon.src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
-
-        tableHeaderIcon.width = "0";
-        tableHeaderIcon.height = "0";
-
-        tableHeaderIcon.style.display = "none";
+		tableHeaderIcon.style.display = "none";
 
         tableHeader.appendChild(tableHeaderIcon);
-
-
 
         tableHeaderRow.appendChild(tableHeader);
     
@@ -271,15 +277,13 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 				if(direction == "asc")
 				{
-					document.getElementById(column + "ColumnHeaderIcon").src = images[0].src;
-					//document.getElementById(column + "ColumnHeaderIcon").src = "http://localhost:8888/codereuse/images/pngfuel.com.up.png";
-					//document.getElementById(column + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+					//document.getElementById(column + "ColumnHeaderIcon").src = images[0].src;
+					document.getElementById(column + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
 				}
 				else if(direction == "desc")
 				{
-					document.getElementById(column + "ColumnHeaderIcon").src = images[1].src;
-					//document.getElementById(column + "ColumnHeaderIcon").src = "http://localhost:8888/codereuse/images/pngfuel.com.down.png";
-					//document.getElementById(column + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
+					//document.getElementById(column + "ColumnHeaderIcon").src = images[1].src;
+					document.getElementById(column + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
 				}
 				
 				document.getElementById(column + "ColumnHeaderIcon").style.display = "inline";

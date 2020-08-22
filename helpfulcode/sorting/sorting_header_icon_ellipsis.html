@@ -1,0 +1,79 @@
+
+<html>
+
+<style>
+
+/*
+* {
+  box-sizing: border-box;
+}
+*/
+
+/*
+.parent {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+  padding: .5em;
+  border: 1px solid grey;
+}
+*/
+
+.description {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.icon {
+  flex: 0 0 auto;
+  background-color: rebeccapurple;
+  color: white;
+  padding: .5em;
+  margin: 0 .25em;
+}
+
+/*
+.button {
+  flex: 0 0 auto;
+  background-color: #ccc;
+  padding: .5em;
+}
+*/
+
+</style>
+
+<div class="parent">
+    <div class="description">
+      <span class="text">Lorem sit amet, consectetur adipisicing elit doloremque earum in, voluptas dolorum sit ab modi facere tempora est, sequi molestiae! Commodi vitae sapiente ipsum, nisi facilis impedit aut? Repellendus!</span>
+      <span class="icon">I</span>
+      <span class="icon">I</span>
+      <span class="icon">I</span>
+      <span class="icon">I</span>
+    </div>
+    <div class="button">
+      Button
+    </div>
+  </div>
+  
+  <div class="parent">
+    <div class="description">
+      <span class="text">Lorem sit amet</span>
+      <span class="icon">I</span>
+      <span class="icon">I</span>
+    </div>
+    <div class="button">
+      Button
+    </div>
+  </div>
+
+  </html>
