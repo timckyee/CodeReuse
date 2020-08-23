@@ -140,8 +140,6 @@ sortTable: function(tblId, column, gridColumnsInfo){
 	table.innerHTML = "";
 	table.appendChild(header);
 
-	debugger
-
 	for(var i=0; i<gridColumnsInfo.length; i++)
 	{
 		var htmlSortIconId = tblId + "_" + column_update + "ColumnHeaderIcon";
