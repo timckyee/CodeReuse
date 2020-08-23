@@ -102,7 +102,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
         tableHeader.appendChild(tableHeaderSpan);
 
 		tableHeaderIcon = document.createElement("img");
-		tableHeaderIcon.id = gridColumnsInfo[i].id + "ColumnHeaderIcon";
+		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
 		//tableHeaderIcon.className = "icon";
 				
 		tableHeaderIcon.src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
@@ -290,27 +290,29 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		for(var i=0; i<gridColumnsInfo.length; i++)
 		{
-			if(gridColumnsInfo[i].id + "ColumnHeaderIcon" == column + "ColumnHeaderIcon")
+			var htmlSortIconId = tableHtmlObjectId + "_" + column + "ColumnHeaderIcon";
+
+			if(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
 			{
-				document.getElementById(column + "ColumnHeaderIcon").width = "14";
-				document.getElementById(column + "ColumnHeaderIcon").height = "14";
+				document.getElementById(htmlSortIconId).width = "14";
+				document.getElementById(htmlSortIconId).height = "14";
 
 				if(direction == "asc")
 				{
-					//document.getElementById(column + "ColumnHeaderIcon").src = images[0].src;
-					document.getElementById(column + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+					//document.getElementById(htmlSortIconId).src = images[0].src;
+					document.getElementById(htmlSortIconId).src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
 				}
 				else if(direction == "desc")
 				{
-					//document.getElementById(column + "ColumnHeaderIcon").src = images[1].src;
-					document.getElementById(column + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
+					//document.getElementById(htmlSortIconId).src = images[1].src;
+					document.getElementById(htmlSortIconId).src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
 				}
 				
-				document.getElementById(column + "ColumnHeaderIcon").style.display = "inline";
+				document.getElementById(htmlSortIconId).style.display = "inline";
 			}
 			else
 			{
-				document.getElementById(gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
+				document.getElementById(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
 			}
 		}
 	}

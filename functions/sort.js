@@ -143,27 +143,29 @@ sortTable: function(tblId, column, gridColumnsInfo){
 	
 	for(var i=0; i<gridColumnsInfo.length; i++)
 	{
-		if(gridColumnsInfo[i].id + "ColumnHeaderIcon" == column_update + "ColumnHeaderIcon")
+		var htmlSortIconId = tblId + "_" + column_update + "ColumnHeaderIcon";
+
+		if(tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
 		{
-			document.getElementById(column_update + "ColumnHeaderIcon").width = "14";
-			document.getElementById(column_update + "ColumnHeaderIcon").height = "14";
+			document.getElementById(htmlSortIconId).width = "14";
+			document.getElementById(htmlSortIconId).height = "14";
 
 			if(direction_update == "asc")
 			{
-				//document.getElementById(column + "ColumnHeaderIcon").src = images[0].src;
-				document.getElementById(column_update + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+				//document.getElementById(htmlSortIconId).src = images[0].src;
+				document.getElementById(htmlSortIconId).src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
 			}
 			else if(direction_update == "desc")
 			{
-				//document.getElementById(column + "ColumnHeaderIcon").src = images[1].src;
-				document.getElementById(column_update + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
+				//document.getElementById(htmlSortIconId).src = images[1].src;
+				document.getElementById(htmlSortIconId).src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
 			}
 			
-			document.getElementById(column_update + "ColumnHeaderIcon").style.display = "inline";
+			document.getElementById(htmlSortIconId).style.display = "inline";
 		}
 		else
 		{
-			document.getElementById(gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
+			document.getElementById(tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
 		}
 	}
 
