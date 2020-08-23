@@ -8,6 +8,9 @@ sortTable: function(tblId, column, gridColumnsInfo){
 	
 	var sortColumn = gridColumnsInfo[column].id;
 	
+	var column_update;
+	var direction_update;
+
 	if(tblId == "tableSuite")
 	{
 		var sortDirection_suite = localStorage.getItem("arraySortDirection_suite");	
@@ -30,7 +33,9 @@ sortTable: function(tblId, column, gridColumnsInfo){
 		}
 		
 		localStorage.setItem("arraySortColumn_suite", sortColumn);
-		
+
+		column_update = localStorage.getItem("arraySortColumn_suite");
+		direction_update = localStorage.getItem("arraySortDirection_suite");
 	}
 	else if(tblId == "tableTenant")
 	{
@@ -54,14 +59,20 @@ sortTable: function(tblId, column, gridColumnsInfo){
 		}
 		
 		localStorage.setItem("arraySortColumn_tenant", sortColumn);
+
+		column_update = localStorage.getItem("arraySortColumn_tenant");
+		direction_update = localStorage.getItem("arraySortDirection_tenant");		
 	}
+
 	
 	var table = document.getElementById(tblId);
     
     var Arr = [];
     
 	var header = table.rows[0];
-	    
+		
+	//console.dir(header);
+
     for(var i=1, ln=table.rows.length; i<ln; i++){
 	    
         var row = table.rows[i];
@@ -69,7 +80,7 @@ sortTable: function(tblId, column, gridColumnsInfo){
         Arr.push([row]);
         
     }
-    
+
     if(tblId == "tableHomeTenant")
     {
 	   	sortingFunctionCompareColumn = parseInt(column) + 1;
@@ -89,7 +100,7 @@ sortTable: function(tblId, column, gridColumnsInfo){
     {
 	    sortDirection = localStorage.getItem("arraySortDirection_tenant");
     }	 	
-    	
+    
     if(sortDirection == "asc")
     {
 		var sortingFunction = function(a,b) {
@@ -128,6 +139,34 @@ sortTable: function(tblId, column, gridColumnsInfo){
 
 	table.innerHTML = "";
 	table.appendChild(header);
+
+	
+	for(var i=0; i<gridColumnsInfo.length; i++)
+	{
+		if(gridColumnsInfo[i].id + "ColumnHeaderIcon" == column_update + "ColumnHeaderIcon")
+		{
+			document.getElementById(column_update + "ColumnHeaderIcon").width = "14";
+			document.getElementById(column_update + "ColumnHeaderIcon").height = "14";
+
+			if(direction_update == "asc")
+			{
+				//document.getElementById(column + "ColumnHeaderIcon").src = images[0].src;
+				document.getElementById(column_update + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+			}
+			else if(direction_update == "desc")
+			{
+				//document.getElementById(column + "ColumnHeaderIcon").src = images[1].src;
+				document.getElementById(column_update + "ColumnHeaderIcon").src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
+			}
+			
+			document.getElementById(column_update + "ColumnHeaderIcon").style.display = "inline";
+		}
+		else
+		{
+			document.getElementById(gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
+		}
+	}
+
 
     for(var i=0, ln=Arr.length; i<ln; i++){
 		table.appendChild(Arr[i][0]);

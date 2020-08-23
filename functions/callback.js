@@ -63,21 +63,41 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
         tableHeaderSpan.style.userSelect = "none";
         tableHeaderSpan.style.cursor = "pointer";
 		tableHeaderSpan.style.paddingRight = "10";
-        tableHeaderSpan.onclick = function(headerCellSpan) {
 
-            //var columnId = headerCellSpan.srcElement.parentElement.id;
-            var columnId = headerCellSpan.srcElement.id;
-            for(var column=0; column<gridColumnsInfo.length; column++)
-            {
-                if(gridColumnsInfo[column].id + "Span" == columnId)
-                    break;
-            }
-			
-			var handler = new CodeReuse.Handler();
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			tableHeaderSpan.onclick = function(headerCellSpan) {
 
-			handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column, pageNumber);
+				//var columnId = headerCellSpan.srcElement.parentElement.id;
+				var columnId = headerCellSpan.srcElement.id;
+				for(var column=0; column<gridColumnsInfo.length; column++)
+				{
+					if(gridColumnsInfo[column].id + "Span" == columnId)
+						break;
+				}
+				
+				var handler = new CodeReuse.Handler();
+				
+				handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column, pageNumber);
+			}
+		}
+		else
+		{
+			tableHeaderSpan.onclick = function(headerCellSpan) {
 
-        }
+				//var columnId = headerCellSpan.srcElement.parentElement.id;
+				var columnId = headerCellSpan.srcElement.id;
+				for(var column=0; column<gridColumnsInfo.length; column++)
+				{
+					if(gridColumnsInfo[column].id + "Span" == columnId)
+						break;
+				}
+
+				var handler = new CodeReuse.Handler();
+
+				handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, column);
+			}
+		}
 		
         tableHeader.appendChild(tableHeaderSpan);
 
