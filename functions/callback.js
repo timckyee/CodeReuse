@@ -105,9 +105,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
 		//tableHeaderIcon.className = "icon";
 				
-		var server = new CodeReuse.Config();
+		//var server = new CodeReuse.Config();
 
-		tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.png";
 		tableHeaderIcon.width = "0";
 		tableHeaderIcon.height = "0";
 
@@ -284,47 +284,90 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	divTable.appendChild(tbl);
 
-
-	if(localStorage.getItem("gridLoad") == "false")
+	if(tableHtmlObjectId == "tableHomeTenant")
 	{
-		var column = localStorage.getItem("arraySortColumn");
-		var direction = localStorage.getItem("arraySortDirection");
-
-		for(var i=0; i<gridColumnsInfo.length; i++)
+		if(localStorage.getItem("gridLoadHomeGrid") == "false")
 		{
-			var htmlSortIconId = tableHtmlObjectId + "_" + column + "ColumnHeaderIcon";
+			var column = localStorage.getItem("arraySortColumn");
+			var direction = localStorage.getItem("arraySortDirection");
 
-			if(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
+			for(var i=0; i<gridColumnsInfo.length; i++)
 			{
-				document.getElementById(htmlSortIconId).width = "14";
-				document.getElementById(htmlSortIconId).height = "14";
+				var htmlSortIconId = tableHtmlObjectId + "_" + column + "ColumnHeaderIcon";
 
-				var server = new CodeReuse.Config();
+				if(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
+				{
+					document.getElementById(htmlSortIconId).width = "14";
+					document.getElementById(htmlSortIconId).height = "14";
 
-				if(direction == "asc")
-				{
-					//document.getElementById(htmlSortIconId).src = images[0].src;
-					document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+					var server = new CodeReuse.Config();
+
+					if(direction == "asc")
+					{
+						//document.getElementById(htmlSortIconId).src = images[0].src;
+						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+					}
+					else if(direction == "desc")
+					{
+						//document.getElementById(htmlSortIconId).src = images[1].src;
+						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
+					}
+					
+					document.getElementById(htmlSortIconId).style.display = "inline";
 				}
-				else if(direction == "desc")
+				else
 				{
-					//document.getElementById(htmlSortIconId).src = images[1].src;
-					document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
+					document.getElementById(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
 				}
-				
-				document.getElementById(htmlSortIconId).style.display = "inline";
-			}
-			else
-			{
-				document.getElementById(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
 			}
 		}
+		else
+		{
+			localStorage.setItem("gridLoadHomeGrid", "false");
+		}
 	}
-	else
+	else if(tableHtmlObjectId == "tableTenant")
 	{
-		localStorage.setItem("gridLoad", "false");
-	}
+		if(localStorage.getItem("gridLoadTenantGrid") == "false")
+		{
+			var column = localStorage.getItem("arraySortColumn");
+			var direction = localStorage.getItem("arraySortDirection");
 
+			for(var i=0; i<gridColumnsInfo.length; i++)
+			{
+				var htmlSortIconId = tableHtmlObjectId + "_" + column + "ColumnHeaderIcon";
+
+				if(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
+				{
+					document.getElementById(htmlSortIconId).width = "14";
+					document.getElementById(htmlSortIconId).height = "14";
+
+					var server = new CodeReuse.Config();
+
+					if(direction == "asc")
+					{
+						//document.getElementById(htmlSortIconId).src = images[0].src;
+						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+					}
+					else if(direction == "desc")
+					{
+						//document.getElementById(htmlSortIconId).src = images[1].src;
+						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
+					}
+					
+					document.getElementById(htmlSortIconId).style.display = "inline";
+				}
+				else
+				{
+					document.getElementById(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
+				}
+			}
+		}
+		else
+		{
+			localStorage.setItem("gridLoadTenantGrid", "false");
+		}
+	}
 },
 
 gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, pageNumber) {

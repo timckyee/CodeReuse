@@ -140,7 +140,8 @@ sortTable: function(tblId, column, gridColumnsInfo){
 	table.innerHTML = "";
 	table.appendChild(header);
 
-	
+	debugger
+
 	for(var i=0; i<gridColumnsInfo.length; i++)
 	{
 		var htmlSortIconId = tblId + "_" + column_update + "ColumnHeaderIcon";
@@ -150,15 +151,17 @@ sortTable: function(tblId, column, gridColumnsInfo){
 			document.getElementById(htmlSortIconId).width = "14";
 			document.getElementById(htmlSortIconId).height = "14";
 
+			var server = new CodeReuse.Config();
+
 			if(direction_update == "asc")
 			{
 				//document.getElementById(htmlSortIconId).src = images[0].src;
-				document.getElementById(htmlSortIconId).src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
 			}
 			else if(direction_update == "desc")
 			{
 				//document.getElementById(htmlSortIconId).src = images[1].src;
-				document.getElementById(htmlSortIconId).src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
+				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
 			}
 			
 			document.getElementById(htmlSortIconId).style.display = "inline";
