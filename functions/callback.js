@@ -105,7 +105,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
 		//tableHeaderIcon.className = "icon";
 				
-		tableHeaderIcon.src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+		var server = new CodeReuse.Config();
+
+		tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.png";
 		tableHeaderIcon.width = "0";
 		tableHeaderIcon.height = "0";
 
@@ -297,15 +299,17 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				document.getElementById(htmlSortIconId).width = "14";
 				document.getElementById(htmlSortIconId).height = "14";
 
+				var server = new CodeReuse.Config();
+
 				if(direction == "asc")
 				{
 					//document.getElementById(htmlSortIconId).src = images[0].src;
-					document.getElementById(htmlSortIconId).src = "http://staging.closedarea.com/images/pngfuel.com.up.png";
+					document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
 				}
 				else if(direction == "desc")
 				{
 					//document.getElementById(htmlSortIconId).src = images[1].src;
-					document.getElementById(htmlSortIconId).src = "http://staging.closedarea.com/images/pngfuel.com.down.png";
+					document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
 				}
 				
 				document.getElementById(htmlSortIconId).style.display = "inline";

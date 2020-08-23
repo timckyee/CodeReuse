@@ -34,16 +34,20 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("arraySortDirection_tenant", "asc");
 
+
+	var server = new CodeReuse.Config();
+
 	var helper = new CodeReuse.Helper();
 
 	helper.preload(
-		["http://staging.closedarea.com/images/pngfuel.com.up.png", 
-		"http://staging.closedarea.com/images/pngfuel.com.down.png"]
+		[server.getServerUrl() + "/images/pngfuel.com.up.png", 
+		server.getServerUrl() + "/images/pngfuel.com.down.png"]
 	);
 
 	var tenant = new CodeReuse.Tenant();
 	
 	tenant.refreshTenantGridHome();
+
 
 	//var tabs = new CodeReuse.Tabs();
 	//tabs.loadHomeTenantGrid();
