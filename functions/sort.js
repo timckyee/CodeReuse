@@ -100,41 +100,53 @@ sortTable: function(tblId, column, gridColumnsInfo){
     {
 	    sortDirection = localStorage.getItem("arraySortDirection_tenant");
     }	 	
-    
+	
+	var primaryKeyColumn = 0;
+
     if(sortDirection == "asc")
     {
-		var sortingFunction = function(a,b) {
+		sortingFunction = function(a,b) {
 			
 			if(b == null)
 				return;
 			
-			var x = a[0].cells[sortingFunctionCompareColumn].innerText;
-			var y = b[0].cells[sortingFunctionCompareColumn].innerText;			
-						
-			if (x < y) {return -1;}
-			if (x > y) {return 1;}
-			
+			var sortCol1 = a[0].cells[sortingFunctionCompareColumn].innerText.toLowerCase();
+			var sortCol2 = b[0].cells[sortingFunctionCompareColumn].innerText.toLowerCase();
+
+			var primaryKeyCol1 = a[0].cells[primaryKeyColumn].innerText.toLowerCase();
+			var primaryKeyCol2 = b[0].cells[primaryKeyColumn].innerText.toLowerCase();
+
+			if(sortCol1 < sortCol2) return -1;
+			if(sortCol1 > sortCol2) return 1;
+			if(primaryKeyCol1 < primaryKeyCol2) return -1;
+			if(primaryKeyCol1 > primaryKeyCol2) return 1;
+
 			return 0;
 		}
 	}
 	else if(sortDirection == "desc")
 	{
-		var sortingFunction = function(a,b) {
+		sortingFunction = function(a,b) {
 							
 			if(b == null)
 				return;
-			
-			var x = a[0].cells[sortingFunctionCompareColumn].innerText;
-			var y = b[0].cells[sortingFunctionCompareColumn].innerText;	
-						
-			if (x > y) {return -1;}
-			if (x < y) {return 1;}
-			
-			return 0;
-		}
-	}	
 
-	
+			var sortCol1 = a[0].cells[sortingFunctionCompareColumn].innerText.toLowerCase();
+			var sortCol2 = b[0].cells[sortingFunctionCompareColumn].innerText.toLowerCase();
+
+			var primaryKeyCol1 = a[0].cells[primaryKeyColumn].innerText.toLowerCase();
+			var primaryKeyCol2= b[0].cells[primaryKeyColumn].innerText.toLowerCase();
+			
+			if(sortCol1 > sortCol2) return -1;
+			if(sortCol1 < sortCol2) return 1;
+			if(primaryKeyCol1 > primaryKeyCol2) return -1;
+			if(primaryKeyCol1 < primaryKeyCol2) return 1;
+
+			return 0;
+			
+		}
+	}
+
 	Arr.sort(sortingFunction);
 
 	table.innerHTML = "";
@@ -175,7 +187,8 @@ sortTable: function(tblId, column, gridColumnsInfo){
 		table.appendChild(Arr[i][0]);
     }
     
-    Arr = null;
+	Arr = null;
+
 }
 
 }
