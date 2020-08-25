@@ -26,8 +26,6 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("gridLoadHomeGrid", "true");
 
-	localStorage.setItem("gridLoadTenantGrid", "true");
-
 	localStorage.setItem("arraySortColumn_suite", "suiteId");
 	
 	localStorage.setItem("arraySortDirection_suite", "asc");

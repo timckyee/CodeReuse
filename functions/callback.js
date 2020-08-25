@@ -326,48 +326,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			localStorage.setItem("gridLoadHomeGrid", "false");
 		}
 	}
-	else if(tableHtmlObjectId == "tableTenant")
-	{
-		if(localStorage.getItem("gridLoadTenantGrid") == "false")
-		{
-			var column = localStorage.getItem("arraySortColumn");
-			var direction = localStorage.getItem("arraySortDirection");
-
-			for(var i=0; i<gridColumnsInfo.length; i++)
-			{
-				var htmlSortIconId = tableHtmlObjectId + "_" + column + "ColumnHeaderIcon";
-
-				if(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
-				{
-					document.getElementById(htmlSortIconId).width = "14";
-					document.getElementById(htmlSortIconId).height = "14";
-
-					var server = new CodeReuse.Config();
-
-					if(direction == "asc")
-					{
-						//document.getElementById(htmlSortIconId).src = images[0].src;
-						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
-					}
-					else if(direction == "desc")
-					{
-						//document.getElementById(htmlSortIconId).src = images[1].src;
-						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
-					}
-					
-					document.getElementById(htmlSortIconId).style.display = "inline";
-				}
-				else
-				{
-					document.getElementById(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
-				}
-			}
-		}
-		else
-		{
-			localStorage.setItem("gridLoadTenantGrid", "false");
-		}
-	}
 },
 
 gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, pageNumber) {
