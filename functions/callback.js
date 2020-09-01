@@ -417,6 +417,15 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
         tableHeaderSpan.style.cursor = "pointer";
 		tableHeaderSpan.style.paddingRight = "10";
 		
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			tableHeaderSpan.onclick = function() {
+
+				alert('Please click on save to leave save mode before sorting');
+			
+			}
+		}
+
         tableHeader.appendChild(tableHeaderSpan);
 
 		tableHeaderIcon = document.createElement("img");
