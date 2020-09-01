@@ -1,9 +1,36 @@
+/**
+ * Class for creating grid, creating grid with row editing, http method get populate form, get populate grid,
+ * post update form, post update grid, post insert record form
+ * @class
+ */
 CodeReuse.Grid_Get_Post_Functions = function() {
 	
 };
 
 CodeReuse.Grid_Get_Post_Functions.prototype = {
 
+/**
+ * Creates an html grid with sorting and paging
+ * @function
+ * @name Grid_Get_Post_Functions#grid
+ * 
+ * @param {string} divElement the html div id to use to attach the table to 
+ * @param {string} phpFile php file name and location
+ * @param {string} queryName the php query name for http method get
+ * @param {string} gridIdField the primary key for the table rows
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {Array} gridColumnsInfo grid object array of columns
+ * @param {string} tableHtmlObjectId the html table object
+ * @param {string} additionalArgs additional arguments to pass into the XMLHttpRequest get
+ * @param {string} additionalArgsValue additional arguments value to pass into the XMLHttpRequest get
+ * @param {function} callback the function to call when the XMLHttpRequest get method returns
+ * @param {function} rowOnClick the handler to call when the user clicks on row in the table
+ * @param {string} showEditColumn to show or hide the edit column in the table
+ * @param {string} sortColumn the grid column which is currently sorted 
+ * @param {string} sortDirection the direction which is currently sorted
+ * @param {string} pageNumber the page number of the table we are currently showing
+ * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
+ */
 grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId) {
 
 	var divTable = document.getElementById(divElement);
@@ -50,6 +77,27 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 	
 },
 
+/**
+ * Creates an html grid with row editing
+ * @function
+ * @name Grid_Get_Post_Functions#gridEdit
+ * 
+ * @param {string} divElement the html div id to use to attach the table to
+ * @param {string} phpFile php file name and location
+ * @param {string} queryName the php query name for http method get
+ * @param {string} gridIdField the primary key for the table rows 
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {Array} gridColumnsInfo grid object array of columns
+ * @param {string} tableHtmlObjectId the html table object
+ * @param {string} additionalArgs additional arguments to pass into the XMLHttpRequest get
+ * @param {string} additionalArgsValue additional arguments value to pass into the XMLHttpRequest get
+ * @param {function} callback the function to call when the XMLHttpRequest get method returns
+ * @param {function} rowOnClick the handler to call when the user clicks on row in the table
+ * @param {string} rowId the table row primary key
+ * @param {string} sortColumn the grid column which is currently sorted 
+ * @param {string} sortDirection the direction which is currently sorted
+ * @param {string} pageNumber the page number of the table we are currently showing
+ */
 gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, rowId, sortColumn, sortDirection, pageNumber) {
 	
 	var divTable = document.getElementById(divElement);
@@ -82,6 +130,20 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 		
 },
 
+/**
+ * Populate html object form
+ * @function
+ * @name Grid_Get_Post_Functions#get_populateForm
+ * 
+ * @param {string} phpFile php file name and location
+ * @param {string} queryName the php query name for http method get
+ * @param {string} htmlObjectPrimaryKeyValue row onclick primary key
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {Array} gridColumnsInfo grid object array of columns
+ * @param {Array} autocompleteInputs array of autocomplete inputs
+ * @param {Array} arrayOldValuesTable array to keep track of form old values used for updating fields
+ * @param {function} callback the function to call when the XMLHttpRequest get method returns
+ */
 get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
@@ -101,6 +163,24 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
 	window.getXmlHttpRequest.send();
 },
 
+/**
+ * Populate grid row when clicking on edit
+ * @function
+ * @name Grid_Get_Post_Functions#get_populateGrid
+ * 
+ * @param {string} phpFile php file name and location
+ * @param {string} divElement the html div id to use to attach the table to
+ * @param {string} queryName the php query name for http method get
+ * @param {string} htmlObjectPrimaryKeyValue row onclick primary key
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {Array} gridColumnsInfo array of grid columns and properties
+ * @param {Array} autocompleteInputs array of autocomplete inputs
+ * @param {Array} arrayOldValuesTableGridEdit array to keep track of row old values used for updating fields
+ * @param {function} callback the function to call when the XMLHttpRequest get method returns 
+ * @param {Object} tableHtml the html table object used to replace the row edited with form objects
+ * @param {string} fieldPrimaryKey the table row primary key
+ * @param {string} tableHtmlObjectId no need for this param
+ */
 get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, callback, tableHtml, fieldPrimaryKey, tableHtmlObjectId)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
@@ -120,6 +200,19 @@ get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyV
 	window.getXmlHttpRequest.send();
 },
 
+/**
+ * Send updated form values to the server
+ * @function
+ * @name Grid_Get_Post_Functions#post_updateForm
+
+ * @param {string} phpFile php file name and location
+ * @param {string} postType php post query name
+ * @param {string} htmlObjectPrimaryKeyValue the form primary key value
+ * @param {Array} htmlObjectFieldsValuesUpdate the html objects updated values
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {Array} arrayOldValuesTable array of old values before the update. is set to the new values after an update.
+ * @param {function} refreshGridCallback refresh grid callback when the XMLHttpRequest post method returns
+ */
 post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback)
 {		
 	var updateString = "";
@@ -206,6 +299,20 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	}
 },
 
+/**
+ * Send updated edit grid row values to the server
+ * @function
+ * @name Grid_Get_Post_Functions#post_updateGrid
+ * 
+ * @param {string} phpFile php file name and location
+ * @param {string} postType php post query name
+ * @param {string} htmlObjectPrimaryKeyValue the form primary key value
+ * @param {Array} htmlObjectFieldsValuesUpdate the html objects updated values
+ * @param {Array} columnsInfo array of grid columns and properties
+ * @param {Array} arrayOldValuesTableGridEdit array of old values before the update. is set to the new values after an update.
+ * @param {function} refreshGridCallbackEditGrid no need for this param
+ * @param {string} pageNumber the page number of the table we are currently showing
+ */
 post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, columnsInfo, arrayOldValuesTableGridEdit, refreshGridCallbackEditGrid, pageNumber)
 {	
 	var updateString = "";
@@ -318,8 +425,6 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 
 						localStorage.setItem("editMode", "false");
 
-						//grid_get_post_functions.post_updateGrid_reset(home_tenant_grid.getGridGetPostDivElement(), tableRowNumber, home_tenant_grid.getTableHtmlObjectId(), htmlObjectPrimaryKeyValue);
-
 					}
 				}
 			
@@ -338,256 +443,19 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	}
 },
 
-
-onclickEditButtonGrid: function(tablePrimaryKey) {
-
-	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-	var tableHtmlEditButton = document.getElementById(home_tenant_grid.getTableHtmlObjectId());
-
-	var tableRows = tableHtmlEditButton.rows[1];
-
-	var countSave = 0;
-
-	for(var i=1; i<tableHtmlEditButton.rows.length; i++)
-	{
-		if(tableHtmlEditButton.rows[i].cells[0].innerText == "save")
-		{
-			countSave = countSave + 1;
-			break;
-		}
-	}
-
-	if(countSave == 1)
-	{
-		alert('Please click on save to leave save mode');
-		return;	
-	}
-
-	var helper = new CodeReuse.Helper();
-
-	helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-		if(result == true)
-		{
-			var tablePrimaryKeyValue = tablePrimaryKey.parentNode.parentNode.childNodes[1].innerText;		
-	
-			var tenantModel = new CodeReuse.Tenant();
-
-			var callback = new CodeReuse.Callback();
-
-			grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"));
-		}
-		else
-		if(result == false)
-		{
-			return;
-		}
-	});
-},
-
-
-post_updateGrid_reset: function(divElement, tableRowNumber, tableHtml, fieldPrimaryKey) {
-
-	localStorage.setItem("editMode", "false");
-
-	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-		
-	var tenantModel = new CodeReuse.Tenant();
-	
-	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-	
-	var callback = new CodeReuse.Callback();
-
-
-	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"), '');
-
-
-	tableRowNumber = tableRowNumber - 1;
-
-
-	var tableEdit = document.getElementById(tableHtml);
-
-
-	var rowReplace = tableEdit.rows[tableRowNumber + 1];
-
-	//var newRow = document.createElement("tr");
-
-	var newRow = tableEdit.insertRow(tableRowNumber);
-
-	var cell = document.createElement("td");
-						
-	cell.style.paddingLeft = "10px";
-
-	cell.value = fieldPrimaryKey;
-
-	editButton = document.createElement("button");
-	editButton.type = "button";
-	editButton.innerText = "edit";
-	editButton.id = "editButton";
-	editButton.style.width = "50px";
-	
-	var tenantModel = new CodeReuse.Tenant();
-	
-	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-	
-	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-	
-	var callback = new CodeReuse.Callback();
-	
-	editButton.onclick = function(tablePrimaryKey) {
-
-		var tableHtmlEditButton = document.getElementById(tableHtml);
-
-		var tableRows = tableHtmlEditButton.rows[1];
-	
-		var countSave = 0;
-	
-		for(var i=1; i<tableHtmlEditButton.rows.length; i++)
-		{
-			if(tableHtmlEditButton.rows[i].cells[0].innerText == "save")
-			{
-				countSave = countSave + 1;
-				break;
-			}
-		}
-	
-		if(countSave == 1)
-		{
-			alert('Please click on save to leave save mode');
-			return;	
-		}
-
-		var helper = new CodeReuse.Helper();
-
-		helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-			if(result == true)
-			{
-				var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
-		
-				grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"));
-			}
-			else
-			if(result == false)
-			{
-				return;
-			}
-		});
-	};
-
-	//cell.className = "underline";	
-	cell.appendChild(editButton);
-	
-	cell.height = 25;
-	
-	newRow.appendChild(cell);
-		
-	
-	cell = document.createElement("td");
-
-	cell.className = "grid";
-	
-	cellText = document.createTextNode(fieldPrimaryKey);
-	
-	cell.appendChild(cellText);
-			
-	newRow.appendChild(cell);
-
-	
-	cell = document.createElement("td");
-
-	cell.className = "grid";
-	
-	cellText = document.createTextNode(document.getElementById("building_option_grid").value);
-
-	cell.appendChild(cellText);
-					
-	newRow.appendChild(cell);
-
-	
-	cell = document.createElement("td");
-
-	cell.className = "grid";
-	
-	cellText = document.createTextNode(document.getElementById("tenant_input_grid").value);
-	
-	cell.appendChild(cellText);
-	
-	newRow.appendChild(cell);
-
-	
-	cell = document.createElement("td");
-	
-	cell.className = "grid";
-	
-	cellText = document.createTextNode(document.getElementById("inputCalendar_grid").value);
-	
-	cell.appendChild(cellText);
-	
-	newRow.appendChild(cell);
-
-	
-	cell = document.createElement("td");
-	cell.className = "grid";
-	
-	cellText = document.createTextNode(document.getElementById("inputCalendarTesting_grid").value);
-
-
-	cell.appendChild(cellText);
-
-	newRow.appendChild(cell);
-	
-
-	rowReplace.parentNode.replaceChild(newRow, rowReplace);
-
-	//rowReplace.parentNode.replaceWith(newRow);
-
-	var divTable = document.getElementById(divElement);
-
-	divTable.innerText = "";
-
-	divTable.appendChild(tableEdit);
-
-	/*
-	var row = document.getElementById(tableHtml).rows[tableRowNumber + 1];
-
-	var building_option; 
-	var building_option_text;
-	var tenant_input;
-	var inputCalendar;
-	var inputCalendarTesting;
-
-	building_option = document.getElementById("building_option_grid")[document.getElementById("building_option_grid").value];
-	building_option_text = building_option.innerHTML;
-	tenant_input = document.getElementById("tenant_input_grid").value;
-	inputCalendar = document.getElementById("inputCalendar_grid").value;
-	inputCalendarTesting = document.getElementById("inputCalendarTesting_grid").value;
-
-	var html = "<td height=\"25\" style=\"padding-left: 10px;\">" +
-	"<button id=\"editButton\" style=\"width: 50px;\"onclick =\"var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();grid_get_post_functions.onclickEditButtonGrid(this);\">edit</button>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<span id =\"inputPrimaryKey\">" + fieldPrimaryKey + "</span>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<span id =\"building_option\">" + building_option_text + "</span>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<span id =\"tenant_input\">" + tenant_input + "</span>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<span id =\"inputCalendar\">" + inputCalendar + "</span>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<span id =\"inputCalendarTesting\">" + inputCalendarTesting + "</span>" +
-	"</td>";
-
-	row.innerHTML = html;
-	*/
-
-},
-
+/**
+ * Send form values of new record to the server
+ * @function
+ * @name Grid_Get_Post_Functions#post_insertRecordForm
+ * 
+ * @param {string} phpFile php file name and location
+ * @param {string} postType php post query name
+ * @param {*} htmlObjectFieldsValuesInsert the html objects new values
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {*} inputPrimaryKeyId the new primary key id generated after insert
+ * @param {*} arrayOldValuesTable array of old values before the insert. is set to the new values after an insert.
+ * @param {*} refreshGridCallback refresh grid callback when the XMLHttpRequest post method returns
+ */
 post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKeyId, arrayOldValuesTable, refreshGridCallback)
 {	
 	var helper = new CodeReuse.Helper();

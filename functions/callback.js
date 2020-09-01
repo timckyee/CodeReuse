@@ -1,9 +1,32 @@
+/**
+ * Class for storing callback functions
+ * @class
+ */
 CodeReuse.Callback = function() {
 	
 };
 
 CodeReuse.Callback.prototype = {
 
+/**
+ * Callback when the XMLHttpRequest get method returns from function Grid_Get_Post_Functions grid
+ * @callback gridCallback
+ * @name Callback#gridCallback
+ * 
+ * @param {string} phpFile php file name and location
+ * @param {string} response the response from the XMLHttpRequest get
+ * @param {string} divTable the html div object to attach the table to 
+ * @param {string} tableHtmlObjectId the html table id
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {string} gridIdField the primary key for the table rows
+ * @param {Array} gridColumnsInfo grid object array of columns 
+ * @param {function} rowOnClick the handler to call when the user clicks on row in the table
+ * @param {string} showEditColumn to show or hide the edit column in the table
+ * @param {string} sortColumn the grid column which is currently sorted
+ * @param {string} sortDirection the direction which is currently sorted
+ * @param {string} pageNumber the page number of the table we are currently showing
+ * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
+ */
 gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId) {
 
 	var tbl = document.createElement("table");
@@ -224,6 +247,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 						var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
 
 						grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
+											
 					}
 					else
 					if(result == false)
@@ -328,6 +352,24 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	}
 },
 
+/**
+ * Callback when the XMLHttpRequest get method returns from function Grid_Get_Post_Functions gridEdit
+ * @callback gridEditCallback
+ * @name Callback#gridEditCallback
+ * 
+ * @param {string} phpFile php file name and location
+ * @param {string} response the response from the XMLHttpRequest get
+ * @param {string} divTable the html div object to attach the table to
+ * @param {string} tableHtmlObjectId the html table id
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {string} gridIdField the primary key for the table rows
+ * @param {Array} gridColumnsInfo grid object array of columns 
+ * @param {function} tenantGridRowOnClick no need for this param
+ * @param {string} rowId field primary key for populating the grid row when editing
+ * @param {string} sortColumn the grid column which is currently sorted
+ * @param {string} sortDirection the direction which is currently sorted
+ * @param {string} pageNumber the page number of the table we are currently showing
+ */
 gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, pageNumber) {
 
 	localStorage.setItem("editMode", "true");
@@ -349,29 +391,51 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	tableHeaderRow.appendChild(tableHeader);	
 	
 	for(var i=0; i<gridColumnsInfo.length; i++)
-	{				
+	{	
 		tableHeader = document.createElement("th");
-		tableHeader.className = "underline";	
+
 		tableHeader.id = gridColumnsInfo[i].id + "ColumnHeader";
 
-		var handler = new CodeReuse.Handler();
+		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
+		//{
+		//	tableHeader.className = "description";
+		//}
 
-		tableHeader.onclick = function(headerCell) {
-			
-			if(localStorage.getItem("editMode") == "true")
-			{
-				alert('Please click on save to leave save mode before sorting columns');
-				return;
-			}
-		}
+		tableHeader.style.padding = "12";
+		tableHeader.style.textAlign = "left";
+		tableHeader.style.whiteSpace = "nowrap";
+		tableHeader.style.overflow = "hidden";
+		tableHeader.style.textOverflow = "ellipsis";
 
-		//tableHeader.onclick = handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, i, pageNumber);
+        var columnName = gridColumnsInfo[i].colName;
 
-		var columnName = gridColumnsInfo[i].colName;
+        tableHeaderSpan = document.createElement("span");
+        tableHeaderSpan.id = gridColumnsInfo[i].id + "Span";
+		tableHeaderSpan.innerHTML = columnName;
+		//tableHeaderSpan.className = "span";
+        tableHeaderSpan.style.textDecoration = "underline";
+        tableHeaderSpan.style.userSelect = "none";
+        tableHeaderSpan.style.cursor = "pointer";
+		tableHeaderSpan.style.paddingRight = "10";
 		
-		tableHeaderText = document.createTextNode(columnName);
-		tableHeader.appendChild(tableHeaderText);
-		tableHeaderRow.appendChild(tableHeader);				
+        tableHeader.appendChild(tableHeaderSpan);
+
+		tableHeaderIcon = document.createElement("img");
+		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
+		//tableHeaderIcon.className = "icon";
+				
+		//var server = new CodeReuse.Config();
+
+		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+		tableHeaderIcon.width = "0";
+		tableHeaderIcon.height = "0";
+
+		tableHeaderIcon.style.display = "none";
+
+        tableHeader.appendChild(tableHeaderIcon);
+
+        tableHeaderRow.appendChild(tableHeader);
+    
 	}
 	
 	tbl.appendChild(tableHeaderRow);
@@ -510,109 +574,21 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 },
 
-onkeyupTenantInput: function(event){
-			
-	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-	if(document.getElementById("tenant_input_grid").value == "")
-	{
-		document.getElementById("tenantSearchList").innerHTML = "";			
-	}
-	else
-	{
-		var autocomplete = new CodeReuse.Autocomplete();
-
-		autocomplete.autocomplete(event, "gridInput", "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", home_tenant_grid.getPhpFile(), "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
-	}
-	
-},
-
-onfocusoutTenantInput: function() { 
-	
-	var autocomplete = new CodeReuse.Autocomplete();
-
-	autocomplete.focusOutHide ("tenantSearchList");
- },
-
-onclickGridSaveButton: function(tablePrimaryKey)
-{
-	if(document.getElementById("tenantSearchList").innerHTML != "")
-	{
-		alert('Please select Tenant Name');
-		return;
-	}
-
-	if(document.getElementById('calendarId').style.display == "block")
-	{
-		alert('Please select field date');
-		return;
-	}
-
-	var helper = new CodeReuse.Helper();
-
-	helper.msgBox('confirm', 'Would you like to save this row?', function (result) {
-
-		if(result == true)
-		{
-			controller.homeTenantGridSave();
-		}
-		else
-		if(result == false)
-		{
-			return;
-		}
-	});
-
-},
-
-onfocusGridCalendarInput: function(event){
-
-	var calendar = new CodeReuse.Calendar();
-	calendar.showHideCalendar(event, 'show' ,'inputCalendar_grid', "calendarId", monthsArray)
-
-},
-
-onblurGridCalendarInput: function(event){
-
-	var calendar = new CodeReuse.Calendar();
-
-	if(calendar.validateDate(event.id) == false)
-	{
-		alert("input format has to be dd-mmm-yyyy");
-	}
-
-	/*
-	if(calendar.validateDate(this.id) == false)
-	{
-		alert("input format has to be dd-mmm-yyyy");
-	}
-	*/
-},
-
-onfocusGridCalendarInputTesting: function(event){
-
-	var calendar = new CodeReuse.Calendar();
-	calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
-
-},
-
-onblurGridCalendarInputTesting: function(event){
-
-	var calendar = new CodeReuse.Calendar();
-
-	if(calendar.validateDate(event.id) == false)
-	{
-		alert("input format has to be dd-mmm-yyyy");
-	}
-
-	/*
-	if(calendar.validateDate(this.id) == false)
-	{
-		alert("input format has to be dd-mmm-yyyy");
-	}
-	*/
-},
-
+/**
+ * Callback when the XMLHttpRequest get method returns from function Grid_Get_Post_Functions get_populateGrid
+ * @callback get_populateGrid_callback
+ * @name Callback#get_populateGrid_callback
+ * 
+ * @param {string} response the response from the XMLHttpRequest get
+ * @param {string} divElement the html div id to use to attach the table to
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {Array} gridColumnsInfo grid object array of columns
+ * @param {Array} autocompleteInputs array of autocomplete inputs
+ * @param {Array} arrayOldValuesTableGridEdit array to keep track of row old values used for updating fields
+ * @param {Object} tableHtml the html table object used to replace the row edited with form objects
+ * @param {string} fieldPrimaryKey the table row primary key
+ * @param {string} tableHtmlObjectId no need for this param
+ */
 get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey, tableHtmlObjectId) {
 	
 	var record = response[0];
@@ -682,6 +658,8 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 			if(result == true)
 			{
 				controller.homeTenantGridSave();
+
+				localStorage.setItem("gridLoadHomeGrid", "true");
 			}
 			else
 			if(result == false)
@@ -867,7 +845,6 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	newRow.appendChild(cell);
 
 
-
 	rowReplace.parentNode.replaceChild(newRow, rowReplace);
 
 	var divTable = document.getElementById(divElement);
@@ -875,77 +852,6 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	divTable.innerText = "";
 
 	divTable.appendChild(tableEdit);
-
-
-	/*
-	var row = document.getElementById(tableHtmlObjectId).rows[parseInt(tableRowNumber) + 1];
-
-	var helper = new CodeReuse.Helper();
-				
-	var dateFormat_inputCalendar_grid = helper.convertDateFromDatabase(record["field1"]);
-	var dateFormat_inputCalendarTesting_grid = helper.convertDateFromDatabase(record["field2"]);
-	*/
-
-//<td height=\"25" style="padding-left: 10px;">
-//<button type="button" id="saveButton" style="width: 50px;" onclick="alert('test')">save</button>
-//</td>
-//<td class="grid"><span id="inputPrimaryKey_grid">1</span></td>
-//<td class="grid"><select id="building_option_grid"><option></option><option>building</option>
-//<option>building2</option></select></td>
-//<td class="grid">
-//<input id="tenant_input_grid" rowattributevalue="1" width="200" style="position: relative; z-index: 1; background-color: white;"></td>
-//<td class="grid"><input id="inputCalendar_grid" style="position: relative; z-index: 1; background-color: white; width: 142px;"></td>
-//<td class="grid"><input id="inputCalendarTesting_grid" width="142" style="position: relative; z-index: 1; background-color: white;"></td>
-	
-	/*
-	var selectOption = record["field3"];
-	var selectHtml;
-
-	if(selectOption == "1")
-	{
-		selectHtml = "<td class=\"grid\">" +
-	"<select id=\"building_option_grid\"><option value=\"\"></option><option value=\"1\" selected>building</option><option value=\"2\">building2</option></select>" +
-	"</td>";
-	}
-	else if(selectOption == "2")
-	{
-		selectHtml = "<td class=\"grid\">" +
-	"<select id=\"building_option_grid\"><option value=\"\"></option><option value=\"1\">building</option><option value=\"2\" selected>building2</option></select>" +
-	"</td>";		
-	}
-
-	var html = "<td height=\"25\" style=\"padding-left: 10px;\">" +
-	"<button id=\"saveButton\" style=\"width: 50px;\"onclick =\"var callback = new CodeReuse.Callback();callback.onclickGridSaveButton();\">save</button>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<span id =\"inputPrimaryKey_grid\">" + fieldPrimaryKey + "</span>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<select id=\"building_option_grid\"><option value=\"\"></option><option value=\"1\">building</option><option value=\"2\">building2</option></select>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<input id=\"tenant_input_grid\" rowattributevalue=\"" + record["field4"] +  "\" width=\"200\" style=\"position: relative; z-index: 1; background-color: white;\" onkeyup=\"var callback = new CodeReuse.Callback();callback.onkeyupTenantInput(this);\" onfocusout=\"var callback = new CodeReuse.Callback();callback.onfocusoutTenantInput();\" value=\"" + record["field4display"] + "\" />" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142px;\" onfocus=\"var callback = new CodeReuse.Callback();callback.onfocusGridCalendarInput(this);\" onblur=\"var callback = new CodeReuse.Callback();callback.onblurGridCalendarInput(this);\" value=\"" + dateFormat_inputCalendar_grid + "\"></td>" +
-	"</td>" +
-	"<td class=\"grid\">" +
-	"<input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142px;\" onfocus=\"var callback = new CodeReuse.Callback();callback.onfocusGridCalendarInputTesting(this);\" onblur=\"var callback = new CodeReuse.Callback();callback.onblurGridCalendarInputTesting(this);\" value=\"" + dateFormat_inputCalendarTesting_grid + "\"></td>" +
-	"</td>";
-
-	row.innerHTML = html;
-
-	document.getElementById("building_option_grid").selectedIndex = record["field3"];
-
-	*/
-
-	//row.innerHTML = newRow.innerHTML;
-
-	/*
-	var row = document.getElementById(tableHtmlObjectId).rows[2];
-
-	row.cells[1].innerHTML = "test";
-	*/
 
 
 	var record = response[0];
@@ -999,6 +905,11 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	}
 },
 
+/**
+ * Refresh Suite grid after inserting or updating Suite record
+ * @function
+ * @name refreshGridCallbackSuite
+ */
 refreshGridCallbackSuite: function()
 {
 	
@@ -1008,6 +919,11 @@ refreshGridCallbackSuite: function()
 	
 },
 
+/**
+ * Refresh Tenant grid after inserting or updating Tenant record
+ * @function
+ * @name refreshGridCallback
+ */
 refreshGridCallback: function()
 {
 	
@@ -1017,6 +933,11 @@ refreshGridCallback: function()
 	
 },
 
+/**
+ * Refresh Home Tenant grid after updating Tenant record
+ * @function
+ * @name refreshGridCallbackHomeTenantGrid
+ */
 refreshGridCallbackHomeTenantGrid: function()
 {
 	
@@ -1026,6 +947,17 @@ refreshGridCallbackHomeTenantGrid: function()
 	
 },
 
+/**
+ * Callback when the XMLHttpRequest get method returns from function Grid_Get_Post_Functions get_populateForm
+ * @callback get_populateForm_callback
+ * @name Callback#get_populateForm_callback
+ * 
+ * @param {string} response the response from the XMLHttpRequest get
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {Array} gridColumnsInfo grid object array of columns
+ * @param {Array} autocompleteInputs array of autocomplete inputs
+ * @param {Array} arrayOldValuesTable array to keep track of form old values used for updating fields
+ */
 get_populateForm_callback: function(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable)
 {	
 	var record = response[0];
