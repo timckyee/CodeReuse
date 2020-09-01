@@ -150,7 +150,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 		var row = document.createElement("tr");
 		
-		row.className = "tableHover";
+		if(tableHtmlObjectId == "tableSuite" || tableHtmlObjectId == "tableTenant")
+		{
+			row.className = "tableHover";
+		}
 		
 		if(highlightRowId != '')
 		{
@@ -158,10 +161,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			{
 				row.className = "tableHover highlightRow";
 			}
-		}
-		else
-		{
-			row.className = "tableHover";
 		}
 
 		row.onclick = function(rowValues) {
@@ -843,7 +842,6 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	cell.appendChild(inputCalendarTesting_grid);
 
 	newRow.appendChild(cell);
-
 
 	rowReplace.parentNode.replaceChild(newRow, rowReplace);
 
