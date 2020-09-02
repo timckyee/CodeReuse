@@ -217,12 +217,12 @@ sortTable: function(tblId, column, gridColumnsInfo){
 			if(direction_update == "asc")
 			{
 				//document.getElementById(htmlSortIconId).src = images[0].src;
-				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 			}
 			else if(direction_update == "desc")
 			{
 				//document.getElementById(htmlSortIconId).src = images[1].src;
-				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
+				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
 			}
 			
 			document.getElementById(htmlSortIconId).style.display = "inline";

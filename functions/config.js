@@ -1,6 +1,7 @@
 CodeReuse.Config = function() {
     
-    this.serverUrl = "http://staging.closedarea.com";    
+    this.serverUrl = "http://staging.closedarea.com";
+    //this.serverUrl = "http://localhost:8888/codereuse";
 
 };
 

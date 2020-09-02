@@ -130,7 +130,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 		//var server = new CodeReuse.Config();
 
-		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 		tableHeaderIcon.width = "0";
 		tableHeaderIcon.height = "0";
 
@@ -328,12 +328,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					if(direction == "asc")
 					{
 						//document.getElementById(htmlSortIconId).src = images[0].src;
-						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 					}
 					else if(direction == "desc")
 					{
 						//document.getElementById(htmlSortIconId).src = images[1].src;
-						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
+						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
 					}
 					
 					document.getElementById(htmlSortIconId).style.display = "inline";
@@ -434,7 +434,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 		//var server = new CodeReuse.Config();
 
-		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 		tableHeaderIcon.width = "0";
 		tableHeaderIcon.height = "0";
 
@@ -603,11 +603,11 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 			if(direction == "asc")
 			{
-				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 			}
 			else if(direction == "desc")
 			{
-				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
+				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
 			}
 			
 			document.getElementById(htmlSortIconId).style.display = "inline";

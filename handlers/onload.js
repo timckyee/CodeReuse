@@ -40,8 +40,8 @@ window.addEventListener("load", function() {
 	var helper = new CodeReuse.Helper();
 
 	helper.preload(
-		[server.getServerUrl() + "/images/pngfuel.com.up.png", 
-		server.getServerUrl() + "/images/pngfuel.com.down.png"]
+		[server.getServerUrl() + "/images/pngfuel.com.up.gif", 
+		server.getServerUrl() + "/images/pngfuel.com.down.gif"]
 	);
 
 	var tenant = new CodeReuse.Tenant();
