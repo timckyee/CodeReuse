@@ -120,19 +120,19 @@ updateGridPage: function(pageNumber)
 
 	var sortIconCount;
 
-	for(sortIconCount=0; sortIconCount<homeTenantGrid.getColumnsInfo().length; sortIconCount++)
+	for(sortIconCount=0; sortIconCount<homeTenantGrid.getColumnsIngetGridColumnsInfofo().length; sortIconCount++)
 	{
-		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
+		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
 		{
 			continue;
 		}
-		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
+		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
 		{
 			break;
 		}
 	}
 
-	if(sortIconCount == homeTenantGrid.getColumnsInfo().length)
+	if(sortIconCount == homeTenantGrid.getColumgetGridColumnsInfonsInfo().length)
 	{
 		localStorage.setItem("gridLoadHomeGrid", "true");
 	}
@@ -198,19 +198,19 @@ updateGridPageArrows: function(direction, pageNumber)
 
 	var sortIconCount;
 
-	for(sortIconCount=0; sortIconCount<homeTenantGrid.getColumnsInfo().length; sortIconCount++)
+	for(sortIconCount=0; sortIconCount<homeTenantGrid.getGridColumnsInfo().length; sortIconCount++)
 	{
-		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
+		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
 		{
 			continue;
 		}
-		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
+		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
 		{
 			break;
 		}
 	}
 
-	if(sortIconCount == homeTenantGrid.getColumnsInfo().length)
+	if(sortIconCount == homeTenantGrid.getGridColumnsInfo().length)
 	{
 		localStorage.setItem("gridLoadHomeGrid", "true");
 	}

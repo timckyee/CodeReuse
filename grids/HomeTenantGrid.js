@@ -56,11 +56,6 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 	},
 	
-	getColumnsInfo: function() {
-		
-		return this.columns;
-	},
-	
 	getGridIdField: function() {
 
 		return this.gridIdField;
@@ -156,7 +151,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 
 			var callback = new CodeReuse.Callback();
 			
-			grid_get_post_functions.post_updateGrid(this.getPhpFile(), this.getHomeTenantGridUpdateQueryName(), document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, localStorage.getItem("homeTenantGridPageNumber"));
+			grid_get_post_functions.post_updateGrid(this.getPhpFile(), this.getHomeTenantGridUpdateQueryName(), document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getGridColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, localStorage.getItem("homeTenantGridPageNumber"));
 		}
 		
 	},

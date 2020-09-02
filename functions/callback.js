@@ -578,7 +578,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	var callback = new CodeReuse.Callback();
 	
-	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, fieldPrimaryKey, home_tenant_grid.getTableHtmlObjectId());
+	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, fieldPrimaryKey, home_tenant_grid.getTableHtmlObjectId());
 
 	
 

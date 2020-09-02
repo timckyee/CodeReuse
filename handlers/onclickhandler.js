@@ -70,19 +70,19 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 
 	var sortIconCount;
 
-	for(sortIconCount=0; sortIconCount<homeTenantGrid.getColumnsInfo().length; sortIconCount++)
+	for(sortIconCount=0; sortIconCount<homeTenantGrid.getGridColumnsInfo().length; sortIconCount++)
 	{
-		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
+		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
 		{
 			continue;
 		}
-		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
+		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
 		{
 			break;
 		}
 	}
 
-	if(sortIconCount == homeTenantGrid.getColumnsInfo().length)
+	if(sortIconCount == homeTenantGrid.getGridColumnsInfo().length)
 	{
 		//localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
 		localStorage.setItem("arraySortDirection", "asc");	
