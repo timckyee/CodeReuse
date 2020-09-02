@@ -28,7 +28,9 @@ sortTable: function(tblId, column, gridColumnsInfo){
 			else
 			{
 				if(sortDirection_suite == "desc")
-					localStorage.setItem("arraySortDirection_suite", "asc");
+					{
+						localStorage.setItem("arraySortDirection_suite", "asc");
+					}
 			}			
 		}
 		

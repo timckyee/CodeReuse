@@ -431,7 +431,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		tableHeaderIcon = document.createElement("img");
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
 		//tableHeaderIcon.className = "icon";
-				
+
 		//var server = new CodeReuse.Config();
 
 		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.png";
@@ -580,6 +580,44 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	
 	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, fieldPrimaryKey, home_tenant_grid.getTableHtmlObjectId());
 
+	
+
+	divTable.innerHTML = "";
+	
+	divTable.appendChild(tbl);
+
+
+	var column = localStorage.getItem("arraySortColumn");
+	var direction = localStorage.getItem("arraySortDirection");
+
+	for(var i=0; i<gridColumnsInfo.length; i++)
+	{
+		var htmlSortIconId = tableHtmlObjectId + "_" + column + "ColumnHeaderIcon";
+
+		if(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
+		{
+			document.getElementById(htmlSortIconId).width = "14";
+			document.getElementById(htmlSortIconId).height = "14";
+
+			var server = new CodeReuse.Config();
+
+			if(direction == "asc")
+			{
+				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.png";
+			}
+			else if(direction == "desc")
+			{
+				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.png";
+			}
+			
+			document.getElementById(htmlSortIconId).style.display = "inline";
+		}
+		else
+		{
+			document.getElementById(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
+		}
+	}
+
 },
 
 /**
@@ -666,8 +704,6 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 			if(result == true)
 			{
 				controller.homeTenantGridSave();
-
-				localStorage.setItem("gridLoadHomeGrid", "true");
 			}
 			else
 			if(result == false)

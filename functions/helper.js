@@ -321,8 +321,6 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 		//if(buttonType == "confirm")
 		msgbox_callback(false);
 
-		localStorage.setItem("gridLoadHomeGrid", "true");
-
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var tenantModel = new CodeReuse.Tenant();

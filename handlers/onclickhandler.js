@@ -78,7 +78,9 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 		else
 		{
 			if(sortDirection == "desc")
+			{
 				localStorage.setItem("arraySortDirection", "asc");
+			}
 		}			
 	}
 		
