@@ -60,6 +60,11 @@ CodeReuse.TenantGrid.prototype = {
 
 	},
 	
+	getTableHtmlObjectId: function() {
+		
+		return this.tableHtmlObjectId;
+	},
+
 	refreshTenantGrid: function(phpFile, fieldsInfo) {
 				
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();

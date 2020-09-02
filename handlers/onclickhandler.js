@@ -65,24 +65,50 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 	
 	var sortDirection = localStorage.getItem("arraySortDirection");	
 	
-	if(sortColumn != localStorage.getItem("arraySortColumn"))
+
+	var homeTenantGrid = new CodeReuse.HomeTenantGrid();
+
+	var sortIconCount;
+
+	for(sortIconCount=0; sortIconCount<homeTenantGrid.getColumnsInfo().length; sortIconCount++)
 	{
-		localStorage.setItem("arraySortDirection", "asc");
+		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
+		{
+			continue;
+		}
+		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
+		{
+			break;
+		}
+	}
+
+	if(sortIconCount == homeTenantGrid.getColumnsInfo().length)
+	{
+		//localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
+		localStorage.setItem("arraySortDirection", "asc");	
 	}
 	else
 	{
-		if(sortDirection == "asc")
+		if(sortColumn != localStorage.getItem("arraySortColumn"))
 		{
-			localStorage.setItem("arraySortDirection", "desc");	
+			localStorage.setItem("arraySortDirection", "asc");
 		}
 		else
 		{
-			if(sortDirection == "desc")
+			if(sortDirection == "asc")
 			{
-				localStorage.setItem("arraySortDirection", "asc");
+				localStorage.setItem("arraySortDirection", "desc");	
 			}
-		}			
+			else
+			{
+				if(sortDirection == "desc")
+				{
+					localStorage.setItem("arraySortDirection", "asc");
+				}
+			}			
+		}
 	}
+
 		
 	localStorage.setItem("arraySortColumn", sortColumn);
 

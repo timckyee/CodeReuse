@@ -45,6 +45,11 @@ CodeReuse.SuiteGrid.prototype = {
 
 	},
 
+	getTableHtmlObjectId: function() {
+		
+		return this.tableHtmlObjectId;
+	},
+
 	getGridIdField: function() {
 
 		return this.gridIdField;
