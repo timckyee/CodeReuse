@@ -216,12 +216,10 @@ sortTable: function(tblId, column, gridColumnsInfo){
 
 			if(direction_update == "asc")
 			{
-				//document.getElementById(htmlSortIconId).src = images[0].src;
 				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 			}
 			else if(direction_update == "desc")
 			{
-				//document.getElementById(htmlSortIconId).src = images[1].src;
 				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
 			}
 			
@@ -232,7 +230,6 @@ sortTable: function(tblId, column, gridColumnsInfo){
 			document.getElementById(tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
 		}
 	}
-
 
     for(var i=0, ln=Arr.length; i<ln; i++){
 		table.appendChild(Arr[i][0]);

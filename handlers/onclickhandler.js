@@ -65,51 +65,25 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 	
 	var sortDirection = localStorage.getItem("arraySortDirection");	
 	
-
-	var homeTenantGrid = new CodeReuse.HomeTenantGrid();
-
-	var sortIconCount;
-
-	for(sortIconCount=0; sortIconCount<homeTenantGrid.getGridColumnsInfo().length; sortIconCount++)
+	if(sortColumn != localStorage.getItem("arraySortColumn"))
 	{
-		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
-		{
-			continue;
-		}
-		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
-		{
-			break;
-		}
-	}
-
-	if(sortIconCount == homeTenantGrid.getGridColumnsInfo().length)
-	{
-		//localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
-		localStorage.setItem("arraySortDirection", "asc");	
+		localStorage.setItem("arraySortDirection", "asc");
 	}
 	else
 	{
-		if(sortColumn != localStorage.getItem("arraySortColumn"))
+		if(sortDirection == "asc")
 		{
-			localStorage.setItem("arraySortDirection", "asc");
+			localStorage.setItem("arraySortDirection", "desc");	
 		}
 		else
 		{
-			if(sortDirection == "asc")
+			if(sortDirection == "desc")
 			{
-				localStorage.setItem("arraySortDirection", "desc");	
+				localStorage.setItem("arraySortDirection", "asc");
 			}
-			else
-			{
-				if(sortDirection == "desc")
-				{
-					localStorage.setItem("arraySortDirection", "asc");
-				}
-			}			
-		}
+		}			
 	}
-
-		
+	
 	localStorage.setItem("arraySortColumn", sortColumn);
 
 	//alert('sort: ' + sortColumn + ' ' + localStorage.getItem("arraySortDirection"));

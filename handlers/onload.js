@@ -23,8 +23,6 @@ window.addEventListener("load", function() {
 	localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
 	
 	localStorage.setItem("arraySortDirection", "asc");
-	
-	localStorage.setItem("gridLoadHomeGrid", "true");
 
 	localStorage.setItem("arraySortColumn_suite", "suiteId");
 	

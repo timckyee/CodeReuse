@@ -128,14 +128,48 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
 		//tableHeaderIcon.className = "icon";
 				
-		//var server = new CodeReuse.Config();
+		var server = new CodeReuse.Config();
 
 		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-		tableHeaderIcon.width = "0";
-		tableHeaderIcon.height = "0";
+		//tableHeaderIcon.width = "0";
+		//tableHeaderIcon.height = "0";
 
-		tableHeaderIcon.style.display = "none";
+		var column;
+		var direction;
 
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			column = localStorage.getItem("arraySortColumn");
+			direction = localStorage.getItem("arraySortDirection");
+		}
+		else if(tableHtmlObjectId == "tableSuite")
+		{
+			column = localStorage.getItem("arraySortColumn_suite");
+			direction = localStorage.getItem("arraySortDirection_suite");
+		}
+		else if(tableHtmlObjectId == "tableTenant")
+		{
+			column = localStorage.getItem("arraySortColumn_tenant");
+			direction = localStorage.getItem("arraySortDirection_tenant");
+		}
+
+		if(gridColumnsInfo[i].id == column)
+		{
+			tableHeaderIcon.width = "14";
+			tableHeaderIcon.height = "14";
+
+			if(direction == "asc")
+			{
+				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
+			}
+			else if(direction == "desc")
+			{
+				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
+			}
+
+			tableHeaderIcon.style.display = "inline";
+		}
+		
         tableHeader.appendChild(tableHeaderIcon);
 
         tableHeaderRow.appendChild(tableHeader);
@@ -302,53 +336,59 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
 		//debugger
 	}
-	
+
+
+	//var rowReplace = tbl.rows[0];
+
+	//rowReplace.parentNode.replaceChild(tableHeaderRow, rowReplace);
+
 	divTable.innerHTML = "";
 	
 	divTable.appendChild(tbl);
 
-	if(tableHtmlObjectId == "tableHomeTenant")
+	/*
+	var column = localStorage.getItem("arraySortColumn");
+	var direction = localStorage.getItem("arraySortDirection");	
+
+	if(tableHtmlObjectId == "tableSuite")
 	{
-		if(localStorage.getItem("gridLoadHomeGrid") == "false")
+		var htmlSortIconId = "tableSuite" + "_" + "suiteId" + "ColumnHeaderIcon";
+
+		var server = new CodeReuse.Config();
+	
+		document.getElementById(htmlSortIconId).width = "14";
+		document.getElementById(htmlSortIconId).height = "14";
+
+		if(direction == "asc")
 		{
-			var column = localStorage.getItem("arraySortColumn");
-			var direction = localStorage.getItem("arraySortDirection");
-
-			for(var i=0; i<gridColumnsInfo.length; i++)
-			{
-				var htmlSortIconId = tableHtmlObjectId + "_" + column + "ColumnHeaderIcon";
-
-				if(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
-				{
-					document.getElementById(htmlSortIconId).width = "14";
-					document.getElementById(htmlSortIconId).height = "14";
-
-					var server = new CodeReuse.Config();
-
-					if(direction == "asc")
-					{
-						//document.getElementById(htmlSortIconId).src = images[0].src;
-						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-					}
-					else if(direction == "desc")
-					{
-						//document.getElementById(htmlSortIconId).src = images[1].src;
-						document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
-					}
-					
-					document.getElementById(htmlSortIconId).style.display = "inline";
-				}
-				else
-				{
-					document.getElementById(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
-				}
-			}
+			document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 		}
-		else
+		else if(direction == "desc")
 		{
-			localStorage.setItem("gridLoadHomeGrid", "false");
+			document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
 		}
 	}
+	else
+	if(tableHtmlObjectId == "tableTenant")
+	{
+		var htmlSortIconId = "tableTenant" + "_" + "fieldPrimaryKey" + "ColumnHeaderIcon";
+
+		var server = new CodeReuse.Config();
+	
+		document.getElementById(htmlSortIconId).width = "14";
+		document.getElementById(htmlSortIconId).height = "14";
+
+		if(direction == "asc")
+		{
+			document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
+		}
+		else if(direction == "desc")
+		{
+			document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
+		}	
+	}
+	*/
+
 },
 
 /**
@@ -432,18 +472,36 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
 		//tableHeaderIcon.className = "icon";
 
-		//var server = new CodeReuse.Config();
+		var server = new CodeReuse.Config();
 
 		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-		tableHeaderIcon.width = "0";
-		tableHeaderIcon.height = "0";
+		//tableHeaderIcon.width = "0";
+		//tableHeaderIcon.height = "0";
 
-		tableHeaderIcon.style.display = "none";
+		var column = localStorage.getItem("arraySortColumn");
+		var direction = localStorage.getItem("arraySortDirection");
 
+		if(gridColumnsInfo[i].id == column)
+		{
+			tableHeaderIcon.width = "14";
+			tableHeaderIcon.height = "14";
+
+			if(direction == "asc")
+			{
+				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
+			}
+			else if(direction == "desc")
+			{
+				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
+			}
+
+			tableHeaderIcon.style.display = "inline";
+		}
+		
         tableHeader.appendChild(tableHeaderIcon);
 
-        tableHeaderRow.appendChild(tableHeader);
-    
+		tableHeaderRow.appendChild(tableHeader);
+		    
 	}
 	
 	tbl.appendChild(tableHeaderRow);
@@ -581,42 +639,9 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, fieldPrimaryKey, home_tenant_grid.getTableHtmlObjectId());
 
 	
-
 	divTable.innerHTML = "";
 	
 	divTable.appendChild(tbl);
-
-
-	var column = localStorage.getItem("arraySortColumn");
-	var direction = localStorage.getItem("arraySortDirection");
-
-	for(var i=0; i<gridColumnsInfo.length; i++)
-	{
-		var htmlSortIconId = tableHtmlObjectId + "_" + column + "ColumnHeaderIcon";
-
-		if(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
-		{
-			document.getElementById(htmlSortIconId).width = "14";
-			document.getElementById(htmlSortIconId).height = "14";
-
-			var server = new CodeReuse.Config();
-
-			if(direction == "asc")
-			{
-				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-			}
-			else if(direction == "desc")
-			{
-				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
-			}
-			
-			document.getElementById(htmlSortIconId).style.display = "inline";
-		}
-		else
-		{
-			document.getElementById(tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
-		}
-	}
 
 },
 

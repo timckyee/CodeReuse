@@ -78,9 +78,14 @@ CodeReuse.SuiteGrid.prototype = {
 			
 			callback = new CodeReuse.Callback();
 			
-			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)	
+			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)
+			{
 				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", '', '', '', '');
-				
+			
+				localStorage.setItem("arraySortColumn_suite", "suiteId");
+	
+				localStorage.setItem("arraySortDirection_suite", "asc");
+			}
 		}
 		
 		/*

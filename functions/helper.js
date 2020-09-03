@@ -114,30 +114,7 @@ updateGridPage: function(pageNumber)
 	}
 
 	localStorage.setItem("homeTenantGridPageNumber", pageNumber);
-
-
-	var homeTenantGrid = new CodeReuse.HomeTenantGrid();
-
-	var sortIconCount;
-
-	for(sortIconCount=0; sortIconCount<homeTenantGrid.getColumnsIngetGridColumnsInfofo().length; sortIconCount++)
-	{
-		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
-		{
-			continue;
-		}
-		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
-		{
-			break;
-		}
-	}
-
-	if(sortIconCount == homeTenantGrid.getColumgetGridColumnsInfonsInfo().length)
-	{
-		localStorage.setItem("gridLoadHomeGrid", "true");
-	}
-
-	
+		
 	var pageNumberUpdate = localStorage.getItem("homeTenantGridPageNumber");
 
 	var tenantModel = new CodeReuse.Tenant();
@@ -192,29 +169,6 @@ updateGridPageArrows: function(direction, pageNumber)
 	}
 
 	localStorage.setItem("homeTenantGridPageNumber", pageNumberUpdate.toString());
-
-
-	var homeTenantGrid = new CodeReuse.HomeTenantGrid();
-
-	var sortIconCount;
-
-	for(sortIconCount=0; sortIconCount<homeTenantGrid.getGridColumnsInfo().length; sortIconCount++)
-	{
-		if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
-		{
-			continue;
-		}
-		else if(document.getElementById(homeTenantGrid.getTableHtmlObjectId() + "_" + homeTenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
-		{
-			break;
-		}
-	}
-
-	if(sortIconCount == homeTenantGrid.getGridColumnsInfo().length)
-	{
-		localStorage.setItem("gridLoadHomeGrid", "true");
-	}
-
 	
 	var tenantModel = new CodeReuse.Tenant();
 

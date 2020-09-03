@@ -88,6 +88,10 @@ CodeReuse.TenantGrid.prototype = {
 			if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
 			{				
 				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", '', '', '', '');
+			
+				localStorage.setItem("arraySortColumn_tenant", "fieldPrimaryKey");
+	
+				localStorage.setItem("arraySortDirection_tenant", "asc");			
 			}
 		}
 		
