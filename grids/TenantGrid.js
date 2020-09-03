@@ -7,7 +7,7 @@ CodeReuse.TenantGrid = function() {
 	this.columns = [
 		
 		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int" },
-		{ colName: "Building Name", id: "buildingName", colType: "string" },
+		{ colName: "Building", id: "buildingName", colType: "string" },
 		{ colName: "Tenant Name", id: "tenantName", colType: "string" },
 		{ colName: "Date First", id: "field1", colType: "date" },
 		{ colName: "Date Second", id: "field2", colType: "date" }
