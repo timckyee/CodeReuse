@@ -15,48 +15,23 @@ sortTable: function(tblId, column, gridColumnsInfo){
 	{
 		var sortDirection_suite = localStorage.getItem("arraySortDirection_suite");	
 		
-
-		var suiteGrid = new CodeReuse.SuiteGrid();
-
-		var sortIconCount;
-	
-		for(sortIconCount=0; sortIconCount<suiteGrid.getGridColumnsInfo().length; sortIconCount++)
+		if(sortColumn != localStorage.getItem("arraySortColumn_suite"))
 		{
-			if(document.getElementById(suiteGrid.getTableHtmlObjectId() + "_" + suiteGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
-			{
-				continue;
-			}
-			else if(document.getElementById(suiteGrid.getTableHtmlObjectId() + "_" + suiteGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
-			{
-				break;
-			}
-		}
-	
-		if(sortIconCount == suiteGrid.getGridColumnsInfo().length)
-		{
-			//localStorage.setItem("arraySortColumn_suite", "suiteId");
-			localStorage.setItem("arraySortDirection_suite", "asc");	
+			localStorage.setItem("arraySortDirection_suite", "asc");
 		}
 		else
-		{
-			if(sortColumn != localStorage.getItem("arraySortColumn_suite"))
+		{	
+			if(sortDirection_suite == "asc")
 			{
-				localStorage.setItem("arraySortDirection_suite", "asc");
+				localStorage.setItem("arraySortDirection_suite", "desc");	
 			}
 			else
-			{	
-				if(sortDirection_suite == "asc")
-				{
-					localStorage.setItem("arraySortDirection_suite", "desc");	
-				}
-				else
-				{
-					if(sortDirection_suite == "desc")
-						{
-							localStorage.setItem("arraySortDirection_suite", "asc");
-						}
-				}			
-			}
+			{
+				if(sortDirection_suite == "desc")
+					{
+						localStorage.setItem("arraySortDirection_suite", "asc");
+					}
+			}			
 		}
 		
 		localStorage.setItem("arraySortColumn_suite", sortColumn);
@@ -68,47 +43,23 @@ sortTable: function(tblId, column, gridColumnsInfo){
 	{
 		var sortDirection_tenant = localStorage.getItem("arraySortDirection_tenant");
 
-		var tenantGrid = new CodeReuse.TenantGrid();
-
-		var sortIconCount;
-	
-		for(sortIconCount=0; sortIconCount<tenantGrid.getGridColumnsInfo().length; sortIconCount++)
+		if(sortColumn != localStorage.getItem("arraySortColumn_tenant"))
 		{
-			if(document.getElementById(tenantGrid.getTableHtmlObjectId() + "_" + tenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "none")	
-			{
-				continue;
-			}
-			else if(document.getElementById(tenantGrid.getTableHtmlObjectId() + "_" + tenantGrid.getGridColumnsInfo()[sortIconCount].id + "ColumnHeaderIcon").style.display == "inline")
-			{
-				break;
-			}
-		}
-	
-		if(sortIconCount == tenantGrid.getGridColumnsInfo().length)
-		{
-			//localStorage.setItem("arraySortColumn_tenant", "fieldPrimarKey");
-			localStorage.setItem("arraySortDirection_tenant", "asc");	
+			localStorage.setItem("arraySortDirection_tenant", "asc");
 		}
 		else
-		{
-			if(sortColumn != localStorage.getItem("arraySortColumn_tenant"))
+		{	
+			if(sortDirection_tenant == "asc")
 			{
-				localStorage.setItem("arraySortDirection_tenant", "asc");
+				localStorage.setItem("arraySortDirection_tenant", "desc");	
 			}
 			else
-			{	
-				if(sortDirection_tenant == "asc")
-				{
-					localStorage.setItem("arraySortDirection_tenant", "desc");	
-				}
-				else
-				{
-					if(sortDirection_tenant == "desc")
-						localStorage.setItem("arraySortDirection_tenant", "asc");
-				}			
-			}
+			{
+				if(sortDirection_tenant == "desc")
+					localStorage.setItem("arraySortDirection_tenant", "asc");
+			}			
 		}
-		
+
 		localStorage.setItem("arraySortColumn_tenant", sortColumn);
 
 		column_update = localStorage.getItem("arraySortColumn_tenant");
