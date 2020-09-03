@@ -127,7 +127,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeaderIcon = document.createElement("img");
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
 		//tableHeaderIcon.className = "icon";
-				
+		
 		var server = new CodeReuse.Config();
 
 		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
