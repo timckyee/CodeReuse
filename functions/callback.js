@@ -63,7 +63,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	{	
 		tableHeader = document.createElement("th");
 
-		tableHeader.id = gridColumnsInfo[i].id + "ColumnHeader";
+		tableHeader.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeader";
 		
 		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
 		//{
@@ -79,7 +79,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
         var columnName = gridColumnsInfo[i].colName;
 
         tableHeaderSpan = document.createElement("span");
-        tableHeaderSpan.id = gridColumnsInfo[i].id + "Span";
+        tableHeaderSpan.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "Span";
 		tableHeaderSpan.innerHTML = columnName;
 
 		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
@@ -100,7 +100,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				var columnId = headerCellSpan.srcElement.id;
 				for(var column=0; column<gridColumnsInfo.length; column++)
 				{
-					if(gridColumnsInfo[column].id + "Span" == columnId)
+					if(tableHtmlObjectId + "_" + gridColumnsInfo[column].id + "Span" == columnId)
 						break;
 				}
 				
@@ -117,7 +117,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				var columnId = headerCellSpan.srcElement.id;
 				for(var column=0; column<gridColumnsInfo.length; column++)
 				{
-					if(gridColumnsInfo[column].id + "Span" == columnId)
+					if(tableHtmlObjectId + "_" + gridColumnsInfo[column].id + "Span" == columnId)
 						break;
 				}
 
@@ -187,6 +187,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		}
 		else
 		{
+			tableHeader.className = "";
+
+			tableHeaderSpan.className = "text";
+
+			tableHeaderIcon.className = "";
+
 			tableHeaderIcon.style.display = "none";
 		}
 
@@ -453,7 +459,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	{	
 		tableHeader = document.createElement("th");
 
-		tableHeader.id = gridColumnsInfo[i].id + "ColumnHeader";
+		tableHeader.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeader";
 
 		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
 		//{

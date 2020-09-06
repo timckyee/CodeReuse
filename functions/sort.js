@@ -5,7 +5,7 @@ CodeReuse.Sort = function() {
 CodeReuse.Sort.prototype = {
 
 sortTable: function(tblId, column, gridColumnsInfo){
-	
+
 	var sortColumn = gridColumnsInfo[column].id;
 	
 	var column_update;
@@ -154,52 +154,47 @@ sortTable: function(tblId, column, gridColumnsInfo){
 	table.innerHTML = "";
 	table.appendChild(header);
 
+	var htmlSortIconId = tblId + "_" + column_update + "ColumnHeaderIcon";
+
+	document.getElementById(htmlSortIconId).width = "14";
+	document.getElementById(htmlSortIconId).height = "14";
+
 	for(var i=0; i<gridColumnsInfo.length; i++)
 	{
-		var htmlSortIconId = tblId + "_" + column_update + "ColumnHeaderIcon";
-
-		document.getElementById(htmlSortIconId).width = "14";
-		document.getElementById(htmlSortIconId).height = "14";
-
 		if(tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
 		{
 			var server = new CodeReuse.Config();
 
-			var tableHeader = gridColumnsInfo[i].id + "ColumnHeader";
+			var tableHeader_update = tblId + "_" + column_update + "ColumnHeader";
+			var tableHeaderSpan_update = tblId + "_" + column_update + "Span";
+			var tableHeaderIcon_update = tblId + "_" + column_update + "ColumnHeaderIcon";
 
-			var tableHeaderSpan = gridColumnsInfo[i].id + "Span";
-
-			var tableHeaderIcon = tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
-
-			console.dir(tableHeader);
-			console.dir(tableHeaderSpan);
-			console.dir(tableHeaderIcon);
-
-			debugger
-			//document.getElementById(tableHeader).className = "description";
-			//document.getElementById(tableHeaderSpan).className = "text";
-			//document.getElementById(tableHeaderIcon).className = "icon";
-
-			//document.getElementById(gridColumnsInfo[i].id + "ColumnHeader").className = "description";
-
-			//document.getElementById(gridColumnsInfo[i].id + "Span").className = "text";
-
-			//document.getElementById(tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").className = "icon";
+			document.getElementById(tableHeader_update).className = "description";
+			document.getElementById(tableHeaderSpan_update).className = "text";
+			document.getElementById(tableHeaderIcon_update).className = "icon";
 
 			if(direction_update == "asc")
 			{
-				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
+				document.getElementById(tableHeaderIcon_update).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 			}
 			else if(direction_update == "desc")
 			{
-				document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
+				document.getElementById(tableHeaderIcon_update).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
 			}
 			
-			document.getElementById(htmlSortIconId).style.display = "inline";
+			document.getElementById(tableHeaderIcon_update).style.display = "inline";
 		}
 		else
 		{
-			document.getElementById(tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").style.display = "none";
+			var tableHeader = tblId + "_" + gridColumnsInfo[i].id + "ColumnHeader";
+			var tableHeaderSpan = tblId + "_" + gridColumnsInfo[i].id + "Span";
+			var tableHeaderIcon = tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
+
+			document.getElementById(tableHeader).className = "";
+			document.getElementById(tableHeaderSpan).className = "text";
+			document.getElementById(tableHeaderIcon).className = "";
+
+			document.getElementById(tableHeaderIcon).style.display = "none";
 		}
 	}
 
