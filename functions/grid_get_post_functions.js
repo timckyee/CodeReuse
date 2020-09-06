@@ -450,11 +450,11 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
  * 
  * @param {string} phpFile php file name and location
  * @param {string} postType php post query name
- * @param {*} htmlObjectFieldsValuesInsert the html objects new values
+ * @param {Array} htmlObjectFieldsValuesInsert the html objects new values
  * @param {Array} fieldsInfo form object array of fields
- * @param {*} inputPrimaryKeyId the new primary key id generated after insert
- * @param {*} arrayOldValuesTable array of old values before the insert. is set to the new values after an insert.
- * @param {*} refreshGridCallback refresh grid callback when the XMLHttpRequest post method returns
+ * @param {string} inputPrimaryKeyId the new primary key id generated after insert
+ * @param {Array} arrayOldValuesTable array of old values before the insert. is set to the new values after an insert.
+ * @param {function} refreshGridCallback refresh grid callback when the XMLHttpRequest post method returns
  */
 post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKeyId, arrayOldValuesTable, refreshGridCallback)
 {	

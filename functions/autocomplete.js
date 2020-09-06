@@ -1,10 +1,21 @@
-
+/**
+ * Class for creating autocomplete input box
+ * @class
+ */
 CodeReuse.Autocomplete = function() {
 		
 };
 
 CodeReuse.Autocomplete.prototype = {
 
+/**
+ * Position and align the autocomplete dropdown list with the input box
+ * @function
+ * @name Autocomplete#positionAutocomplete
+ * 
+ * @param {string} inputAutocompleteId input box html id
+ * @param {string} divListId div list html id
+ */
 positionAutocomplete: function(inputAutocompleteId, divListId) {
 		
 	var positionInputAutocomplete = document.getElementById(inputAutocompleteId);
@@ -19,6 +30,13 @@ positionAutocomplete: function(inputAutocompleteId, divListId) {
 	
 },
 
+/**
+ * On focus out of autocomplete tenant input force user to select value from drop down list
+ * @function
+ * @name Autocomplete#focusOutHide
+ * 
+ * @param {string} div id of the autocomplete drop down list
+ */
 focusOutHide: function(div) {
 	
 	/*
@@ -42,6 +60,7 @@ focusOutHide: function(div) {
 	}
 },
 
+/*
 oldValue: function(saveOrGet, arrayItem, arrayValue) {
 		
 	if(saveOrGet == "save")
@@ -76,7 +95,6 @@ submitTest: function() {
 	
 },
 
-/*
 resetInputFields: function(queryName)
 {
 	if(queryName == "buildings")
@@ -86,10 +104,29 @@ resetInputFields: function(queryName)
 },
 */
 
+/**
+ * The main autocomplete function
+ * @function
+ * @name Autocomplete#autocomplete
+ *  
+ * @param {Object} event key up event when user types in the input box
+ * @param {string} object no need for this param
+ * @param {string} divElement div search list id
+ * @param {string} itemColumns comma separated list of database field columns to show in teh search list
+ * @param {string} valueField primary key of the search list row
+ * @param {string} httpGetOrPost http method get or post
+ * @param {string} phpFile php file name and location
+ * @param {string} queryName the php query name for http method
+ * @param {string} additionalArgs additional arguments to pass into the XMLHttpRequest get
+ * @param {string} additionalArgsValue additional arguments value to pass into the XMLHttpRequest get
+ * @param {string} positionResultsListInput input box html id
+ * @param {string} positionResultsListDiv div list html id
+ */
 autocomplete: function(event, object, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {		
 	
 	var input;
 
+	/*
 	if(object == "gridInput")
 	{
 		input = event;
@@ -98,6 +135,9 @@ autocomplete: function(event, object, divElement, itemColumns, valueField, httpG
 	{
 		input = event.target;
 	}
+	*/
+
+	input = event.target;
 	
 	var searchList = document.getElementById(divElement);
 	
@@ -142,7 +182,7 @@ autocomplete: function(event, object, divElement, itemColumns, valueField, httpG
 								cellValue = cellValue + this.cells[i].innerHTML + ' ';
 						}
 						*/
-						
+
 						var cellValue = this.cells[1].innerHTML;
 												
 						input.value = cellValue.trim();

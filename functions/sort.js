@@ -158,12 +158,33 @@ sortTable: function(tblId, column, gridColumnsInfo){
 	{
 		var htmlSortIconId = tblId + "_" + column_update + "ColumnHeaderIcon";
 
+		document.getElementById(htmlSortIconId).width = "14";
+		document.getElementById(htmlSortIconId).height = "14";
+
 		if(tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon" == htmlSortIconId)
 		{
-			document.getElementById(htmlSortIconId).width = "14";
-			document.getElementById(htmlSortIconId).height = "14";
-
 			var server = new CodeReuse.Config();
+
+			var tableHeader = gridColumnsInfo[i].id + "ColumnHeader";
+
+			var tableHeaderSpan = gridColumnsInfo[i].id + "Span";
+
+			var tableHeaderIcon = tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
+
+			console.dir(tableHeader);
+			console.dir(tableHeaderSpan);
+			console.dir(tableHeaderIcon);
+
+			debugger
+			//document.getElementById(tableHeader).className = "description";
+			//document.getElementById(tableHeaderSpan).className = "text";
+			//document.getElementById(tableHeaderIcon).className = "icon";
+
+			//document.getElementById(gridColumnsInfo[i].id + "ColumnHeader").className = "description";
+
+			//document.getElementById(gridColumnsInfo[i].id + "Span").className = "text";
+
+			//document.getElementById(tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon").className = "icon";
 
 			if(direction_update == "asc")
 			{

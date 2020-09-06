@@ -46,7 +46,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	}
 								
 	var tableHeaderRow = document.createElement("tr");
-	
+
 	var tableHeader;
 	var tableHeaderText;
 	
@@ -64,7 +64,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeader = document.createElement("th");
 
 		tableHeader.id = gridColumnsInfo[i].id + "ColumnHeader";
-
+		
 		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
 		//{
 		//	tableHeader.className = "description";
@@ -81,7 +81,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
         tableHeaderSpan = document.createElement("span");
         tableHeaderSpan.id = gridColumnsInfo[i].id + "Span";
 		tableHeaderSpan.innerHTML = columnName;
-		//tableHeaderSpan.className = "span";
+
+		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
+		//{
+		//tableHeaderSpan.className = "text";
+		//}
+
         tableHeaderSpan.style.textDecoration = "underline";
         tableHeaderSpan.style.userSelect = "none";
         tableHeaderSpan.style.cursor = "pointer";
@@ -126,7 +131,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		tableHeaderIcon = document.createElement("img");
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
-		//tableHeaderIcon.className = "icon";
+		tableHeaderIcon.className = "icon";
+
+		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
+		//{
+		//	tableHeaderIcon.className = "icon";
+		//}
 		
 		var server = new CodeReuse.Config();
 
@@ -153,10 +163,16 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			direction = localStorage.getItem("arraySortDirection_tenant");
 		}
 
+		tableHeaderIcon.width = "14";
+		tableHeaderIcon.height = "14";
+
 		if(gridColumnsInfo[i].id == column)
 		{
-			tableHeaderIcon.width = "14";
-			tableHeaderIcon.height = "14";
+			tableHeader.className = "description";
+
+			tableHeaderSpan.className = "text";
+
+			tableHeaderIcon.className = "icon";
 
 			if(direction == "asc")
 			{
@@ -169,7 +185,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 			tableHeaderIcon.style.display = "inline";
 		}
-		
+		else
+		{
+			tableHeaderIcon.style.display = "none";
+		}
+
         tableHeader.appendChild(tableHeaderIcon);
 
         tableHeaderRow.appendChild(tableHeader);
@@ -815,7 +835,7 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 		}
 		else
 		{
-			autocomplete.autocomplete(event, "formInput", "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", home_tenant_grid.getPhpFile(), "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
+			autocomplete.autocomplete(event, "gridInput", "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", home_tenant_grid.getPhpFile(), "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
 		}
 		
 	});		

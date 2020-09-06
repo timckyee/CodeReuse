@@ -1,10 +1,19 @@
-
+/**
+ * The app controller to save suite form, tenant form, and home tenant grid,
+ * reset form fields when click on new, and refresh form data when change building selection
+ * @class
+ */
 CodeReuse.Controller = function () {
 		
 };
 
 CodeReuse.Controller.prototype = {
 	
+	/**
+	 * Save the suite form values
+	 * @function
+	 * @name Controller#suiteSave
+	 */
 	suiteSave: function() {
 		
 		var saveType;
@@ -47,6 +56,11 @@ CodeReuse.Controller.prototype = {
 		
 	},	
 	
+	/**
+	 * Save the tenant form values
+	 * @function
+	 * @name Controller#tenantSave
+	 */
 	tenantSave: function() {
 		
 		var saveType;
@@ -93,6 +107,11 @@ CodeReuse.Controller.prototype = {
 		
 	},
 	
+	/**
+	 * Save the home tenant grid values
+	 * @function
+	 * @name Controller#tenantSave
+	 */	
 	homeTenantGridSave: function() {
 		
 		var saveType;
@@ -153,6 +172,7 @@ CodeReuse.Controller.prototype = {
 		
 	},
 	
+	/*
 	resetSuiteFields: function() {
 		
 		var suiteModel = new CodeReuse.Suite();
@@ -164,8 +184,14 @@ CodeReuse.Controller.prototype = {
 			document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
 		}
 		
-	},	
+	},
+	*/
 	
+	/**
+	 * Set the tenant form values to empty when clicking on new
+	 * @function
+	 * @name Controller#resetTenantFields
+	 */
 	resetTenantFields: function() {
 		
 		var tenantModel = new CodeReuse.Tenant();
@@ -179,6 +205,11 @@ CodeReuse.Controller.prototype = {
 		
 	},
 	
+	/**
+	 * Refresh tenant grid when changing the building select on tenant form
+	 * @function
+	 * @name Controller#refreshSelectTenantGrid
+	 */	
 	refreshSelectTenantGrid: function() {
 		
 		var tenantModel = new CodeReuse.Tenant();
@@ -187,6 +218,11 @@ CodeReuse.Controller.prototype = {
 			
 	},
 	
+	/**
+	 * Set the suite form values to empty when clicking on new
+	 * @function
+	 * @name Controller#resetSuiteFields
+	 */	
 	resetSuiteFields: function() {
 		
 		var suiteModel = new CodeReuse.Suite();
@@ -200,6 +236,11 @@ CodeReuse.Controller.prototype = {
 		
 	},	
 	
+	/**
+	 * Refresh suite grid when changing the building select on tenant form
+	 * @function
+	 * @name Controller#refreshSelectTenantGrid
+	 */		
 	refreshSelectSuiteGrid: function() {
 		
 		var suiteModel = new CodeReuse.Suite();
