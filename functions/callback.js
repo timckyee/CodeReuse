@@ -87,6 +87,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		//tableHeaderSpan.className = "text";
 		//}
 
+		
         tableHeaderSpan.style.textDecoration = "underline";
         tableHeaderSpan.style.userSelect = "none";
         tableHeaderSpan.style.cursor = "pointer";
@@ -131,7 +132,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		tableHeaderIcon = document.createElement("img");
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
-		tableHeaderIcon.className = "icon";
+		//tableHeaderIcon.className = "icon";
 
 		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
 		//{
@@ -163,11 +164,14 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			direction = localStorage.getItem("arraySortDirection_tenant");
 		}
 
-		tableHeaderIcon.width = "14";
-		tableHeaderIcon.height = "14";
+		//tableHeaderIcon.width = "14";
+		//tableHeaderIcon.height = "14";
 
 		if(gridColumnsInfo[i].id == column)
 		{
+			tableHeaderIcon.width = "14";
+			tableHeaderIcon.height = "14";
+
 			tableHeader.className = "description";
 
 			tableHeaderSpan.className = "text";
@@ -371,50 +375,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	divTable.innerHTML = "";
 	
 	divTable.appendChild(tbl);
-
-	/*
-	var column = localStorage.getItem("arraySortColumn");
-	var direction = localStorage.getItem("arraySortDirection");	
-
-	if(tableHtmlObjectId == "tableSuite")
-	{
-		var htmlSortIconId = "tableSuite" + "_" + "suiteId" + "ColumnHeaderIcon";
-
-		var server = new CodeReuse.Config();
-	
-		document.getElementById(htmlSortIconId).width = "14";
-		document.getElementById(htmlSortIconId).height = "14";
-
-		if(direction == "asc")
-		{
-			document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-		}
-		else if(direction == "desc")
-		{
-			document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
-		}
-	}
-	else
-	if(tableHtmlObjectId == "tableTenant")
-	{
-		var htmlSortIconId = "tableTenant" + "_" + "fieldPrimaryKey" + "ColumnHeaderIcon";
-
-		var server = new CodeReuse.Config();
-	
-		document.getElementById(htmlSortIconId).width = "14";
-		document.getElementById(htmlSortIconId).height = "14";
-
-		if(direction == "asc")
-		{
-			document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-		}
-		else if(direction == "desc")
-		{
-			document.getElementById(htmlSortIconId).src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
-		}	
-	}
-	*/
-
 },
 
 /**
@@ -450,11 +410,15 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 	var tableHeader;
 	var tableHeaderText;		
 	
+	// th for the edit or save column
+
 	tableHeader = document.createElement("th");
+	
 	tableHeader.style.width = "70px";
 	
 	tableHeaderRow.appendChild(tableHeader);	
 	
+
 	for(var i=0; i<gridColumnsInfo.length; i++)
 	{	
 		tableHeader = document.createElement("th");
@@ -512,6 +476,12 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			tableHeaderIcon.width = "14";
 			tableHeaderIcon.height = "14";
 
+			tableHeader.className = "description";
+
+			tableHeaderSpan.className = "text";
+
+			tableHeaderIcon.className = "icon";
+
 			if(direction == "asc")
 			{
 				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
@@ -523,6 +493,16 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 			tableHeaderIcon.style.display = "inline";
 		}
+		else
+		{
+			tableHeader.className = "";
+
+			tableHeaderSpan.className = "text";
+
+			tableHeaderIcon.className = "";
+
+			tableHeaderIcon.style.display = "none";
+		}		
 		
         tableHeader.appendChild(tableHeaderIcon);
 
