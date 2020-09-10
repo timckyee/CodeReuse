@@ -32,17 +32,37 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
 	
-	if(tableHtmlObjectId == "tableHomeTenant")
+	var helper = new CodeReuse.Helper();
+
+	if(helper.checkIsMobile() == true)
 	{
-		tbl.className = "homeGrid";
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			tbl.className = "homeGridMobile";
+		}
+		else if(tableHtmlObjectId == "tableSuite")
+		{
+			tbl.className = "suiteGridMobile";
+		}
+		else if(tableHtmlObjectId == "tableTenant")
+		{
+			tbl.className = "tenantGridMobile";
+		}
 	}
-	else if(tableHtmlObjectId == "tableSuite")
+	else
 	{
-		tbl.className = "suiteGrid";
-	}
-	else if(tableHtmlObjectId == "tableTenant")
-	{
-		tbl.className = "tenantGrid";
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			tbl.className = "homeGrid";
+		}
+		else if(tableHtmlObjectId == "tableSuite")
+		{
+			tbl.className = "suiteGrid";
+		}
+		else if(tableHtmlObjectId == "tableTenant")
+		{
+			tbl.className = "tenantGrid";
+		}
 	}
 								
 	var tableHeaderRow = document.createElement("tr");
@@ -401,8 +421,18 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
-	tbl.className = "homeGrid";
-	
+
+	var helper = new CodeReuse.Helper();
+
+	if(helper.checkIsMobile() == true)
+	{
+		tbl.className = "homeGridMobile";
+	}
+	else
+	{
+		tbl.className = "homeGrid";
+	}
+
 	var tableHeaderRow = tbl.insertRow();					
 								
 	//var tableHeaderRow = document.createElement("tr");

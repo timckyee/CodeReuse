@@ -295,6 +295,21 @@ preload: function(preload) {
 		images[i] = new Image();
 		images[i].src = preload[i];
 	}
+},
+
+checkIsMobile: function() {
+
+	var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+	if(isMobile)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 }
 
 }
