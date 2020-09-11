@@ -297,17 +297,32 @@ preload: function(preload) {
 	}
 },
 
-checkIsMobile: function() {
+checkPlatform: function() {
 
-	var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+	var isIOS_safari = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-	if(isMobile)
+	var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+	var isAndroid = /Android/i.test(navigator.userAgent);
+
+	if(isIOS_safari == false && isIOS == false && isAndroid == false)
 	{
-		return true;
+		return "desktop";
 	}
 	else
+	if(isIOS_safari == true)
 	{
-		return false;
+		return "IOS_safari";
+	}
+	else
+	if(isIOS == true)
+	{
+		return "IOS";
+	}
+	else
+	if(isAndroid == true)
+	{
+		return "android";
 	}
 
 }

@@ -34,22 +34,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	var helper = new CodeReuse.Helper();
 
-	if(helper.checkIsMobile() == true)
-	{
-		if(tableHtmlObjectId == "tableHomeTenant")
-		{
-			tbl.className = "homeGridMobile";
-		}
-		else if(tableHtmlObjectId == "tableSuite")
-		{
-			tbl.className = "suiteGridMobile";
-		}
-		else if(tableHtmlObjectId == "tableTenant")
-		{
-			tbl.className = "tenantGridMobile";
-		}
-	}
-	else
+	var platform = helper.checkPlatform();
+
+	if(platform == "desktop")
 	{
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
@@ -64,6 +51,54 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			tbl.className = "tenantGrid";
 		}
 	}
+	else
+	if(platform == "IOS_safari")
+	{
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			tbl.className = "homeGridIOS_safari";
+		}
+		else if(tableHtmlObjectId == "tableSuite")
+		{
+			tbl.className = "suiteGridIOS_safari";
+		}
+		else if(tableHtmlObjectId == "tableTenant")
+		{
+			tbl.className = "tenantGridIOS_safari";
+		}
+	}
+	else
+	if(platform == "IOS")
+	{
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			tbl.className = "homeGridIOS";
+		}
+		else if(tableHtmlObjectId == "tableSuite")
+		{
+			tbl.className = "suiteGridIOS";
+		}
+		else if(tableHtmlObjectId == "tableTenant")
+		{
+			tbl.className = "tenantGridIOS";
+		}
+	}
+	else
+	if(platform == "android")
+	{
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			tbl.className = "homeGridMobile";
+		}
+		else if(tableHtmlObjectId == "tableSuite")
+		{
+			tbl.className = "suiteGridMobile";
+		}
+		else if(tableHtmlObjectId == "tableTenant")
+		{
+			tbl.className = "tenantGridMobile";
+		}
+	}	
 								
 	var tableHeaderRow = document.createElement("tr");
 
@@ -424,14 +459,24 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 	var helper = new CodeReuse.Helper();
 
-	if(helper.checkIsMobile() == true)
-	{
-		tbl.className = "homeGridMobile";
-	}
-	else
+	var platform = helper.checkPlatform();
+
+	if(platform == "desktop")
 	{
 		tbl.className = "homeGrid";
 	}
+	else if(platform == "IOS_safari")
+	{
+		tbl.className = "homeGridIOS_safari";
+	}
+	else if(platform == "IOS")
+	{
+		tbl.className = "homeGridIOS";
+	}	
+	else if(platform == "android")
+	{
+		tbl.className = "homeGridMobile";
+	}	
 
 	var tableHeaderRow = tbl.insertRow();					
 								
