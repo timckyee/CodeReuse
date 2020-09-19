@@ -61,6 +61,28 @@ CodeReuse.HomeTenantGrid.prototype = {
 		return this.gridIdField;
 	},
 
+	getHomeGridPrimaryKey: function() {
+
+		var table = document.getElementById(this.tableHtmlObjectId);
+
+		var row;
+
+		for(var i=1; i<table.rows.length; i++)
+		{
+			row = table.rows[i];
+			
+			if(row.className == "tableHover highlightRow")
+			{
+				break;
+			}
+		}
+
+		var primaryKey = row.cells[1].innerText;
+
+		return primaryKey;
+
+	},
+
 	getAutocompleteInputs: function() {
 	
 		return this.autocomplete_inputs;

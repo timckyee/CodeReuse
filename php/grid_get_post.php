@@ -33,25 +33,165 @@
 		else
 		if($queryName == "gridtablehome") {
 			
-			$pageNumber = $_GET["pageNumber"];
+			/*
+			$mysqli->query("SET @row_number = 0; select num, fieldPrimaryKey, buildingName, tenantName, field1, field2, field3, field4 FROM (SELECT (@row_number:=@row_number + 1) AS num, fieldPrimaryKey, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName,field3,(select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName,field4,field1,field2 FROM tableGridGetPost2 ORDER BY (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) desc, fieldPrimaryKey asc) rowNumberEach");
+			*/
 
-			$pageSize = 4;
-
-			$limit = $pageSize;
-			$offset = ($pageNumber - 1) * $pageSize;
-
-			$primaryKeySortDirection = '';
-
-			if($_GET["sortDirection"] == "asc")
+			if($_GET["savePrimaryKey"] != "")
 			{
-				$primaryKeySortDirection = "asc";
-			}
-			else if($_GET["sortDirection"] == "desc")
-			{
-				$primaryKeySortDirection = "desc";
-			}
+				$savePrimaryKey = $_GET["savePrimaryKey"];
 
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"] . ", fieldPrimaryKey " . $primaryKeySortDirection . " limit " . $limit . " offset " . $offset);
+				//$savePrimaryKey = 4;
+
+				$sortColumn = $_GET["sortColumn"];
+				$sortDirection = $_GET["sortDirection"];
+
+				//$sortColumn = "fieldPrimaryKey";
+				//$sortDirection = "asc";
+				$orderBy;
+
+				if($sortColumn == "fieldPrimaryKey")
+				{
+					if($sortDirection == "asc")
+					{
+						$orderBy = "ORDER BY fieldPrimaryKey asc";
+					}
+					else if($sortDirection == "desc")
+					{
+						$orderBy = "ORDER BY fieldPrimaryKey desc";
+					}
+				}
+				else if($sortColumn == "buildingName")
+				{
+					if($sortDirection == "asc")
+					{
+						$orderBy = "ORDER BY (select buildingName from tableGridGetPostBuilding where buildingId = field3) asc";
+					}
+					else if($sortDirection == "desc")
+					{
+						$orderBy = "ORDER BY (select buildingName from tableGridGetPostBuilding where buildingId = field3) desc";
+					}
+				}
+				else if($sortColumn == "tenantName")
+				{
+					if($sortDirection == "asc")
+					{
+						$orderBy = "ORDER BY (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) asc";	
+					}
+					else if($sortDirection == "desc")
+					{
+						$orderBy = "ORDER BY (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) desc";	
+					}					
+				}
+				else if($sortColumn == "field1")
+				{
+					if($sortDirection == "asc")
+					{
+						$orderBy = "ORDER BY field1 asc";
+					}
+					else if($sortDirection == "desc")
+					{
+						$orderBy = "ORDER BY field1 desc";
+					}
+				}
+				else if($sortColumn == "field2")
+				{
+					if($sortDirection == "asc")
+					{
+						$orderBy = "ORDER BY field2 asc";
+					}
+					else if($sortDirection == "desc")
+					{
+						$orderBy = "ORDER BY field2 desc";
+					}
+				}				
+				
+
+				$fieldPrimaryKeySortSecondColumnDirection;
+				if($sortDirection == "asc")
+				{
+					$fieldPrimaryKeySortSecondColumnDirection = "asc";
+				}
+				else if($sortDirection == "desc")
+				{
+					$fieldPrimaryKeySortSecondColumnDirection = "desc";
+				}
+
+				$mysqli->query('SET @row_number = 0;');
+				$sql = "SELECT num, fieldPrimaryKey
+					FROM
+					(
+					SELECT (@row_number:=@row_number + 1) AS num, 
+					fieldPrimaryKey, 
+					(select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName,
+					field3,
+					(select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName,
+					field4,
+					field1,
+					field2
+				FROM
+					tableGridGetPost2 " . $orderBy . " ," . " fieldPrimaryKey " . $fieldPrimaryKeySortSecondColumnDirection .
+					") subqueryAddRowNumber
+				WHERE fieldPrimaryKey = " . $savePrimaryKey;
+
+				$stmt = $mysqli->prepare($sql);
+				$stmt->execute();
+
+				//$result = $stmt->fetch();
+
+				$result = $stmt->get_result();
+
+				$row = $result->fetch_object();
+
+				$rowNumber = $row->num;
+						
+				$pageSize = 4;
+				$pageNumber;
+
+				if($rowNumber % $pageSize > 0)
+				{
+					$pageNumber = floor($rowNumber / $pageSize) + 1;
+				}
+				else if($rowNumber % $pageSize == 0)
+				{
+					$pageNumber = floor($rowNumber / $pageSize);
+				}
+					
+				$limit = $pageSize;
+				$offset = ($pageNumber - 1) * $pageSize;
+
+				if($_GET["queryType"] == "getPageNumber")
+				{
+					echo $pageNumber;
+					return;
+				}
+				else
+				{
+					$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 order by " . $sortColumn . " " . $sortDirection . ", fieldPrimaryKey " . $fieldPrimaryKeySortSecondColumnDirection . " limit " . $limit . " offset " . $offset);
+				}
+			}
+			else
+			{
+				$pageNumber = $_GET["pageNumber"];
+
+				$pageSize = 4;
+
+				$limit = $pageSize;
+				$offset = ($pageNumber - 1) * $pageSize;
+
+				$primaryKeySortDirection = '';
+
+				if($_GET["sortDirection"] == "asc")
+				{
+					$primaryKeySortDirection = "asc";
+				}
+				else if($_GET["sortDirection"] == "desc")
+				{
+					$primaryKeySortDirection = "desc";
+				}
+
+				$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, field3 as buildingId, field4 as tenantId, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 order by " . $_GET["sortColumn"] . " " . $_GET["sortDirection"] . ", fieldPrimaryKey " . $primaryKeySortDirection . " limit " . $limit . " offset " . $offset);
+			}
 		}
 		/*
 		else

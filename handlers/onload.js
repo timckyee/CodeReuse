@@ -57,6 +57,7 @@ function init_gridGetPost_xmlHttpRequests() {
 	window.gridXmlHttpRequest = new XMLHttpRequest();
 	window.getXmlHttpRequest = new XMLHttpRequest();
 	window.postXmlHttpRequest = new XMLHttpRequest();
+	window.getPageNumberHttpRequest = new XMLHttpRequest();
 	
 }
 

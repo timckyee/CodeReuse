@@ -30,8 +30,9 @@ CodeReuse.Grid_Get_Post_Functions.prototype = {
  * @param {string} sortDirection the direction which is currently sorted
  * @param {string} pageNumber the page number of the table we are currently showing
  * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
+ * @param {string} getPageNumber the function to call to get the page number after saving the edit grid
  */
-grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId) {
+grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, getPageNumber) {
 
 	var divTable = document.getElementById(divElement);
 	
@@ -41,7 +42,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 
 			var response = JSON.parse(this.responseText);				
 						
-			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId);
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, getPageNumber);
 					
 		}
 	};
@@ -98,7 +99,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
  * @param {string} sortDirection the direction which is currently sorted
  * @param {string} pageNumber the page number of the table we are currently showing
  */
-gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, rowId, sortColumn, sortDirection, pageNumber) {
+gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, rowId, sortColumn, sortDirection, pageNumber, getPageNumber) {
 	
 	var divTable = document.getElementById(divElement);
 
@@ -122,12 +123,90 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
 	else
 	{
 		queryString = "queryName" + "=" + queryName + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection + "&" + "pageNumber=" + pageNumber;
+		
 	}
-
 		
 	window.gridXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.gridXmlHttpRequest.send();		
 		
+},
+
+/**
+ * Gets the page number after saving record
+ * @function
+ * @name Grid_Get_Post_Functions#getPageNumberAfterSaveRecord
+ * 
+ */
+getPageNumberAfterSaveRecord_set: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, setOrReturn) 
+{
+	window.getPageNumberHttpRequest.onreadystatechange = function() {
+				
+		if (this.readyState == 4 && this.status == 200) {
+
+			var response = JSON.parse(this.responseText);
+
+			document.getElementById("gridGetPostHomePagingPageNumber").value = response;
+					
+		}
+	};
+	
+	var queryString;
+	
+	queryString = "queryName" + "=" + queryName + "&" + "queryType" + "=" + queryType + "&" + "savePrimaryKey" + "=" + savePrimaryKeyValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
+
+	window.getPageNumberHttpRequest.open("GET", phpFile + "?" + queryString, true);
+	window.getPageNumberHttpRequest.send();
+},
+
+/**
+ * Gets the page number after saving record
+ * @function
+ * @name Grid_Get_Post_Functions#getPageNumberAfterSaveRecord
+ * 
+ */
+getPageNumberAfterSaveRecord_return: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, gridOrGridEdit) 
+{
+	window.getPageNumberHttpRequest.onreadystatechange = function() {
+				
+		if (this.readyState == 4 && this.status == 200) {
+
+			var response = JSON.parse(this.responseText);
+
+			//return response;
+			
+			var tenantModel = new CodeReuse.Tenant();
+			
+			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+			
+			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+			
+			var callback = new CodeReuse.Callback();
+
+			var column = localStorage.getItem("arraySortColumn");
+			var direction = localStorage.getItem("arraySortDirection");
+			
+			//var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
+
+			var pageNumber = response;
+
+			if(gridOrGridEdit == "gridEdit")
+			{
+				grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), savePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
+			} 
+			else if (gridOrGridEdit == "grid")
+			{
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, '');
+			}
+			
+		}
+	};
+	
+	var queryString;
+	
+	queryString = "queryName" + "=" + queryName + "&" + "queryType" + "=" + queryType + "&" + "savePrimaryKey" + "=" + savePrimaryKeyValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
+
+	window.getPageNumberHttpRequest.open("GET", phpFile + "?" + queryString, true);
+	window.getPageNumberHttpRequest.send();
 },
 
 /**
@@ -420,8 +499,10 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 						home_tenant_grid = new CodeReuse.HomeTenantGrid();
 			
 						var callback = new CodeReuse.Callback();
-			
-						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, htmlObjectPrimaryKeyValue);
+
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", htmlObjectPrimaryKeyValue, callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, htmlObjectPrimaryKeyValue, "getPageNumber");
+
+						//grid_get_post_functions.getPageNumberAfterSaveRecord(home_tenant_grid.getPhpFile(), "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
 
 						localStorage.setItem("editMode", "false");
 
