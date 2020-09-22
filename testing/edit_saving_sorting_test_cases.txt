@@ -1,0 +1,77 @@
+
+test case 1
+
+- refresh page
+- click on date second - primary key 2,4,6,8
+- click on edit 4
+- change date second to 04-aug-2019
+- click save - primary key 3,4,5,7 - page number 2 (2,6,8,1 - page number 1)
+- primary key 4 highlighted
+- click on edit 4
+- change date second to 01-aug-2019
+- click save - primary key 2,4,6,8 - page number 1 (1,3,5,7 - page number 2)
+- primary key 4 highlighted
+
+test case 2
+
+- refresh page
+- click on date second - primary key 2,4,6,8
+- click on edit 4
+- change date second to 04-aug-2019
+- click save - primary key 3,4,5,7 - page number 2 (2,6,8,1 - page number 1)
+- primary key 4 highlighted
+
+- click on edit 5
+- change date second to 01-aug-2019
+- click save - primary key 2,5,6,8 - page number 1 (1,3,4,7 - page number 2)
+- primary key 5 highlighted
+
+- go to page 2 click on edit 7
+- change date second to 01-aug-2019
+- click save - primary key 2,5,6,7 - page number 1 (8,1,3,4 - page number 2)
+- primary key 7 highlighted
+
+- click on edit 5
+- change date second to 04-aug-2019
+- click save - primark key 1,3,4,5 - page number 2 (2,6,7,8 - page number 1)
+- primary key 5 hightlighted
+
+test case 3
+
+- refresh page
+- click on date second - primary key 2,4,6,8
+- click on edit 4
+- change date second to 04-aug-2019
+- click save - primary key 3,4,5,7 - page number 2 (2,6,8,1 - page number 1)
+- primary key 4 highlighted
+
+- go to page 1 click on edit 2
+- change date second to 04-aug-2019
+- click save - primary key 6,8,1,2 - page number 1 (3,4,5,7 - page number 2)
+- primary key 2 highlighted
+
+- click on edit 2
+- change date second to 01-aug-2019
+- click save - primary key 2,6,8,1 - page number 1 (3,4,5,7 - page number 2)
+- primark key 2 highlighted
+
+test case 4
+
+- refresh page
+- click on date second two times - primary key 7,5,3,1
+- click on edit 7
+- change date second to 01-aug-2019
+- click save - primary key 7,6,4,2 - page number 2 (5,3,1,8 - page number 1)
+- primary key 7 highlighted
+
+- click on edit 4
+- change date second to 04-aug-2019
+- click save - primary key 5,4,3,1 - page number 1 (8,7,6,2 - page number 2)
+- primary key 4 highlighted
+
+- go to page 2 click on edit 7
+- change date second to 04-aug-2019
+- click save - primary key 7,5,4,3 - page number 1 (1,8,6,2 - page number 2)
+- primary key 7 highlighted
+
+- click on date second - primary key 2,6,8,1 - page number 1 (3,4,5,7 - page number 2)

@@ -137,7 +137,7 @@ gridEdit: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, grid
  * @name Grid_Get_Post_Functions#getPageNumberAfterSaveRecord
  * 
  */
-getPageNumberAfterSaveRecord_set: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, setOrReturn) 
+getPageNumberServer_set: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, gridColumnsInfo, sortTableHtmlObjectId, refreshGrid) 
 {
 	window.getPageNumberHttpRequest.onreadystatechange = function() {
 				
@@ -145,8 +145,26 @@ getPageNumberAfterSaveRecord_set: function(phpFile, queryName, queryType, savePr
 
 			var response = JSON.parse(this.responseText);
 
-			document.getElementById("gridGetPostHomePagingPageNumber").value = response;
-					
+			var pageNumber = response;
+
+			document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumber;
+
+			/*
+
+			if(refreshGrid == "true")
+			{
+				var tenantModel = new CodeReuse.Tenant();
+			
+				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+				
+				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+				
+				var callback = new CodeReuse.Callback();
+
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, '');				
+			}
+
+			*/
 		}
 	};
 	
@@ -164,7 +182,7 @@ getPageNumberAfterSaveRecord_set: function(phpFile, queryName, queryType, savePr
  * @name Grid_Get_Post_Functions#getPageNumberAfterSaveRecord
  * 
  */
-getPageNumberAfterSaveRecord_return: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, gridOrGridEdit) 
+getPageNumberServer_return: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, gridOrGridEdit) 
 {
 	window.getPageNumberHttpRequest.onreadystatechange = function() {
 				
@@ -185,19 +203,86 @@ getPageNumberAfterSaveRecord_return: function(phpFile, queryName, queryType, sav
 			var column = localStorage.getItem("arraySortColumn");
 			var direction = localStorage.getItem("arraySortDirection");
 			
-			//var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
+			var pageNumberGridEdit = response;
 
-			var pageNumber = response;
+			var pageNumberGrid = localStorage.getItem("homeTenantGridPageNumber");
 
 			if(gridOrGridEdit == "gridEdit")
 			{
-				grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), savePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
+				alert('gridEdit:' + pageNumberGridEdit);
+
+				document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumberGridEdit;
+
+				//localStorage.setItem("homeTenantGridPageNumber",pageNumberGridEdit);
+
+				//alert(localStorage.getItem("homeTenantGridPageNumber"));
+
+			}
+			else if (gridOrGridEdit == "grid")
+			{
+				alert('grid:' + pageNumberGrid);
+
+				document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumberGrid;
+			}
+
+
+			//document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumber;
+
+			//alert(pageNumber);
+
+			if(gridOrGridEdit == "gridEdit")
+			{
+				grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), savePrimaryKeyValue, sortColumn, sortDirection, pageNumberGridEdit);
 			} 
 			else if (gridOrGridEdit == "grid")
 			{
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, '');
+				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, '');
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumberGrid, '');
 			}
+		}
+	};
+	
+	var queryString;
+	
+	queryString = "queryName" + "=" + queryName + "&" + "queryType" + "=" + queryType + "&" + "savePrimaryKey" + "=" + savePrimaryKeyValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
+
+	window.getPageNumberHttpRequest.open("GET", phpFile + "?" + queryString, true);
+	window.getPageNumberHttpRequest.send();
+},
+
+/**
+ * Gets the page number after saving record
+ * @function
+ * @name Grid_Get_Post_Functions#getPageNumberAfterSaveRecord
+ * 
+ */
+getPageNumberServerAfterSaveRecord_set: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, gridOrGridEdit) 
+{
+	window.getPageNumberHttpRequest.onreadystatechange = function() {
+				
+		if (this.readyState == 4 && this.status == 200) {
+
+			var response = JSON.parse(this.responseText);
+
+			//return response;
 			
+			var tenantModel = new CodeReuse.Tenant();
+			
+			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+			
+			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+			
+			var callback = new CodeReuse.Callback();
+
+			var column = localStorage.getItem("arraySortColumn");
+			var direction = localStorage.getItem("arraySortDirection");
+			
+			var pageNumberGridEdit = response;
+
+			localStorage.setItem("homeTenantGridPageNumber", pageNumberGridEdit);
+
+			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", savePrimaryKeyValue, callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumberGridEdit, savePrimaryKeyValue, "getPageNumber");
+			//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumberGrid, '');
 		}
 	};
 	
@@ -492,6 +577,13 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 					
 					if (this.readyState == 4 && this.status == 200) {
 				
+						var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
+
+						var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+						var savePageNumber = grid_get_post_function.getPageNumberServerAfterSaveRecord_set(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), "grid");						
+
+						/*
 						grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
 						tenantModel = new CodeReuse.Tenant();
@@ -501,6 +593,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 						var callback = new CodeReuse.Callback();
 
 						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", htmlObjectPrimaryKeyValue, callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, htmlObjectPrimaryKeyValue, "getPageNumber");
+						*/
 
 						//grid_get_post_functions.getPageNumberAfterSaveRecord(home_tenant_grid.getPhpFile(), "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
 

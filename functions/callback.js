@@ -368,7 +368,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 						var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
 
-						var savePageNumber = grid_get_post_function.getPageNumberAfterSaveRecord_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", tablePrimaryKeyValue, sortColumn, sortDirection, "gridEdit");
+						var savePageNumber = grid_get_post_function.getPageNumberServer_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", tablePrimaryKeyValue, sortColumn, sortDirection, "gridEdit");
 
 
 						//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
@@ -442,7 +442,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	{
 		var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
 
-		grid_get_post_function.getPageNumberAfterSaveRecord_set(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", highlightRowId, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
+		grid_get_post_function.getPageNumberServer_set(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", highlightRowId, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
 	}
 
 },
@@ -661,7 +661,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			
 					var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
 
-					var savePageNumber = grid_get_post_function.getPageNumberAfterSaveRecord_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", rowId, sortColumn, sortDirection, "gridEdit");
+					var savePageNumber = grid_get_post_function.getPageNumberServer_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", rowId, sortColumn, sortDirection, "gridEdit");
 					
 					//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);
 				}

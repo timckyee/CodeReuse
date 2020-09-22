@@ -88,7 +88,21 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 
 	//alert('sort: ' + sortColumn + ' ' + localStorage.getItem("arraySortDirection"));
 
-	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, '');
+	//var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions();
+
+	//grid_get_post_function.getPageNumberAfterSaveRecord_set(home_tenant_grid.getPhpFile(), "gridtablehome", "getPageNumber", "savePrimaryKey", home_tenant_grid.getHomeGridPrimaryKey(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), gridColumnsInfo, sortTableHtmlObjectId, "true");
+
+	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+
+	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+	var primaryKey = home_tenant_grid.getHomeGridPrimaryKey();
+
+	var savePageNumber = grid_get_post_functions.getPageNumberServer_return(home_tenant_grid.getPhpFile(), "gridtablehome", "getPageNumber", "savePrimaryKey", primaryKey, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), "grid");
+
+	//document.getElementById("gridGetPostHomePagingPageNumber").value = savePageNumber;
+
+	//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, sortTableHtmlObjectId, '', '', callback.gridCallback, '', "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber, '');
 
 }
 

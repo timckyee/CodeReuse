@@ -281,7 +281,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 		var primaryKey = home_tenant_grid.getHomeGridPrimaryKey();
 
-		var savePageNumber = grid_get_post_functions.getPageNumberAfterSaveRecord_return(home_tenant_grid.getPhpFile(), "gridtablehome", "getPageNumber", "savePrimaryKey", primaryKey, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), "grid");
+		var savePageNumber = grid_get_post_functions.getPageNumberServer_return(home_tenant_grid.getPhpFile(), "gridtablehome", "getPageNumber", "savePrimaryKey", primaryKey, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), "grid");
 
 		//var tenantModel = new CodeReuse.Tenant();
 		
