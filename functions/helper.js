@@ -254,7 +254,8 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 	modal.style.display = "block";
 	
 	var buttonOK = document.getElementById("buttonOK");
-	
+	buttonOK.className = "noHover";
+
 	buttonOK.onclick = function() {
 
 		modal.style.display = "none";
@@ -265,7 +266,8 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 	};
 	
 	var buttonCancel = document.getElementById("buttonCancel");
-	
+	buttonCancel.className = "noHover";
+
 	buttonCancel.onclick = function() {
 
 		localStorage.setItem("editMode", "false");
