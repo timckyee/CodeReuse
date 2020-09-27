@@ -209,7 +209,7 @@ getPageNumberServer_return: function(phpFile, queryName, queryType, savePrimaryK
 
 			if(gridOrGridEdit == "gridEdit")
 			{
-				alert('gridEdit:' + pageNumberGridEdit);
+				//alert('gridEdit:' + pageNumberGridEdit);
 
 				document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumberGridEdit;
 
@@ -220,7 +220,7 @@ getPageNumberServer_return: function(phpFile, queryName, queryType, savePrimaryK
 			}
 			else if (gridOrGridEdit == "grid")
 			{
-				alert('grid:' + pageNumberGrid);
+				//alert('grid:' + pageNumberGrid);
 
 				document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumberGrid;
 			}

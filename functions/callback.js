@@ -324,6 +324,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			//editButton.value = "edit";
 			editButton.innerText = "edit";
 			editButton.id = "editButton";
+			editButton.className = "noHover";
 			editButton.style.width = "50px";
 
 			var tenantModel = new CodeReuse.Tenant();
@@ -618,6 +619,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		editButton.type = "button";
 		editButton.innerText = "edit";
 		editButton.id = "editButton";
+		editButton.className = "noHover";
 		editButton.style.width = "50px";
 
 		var tenantModel = new CodeReuse.Tenant();
@@ -765,7 +767,6 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 
 	//tableRowNumber = tableRowNumber - 1;
 
-
 	var tableEdit = tableHtml;
 
 	var rowReplace;
@@ -773,20 +774,13 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	for(tableEditCount=0; tableEditCount<tableEdit.rows.length; tableEditCount++)
 	{
 		row = tableEdit.rows[tableEditCount + 1];
-		if(row != undefined)
+
+		if(row.cells[1].innerText == fieldPrimaryKey)
 		{
-			if(row.cells[1].innerText == fieldPrimaryKey)
-			{
-				rowReplace = tableEdit.rows[tableEditCount + 1];
-				break;
-			}
+			rowReplace = tableEdit.rows[tableEditCount + 1];
+			break;
 		}
 	}
-
-	if(rowReplace == undefined)
-	{	
-		return;
-	}	
 
 	//var rowReplace = tableEdit.rows[tableRowNumber + 1];
 
@@ -805,6 +799,7 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	//saveButton.value = "save";
 	saveButton.innerText = "save";
 	saveButton.id = "saveButton";
+	saveButton.className = "noHover";
 	saveButton.style.width = "50px";
 	
 	var tenantModel = new CodeReuse.Tenant();

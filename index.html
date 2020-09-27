@@ -176,6 +176,14 @@ sorting header icon ellipsis
     overflow: auto;
 }
 
+
+.noHover
+{
+	outline: none;
+	border: 1px solid black;
+	border-radius: 4px;
+}
+
 .pagingElements
 {
 	padding: 10px;
@@ -263,8 +271,8 @@ sorting header icon ellipsis
 	<div id="gridGetPostSuite" style="display:block">
 	</div>
 	<br>
-	<input type="submit" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
-	<input type="submit" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); }" />
+	<input class="noHover" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
+	<input class="noHover" type="submit" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); }" />
 	
 	</center>
 
@@ -333,8 +341,8 @@ sorting header icon ellipsis
 	<div id="gridGetPost" style="display:block"></div>
 	<br>
 	
-	<input type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
-	<input type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }" />
+	<input class="noHover" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
+	<input class="noHover" type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }" />
 	
 	</center>
 
