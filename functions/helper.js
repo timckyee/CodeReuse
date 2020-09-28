@@ -254,7 +254,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 	modal.style.display = "block";
 	
 	var buttonOK = document.getElementById("buttonOK");
-	buttonOK.className = "noHover";
+	buttonOK.className = "button";
 
 	buttonOK.onclick = function() {
 
@@ -266,7 +266,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 	};
 	
 	var buttonCancel = document.getElementById("buttonCancel");
-	buttonCancel.className = "noHover";
+	buttonCancel.className = "button";
 
 	buttonCancel.onclick = function() {
 

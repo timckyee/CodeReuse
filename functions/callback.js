@@ -319,12 +319,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			cell.value = response[tableRowCount]["fieldPrimaryKey"];
 			
-			editButton = document.createElement("button");
-			editButton.type = "button";
-			//editButton.value = "edit";
+			editButton = document.createElement("a");
+			//editButton.type = "button";
 			editButton.innerText = "edit";
-			editButton.id = "editButton";
-			editButton.className = "noHover";
+			editButton.id = "editLink";
+			editButton.className = "underline";
 			editButton.style.width = "50px";
 
 			var tenantModel = new CodeReuse.Tenant();
@@ -615,11 +614,11 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		
 		cell.value = response[tableRowCount]["fieldPrimaryKey"];
 		
-		editButton = document.createElement("button");
-		editButton.type = "button";
+		editButton = document.createElement("a");
+		//editButton.type = "button";
 		editButton.innerText = "edit";
-		editButton.id = "editButton";
-		editButton.className = "noHover";
+		editButton.id = "editLink";
+		editButton.className = "underline";
 		editButton.style.width = "50px";
 
 		var tenantModel = new CodeReuse.Tenant();
@@ -794,12 +793,11 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 
 	cell.value = fieldPrimaryKey;
 
-	saveButton = document.createElement("button");
-	saveButton.type = "button";
-	//saveButton.value = "save";
+	saveButton = document.createElement("a");
+	//saveButton.type = "button";
 	saveButton.innerText = "save";
-	saveButton.id = "saveButton";
-	saveButton.className = "noHover";
+	saveButton.id = "saveLink";
+	saveButton.className = "underline";
 	saveButton.style.width = "50px";
 	
 	var tenantModel = new CodeReuse.Tenant();

@@ -177,12 +177,18 @@ sorting header icon ellipsis
 }
 
 
-.noHover
+.button
 {
 	outline: none;
 	border: 1px solid black;
 	border-radius: 4px;
 }
+
+.button:hover
+{
+	background-color: #e0e0e0;
+}
+
 
 .pagingElements
 {
@@ -213,7 +219,7 @@ sorting header icon ellipsis
 
 <center><div id="gridGetPostHomePaging">
 <span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('left',document.getElementById('gridGetPostHomePagingPageNumber').value)"><<</span>
-<span class="pagingElements">Page Number</span></span><input id="gridGetPostHomePagingPageNumber"/><button class="noHover" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(document.getElementById('gridGetPostHomePagingPageNumber').value)">Go</button>
+<span class="pagingElements">Page Number</span></span><input id="gridGetPostHomePagingPageNumber"/><button class="button" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(document.getElementById('gridGetPostHomePagingPageNumber').value)">Go</button>
 <span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('right',document.getElementById('gridGetPostHomePagingPageNumber').value)">>></span>
 </div>
 </center>
@@ -271,8 +277,8 @@ sorting header icon ellipsis
 	<div id="gridGetPostSuite" style="display:block">
 	</div>
 	<br>
-	<input class="noHover" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
-	<input class="noHover" type="submit" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); }" />
+	<input class="button" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
+	<input class="button" type="submit" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); }" />
 	
 	</center>
 
@@ -341,8 +347,8 @@ sorting header icon ellipsis
 	<div id="gridGetPost" style="display:block"></div>
 	<br>
 	
-	<input class="noHover" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
-	<input class="noHover" type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }" />
+	<input class="button" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
+	<input class="button" type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }" />
 	
 	</center>
 
