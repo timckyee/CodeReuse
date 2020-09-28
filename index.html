@@ -1,21 +1,402 @@
-<script>
+<html>
 
-function htmlobjectsfunction() {
+<head>
 
-    alert('testing');
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/calendar.css">
+
+<style>	
+
+div.tabOptions {
+	
+	text-align: center;
+	padding: 25px;
+		
+}
+	
+div.tabOptions:hover {
+	
+	background-color: lightgray;
+	cursor: default;
+	user-select: none;
 
 }
-</script>
 
-<table>
-<tr>
-<td height="25" style="padding-left: 10px;"><button type="button" id="saveButton" style="width: 50px;" onclick="htmlobjectsfunction()">save</button></td><td class="grid"><span id="inputPrimaryKey_grid">1</span></td><td class="grid"><select id="building_option_grid"><option></option><option>building</option><option>building2</option></select></td><td class="grid"><input id="tenant_input_grid" rowattributevalue="1" width="200" style="position: relative; z-index: 1; background-color: white;"></td><td class="grid"><input id="inputCalendar_grid" style="position: relative; z-index: 1; background-color: white; width: 142px;"></td><td class="grid"><input id="inputCalendarTesting_grid" width="142" style="position: relative; z-index: 1; background-color: white;"></td>
-</tr>
-</table>
+div.tabOptionsSelect {
+	
+	text-align: center;
+	padding: 25px;	
+	background-color: lightgray;
+		
+}
+
+/*
+div.pageContents {
+	
+	border: 1px solid black;
+	border-left: none;
+	width: 100%;
+	height: 100%;
+		
+}
+*/
+
+div.pageContentsForm {
+
+	top: 140px;
+	border: 1px solid black;
+	border-left: none;
+	width: 100%;
+	height: 100%;
+		
+}
+
+.underline {
+	padding-left: 10px;
+    text-decoration: underline;
+   	cursor: default;
+	user-select: none;
+	text-align: left;
+}
+
+/*
+table {
+  table-layout: fixed;
+  width: 70%;
+}
+*/
+
+table.homeGrid {
+  table-layout: fixed;
+  width: 70%;
+}
+
+table.homeGridIOS_safari {
+  table-layout: fixed;
+  width: 90%;
+}
+
+table.homeGridIOS {
+  table-layout: fixed;
+  width: 95%;
+}
+
+table.homeGridMobile {
+  table-layout: fixed;
+  width: 95%;
+}
+
+table.tenantGrid {
+  table-layout: fixed;
+  width: 57%;
+}
+
+table.tenantGridIOS_safari {
+  table-layout: fixed;
+  width: 70%;
+}
+
+table.tenantGridIOS {
+  table-layout: fixed;
+  width: 70%;
+}
+
+table.tenantGridMobile {
+  table-layout: fixed;
+  width: 70%;
+}
+
+table.suiteGrid {
+  table-layout: fixed;
+  width: 45%;
+}
+
+table.suiteGridIOS_safari {
+  table-layout: fixed;
+  width: 57%;
+}
+
+table.suiteGridIOS {
+  table-layout: fixed;
+  width: 57%;
+}
+
+table.suiteGridMobile {
+  table-layout: fixed;
+  width: 57%;
+}
 
 
+table.autocomplete {
+  table-layout: fixed;
+  width: 140px;
+}
+
+table.formGrid {
+  table-layout: fixed;
+  width: 40%;
+}
+
+td.grid {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+/*
+
+sorting header icon ellipsis
+
+*/
+
+.description {
+	display: flex;
+  	align-items: center;
+  	white-space: nowrap;
+  	overflow: hidden;
+}
+
+.text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  padding: 2px;
+}
 
 
+.table-wrapper
+{
+	height: 40%;
+    overflow: auto;
+}
 
 
+.button
+{
+	outline: none;
+	border: 1px solid black;
+	border-radius: 4px;
+}
 
+.button:hover
+{
+	background-color: rgb(220,220,220)
+}
+
+
+.pagingElements
+{
+	padding: 10px;
+}
+
+</style>
+
+</head>
+
+<body>
+	
+<div id="tabPanel" style="border:1px solid black; float:left; height:100%" onselectstart='return false;'>
+
+<div id="tabHome" class="tabOptionsSelect" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Home Tab 1</div>
+<div id="tabSuites" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Suites Tab 2</div>
+<div id="tabTenants" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Tenants Tab 3</div>
+<div id="tabRentRollAndReports" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this)">Rent Roll & Reports Tab 4</div>
+	
+</div>
+	
+<div id="pageContentHome" class="pageContentsForm" style="display:block" onselectstart='return false;'>
+<br>
+<br>
+<br>
+<br>
+<center><div id="gridGetPostHome" class="table-wrapper" style="display:block"></div></center>
+
+<center><div id="gridGetPostHomePaging">
+<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('left',document.getElementById('gridGetPostHomePagingPageNumber').value)"><<</span>
+<span class="pagingElements">Page Number</span></span><input id="gridGetPostHomePagingPageNumber"/><button class="button" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(document.getElementById('gridGetPostHomePagingPageNumber').value)">Go</button>
+<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('right',document.getElementById('gridGetPostHomePagingPageNumber').value)">>></span>
+</div>
+</center>
+
+</div>
+
+<div id="pageContentSuites" class="pageContentsForm" style="display:none;" onselectstart='return false;'>	
+	
+	<br>
+	<br>
+	<br>
+	<br>
+	<center>
+	
+	<span>select</span>
+	<select id="selectBuildingSuite" onchange="if(this.value == ''){ document.getElementById('gridGetPostSuite').style.display = 'none'; } else { document.getElementById('gridGetPostSuite').style.display = 'block'; controller.refreshSelectSuiteGrid();controller.resetSuiteFields(); }">
+			<option value="" selected>None</option>
+			<option value="1">building</option>
+			<option value="2">building2</option>
+	</select>
+	<br>
+	<br>
+	
+	<table class="formGrid">
+
+	<tr>
+	<td><span>primary key</span></td>
+	<td><input "text" id="inputPrimaryKeySuite" readonly /></td>
+	</tr>
+
+	<tr>
+	<td><span>building</span></td>
+	<td>
+	<select id="inputBuildingId">
+			<option value ""</option>
+			<option value="1">building</option>
+			<option value="2">building2</option>
+			</select>			
+	</td>
+	</tr>
+
+	<tr>
+	<td><span>suite number</span></td>
+	<td><input "text" id="inputSuiteNumber" /></td>
+	</tr>
+
+	<tr>
+	<td><span>location</span></td>
+	<td><input "text" id="inputLocation" /></td>
+	</tr>
+	
+	</table>
+		
+	<br>
+	<div id="gridGetPostSuite" style="display:block">
+	</div>
+	<br>
+	<input class="button" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
+	<input class="button" type="submit" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); }" />
+	
+	</center>
+
+</div>
+
+<div id="pageContentTenants" class="pageContentsForm" style="display:none" onselectstart='return false;'>
+	
+	<br>
+	<br>
+	<br>
+	<br>
+	<center>
+
+	<span>select</span>
+	<select id="selectBuildingTenant" onchange="if(this.value == ''){ document.getElementById('gridGetPost').style.display = 'none'; } else { document.getElementById('gridGetPost').style.display = 'block'; controller.refreshSelectTenantGrid();controller.resetTenantFields(); }">
+		<option value="" selected>None</option>
+		<option value="1">building</option>
+		<option value="2">building2</option>
+	</select>
+	<br>
+	<br>
+	
+	<table class="formGrid">
+	
+	<tr>
+	<td><span>primary key</span></td>
+	<td><input "text" id="inputPrimaryKey" readonly /></td>
+	</tr>
+
+	<!--
+	<tr>
+	<td><span>input</span></td>
+    <td><input type="text" name="building" id="building_input" style="position: relative; z-index: 1; background-color: white; width: 200"></td>
+    </tr>
+    -->
+	
+	<tr>
+	<td><span>building</span></td>
+	<td><select id="building_option">
+		<option value ""</option>
+		<option value="1">building</option>
+		<option value="2">building2</option>
+		</select>	
+	</td>	
+	</tr>
+	
+	<tr>
+	<td><span>tenant</span></td>
+    <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 142" /></td>
+	</tr>
+    
+    <tr>
+	<td><span>field date</span></td>
+	<td><input type="text" id="inputCalendar" style="position: relative; z-index: 1; background-color: white; width: 142" /></td>
+    </tr>
+
+	<tr>
+	<td><span>field date</span></td>
+	<td><input type="text" id="inputCalendarTesting" style="position: relative; z-index: 1; background-color: white; width: 142" /></td>
+	</tr>
+
+	</table>
+
+	<br>
+	<br>
+	<div id="gridGetPost" style="display:block"></div>
+	<br>
+	
+	<input class="button" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
+	<input class="button" type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }" />
+	
+	</center>
+
+</div>
+
+<div id="pageContentRentRollAndReports" class="pageContents" style="display:none">
+<br>
+<span>&nbsp&nbsp Rent Roll & Reports</span>
+</div>
+
+<div id="tenantSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div>
+<div id="buildingSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div>
+<div id="calendarId" style="position: absolute; display: none; z-index: 2; background-color: white" onselectstart='return false;'></div>
+
+<div onselectstart='return false;' id="myModal" class="modal">
+
+	<div class="modal-content">
+  
+	  <center>
+	  <span id="popupText"></span>
+	  <br>
+	  <br>
+	  <button id="buttonOK">OK</button>
+	  <br>
+	  <button id="buttonCancel">Cancel</button>
+	  </center>
+  
+	</div>
+  
+</div>
+
+<script src="functions/helper.js" type="text/javascript"></script>
+<script src="handlers/onload.js" type="text/javascript"></script>
+<script src="grids/HomeTenantGrid.js" type="text/javascript"></script>
+<script src="functions/config.js" type="text/javascript"></script>
+<script src="functions/tabs.js" type="text/javascript"></script>
+<script src="controller/controller.js" type="text/javascript"></script>
+<script src="objects/Suite.js" type="text/javascript"></script>
+<script src="objects/Tenant.js" type="text/javascript"></script>
+<script src="grids/TenantGrid.js" type="text/javascript"></script>
+<script src="grids/SuiteGrid.js" type="text/javascript"></script>	
+<script src="functions/grid_get_post_functions.js" type="text/javascript"></script>
+<script src="functions/sort.js" type="text/javascript"></script>
+<script src="functions/calendar.js" type="text/javascript"></script>
+<script src="functions/autocomplete.js" type="text/javascript"></script>
+<script src="handlers/onclickhandler.js" type="text/javascript"></script>
+<script src="functions/callback.js" type="text/javascript"></script>
+
+</body>
+
+</html>
