@@ -7,12 +7,18 @@ table {
 .tableHover:hover {
 	
 	background-color: lightgray;
-
+	cursor: pointer;
 }
 
 td {
 	
 	border: 1px solid black;
+	
+}
+
+.rowClickCursor {
+	
+	cursor: pointer;
 	
 }
 
@@ -25,7 +31,7 @@ tr.autocomplete:hover {
 .highlightRow {
 
 	background-color: lightgray;
-
+	cursor: pointer;
 }
 
 /* The Modal (background) */

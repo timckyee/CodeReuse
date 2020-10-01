@@ -64,11 +64,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 	{
 		if(additionalArgs != "")
 		{
-			queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue;
-		}
-		else
-		{
-			queryString = "queryName" + "=" + queryName;
+			queryString = "queryName" + "=" + queryName + "&" + additionalArgs + "=" + additionalArgsValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
 		}
 	}
 

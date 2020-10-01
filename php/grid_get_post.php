@@ -24,10 +24,23 @@
 		$queryName = $_GET["queryName"];
 		
 		if($queryName == "gridtable") {
-										
+								
+			$sortColumn = $_GET["sortColumn"];
+			$sortDirection = $_GET["sortDirection"];
+
 			$buildingId = $_GET["building"];
 			
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId . " order by fieldPrimaryKey asc");
+			$fieldPrimaryKeySortSecondColumnDirection;
+			if($sortDirection == "asc")
+			{
+				$fieldPrimaryKeySortSecondColumnDirection = "asc";
+			}
+			else if($sortDirection == "desc")
+			{
+				$fieldPrimaryKeySortSecondColumnDirection = "desc";
+			}			
+
+			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId . " order by " . $sortColumn . " " . $sortDirection . ", fieldPrimaryKey " . $fieldPrimaryKeySortSecondColumnDirection);
 						
 		}
 		else
@@ -227,8 +240,22 @@
 		}
 		else if($queryName == "suites") {
 						
-	        $result = $mysqli->query("select suiteId, suiteNumber, tableGridGetPostSuite.buildingId, buildingName, location from tableGridGetPostSuite inner join tableGridGetPostBuilding on tableGridGetPostSuite.buildingId = tableGridGetPostBuilding.buildingId where tableGridGetPostBuilding.buildingId = " . $_GET["building"] . " order by suiteId asc");
+			$sortColumn = $_GET["sortColumn"];
+			$sortDirection = $_GET["sortDirection"];
+
+			$buildingId = $_GET["building"];
 			
+			$fieldPrimaryKeySortSecondColumnDirection;
+			if($sortDirection == "asc")
+			{
+				$fieldPrimaryKeySortSecondColumnDirection = "asc";
+			}
+			else if($sortDirection == "desc")
+			{
+				$fieldPrimaryKeySortSecondColumnDirection = "desc";
+			}
+			
+			$result = $mysqli->query("select suiteId, suiteNumber, tableGridGetPostSuite.buildingId, buildingName, location from tableGridGetPostSuite inner join tableGridGetPostBuilding on tableGridGetPostSuite.buildingId = tableGridGetPostBuilding.buildingId where tableGridGetPostBuilding.buildingId = " . $buildingId . " order by " . $sortColumn . " " . $sortDirection . ", suiteId " . $fieldPrimaryKeySortSecondColumnDirection);
 		}		
 		else if($queryName == "tenants") {
 

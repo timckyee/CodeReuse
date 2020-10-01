@@ -60,14 +60,47 @@ CodeReuse.SuiteGrid.prototype = {
 		return this.columns;
 	},
 	
+	getSuiteSelectedRowId: function() {
+
+		var table = document.getElementById(this.tableHtmlObjectId);
+
+		if(table == null)
+		{
+			return;
+		}
+
+		var row;
+
+		for(var i=1; i<table.rows.length; i++)
+		{
+			row = table.rows[i];
+			
+			if(row.className == "tableHover highlightRow")
+			{
+				break;
+			}
+		}
+
+		var primaryKey = row.cells[0].innerText;
+
+		return primaryKey;
+
+	},
+
 	refreshSuiteGrid: function(phpFile, fieldsInfo) {
 						
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var callback = new CodeReuse.Callback();
 				
-		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)			
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", '' ,'', '', '');
+		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)
+		{
+			var sortColumn = localStorage.getItem("arraySortColumn_suite");
+
+			var sortDirection = localStorage.getItem("arraySortDirection_suite");
+
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', this.getSuiteSelectedRowId());
+		}
 	},
 	
 	refreshSelectSuiteGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
@@ -80,11 +113,11 @@ CodeReuse.SuiteGrid.prototype = {
 			
 			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)
 			{
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", '', '', '', '');
-			
-				localStorage.setItem("arraySortColumn_suite", "suiteId");
-	
-				localStorage.setItem("arraySortDirection_suite", "asc");
+				var sortColumn = localStorage.getItem("arraySortColumn_suite");
+
+				var sortDirection = localStorage.getItem("arraySortDirection_suite");
+
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', this.getSuiteSelectedRowId());
 			}
 		}
 		

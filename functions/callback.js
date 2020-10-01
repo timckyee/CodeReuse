@@ -264,7 +264,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	tbl.appendChild(tableHeaderRow);
 
-
 	for(tableRowCount=0; tableRowCount<response.length; tableRowCount++)
 	{
 			
@@ -274,13 +273,23 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		{
 			row.className = "tableHover";
 		}
-		
-		if(highlightRowId != '')
+
+		if(highlightRowId != '' && highlightRowId != undefined)
 		{
-			if(response[tableRowCount]["fieldPrimaryKey"] == highlightRowId)
+			if(tableHtmlObjectId == "tableSuite")
 			{
-				row.className = "tableHover highlightRow";
+				if(response[tableRowCount]["suiteId"] == highlightRowId)
+				{
+					row.className = "tableHover highlightRow";
+				}
 			}
+			else if(tableHtmlObjectId == "tableTenant")
+			{
+				if(response[tableRowCount]["fieldPrimaryKey"] == highlightRowId)
+				{
+					row.className = "tableHover highlightRow";
+				}
+			}	
 		}
 
 		row.onclick = function(rowValues) {
@@ -302,7 +311,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
 				}
 
-				rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo); 
+				rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo, tableHtmlObjectId); 
 			}
 		};
 			
@@ -324,6 +333,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			editButton.innerText = "edit";
 			editButton.id = "editLink";
 			editButton.className = "underline";
+			editButton.style.cursor = "pointer";
 			editButton.style.width = "50px";
 
 			var tenantModel = new CodeReuse.Tenant();
@@ -619,6 +629,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 		editButton.innerText = "edit";
 		editButton.id = "editLink";
 		editButton.className = "underline";
+		editButton.style.cursor = "pointer";
 		editButton.style.width = "50px";
 
 		var tenantModel = new CodeReuse.Tenant();
@@ -798,6 +809,7 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	saveButton.innerText = "save";
 	saveButton.id = "saveLink";
 	saveButton.className = "underline";
+	saveButton.style.cursor = "pointer";
 	saveButton.style.width = "50px";
 	
 	var tenantModel = new CodeReuse.Tenant();

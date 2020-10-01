@@ -9,9 +9,25 @@ TenantHomeGridOnClickHandler: function(phpFile, row, fieldsInfo, gridColumnsInfo
 },
 
 
-SuiteGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInfo) {
+SuiteGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInfo, tableHtmlObjectId) {
 			
 	//var rowAttributeValue = row.attributes["gridIdField"].value;
+
+	var tableSuite = document.getElementById(tableHtmlObjectId);
+	var row;
+
+	for(var i=0; i<tableSuite.rows.length; i++)
+	{
+		row = tableSuite.rows[i];
+		if(row.cells[0].innerText == gridRowId)
+		{
+			row.className = "tableHover highlightRow";
+		}
+		else
+		{
+			row.className = "rowClickCursor";
+		}
+	}
 
 	var suiteModel = new CodeReuse.Suite();
 	
@@ -25,9 +41,25 @@ SuiteGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInf
 	
 },
 
-TenantGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInfo) {
+TenantGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInfo, tableHtmlObjectId) {
 		
 	//var rowAttributeValue = row.attributes["gridIdField"].value;
+
+	var tableTenant = document.getElementById(tableHtmlObjectId);
+	var row;
+
+	for(var i=0; i<tableTenant.rows.length; i++)
+	{
+		row = tableTenant.rows[i];
+		if(row.cells[0].innerText == gridRowId)
+		{
+			row.className = "tableHover highlightRow";
+		}
+		else
+		{
+			row.className = "rowClickCursor";
+		}
+	}
 
 	var tenantModel = new CodeReuse.Tenant();
 	
