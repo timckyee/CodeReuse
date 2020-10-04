@@ -305,6 +305,19 @@ preload: function(preload) {
 	}
 },
 
+resetRowHighlight: function(tableHtmlObjectId) {
+
+	var tableReset = document.getElementById(tableHtmlObjectId);
+	var row;
+
+	for(var i=0; i<tableReset.rows.length; i++)
+	{
+		row = tableReset.rows[i];
+		row.className = "rowClickCursor";
+	}	
+
+},
+
 checkPlatform: function() {
 
 	var isIOS_safari = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);

@@ -92,7 +92,7 @@ CodeReuse.TenantGrid.prototype = {
 
 	},
 
-	refreshTenantGrid: function(phpFile, fieldsInfo) {
+	refreshTenantGrid: function(phpFile, fieldsInfo, highlightId) {
 
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
@@ -104,7 +104,7 @@ CodeReuse.TenantGrid.prototype = {
 
 			var sortDirection = localStorage.getItem("arraySortDirection_tenant");
 
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', this.getTenantSelectedRowId());
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId);
 		}
 	},
 	

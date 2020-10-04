@@ -372,8 +372,9 @@ get_populateGrid: function(phpFile, divElement, queryName, htmlObjectPrimaryKeyV
  * @param {Array} fieldsInfo form object array of fields
  * @param {Array} arrayOldValuesTable array of old values before the update. is set to the new values after an update.
  * @param {function} refreshGridCallback refresh grid callback when the XMLHttpRequest post method returns
+ * @param {string} tableHtmlObjectId table name of the form grid
  */
-post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback)
+post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback, tableHtmlObjectId)
 {		
 	var updateString = "";
 	
@@ -438,8 +439,20 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 							arrayOldValuesTable[fieldsInfo[update].htmlObjectId] = htmlObjectFieldsValuesUpdate[update];
 						}
 						
+						var suiteGrid = new CodeReuse.SuiteGrid();
+						var tenantGrid = new CodeReuse.TenantGrid();
+
+						if(tableHtmlObjectId == suiteGrid.getTableHtmlObjectId())
+						{
+							highlightId = suiteGrid.getSuiteSelectedRowId();
+						}
+						else if(tableHtmlObjectId == tenantGrid.getTableHtmlObjectId())
+						{
+							highlightId = tenantGrid.getTenantSelectedRowId();
+						}
+						
 						if(refreshGridCallback != undefined)
-							refreshGridCallback();
+							refreshGridCallback(highlightId);
 						
 					}
 				}
@@ -701,8 +714,10 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 							arrayOldValuesTable[fieldsInfo[insert].htmlObjectId] = htmlObjectFieldsValuesInsert[insert];
 					}		
 					
+					var highlightId = insertId;
+
 					if(refreshGridCallback != undefined)
-						refreshGridCallback();
+						refreshGridCallback(highlightId);
 		
 				}
 			}	

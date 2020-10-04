@@ -1,5 +1,5 @@
 CodeReuse.Tenant = function() {
-		
+	
 	this.fieldPrimaryKey;
 	this.field1;
 	this.field2;
@@ -101,11 +101,11 @@ CodeReuse.Tenant.prototype = {
 		
 	},
 	
-	refreshTenantGrid: function() {
+	refreshTenantGrid: function(highlightId) {
 		
 		var tenantGrid = new CodeReuse.TenantGrid();
 		
-		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo());
+		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo(), highlightId);
 		
 	},
 	
@@ -145,7 +145,9 @@ CodeReuse.Tenant.prototype = {
 			
 			var callback = new CodeReuse.Callback();
 			
-			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getTenantUpdateQueryName(), document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallback);
+			var tenantGrid = new CodeReuse.TenantGrid();
+
+			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getTenantUpdateQueryName(), document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallback, tenantGrid.getTableHtmlObjectId());
 		}
 		
 	},

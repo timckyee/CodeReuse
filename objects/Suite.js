@@ -81,11 +81,11 @@ CodeReuse.Suite.prototype = {
 		
 	},
 	
-	refreshSuiteGrid: function() {
+	refreshSuiteGrid: function(highlightId) {
 		
 		var suiteGrid = new CodeReuse.SuiteGrid();
 		
-		suiteGrid.refreshSuiteGrid(this.getPhpFile(),this.getFieldsInfo());
+		suiteGrid.refreshSuiteGrid(this.getPhpFile(),this.getFieldsInfo(), highlightId);
 		
 	},
 	
@@ -109,7 +109,9 @@ CodeReuse.Suite.prototype = {
 			
 			var callback = new CodeReuse.Callback();
 			
-			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getSuiteUpdateQueryName(), document.getElementById("inputPrimaryKeySuite").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallbackSuite);
+			var suiteGrid = new CodeReuse.SuiteGrid();
+
+			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getSuiteUpdateQueryName(), document.getElementById("inputPrimaryKeySuite").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallbackSuite, suiteGrid.getTableHtmlObjectId());
 		}
 		
 	},

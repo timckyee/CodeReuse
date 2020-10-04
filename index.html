@@ -278,7 +278,7 @@ sorting header icon ellipsis
 	</div>
 	<br>
 	<input class="button" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
-	<input class="button" type="submit" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); }" />
+	<input class="button" type="submit" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());" />
 	
 	</center>
 
@@ -348,7 +348,7 @@ sorting header icon ellipsis
 	<br>
 	
 	<input class="button" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
-	<input class="button" type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }" />
+	<input class="button" type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }; var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());" />
 	
 	</center>
 

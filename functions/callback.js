@@ -1090,12 +1090,12 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
  * @function
  * @name refreshGridCallbackSuite
  */
-refreshGridCallbackSuite: function()
+refreshGridCallbackSuite: function(highlightId)
 {
 	
 	var suiteModel = new CodeReuse.Suite();
-	
-	suiteModel.refreshSuiteGrid();
+
+	suiteModel.refreshSuiteGrid(highlightId);
 	
 },
 
@@ -1104,12 +1104,12 @@ refreshGridCallbackSuite: function()
  * @function
  * @name refreshGridCallback
  */
-refreshGridCallback: function()
+refreshGridCallback: function(highlightId)
 {
 	
 	var tenantModel = new CodeReuse.Tenant();
 	
-	tenantModel.refreshTenantGrid();	
+	tenantModel.refreshTenantGrid(highlightId);	
 	
 },
 
