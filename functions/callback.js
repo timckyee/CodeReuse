@@ -110,7 +110,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	{
 		tableHeader = document.createElement("th");
 		
-		tableHeader.style.width = "70px";
+		tableHeader.style.width = "100px";
 		
 		tableHeaderRow.appendChild(tableHeader);
 	}
@@ -323,6 +323,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell = document.createElement("td");
 			
 			cell.style.paddingLeft = "10px";
+			cell.style.paddingLeft = "10px";
 						
 			//cellText = document.createTextNode("edit");
 			
@@ -394,6 +395,31 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			//cell.className = "underline";
 			cell.appendChild(editButton);
+
+			saveButton = document.createElement("a");
+			saveButton.innerText = "save";
+			saveButton.id = "saveLink";
+			saveButton.className = "underline";
+			saveButton.style.cursor = "pointer";
+			saveButton.style.width = "50px";
+
+			saveButton.onclick = function(tablePrimaryKey) {
+
+				if(localStorage.getItem("editMode") == "false")
+				{
+					var helper = new CodeReuse.Helper();
+
+					helper.msgBox('alert', 'You are not in edit mode. Please click on edit.', function (result) {
+
+						if(result == true)
+						{	
+						}
+					});
+				}
+
+			}
+			
+			cell.appendChild(saveButton)
 			
 			cell.height = 25;
 			
@@ -514,7 +540,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 
 	tableHeader = document.createElement("th");
 	
-	tableHeader.style.width = "70px";
+	tableHeader.style.width = "100px";
 	
 	tableHeaderRow.appendChild(tableHeader);	
 	
@@ -687,6 +713,33 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 											
 		//cell.className = "underline";	
 		cell.appendChild(editButton);
+
+
+		saveButton = document.createElement("a");
+		saveButton.innerText = "save";
+		saveButton.id = "saveLink";
+		saveButton.className = "underline";
+		saveButton.style.cursor = "pointer";
+		saveButton.style.width = "50px";
+
+		saveButton.onclick = function(tablePrimaryKey) {
+
+			if(localStorage.getItem("editMode") == "true")
+			{
+				var helper = new CodeReuse.Helper();
+
+				helper.msgBox('alert', 'You are not in edit mode. Please click on edit.', function (result) {
+
+					if(result == true)
+					{	
+					}
+				});
+			}
+
+		}
+
+		cell.appendChild(saveButton);
+
 		
 		cell.height = 25;
 		
@@ -772,7 +825,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
  * @param {string} tableHtmlObjectId no need for this param
  */
 get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey, tableHtmlObjectId) {
-	
+
 	var record = response[0];
 
 	//tableRowNumber = tableRowNumber - 1;
@@ -801,8 +854,36 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	var cell = document.createElement("td");
 						
 	cell.style.paddingLeft = "10px";
+	cell.style.paddingRight = "10px";
 
 	cell.value = fieldPrimaryKey;
+
+	
+	editButton = document.createElement("a");
+	editButton.innerText = "edit";
+	editButton.id = "editLink";
+	editButton.className = "underline";
+	editButton.style.cursor = "pointer";
+	editButton.style.width = "50px";
+
+	editButton.onclick = function(tablePrimaryKey)
+	{	
+		if(localStorage.getItem("editMode") == "true")
+		{
+			var helper = new CodeReuse.Helper();
+
+			helper.msgBox('confirm', 'You are in edit mode. Please click on OK then save or Cancel.', function (result) {	
+				
+				if(result == true)
+				{
+
+				}
+
+			});				
+		}
+
+	}
+
 
 	saveButton = document.createElement("a");
 	//saveButton.type = "button";
@@ -851,6 +932,8 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	};
 
 	//cell.className = "underline";	
+	cell.appendChild(editButton);
+
 	cell.appendChild(saveButton);
 	
 	cell.height = 25;
