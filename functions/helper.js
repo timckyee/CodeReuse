@@ -86,6 +86,7 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 
 updateGridPage: function(pageNumber)
 {
+	/*
 	var tableHomeTenant = document.getElementById('tableHomeTenant');
 
 	var tableRows = tableHomeTenant.rows[1];
@@ -106,6 +107,13 @@ updateGridPage: function(pageNumber)
 		alert('Please click on save to leave save mode');
 		return;	
 	}
+	*/
+
+	if(localStorage.getItem("editMode") == "true")
+	{
+		alert('Please click on save to leave save mode');
+		return;
+	}	
 
 	if(pageNumber == "")
 	{
@@ -126,6 +134,7 @@ updateGridPage: function(pageNumber)
 
 updateGridPageArrows: function(direction, pageNumber)
 {
+	/*
 	var tableHomeTenant = document.getElementById('tableHomeTenant');
 
 	var tableRows = tableHomeTenant.rows[1];
@@ -146,6 +155,13 @@ updateGridPageArrows: function(direction, pageNumber)
 		alert('Please click on save to leave save mode');
 		return;	
 	}
+	*/
+
+	if(localStorage.getItem("editMode") == "true")
+	{
+		alert('Please click on save to leave save mode');
+		return;
+	}		
 
 	if(pageNumber == "")
 	{

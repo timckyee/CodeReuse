@@ -347,6 +347,46 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			editButton.onclick = function(tablePrimaryKey) 
 			{
+				//alert('test');
+
+				//alert(localStorage.getItem("editMode"));
+
+				var helper = new CodeReuse.Helper();
+
+				if(localStorage.getItem("editMode") == "true")
+				{
+					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
+
+						return;
+						
+					});
+				}
+				else
+				{
+					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
+
+						if(result == true)
+						{
+							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
+	
+	
+							var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
+	
+							var savePageNumber = grid_get_post_function.getPageNumberServer_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", tablePrimaryKeyValue, sortColumn, sortDirection, "gridEdit");
+	
+	
+							//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);	
+
+						}
+						else
+						if(result == false)
+						{
+							return;
+						}
+					});					
+				}
+
+				/*
 				var tableHtml = document.getElementById(tableHtmlObjectId);
 
 				var tableRows = tableHtml.rows[1];
@@ -367,9 +407,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					alert('Please click on save to leave save mode');
 					return;	
 				}
+				*/
 
-				var helper = new CodeReuse.Helper();
-
+				/*
 				helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 
 					if(result == true)
@@ -391,6 +431,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 						return;
 					}
 				});
+				*/
 			}
 			
 			//cell.className = "underline";
@@ -405,10 +446,19 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 			saveButton.onclick = function(tablePrimaryKey) {
 
-				if(localStorage.getItem("editMode") == "false")
-				{
-					var helper = new CodeReuse.Helper();
+				var helper = new CodeReuse.Helper();
 
+				if(localStorage.getItem("editMode") == "true")
+				{
+					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
+
+						if(result == true)
+						{	
+						}
+					});
+				}
+				else
+				{
 					helper.msgBox('alert', 'You are not in edit mode. Please click on edit.', function (result) {
 
 						if(result == true)
@@ -668,6 +718,45 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 						
 		editButton.onclick = function(tablePrimaryKey) {
 
+			//alert('test2');
+			
+			//alert(localStorage.getItem("editMode"));
+
+			var helper = new CodeReuse.Helper();
+			
+			//debugger
+
+			if(localStorage.getItem("editMode") == "true")
+			{
+				helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
+
+					return;
+				
+				});
+			}
+			else
+			{
+				helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
+
+					if(result == true)
+					{
+						var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
+				
+						var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
+	
+						var savePageNumber = grid_get_post_function.getPageNumberServer_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", rowId, sortColumn, sortDirection, "gridEdit");
+						
+						//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);					
+					}
+					else
+					if(result == false)
+					{
+						return;
+					}
+				});				
+			}	
+			
+			/*
 			var tableHtml = document.getElementById(tableHtmlObjectId);
 
 			var tableRows = tableHtml.rows[1];
@@ -688,9 +777,9 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 				alert('Please click on save to leave save mode');
 				return;	
 			}
+			*/
 
-			var helper = new CodeReuse.Helper();
-
+			/*
 			helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 
 				if(result == true)
@@ -709,6 +798,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 					return;
 				}
 			});
+			*/
 		};
 											
 		//cell.className = "underline";	
@@ -728,7 +818,7 @@ gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, field
 			{
 				var helper = new CodeReuse.Helper();
 
-				helper.msgBox('alert', 'You are not in edit mode. Please click on edit.', function (result) {
+				helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
 
 					if(result == true)
 					{	
@@ -846,6 +936,9 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 	}
 
 	//var rowReplace = tableEdit.rows[tableRowNumber + 1];
+
+
+	/*
 
 	var newRow = document.createElement("tr");
 
@@ -1096,7 +1189,7 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 		{
 			alert("input format has to be dd-mmm-yyyy");
 		}
-	});			
+	});
 	
 	var helper = new CodeReuse.Helper();
 				
@@ -1116,6 +1209,174 @@ get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumn
 
 	divTable.appendChild(tableEdit);
 
+	*/
+
+
+	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" style=\"padding-left: 10px;\"><a id=\"editLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">edit</a><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendar_grid\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" value=\"\"</td>";
+
+
+	document.getElementById("editLink2").onclick = function() {
+
+		if(localStorage.getItem("editMode") == "true")
+		{
+			var helper = new CodeReuse.Helper();
+
+			helper.msgBox('confirm', 'You are in edit mode. Please click on OK then save or Cancel.', function (result) {	
+				
+				if(result == true)
+				{
+
+				}
+
+			});				
+		}
+
+	}
+
+	document.getElementById("saveLink2").onclick = function() {
+	
+		if(document.getElementById("tenantSearchList").innerHTML != "")
+		{
+			alert('Please select Tenant Name');
+			return;
+		}
+
+		if(document.getElementById('calendarId').style.display == "block")
+		{
+			alert('Please select field date');
+			return;
+		}
+
+		var helper = new CodeReuse.Helper();
+
+		helper.msgBox('confirm', 'Would you like to save this row?', function (result) {
+
+			if(result == true)
+			{
+				controller.homeTenantGridSave();
+			}
+			else
+			if(result == false)
+			{
+				return;
+			}
+		});
+
+	}
+
+
+	document.getElementById("inputPrimaryKey_grid").innerText = fieldPrimaryKey;
+
+	document.getElementById("building_option_grid").selectedIndex = record["field3"];
+
+
+	document.getElementById("tenant_input_grid").value = record["field4display"];
+
+	document.getElementById("tenant_input_grid").setAttribute("rowAttributeValue", record["field4"]);
+
+	document.getElementById("tenant_input_grid").style.position = "relative";
+	document.getElementById("tenant_input_grid").style.zIndex = "1";
+	document.getElementById("tenant_input_grid").style.backgroundColor = "white";
+	document.getElementById("tenant_input_grid").width = "200";		
+
+	document.getElementById("tenant_input_grid").onkeyup = function() {
+
+		var autocomplete = new CodeReuse.Autocomplete();
+
+		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+		if(document.getElementById("tenant_input_grid").value == "")
+		{
+			document.getElementById("tenantSearchList").innerHTML = "";			
+		}
+		else
+		{
+			autocomplete.autocomplete(event, "gridInput", "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", home_tenant_grid.getPhpFile(), "tenants", "building", document.getElementById("building_option_grid").selectedIndex, "tenant_input_grid", "tenantSearchList");
+		}
+	}
+
+
+	document.getElementById("inputCalendar_grid").value = "01-aug-2019";
+	
+	document.getElementById("inputCalendar_grid").style.position = "relative";
+	document.getElementById("inputCalendar_grid").style.zIndex = "1";
+	document.getElementById("inputCalendar_grid").style.backgroundColor = "white";
+	document.getElementById("inputCalendar_grid").style.width = "142";
+	
+
+	var calendar = new CodeReuse.Calendar();
+	
+	document.getElementById("inputCalendar_grid").addEventListener("focus", function(event){
+		
+		var calendar = new CodeReuse.Calendar();
+		calendar.showHideCalendar(event, 'show' ,'inputCalendar_grid', "calendarId", monthsArray)
+	
+	});
+	
+	document.getElementById("inputCalendar_grid").addEventListener("blur", function(event){
+	
+		var calendar = new CodeReuse.Calendar();
+		
+		if(calendar.validateDate(this.id) == false)
+		{
+			alert("input format has to be dd-mmm-yyyy");
+		}
+	});
+
+	var helper = new CodeReuse.Helper();
+				
+	var dateFormat = helper.convertDateFromDatabase(record["field1"]);
+	
+	document.getElementById("inputCalendar_grid").value = dateFormat;
+
+	
+	document.getElementById("inputCalendarTesting_grid").value = "04-aug-2019";
+
+	document.getElementById("inputCalendarTesting_grid").style.position = "relative";
+	document.getElementById("inputCalendarTesting_grid").style.zIndex = "1";
+	document.getElementById("inputCalendarTesting_grid").style.backgroundColor = "white";
+	document.getElementById("inputCalendarTesting_grid").width = "142";			
+	
+	document.getElementById("inputCalendarTesting_grid").addEventListener("focus", function(event){
+		
+		var calendar = new CodeReuse.Calendar();
+		calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
+	
+	});
+	
+	document.getElementById("inputCalendarTesting_grid").addEventListener("blur", function(event){
+	
+		var calendar = new CodeReuse.Calendar();
+		if(calendar.validateDate(this.id) == false)
+		{
+			alert("input format has to be dd-mmm-yyyy");
+		}
+	});
+				
+	var dateFormat = helper.convertDateFromDatabase(record["field2"]);
+
+	inputCalendarTesting_grid.value = dateFormat;
+
+
+	/*
+	var tableHtml = document.getElementById(tableHtmlObjectId);
+					
+	for(var i=1; i<tableHtml.rows.length; i++)
+	{
+		if(tableHtml.rows[i].cells[1].innerText == fieldPrimaryKey)
+		{
+			tableHtml.rows[i].className = "highlightRow";
+		}
+		else
+		{
+			tableHtml.rows[i].className = "";
+		}
+	}
+	*/
+
+
+
+	//debugger
 
 	var record = response[0];
 	
