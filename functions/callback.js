@@ -153,17 +153,30 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		{
 			tableHeaderSpan.onclick = function(headerCellSpan) {
 
-				//var columnId = headerCellSpan.srcElement.parentElement.id;
-				var columnId = headerCellSpan.srcElement.id;
-				for(var column=0; column<gridColumnsInfo.length; column++)
+				if(localStorage.getItem("editMode") == "true")
 				{
-					if(tableHtmlObjectId + "_" + gridColumnsInfo[column].id + "Span" == columnId)
-						break;
+					var helper = new CodeReuse.Helper();
+
+					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode before sorting.', function (result) {
+
+						return;
+						
+					});
 				}
-				
-				var handler = new CodeReuse.Handler();
-				
-				handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column, pageNumber);
+				else
+				{
+					//var columnId = headerCellSpan.srcElement.parentElement.id;
+					var columnId = headerCellSpan.srcElement.id;
+					for(var column=0; column<gridColumnsInfo.length; column++)
+					{
+						if(tableHtmlObjectId + "_" + gridColumnsInfo[column].id + "Span" == columnId)
+							break;
+					}
+					
+					var handler = new CodeReuse.Handler();
+					
+					handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column, pageNumber);					
+				}
 			}
 		}
 		else
