@@ -26,12 +26,11 @@ CodeReuse.Callback.prototype = {
  * @param {string} sortDirection the direction which is currently sorted
  * @param {string} pageNumber the page number of the table we are currently showing
  * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
- * @param {string} getPageNumber the function to call to set the page number html input after saving the edit grid
  * @param {string} showEditRow show the edit row html objects
  * @param {string} savePrimaryKeyValue the primary key value of the edit row were are saving
  * @param {string} highlightRow flag to highlight the row after save
  */
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, getPageNumber, showEditRow, savePrimaryKeyValue, highlightRow) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -525,7 +524,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		var tableEdit = document.getElementById(tableHtmlObjectId);
 				
-		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), home_tenant_grid.getGridGetPostDivElement(), "populategrid", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue, home_tenant_grid.getTableHtmlObjectId());
+		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue);
 	}
 
 },
@@ -536,16 +535,13 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
  * @name Callback#get_populateGrid_callback
  * 
  * @param {string} response the response from the XMLHttpRequest get
- * @param {string} divElement the html div id to use to attach the table to
- * @param {Array} fieldsInfo form object array of fields
- * @param {Array} gridColumnsInfo grid object array of columns
+ * @param {string} divElement the html div id to use to attach the table to 
  * @param {Array} autocompleteInputs array of autocomplete inputs
  * @param {Array} arrayOldValuesTableGridEdit array to keep track of row old values used for updating fields
  * @param {Object} tableHtml the html table object used to replace the row edited with form objects
  * @param {string} fieldPrimaryKey the table row primary key
- * @param {string} tableHtmlObjectId no need for this param
  */
-get_populateGrid_callback: function(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey, tableHtmlObjectId) {
+get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey) {
 
 	var record = response[0];
 

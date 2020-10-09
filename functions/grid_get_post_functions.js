@@ -30,12 +30,14 @@ CodeReuse.Grid_Get_Post_Functions.prototype = {
  * @param {string} sortDirection the direction which is currently sorted
  * @param {string} pageNumber the page number of the table we are currently showing
  * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
+ * 
  * @param {string} getPageNumber the function to call to set the page number html input after saving the edit grid
+ *
  * @param {string} showEditRow show the edit row html objects
  * @param {string} savePrimaryKeyValue the primary key value of the edit row were are saving
  * @param {string} highlightRow flag to highlight the row after save
  */
-grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, getPageNumber, showEditRow, savePrimaryKeyValue, highlightRow) {
+grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow) {
 
 	var divTable = document.getElementById(divElement);
 	
@@ -45,7 +47,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 
 			var response = JSON.parse(this.responseText);				
 						
-			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, getPageNumber, showEditRow, savePrimaryKeyValue, highlightRow);
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow);
 					
 		}
 	};
@@ -163,19 +165,19 @@ getPageNumberServer_return: function(phpFile, queryName, queryType, savePrimaryK
 			var column = localStorage.getItem("arraySortColumn");
 			var direction = localStorage.getItem("arraySortDirection");
 			
-			var pageNumberGridEdit = response;
+			var pageNumber = response;
 
-			var pageNumberGrid = localStorage.getItem("homeTenantGridPageNumber");
+			//var pageNumberGrid = localStorage.getItem("homeTenantGridPageNumber");
 
 			if(gridOrGridEdit == "gridEdit")
 			{	
 				localStorage.setItem("editMode", "true");
 
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumberGridEdit, '', '', "true", savePrimaryKeyValue, '');
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "true", savePrimaryKeyValue, '');
 			} 
 			else if (gridOrGridEdit == "grid")
 			{
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumberGrid, '', '', '', '', '');
+				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', '', '', '');
 			}
 		}
 	};
@@ -228,7 +230,7 @@ getPageNumberServerAfterSaveRecord_set: function(phpFile, queryName, queryType, 
 
 			localStorage.setItem("editMode", "false");
 
-			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", savePrimaryKeyValue, callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", column, direction, pageNumberGridEdit, savePrimaryKeyValue, "getPageNumber", "true", '', "true");
+			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", savePrimaryKeyValue, callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", column, direction, pageNumberGridEdit, savePrimaryKeyValue, "true", '', "true");
 		
 		}
 	};
@@ -279,19 +281,16 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
  * @function
  * @name Grid_Get_Post_Functions#get_populateGrid
  * 
- * @param {string} phpFile php file name and location
- * @param {string} divElement the html div id to use to attach the table to
+ * @param {string} phpFile php file name and location 
  * @param {string} queryName the php query name for http method get 
- * @param {Array} fieldsInfo form object array of fields
  * @param {Array} gridColumnsInfo array of grid columns and properties
  * @param {Array} autocompleteInputs array of autocomplete inputs
  * @param {Array} arrayOldValuesTableGridEdit array to keep track of row old values used for updating fields
  * @param {function} callback the function to call when the XMLHttpRequest get method returns 
  * @param {Object} tableHtml the html table object used to replace the row edited with form objects
  * @param {string} htmlObjectPrimaryKeyValue the table row primary key
- * @param {string} tableHtmlObjectId no need for this param
  */
-get_populateGrid: function(phpFile, divElement, queryName, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, callback, tableHtml, htmlObjectPrimaryKeyValue, tableHtmlObjectId)
+get_populateGrid: function(phpFile, queryName, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, callback, tableHtml, htmlObjectPrimaryKeyValue)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -299,7 +298,7 @@ get_populateGrid: function(phpFile, divElement, queryName, fieldsInfo, gridColum
 			
 			var response = JSON.parse(this.responseText);
 
-			callback(response, divElement, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, htmlObjectPrimaryKeyValue, tableHtmlObjectId);
+			callback(response, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, htmlObjectPrimaryKeyValue);
 		
 		}
 	}
@@ -539,6 +538,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 						var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
 						grid_get_post_function.getPageNumberServerAfterSaveRecord_set(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
+
 					}
 				}
 			

@@ -99,7 +99,7 @@ CodeReuse.SuiteGrid.prototype = {
 
 			var sortDirection = localStorage.getItem("arraySortDirection_suite");
 
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId);
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId, '', '', '');
 		}
 	},
 	
@@ -117,7 +117,7 @@ CodeReuse.SuiteGrid.prototype = {
 
 				var sortDirection = localStorage.getItem("arraySortDirection_suite");
 
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', this.getSuiteSelectedRowId());
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', this.getSuiteSelectedRowId(), '' ,'' ,'');
 			}
 		}
 		
