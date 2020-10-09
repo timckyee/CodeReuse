@@ -26,9 +26,9 @@ CodeReuse.Callback.prototype = {
  * @param {string} sortDirection the direction which is currently sorted
  * @param {string} pageNumber the page number of the table we are currently showing
  * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
- * @param {string} getPageNumber the function to call to get the page number after saving the edit grid
+ * @param {string} getPageNumber the function to call to set the page number html input after saving the edit grid
  * @param {string} showEditRow show the edit row html objects
- * @param {string} savePrimaryKeyValue the primary key value of the edit row
+ * @param {string} savePrimaryKeyValue the primary key value of the edit row were are saving
  * @param {string} highlightRow flag to highlight the row after save
  */
 gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, getPageNumber, showEditRow, savePrimaryKeyValue, highlightRow) {
@@ -374,30 +374,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			editButton.onclick = function(tablePrimaryKey) 
 			{
-				/*
-				var tableEdit = document.getElementById(home_tenant_grid.getTableHtmlObjectId());
-				var rows;
-
-				var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
-
-				for(var i=0; i<tableEdit.rows.length; i++)
-				{
-					row = tableEdit.rows[i];
-					if(row.cells[1].innerText == tablePrimaryKeyValue)
-					{
-						row.className = "linkBold";
-					}
-					else
-					{
-						row.className = "";
-					}
-				}
-				*/
-				
-				//alert('test');
-
-				//alert(localStorage.getItem("editMode"));
-
 				var helper = new CodeReuse.Helper();
 
 				if(localStorage.getItem("editMode") == "true")
@@ -419,7 +395,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 							var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
 	
-							var savePageNumber = grid_get_post_function.getPageNumberServer_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", tablePrimaryKeyValue, sortColumn, sortDirection, "gridEdit", tableHtmlObjectId);
+							var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+							grid_get_post_function.getPageNumberServer_return(phpFile, home_tenant_grid.getRefreshHomeTenantGridQueryName(), "getPageNumber", "savePrimaryKey", tablePrimaryKeyValue, sortColumn, sortDirection, "gridEdit", tableHtmlObjectId);
 	
 	
 							//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);	
@@ -432,53 +410,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 						}
 					});					
 				}
-
-				/*
-				var tableHtml = document.getElementById(tableHtmlObjectId);
-
-				var tableRows = tableHtml.rows[1];
-			
-				var countSave = 0;
-			
-				for(var i=1; i<tableHtml.rows.length; i++)
-				{
-					if(tableHtml.rows[i].cells[0].innerText == "save")
-					{
-						countSave = countSave + 1;
-						break;
-					}
-				}
-
-				if(countSave == 1)
-				{
-					alert('Please click on save to leave save mode');
-					return;	
-				}
-				*/
-
-				/*
-				helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-					if(result == true)
-					{
-						var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
-
-
-						var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
-
-						var savePageNumber = grid_get_post_function.getPageNumberServer_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", tablePrimaryKeyValue, sortColumn, sortDirection, "gridEdit");
-
-
-						//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);
-											
-					}
-					else
-					if(result == false)
-					{
-						return;
-					}
-				});
-				*/
 			}
 			
 			//cell.className = "underline";
@@ -571,16 +502,19 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	divTable.appendChild(tbl);
 
+	/*
 	if(getPageNumber == "getPageNumber")
 	{
 		var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
 
-		grid_get_post_function.getPageNumberServer_set(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", highlightRowId, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
-	}
+		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
+		grid_get_post_function.getPageNumberServer_set(phpFile, home_tenant_grid.getTableHtmlObjectId(), "getPageNumber", "savePrimaryKey", highlightRowId, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), showEditRow, tbl);
+	}
+	*/
+	
 	if(showEditRow == "true")
 	{
-
 		var tenantModel = new CodeReuse.Tenant();
 			
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -591,377 +525,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		var tableEdit = document.getElementById(tableHtmlObjectId);
 				
-		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), home_tenant_grid.getGridGetPostDivElement(), "populategrid", savePrimaryKeyValue, tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue, home_tenant_grid.getTableHtmlObjectId());
-
+		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), home_tenant_grid.getGridGetPostDivElement(), "populategrid", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue, home_tenant_grid.getTableHtmlObjectId());
 	}
-
-},
-
-/**
- * Callback when the XMLHttpRequest get method returns from function Grid_Get_Post_Functions gridEdit
- * @callback gridEditCallback
- * @name Callback#gridEditCallback
- * 
- * @param {string} phpFile php file name and location
- * @param {string} response the response from the XMLHttpRequest get
- * @param {string} divTable the html div object to attach the table to
- * @param {string} tableHtmlObjectId the html table id
- * @param {Array} fieldsInfo form object array of fields
- * @param {string} gridIdField the primary key for the table rows
- * @param {Array} gridColumnsInfo grid object array of columns 
- * @param {function} tenantGridRowOnClick no need for this param
- * @param {string} rowId field primary key for populating the grid row when editing
- * @param {string} sortColumn the grid column which is currently sorted
- * @param {string} sortDirection the direction which is currently sorted
- * @param {string} pageNumber the page number of the table we are currently showing
- */
-gridEditCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, tenantGridRowOnClick, rowId, sortColumn, sortDirection, pageNumber) {
-
-	alert('gridEditCallback');
-
-	localStorage.setItem("editMode", "true");
-
-	var tbl = document.createElement("table");
-	tbl.id = tableHtmlObjectId;
-
-	var helper = new CodeReuse.Helper();
-
-	var platform = helper.checkPlatform();
-
-	if(platform == "desktop")
-	{
-		tbl.className = "homeGrid";
-	}
-	else if(platform == "IOS_safari")
-	{
-		tbl.className = "homeGridIOS_safari";
-	}
-	else if(platform == "IOS")
-	{
-		tbl.className = "homeGridIOS";
-	}	
-	else if(platform == "android")
-	{
-		tbl.className = "homeGridMobile";
-	}	
-
-	var tableHeaderRow = tbl.insertRow();					
-								
-	//var tableHeaderRow = document.createElement("tr");
-	
-	var tableHeader;
-	var tableHeaderText;		
-	
-	// th for the edit or save column
-
-	tableHeader = document.createElement("th");
-	
-	tableHeader.style.width = "100px";
-	
-	tableHeaderRow.appendChild(tableHeader);	
-	
-
-	for(var i=0; i<gridColumnsInfo.length; i++)
-	{	
-		tableHeader = document.createElement("th");
-
-		tableHeader.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeader";
-
-		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
-		//{
-		//	tableHeader.className = "description";
-		//}
-
-		tableHeader.style.padding = "12";
-		tableHeader.style.textAlign = "left";
-		tableHeader.style.whiteSpace = "nowrap";
-		tableHeader.style.overflow = "hidden";
-		tableHeader.style.textOverflow = "ellipsis";
-
-        var columnName = gridColumnsInfo[i].colName;
-
-        tableHeaderSpan = document.createElement("span");
-        tableHeaderSpan.id = gridColumnsInfo[i].id + "Span";
-		tableHeaderSpan.innerHTML = columnName;
-		//tableHeaderSpan.className = "span";
-        tableHeaderSpan.style.textDecoration = "underline";
-        tableHeaderSpan.style.userSelect = "none";
-        tableHeaderSpan.style.cursor = "pointer";
-		tableHeaderSpan.style.paddingRight = "10";
-		
-		if(tableHtmlObjectId == "tableHomeTenant")
-		{
-			tableHeaderSpan.onclick = function() {
-
-				alert('Please click on save to leave save mode before sorting');
-			
-			}
-		}
-
-        tableHeader.appendChild(tableHeaderSpan);
-
-		tableHeaderIcon = document.createElement("img");
-		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
-		//tableHeaderIcon.className = "icon";
-
-		var server = new CodeReuse.Config();
-
-		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-		//tableHeaderIcon.width = "0";
-		//tableHeaderIcon.height = "0";
-
-		var column = localStorage.getItem("arraySortColumn");
-		var direction = localStorage.getItem("arraySortDirection");
-
-		if(gridColumnsInfo[i].id == column)
-		{
-			tableHeaderIcon.width = "14";
-			tableHeaderIcon.height = "14";
-
-			tableHeader.className = "description";
-
-			tableHeaderSpan.className = "text";
-
-			tableHeaderIcon.className = "icon";
-
-			if(direction == "asc")
-			{
-				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-			}
-			else if(direction == "desc")
-			{
-				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
-			}
-
-			tableHeaderIcon.style.display = "inline";
-		}
-		else
-		{
-			tableHeader.className = "";
-
-			tableHeaderSpan.className = "text";
-
-			tableHeaderIcon.className = "";
-
-			tableHeaderIcon.style.display = "none";
-		}		
-		
-        tableHeader.appendChild(tableHeaderIcon);
-
-		tableHeaderRow.appendChild(tableHeader);
-		    
-	}
-	
-	tbl.appendChild(tableHeaderRow);
-	
-	var tableRowCount;
-
-	for(tableRowCount=0; tableRowCount<response.length; tableRowCount++)
-	{
-		var row = tbl.insertRow();
-
-		cell = document.createElement("td");
-				
-		cell.style.paddingLeft = "10px";
-		
-		cell.value = response[tableRowCount]["fieldPrimaryKey"];
-		
-		editButton = document.createElement("a");
-		//editButton.type = "button";
-		editButton.innerText = "edit";
-		editButton.id = "editLink";
-		editButton.className = "underline";
-		editButton.style.cursor = "pointer";
-		editButton.style.width = "50px";
-
-		var tenantModel = new CodeReuse.Tenant();
-		
-		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-		
-		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-		
-		var callback = new CodeReuse.Callback();
-						
-		editButton.onclick = function(tablePrimaryKey) {
-
-			//alert('test2');
-			
-			//alert(localStorage.getItem("editMode"));
-
-			var helper = new CodeReuse.Helper();
-			
-			//debugger
-
-			if(localStorage.getItem("editMode") == "true")
-			{
-				helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
-
-					return;
-				
-				});
-			}
-			else
-			{
-				helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-					if(result == true)
-					{
-						var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
-				
-						var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
-	
-						var savePageNumber = grid_get_post_function.getPageNumberServer_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", rowId, sortColumn, sortDirection, "gridEdit");
-						
-						//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);					
-					}
-					else
-					if(result == false)
-					{
-						return;
-					}
-				});				
-			}	
-			
-			/*
-			var tableHtml = document.getElementById(tableHtmlObjectId);
-
-			var tableRows = tableHtml.rows[1];
-		
-			var countSave = 0;
-		
-			for(var i=1; i<tableHtml.rows.length; i++)
-			{
-				if(tableHtml.rows[i].cells[0].innerText == "save")
-				{
-					countSave = countSave + 1;
-					break;
-				}
-			}
-		
-			if(countSave == 1)
-			{
-				alert('Please click on save to leave save mode');
-				return;	
-			}
-			*/
-
-			/*
-			helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-				if(result == true)
-				{
-					var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;		
-			
-					var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
-
-					var savePageNumber = grid_get_post_function.getPageNumberServer_return(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", rowId, sortColumn, sortDirection, "gridEdit");
-					
-					//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);
-				}
-				else
-				if(result == false)
-				{
-					return;
-				}
-			});
-			*/
-		};
-											
-		//cell.className = "underline";	
-		cell.appendChild(editButton);
-
-
-		saveButton = document.createElement("a");
-		saveButton.innerText = "save";
-		saveButton.id = "saveLink";
-		saveButton.className = "underline";
-		saveButton.style.cursor = "pointer";
-		saveButton.style.width = "50px";
-
-		saveButton.onclick = function(tablePrimaryKey) {
-
-			if(localStorage.getItem("editMode") == "true")
-			{
-				var helper = new CodeReuse.Helper();
-
-				helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
-
-					if(result == true)
-					{	
-					}
-				});
-			}
-
-		}
-
-		cell.appendChild(saveButton);
-
-		
-		cell.height = 25;
-		
-		row.appendChild(cell);
-
-
-		
-		for(i=0; i<gridColumnsInfo.length; i++)
-		{	
-			
-			cell = document.createElement("td");
-			
-			cell.className = "grid";
-				
-			var colType = gridColumnsInfo[i].colType;
-			
-			if(colType == "date")
-			{	
-				var dateFromDatabase = response[tableRowCount][gridColumnsInfo[i].id];
-				
-				var helper = new CodeReuse.Helper();
-				
-				var dateFormat = helper.convertDateFromDatabase(dateFromDatabase);
-				
-				cellText = document.createTextNode(dateFormat);
-			}
-			else
-			{
-				if(gridColumnsInfo[i].hasIdHiddenField == true)
-				{				
-					cell.value = response[tableRowCount][gridColumnsInfo[i].idDbField];
-				}						
-				
-				cellText = document.createTextNode(response[tableRowCount][gridColumnsInfo[i].id]);
-			}
-			
-			cell.appendChild(cellText);
-			
-			row.appendChild(cell);
-				
-			row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);		
-		}
-
-		tbl.appendChild(row);
-
-	}
-
-	//var fieldPrimaryKey = response[tableRowNumber - 1]["fieldPrimaryKey"].toString();
-	var fieldPrimaryKey = rowId;
-
-	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-
-	var tenantModel = new CodeReuse.Tenant();
-	
-	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-	var autocompleteInputs = tenantModel.getAutocompleteInputs();
-	
-	var callback = new CodeReuse.Callback();
-	
-	grid_get_post_functions.get_populateGrid(phpFile, home_tenant_grid.getGridGetPostDivElement(), "populategrid", fieldPrimaryKey, tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, fieldPrimaryKey, home_tenant_grid.getTableHtmlObjectId());
-
-	
-	divTable.innerHTML = "";
-	
-	divTable.appendChild(tbl);
 
 },
 
