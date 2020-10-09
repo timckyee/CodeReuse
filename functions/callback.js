@@ -27,8 +27,11 @@ CodeReuse.Callback.prototype = {
  * @param {string} pageNumber the page number of the table we are currently showing
  * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
  * @param {string} getPageNumber the function to call to get the page number after saving the edit grid
+ * @param {string} showEditRow show the edit row html objects
+ * @param {string} savePrimaryKeyValue the primary key value of the edit row
+ * @param {string} highlightRow flag to highlight the row after save
  */
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, getPageNumber) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, getPageNumber, showEditRow, savePrimaryKeyValue, highlightRow) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -286,7 +289,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		{
 			row.className = "tableHover";
 		}
-
+	
 		if(highlightRowId != '' && highlightRowId != undefined)
 		{
 			if(tableHtmlObjectId == "tableSuite")
@@ -302,7 +305,18 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				{
 					row.className = "tableHover highlightRow";
 				}
-			}	
+			}
+
+			if(highlightRow == "true")
+			{
+				if(tableHtmlObjectId == "tableHomeTenant")
+				{
+					if(response[tableRowCount]["fieldPrimaryKey"] == highlightRowId)
+					{
+						row.className = "tableHover highlightRow";
+					}
+				}
+			}
 		}
 
 		row.onclick = function(rowValues) {
@@ -360,6 +374,26 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			editButton.onclick = function(tablePrimaryKey) 
 			{
+				/*
+				var tableEdit = document.getElementById(home_tenant_grid.getTableHtmlObjectId());
+				var rows;
+
+				var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
+
+				for(var i=0; i<tableEdit.rows.length; i++)
+				{
+					row = tableEdit.rows[i];
+					if(row.cells[1].innerText == tablePrimaryKeyValue)
+					{
+						row.className = "linkBold";
+					}
+					else
+					{
+						row.className = "";
+					}
+				}
+				*/
+				
 				//alert('test');
 
 				//alert(localStorage.getItem("editMode"));
@@ -542,6 +576,23 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
 
 		grid_get_post_function.getPageNumberServer_set(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", highlightRowId, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
+	}
+
+	if(showEditRow == "true")
+	{
+
+		var tenantModel = new CodeReuse.Tenant();
+			
+		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+		
+		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+		
+		var callback = new CodeReuse.Callback();
+
+		var tableEdit = document.getElementById(tableHtmlObjectId);
+				
+		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), home_tenant_grid.getGridGetPostDivElement(), "populategrid", savePrimaryKeyValue, tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue, home_tenant_grid.getTableHtmlObjectId());
+
 	}
 
 },

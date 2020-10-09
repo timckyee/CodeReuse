@@ -158,7 +158,8 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 	},
 	
-	homeTenantGridUpdate: function(tableRowNumber) {	
+	homeTenantGridUpdate: function(tableRowNumber) {
+
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();
 		
 		var helper = new CodeReuse.Helper();								
@@ -173,7 +174,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 
 			var callback = new CodeReuse.Callback();
 			
-			grid_get_post_functions.post_updateGrid(this.getPhpFile(), this.getHomeTenantGridUpdateQueryName(), document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getGridColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, localStorage.getItem("homeTenantGridPageNumber"));
+			grid_get_post_functions.post_updateGrid(this.getPhpFile(), this.getHomeTenantGridUpdateQueryName(), document.getElementById("inputPrimaryKey_grid").innerHTML, htmlObjectFieldsValuesUpdate, this.getGridColumnsInfo(), this.arrayOldValuesTableGridEdit, callback.refreshGridCallbackHomeTenantGrid, localStorage.getItem("homeTenantGridPageNumber"), tableRowNumber);
 		}
 		
 	},
