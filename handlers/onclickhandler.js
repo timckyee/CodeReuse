@@ -37,7 +37,7 @@ SuiteGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInf
 	
 	var callback = new CodeReuse.Callback();
 	
-	grid_get_post_functions.get_populateForm(phpFile, "populateSuite", gridRowId, fieldsInfo, gridColumnsInfo, '', arrayOldValuesTable, callback.get_populateForm_callback);
+	grid_get_post_functions.get_populateForm(phpFile, "populateSuite", gridRowId, fieldsInfo, '', arrayOldValuesTable, callback.get_populateForm_callback);
 	
 },
 
@@ -71,7 +71,7 @@ TenantGridOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsIn
 	
 	var callback = new CodeReuse.Callback();
 	
-	grid_get_post_functions.get_populateForm(phpFile, "populate", gridRowId, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
+	grid_get_post_functions.get_populateForm(phpFile, "populate", gridRowId, fieldsInfo, autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
 	
 },
 
