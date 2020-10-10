@@ -28,6 +28,12 @@ tr.autocomplete:hover {
 	
 }
 
+.heightCell {
+
+	height: 25px;
+
+}
+
 .highlightRow {
 
 	background-color: lightgray;

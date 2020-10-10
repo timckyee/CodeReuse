@@ -123,16 +123,13 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		tableHeader.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeader";
 		
-		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
-		//{
-		//	tableHeader.className = "description";
-		//}
+		var tableHeaderStyle = tableHeader.style;
 
-		tableHeader.style.padding = "12";
-		tableHeader.style.textAlign = "left";
-		tableHeader.style.whiteSpace = "nowrap";
-		tableHeader.style.overflow = "hidden";
-		tableHeader.style.textOverflow = "ellipsis";
+		tableHeaderStyle.padding = "12";
+		tableHeaderStyle.textAlign = "left";
+		tableHeaderStyle.whiteSpace = "nowrap";
+		tableHeaderStyle.overflow = "hidden";
+		tableHeaderStyle.textOverflow = "ellipsis";
 
         var columnName = gridColumnsInfo[i].colName;
 
@@ -140,16 +137,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
         tableHeaderSpan.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "Span";
 		tableHeaderSpan.innerHTML = columnName;
 
-		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
-		//{
-		//tableHeaderSpan.className = "text";
-		//}
-
+		var tableHeaderSpanStyle = tableHeaderSpan.style;
 		
-        tableHeaderSpan.style.textDecoration = "underline";
-        tableHeaderSpan.style.userSelect = "none";
-        tableHeaderSpan.style.cursor = "pointer";
-		tableHeaderSpan.style.paddingRight = "10";
+        tableHeaderSpanStyle.textDecoration = "underline";
+        tableHeaderSpanStyle.userSelect = "none";
+        tableHeaderSpanStyle.cursor = "pointer";
+		tableHeaderSpanStyle.paddingRight = "10";
 
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
@@ -167,7 +160,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				}
 				else
 				{
-					//var columnId = headerCellSpan.srcElement.parentElement.id;
 					var columnId = headerCellSpan.srcElement.id;
 					for(var column=0; column<gridColumnsInfo.length; column++)
 					{
@@ -185,7 +177,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		{
 			tableHeaderSpan.onclick = function(headerCellSpan) {
 
-				//var columnId = headerCellSpan.srcElement.parentElement.id;
 				var columnId = headerCellSpan.srcElement.id;
 				for(var column=0; column<gridColumnsInfo.length; column++)
 				{
@@ -203,18 +194,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		tableHeaderIcon = document.createElement("img");
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
-		//tableHeaderIcon.className = "icon";
-
-		//if(gridColumnsInfo[i].id == "fieldPrimaryKey")
-		//{
-		//	tableHeaderIcon.className = "icon";
-		//}
 		
 		var server = new CodeReuse.Config();
-
-		//tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
-		//tableHeaderIcon.width = "0";
-		//tableHeaderIcon.height = "0";
 
 		var column;
 		var direction;
@@ -234,9 +215,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			column = localStorage.getItem("arraySortColumn_tenant");
 			direction = localStorage.getItem("arraySortDirection_tenant");
 		}
-
-		//tableHeaderIcon.width = "14";
-		//tableHeaderIcon.height = "14";
 
 		if(gridColumnsInfo[i].id == column)
 		{
@@ -281,7 +259,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 	for(tableRowCount=0; tableRowCount<response.length; tableRowCount++)
 	{
-			
 		var row = document.createElement("tr");
 		
 		if(tableHtmlObjectId == "tableSuite" || tableHtmlObjectId == "tableTenant")
@@ -320,21 +297,17 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		row.onclick = function(rowValues) {
 
-			//var rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
-
-			//var rowPrimaryKey = rowValues.srcElement.parentNode.value;
-
 			if(tableHtmlObjectId != "tableHomeTenant")
 			{
 				var rowPrimaryKey;
 
-				if(rowValues.srcElement.parentNode.cells == undefined)
+				if(rowValues.target.parentNode.cells == undefined)
 				{
-					rowPrimaryKey = rowValues.srcElement.cells[0].innerText;
+					rowPrimaryKey = rowValues.target.cells[0].innerText;
 				}
 				else
 				{
-					rowPrimaryKey = rowValues.srcElement.parentNode.cells[0].innerText;
+					rowPrimaryKey = rowValues.target.parentNode.cells[0].innerText;
 				}
 
 				rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo, tableHtmlObjectId); 
@@ -348,20 +321,22 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		{			
 			cell = document.createElement("td");
 			
-			cell.style.paddingLeft = "10px";
-			cell.style.paddingLeft = "10px";
-						
-			//cellText = document.createTextNode("edit");
+			var cellStyle = cell.style;
+
+			cellStyle.paddingLeft = "10px";
+			cellStyle.paddingLeft = "10px";
 			
 			cell.value = response[tableRowCount]["fieldPrimaryKey"];
 			
 			editButton = document.createElement("a");
-			//editButton.type = "button";
 			editButton.innerText = "edit";
 			editButton.id = "editLink";
 			editButton.className = "underline";
-			editButton.style.cursor = "pointer";
-			editButton.style.width = "50px";
+
+			var editButtonStyle = editButton.style;
+
+			editButtonStyle.cursor = "pointer";
+			editButtonStyle.width = "50px";
 
 			var tenantModel = new CodeReuse.Tenant();
 			
@@ -389,7 +364,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 						if(result == true)
 						{
-							var tablePrimaryKeyValue = tablePrimaryKey.srcElement.parentNode.parentNode.cells[1].innerText;
+							var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
 	
 	
 							var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
@@ -411,15 +386,17 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				}
 			}
 			
-			//cell.className = "underline";
 			cell.appendChild(editButton);
 
 			saveButton = document.createElement("a");
 			saveButton.innerText = "save";
 			saveButton.id = "saveLink";
 			saveButton.className = "underline";
-			saveButton.style.cursor = "pointer";
-			saveButton.style.width = "50px";
+
+			var saveButtonStyle = saveButton.style;
+
+			saveButtonStyle.cursor = "pointer";
+			saveButtonStyle.width = "50px";
 
 			saveButton.onclick = function(tablePrimaryKey) {
 
@@ -429,18 +406,16 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				{
 					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
 
-						if(result == true)
-						{	
-						}
+						return;
+
 					});
 				}
 				else
 				{
 					helper.msgBox('alert', 'You are not in edit mode. Please click on edit.', function (result) {
 
-						if(result == true)
-						{	
-						}
+						return;
+
 					});
 				}
 
@@ -448,8 +423,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			cell.appendChild(saveButton)
 			
-			cell.height = 25;
-			
+			//cell.height = 25;
+
+			cell.className = "heightCell";
+
 			row.appendChild(cell);
 		}			
 			
@@ -488,29 +465,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		}
 		
 		tbl.appendChild(row);
-		
-		//debugger
 	}
-
-
-	//var rowReplace = tbl.rows[0];
-
-	//rowReplace.parentNode.replaceChild(tableHeaderRow, rowReplace);
 
 	divTable.innerHTML = "";
 	
 	divTable.appendChild(tbl);
-
-	/*
-	if(getPageNumber == "getPageNumber")
-	{
-		var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
-
-		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-		grid_get_post_function.getPageNumberServer_set(phpFile, home_tenant_grid.getTableHtmlObjectId(), "getPageNumber", "savePrimaryKey", highlightRowId, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), showEditRow, tbl);
-	}
-	*/
 	
 	if(showEditRow == "true")
 	{
@@ -545,11 +504,7 @@ get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInput
 
 	var record = response[0];
 
-	//tableRowNumber = tableRowNumber - 1;
-
 	var tableEdit = tableHtml;
-
-	var rowReplace;
 
 	for(tableEditCount=0; tableEditCount<tableEdit.rows.length; tableEditCount++)
 	{
@@ -557,11 +512,9 @@ get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInput
 
 		if(row.cells[1].innerText == fieldPrimaryKey)
 		{
-			rowReplace = tableEdit.rows[tableEditCount + 1];
 			break;
 		}
 	}
-
 
 	//tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" style=\"padding-left: 10px;\"><a id=\"editLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">edit</a><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendar_grid\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" value=\"\"</td>";
 
@@ -708,6 +661,9 @@ get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInput
 		}
 		else
 		{
+			arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].id];
+
+			/*
 			if(gridColumnsInfo[i].htmlObjectType == "autocomplete")
 			{
 				for(input=0; input<autocompleteInputs.length; input++)
@@ -729,15 +685,17 @@ get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInput
 				
 				arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].id];
 			}
+			*/
 		}
 	}
 },
-
 
 /**
  * Refresh Suite grid after inserting or updating Suite record
  * @function
  * @name refreshGridCallbackSuite
+ * 
+ * @param {string} highlightId the primary key row id to highlight
  */
 refreshGridCallbackSuite: function(highlightId)
 {
@@ -751,7 +709,8 @@ refreshGridCallbackSuite: function(highlightId)
 /**
  * Refresh Tenant grid after inserting or updating Tenant record
  * @function
- * @name refreshGridCallback
+ * 
+ * @param {string} highlightId the primary key row id to highlight
  */
 refreshGridCallback: function(highlightId)
 {
@@ -783,11 +742,10 @@ refreshGridCallbackHomeTenantGrid: function()
  * 
  * @param {string} response the response from the XMLHttpRequest get
  * @param {Array} fieldsInfo form object array of fields
- * @param {Array} gridColumnsInfo grid object array of columns
  * @param {Array} autocompleteInputs array of autocomplete inputs
  * @param {Array} arrayOldValuesTable array to keep track of form old values used for updating fields
  */
-get_populateForm_callback: function(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable)
+get_populateForm_callback: function(response, fieldsInfo, autocompleteInputs, arrayOldValuesTable)
 {	
 	var record = response[0];
 	

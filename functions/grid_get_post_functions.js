@@ -79,59 +79,6 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 	
 },
 
-/*
- * Sets the page number of the gridGetPostHomePagingPageNumber html input after saving record. If the param showEditRow is "true" then show row html objects and values.
- * @function
- * @name Grid_Get_Post_Functions#getPageNumberServer_set
- * 
- * @param {string} phpFile the php query name for http method get
- * @param {string} queryName the php query name for http method get
- * @param {string} queryType the php query type - either getPageNumber or result set
- * @param {string} savePrimaryKey the primary key field name we are saving
- * @param {string} savePrimaryKeyValue the primary key value we are saving
- * @param {string} sortColumn column of the sort to find the page of the savePrimaryKeyValue
- * @param {string} sortDirection direction of the sort to find the page of the savePrimaryKeyValue
- * @param {string} showEditRow show the edit row html objects
- * @param {Object} tableHtml the html table object used to replace the row edited with form objects
- */
-
-/*
-getPageNumberServer_set: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, showEditRow, tableHtml)
-{
-	window.getPageNumberHttpRequest.onreadystatechange = function() {
-				
-		if (this.readyState == 4 && this.status == 200) {
-
-			var response = JSON.parse(this.responseText);
-
-			var pageNumber = response;
-
-			document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumber;
-
-			if(showEditRow == "true")
-			{
-				var tenantModel = new CodeReuse.Tenant();
-				
-				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-				
-				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-				
-				var callback = new CodeReuse.Callback();
-						
-				grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), home_tenant_grid.getGridGetPostDivElement(), "populategrid", tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableHtml, savePrimaryKeyValue, home_tenant_grid.getTableHtmlObjectId());
-			}
-		}
-	};
-	
-	var queryString;
-	``
-	queryString = "queryName" + "=" + queryName + "&" + "queryType" + "=" + queryType + "&" + savePrimaryKey + "=" + savePrimaryKeyValue + "&" + "sortColumn=" + sortColumn + "&" + "sortDirection=" + sortDirection;
-
-	window.getPageNumberHttpRequest.open("GET", phpFile + "?" + queryString, true);
-	window.getPageNumberHttpRequest.send();
-},
-*/
-
 /**
  * Gets the page number of the record saved
  * @function
@@ -252,12 +199,11 @@ getPageNumberServerAfterSaveRecord_set: function(phpFile, queryName, queryType, 
  * @param {string} queryName the php query name for http method get
  * @param {string} htmlObjectPrimaryKeyValue row onclick primary key
  * @param {Array} fieldsInfo form object array of fields
- * @param {Array} gridColumnsInfo grid object array of columns
  * @param {Array} autocompleteInputs array of autocomplete inputs
  * @param {Array} arrayOldValuesTable array to keep track of form old values used for updating fields
  * @param {function} callback the function to call when the XMLHttpRequest get method returns
  */
-get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable, callback)
+get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, autocompleteInputs, arrayOldValuesTable, callback)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -265,7 +211,7 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
 			
 			var response = JSON.parse(this.responseText);
 			
-			callback(response, fieldsInfo, gridColumnsInfo, autocompleteInputs, arrayOldValuesTable);
+			callback(response, fieldsInfo, autocompleteInputs, arrayOldValuesTable);
 		
 		}
 	}
