@@ -80,9 +80,9 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 },
 
 /**
- * Gets the page number of the record saved
+ * Shows the grid after getting page number of the primary key of the record being updated.
  * @function
- * @name Grid_Get_Post_Functions#getPageNumberServer_return
+ * @name Grid_Get_Post_Functions#showTheGrid
  * 
  * @param {string} phpFile the php query name for http method get
  * @param {string} queryName the php query name for http method get
@@ -93,7 +93,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
  * @param {string} sortDirection direction of the sort to find the page of the savePrimaryKeyValue
  * @param {string} gridOrGridEdit grid mode - either grid or grid edit
  */
-getPageNumberServer_return: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, gridOrGridEdit) 
+showTheGrid: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, gridOrGridEdit) 
 {
 	window.getPageNumberHttpRequest.onreadystatechange = function() {
 				
@@ -138,7 +138,7 @@ getPageNumberServer_return: function(phpFile, queryName, queryType, savePrimaryK
 },
 
  /**
-  * Gets the page number after saving record
+  * Shows the grid after getting page number of the primary key of the record being saved.
   * @function
   * @name Grid_Get_Post_Functions#getPageNumberAfterSaveRecord
   * 
@@ -150,7 +150,7 @@ getPageNumberServer_return: function(phpFile, queryName, queryType, savePrimaryK
   * @param {string} sortColumn column of the sort to find the page of the savePrimaryKeyValue
   * @param {string} sortDirection direction of the sort to find the page of the savePrimaryKeyValue
   */
-getPageNumberServerAfterSaveRecord_set: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection) 
+showTheGridAfterSaveRecord: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection) 
 {
 	window.getPageNumberHttpRequest.onreadystatechange = function() {
 				
@@ -483,7 +483,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 
 						var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
-						grid_get_post_function.getPageNumberServerAfterSaveRecord_set(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
+						grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"));
 
 					}
 				}
