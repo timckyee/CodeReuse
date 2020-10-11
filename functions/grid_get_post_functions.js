@@ -112,7 +112,9 @@ showTheGrid: function(phpFile, queryName, queryType, savePrimaryKey, savePrimary
 			var column = localStorage.getItem("arraySortColumn");
 			var direction = localStorage.getItem("arraySortDirection");
 			
-			var pageNumber = response;
+			//var pageNumber = response;
+
+			var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
 
 			//var pageNumberGrid = localStorage.getItem("homeTenantGridPageNumber");
 
@@ -169,15 +171,15 @@ showTheGridAfterSaveRecord: function(phpFile, queryName, queryType, savePrimaryK
 			var column = localStorage.getItem("arraySortColumn");
 			var direction = localStorage.getItem("arraySortDirection");
 			
-			var pageNumberGridEdit = response;
+			var pageNumber = response;
 
-			document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumberGridEdit;
+			document.getElementById("gridGetPostHomePagingPageNumber").value = pageNumber;
 
-			localStorage.setItem("homeTenantGridPageNumber", pageNumberGridEdit);
+			localStorage.setItem("homeTenantGridPageNumber", pageNumber);
 
 			localStorage.setItem("editMode", "false");
 
-			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", savePrimaryKeyValue, callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", column, direction, pageNumberGridEdit, savePrimaryKeyValue, "true", '', "true");
+			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", savePrimaryKeyValue, callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", column, direction, pageNumber, savePrimaryKeyValue, "true", '', "true");
 		
 		}
 	};
