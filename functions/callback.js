@@ -371,7 +371,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 							var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
-							grid_get_post_function.showTheGrid(phpFile, home_tenant_grid.getRefreshHomeTenantGridQueryName(), "getPageNumber", "savePrimaryKey", tablePrimaryKeyValue, sortColumn, sortDirection, "gridEdit", tableHtmlObjectId);
+							grid_get_post_function.showTheGrid(tablePrimaryKeyValue, "gridEdit");
 	
 	
 							//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);	

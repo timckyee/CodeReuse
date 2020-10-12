@@ -30,9 +30,6 @@ CodeReuse.Grid_Get_Post_Functions.prototype = {
  * @param {string} sortDirection the direction which is currently sorted
  * @param {string} pageNumber the page number of the table we are currently showing
  * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
- * 
- * @param {string} getPageNumber the function to call to set the page number html input after saving the edit grid
- *
  * @param {string} showEditRow show the edit row html objects
  * @param {string} savePrimaryKeyValue the primary key value of the edit row were are saving
  * @param {string} highlightRow flag to highlight the row after save
@@ -80,21 +77,40 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 },
 
 /**
- * Shows the grid after getting page number of the primary key of the record being updated.
+ * Shows the grid with or without row editing depending on gridOrGridEdit flag.
  * @function
  * @name Grid_Get_Post_Functions#showTheGrid
  * 
- * @param {string} phpFile the php query name for http method get
- * @param {string} queryName the php query name for http method get
- * @param {string} queryType the php query type - either getPageNumber or result set
- * @param {string} savePrimaryKey the primary key field name we are saving
- * @param {string} savePrimaryKeyValue the primary key value we are saving
- * @param {string} sortColumn column of the sort to find the page of the savePrimaryKeyValue
- * @param {string} sortDirection direction of the sort to find the page of the savePrimaryKeyValue
+ * @param {string} primaryKeyValue the primary key value of the row we are editing.
  * @param {string} gridOrGridEdit grid mode - either grid or grid edit
  */
-showTheGrid: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, gridOrGridEdit) 
+showTheGrid: function(primaryKeyValue, gridOrGridEdit) 
 {
+	var tenantModel = new CodeReuse.Tenant();
+			
+	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+	
+	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+	
+	var callback = new CodeReuse.Callback();
+
+	var column = localStorage.getItem("arraySortColumn");
+	var direction = localStorage.getItem("arraySortDirection");
+
+	var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
+
+	if(gridOrGridEdit == "gridEdit")
+	{	
+		localStorage.setItem("editMode", "true");
+
+		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "true", primaryKeyValue, '');
+	} 
+	else if (gridOrGridEdit == "grid")
+	{
+		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "false", '', '');
+	}
+
+	/*
 	window.getPageNumberHttpRequest.onreadystatechange = function() {
 				
 		if (this.readyState == 4 && this.status == 200) {
@@ -137,12 +153,14 @@ showTheGrid: function(phpFile, queryName, queryType, savePrimaryKey, savePrimary
 
 	window.getPageNumberHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.getPageNumberHttpRequest.send();
+
+	*/
 },
 
  /**
-  * Shows the grid after getting page number of the primary key of the record being saved.
+  * Shows the grid after saving record with updated page number and highlight.
   * @function
-  * @name Grid_Get_Post_Functions#getPageNumberAfterSaveRecord
+  * @name Grid_Get_Post_Functions#showTheGridAfterSaveRecordWithHighlight
   * 
   * @param {string} phpFile the php query name for http method get
   * @param {string} queryName the php query name for http method get
@@ -179,7 +197,7 @@ showTheGridAfterSaveRecord: function(phpFile, queryName, queryType, savePrimaryK
 
 			localStorage.setItem("editMode", "false");
 
-			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", savePrimaryKeyValue, callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", column, direction, pageNumber, savePrimaryKeyValue, "true", '', "true");
+			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "savePrimaryKey", savePrimaryKeyValue, callback.gridCallback, '', "showEdit", column, direction, pageNumber, savePrimaryKeyValue, "false", savePrimaryKeyValue, "true");
 		
 		}
 	};

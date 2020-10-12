@@ -299,7 +299,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 		var primaryKey = home_tenant_grid.getHomeGridPrimaryKey();
 
-		grid_get_post_functions.showTheGrid(home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), "getPageNumber", "savePrimaryKey", primaryKey, localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), "grid");
+		grid_get_post_functions.showTheGrid(primaryKey, "grid");
 
 		//var tenantModel = new CodeReuse.Tenant();
 		
