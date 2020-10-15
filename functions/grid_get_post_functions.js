@@ -109,64 +109,6 @@ showTheGrid: function(primaryKeyValue, gridOrGridEdit)
 	{
 		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "false", '', '');
 	}
-
-	/*
-	window.getPageNumberHttpRequest.onreadystatechange = function() {
-				
-		if (this.readyState == 4 && this.status == 200) {
-
-			var response = JSON.parse(this.responseText);
-			
-			var tenantModel = new CodeReuse.Tenant();
-			
-			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-			
-			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-			
-			var callback = new CodeReuse.Callback();
-
-			var column = localStorage.getItem("arraySortColumn");
-			var direction = localStorage.getItem("arraySortDirection");
-
-			var pageNumberResponse = response;
-
-			var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
-
-			alert("pageNumberResponse: " + pageNumberResponse);
-			alert("pageNumber: " + pageNumber);
-
-			if(gridOrGridEdit == "gridEdit")
-			{	
-				alert("primaryKeyValue: " + primaryKeyValue);
-
-				alert('gridedit');
-
-				localStorage.setItem("editMode", "true");
-
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumberResponse, '', "true", primaryKeyValue, '');
-			} 
-			else if (gridOrGridEdit == "grid")
-			{
-				alert("primaryKeyValue: " + primaryKeyValue);
-
-				alert('grid');
-				
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', '', '', '');
-			}
-		}
-	};
-	
-	var column = localStorage.getItem("arraySortColumn");
-	var direction = localStorage.getItem("arraySortDirection");
-
-	var queryString;
-
-	queryString = "queryName" + "=" + "gridtablehome" + "&" + "queryType" + "=" + "getPageNumber" + "&" + "savePrimaryKey" + "=" + primaryKeyValue + "&" + "sortColumn=" + column + "&" + "sortDirection=" + direction + "&" + "pageNumber=" + localStorage.getItem("homeTenantGridPageNumber");
-
-	window.getPageNumberHttpRequest.open("GET", "php/grid_get_post.php" + "?" + queryString, true);
-	window.getPageNumberHttpRequest.send();
-	*/
-
 },
 
  /**
