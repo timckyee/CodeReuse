@@ -118,13 +118,7 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(sortTableHtmlObjectId, gri
 	
 	localStorage.setItem("arraySortColumn", sortColumn);
 
-	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-
-	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-	var primaryKey = home_tenant_grid.getHomeGridPrimaryKey();
-
-	grid_get_post_functions.showTheGrid(primaryKey, "grid");
+	grid_get_post_functions.showTheGrid("", "grid");
 
 }
 

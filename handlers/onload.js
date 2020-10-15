@@ -16,6 +16,8 @@ window.addEventListener("load", function() {
 
 	localStorage.setItem("editMode", "false");
 
+	//localStorage.setItem("editModePrimaryKey", "");
+
 	localStorage.setItem("homeTenantGridPageNumber", "1");
 
 	document.getElementById("gridGetPostHomePagingPageNumber").value = "1";

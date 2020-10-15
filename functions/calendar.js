@@ -404,15 +404,20 @@ calendar: function(month, year, inputCalendarId, divCalendarId, monthsArray) {
 				}
 			}	
 			
-			var dayClick = obj.srcElement.innerHTML;
+			//var dayClick = obj.srcElement.innerHTML;
 			
+			var dayClick = obj.target.innerHTML;
+
 			var dayPadding = dayClick;
 			
 			if(dayClick.length != 2)
 				dayPadding = '0' + dayPadding;
 						
-			document.getElementById(inputCalendarId).value = dayPadding + '-' + currentMonthString.substr(0,3).toLowerCase() + '-' + currentYear;
-			
+			if(document.getElementById(inputCalendarId) != null)
+			{
+				document.getElementById(inputCalendarId).value = dayPadding + '-' + currentMonthString.substr(0,3).toLowerCase() + '-' + currentYear;
+			}
+
 			document.getElementById(divCalendarId).style.display = "none";
 		};
 		

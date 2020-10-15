@@ -86,29 +86,6 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 
 updateGridPage: function(pageNumber)
 {
-	/*
-	var tableHomeTenant = document.getElementById('tableHomeTenant');
-
-	var tableRows = tableHomeTenant.rows[1];
-
-	var countSave = 0;
-
-	for(var i=1; i<tableHomeTenant.rows.length; i++)
-	{
-		if(tableHomeTenant.rows[i].cells[0].innerText == "save")
-		{
-			countSave = countSave + 1;
-			break;
-		}
-	}
-
-	if(countSave == 1)
-	{
-		alert('Please click on save to leave save mode');
-		return;	
-	}
-	*/
-
 	if(localStorage.getItem("editMode") == "true")
 	{
 		alert('Please click on save to leave save mode');
@@ -134,29 +111,6 @@ updateGridPage: function(pageNumber)
 
 updateGridPageArrows: function(direction, pageNumber)
 {
-	/*
-	var tableHomeTenant = document.getElementById('tableHomeTenant');
-
-	var tableRows = tableHomeTenant.rows[1];
-
-	var countSave = 0;
-
-	for(var i=1; i<tableHomeTenant.rows.length; i++)
-	{
-		if(tableHomeTenant.rows[i].cells[0].innerText == "save")
-		{
-			countSave = countSave + 1;
-			break;
-		}
-	}
-
-	if(countSave == 1)
-	{
-		alert('Please click on save to leave save mode');
-		return;	
-	}
-	*/
-
 	if(localStorage.getItem("editMode") == "true")
 	{
 		alert('Please click on save to leave save mode');
@@ -290,24 +244,13 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 		modal.style.display = "none";
 
-		//if(buttonType == "confirm")
 		msgbox_callback(false);
 
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-		var primaryKey = home_tenant_grid.getHomeGridPrimaryKey();
-
-		grid_get_post_functions.showTheGrid(primaryKey, "grid");
-
-		//var tenantModel = new CodeReuse.Tenant();
 		
-		//var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-		
-		//var callback = new CodeReuse.Callback();
-
-		//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"), '');
+		grid_get_post_functions.showTheGrid("", "grid");
 		
 	}
 	
