@@ -297,7 +297,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 
 			if(result == true)
 			{
-				alert(updateString);
+				//alert(updateString);
 
 				updateString = updateString.substr(0, updateString.length - 1);
 						
@@ -447,7 +447,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 
 			if(result == true)
 			{
-				alert(updateString);
+				//alert(updateString);
 
 				updateString = updateString.substr(0, updateString.length - 1);
 						
