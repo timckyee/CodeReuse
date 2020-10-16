@@ -16,8 +16,6 @@ window.addEventListener("load", function() {
 
 	localStorage.setItem("editMode", "false");
 
-	//localStorage.setItem("editModePrimaryKey", "");
-
 	localStorage.setItem("homeTenantGridPageNumber", "1");
 
 	document.getElementById("gridGetPostHomePagingPageNumber").value = "1";
@@ -47,10 +45,6 @@ window.addEventListener("load", function() {
 	var tenant = new CodeReuse.Tenant();
 	
 	tenant.refreshTenantGridHome();
-
-
-	//var tabs = new CodeReuse.Tabs();
-	//tabs.loadHomeTenantGrid();
 	
 });
 
@@ -68,6 +62,7 @@ function init_autocomplete_inputs() {
 	window.autocompleteXmlHttpRequest = new XMLHttpRequest();
 	
 	var tenantModel = new CodeReuse.Tenant();
+
 	var phpFile = tenantModel.getPhpFile();
 	
 	//var building_input = document.getElementById("building_input");
@@ -131,7 +126,7 @@ function init_calendar_inputs() {
 	
 	inputCalendar.addEventListener("focus", function(event){
 		
-		calendar.showHideCalendar(event, 'show' ,'inputCalendar', divCalendarId, monthsArray)
+		calendar.showHideCalendar('show' ,'inputCalendar', divCalendarId, monthsArray)
 		
 	});
 	
@@ -150,7 +145,7 @@ function init_calendar_inputs() {
 	
 	inputCalendarTesting.addEventListener("focus", function(event){
 		
-		calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting', divCalendarId, monthsArray)
+		calendar.showHideCalendar('show' ,'inputCalendarTesting', divCalendarId, monthsArray)
 		
 	});
 	

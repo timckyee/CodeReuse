@@ -110,7 +110,7 @@ CodeReuse.Controller.prototype = {
 	/**
 	 * Save the home tenant grid values
 	 * @function
-	 * @name Controller#tenantSave
+	 * @name Controller#homeTenantGridSave
 	 */	
 	homeTenantGridSave: function() {
 		
@@ -157,35 +157,7 @@ CodeReuse.Controller.prototype = {
 		
 		homeTenantGrid.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey_grid);
 		homeTenantGrid.homeTenantGridUpdate(tableRowNumber, localStorage.getItem("homeTenantGridPageNumber"));	
-	},	
-	
-	resetBuildingSelectField: function(selectFieldHtmlObjectId, gridGetPostDivElement) {
-		
-		//var selectFieldHtmlObjectId = "selectBuilding";
-		//var gridGetPostDivElement = "gridGetPost";
-		
-		//document.getElementById(selectFieldHtmlObjectId).selectedIndex = 0;
-		
-		//var helper = new CodeReuse.Helper();
-		
-		//helper.gridHide(gridGetPostDivElement);
-		
 	},
-	
-	/*
-	resetSuiteFields: function() {
-		
-		var suiteModel = new CodeReuse.Suite();
-		
-		var fieldsInfo = suiteModel.getFieldsInfo();
-		
-		for(i=0; i<fieldsInfo.length; i++)
-		{
-			document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
-		}
-		
-	},
-	*/
 	
 	/**
 	 * Set the tenant form values to empty when clicking on new
@@ -239,7 +211,7 @@ CodeReuse.Controller.prototype = {
 	/**
 	 * Refresh suite grid when changing the building select on tenant form
 	 * @function
-	 * @name Controller#refreshSelectTenantGrid
+	 * @name Controller#refreshSelectSuiteGrid
 	 */		
 	refreshSelectSuiteGrid: function() {
 		

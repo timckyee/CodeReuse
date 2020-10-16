@@ -169,7 +169,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					
 					var handler = new CodeReuse.Handler();
 					
-					handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column, pageNumber);					
+					handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column.toString(), pageNumber);					
 				}
 			}
 		}
@@ -186,7 +186,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 				var handler = new CodeReuse.Handler();
 
-				handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, column);
+				handler.sortTableColumnOnclickHandler(tableHtmlObjectId, gridColumnsInfo, column.toString());
 			}
 		}
 		
@@ -568,7 +568,7 @@ get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInput
 	document.getElementById("inputCalendar_grid").addEventListener("focus", function(event){
 		
 		var calendar = new CodeReuse.Calendar();
-		calendar.showHideCalendar(event, 'show' ,'inputCalendar_grid', "calendarId", monthsArray);
+		calendar.showHideCalendar('show' ,'inputCalendar_grid', "calendarId", monthsArray);
 	
 	});
 	*/
@@ -606,7 +606,7 @@ get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInput
 	document.getElementById("inputCalendarTesting_grid").addEventListener("focus", function(event){
 		
 		var calendar = new CodeReuse.Calendar();
-		calendar.showHideCalendar(event, 'show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
+		calendar.showHideCalendar('show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
 	
 	});
 	*/
@@ -692,8 +692,8 @@ get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInput
 
 /**
  * Refresh Suite grid after inserting or updating Suite record
- * @function
- * @name refreshGridCallbackSuite
+ * @callback refreshGridCallbackSuite
+ * @name Callback#refreshGridCallbackSuite
  * 
  * @param {string} highlightId the primary key row id to highlight
  */
@@ -708,7 +708,8 @@ refreshGridCallbackSuite: function(highlightId)
 
 /**
  * Refresh Tenant grid after inserting or updating Tenant record
- * @function
+ * @callback refreshGridCallback
+ * @name Callback#refreshGridCallback
  * 
  * @param {string} highlightId the primary key row id to highlight
  */
@@ -723,8 +724,8 @@ refreshGridCallback: function(highlightId)
 
 /**
  * Refresh Home Tenant grid after updating Tenant record
- * @function
- * @name refreshGridCallbackHomeTenantGrid
+ * @callback refreshGridCallbackHomeTenantGrid
+ * @name Callback#refreshGridCallbackHomeTenantGrid
  */
 refreshGridCallbackHomeTenantGrid: function()
 {

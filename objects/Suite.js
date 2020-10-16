@@ -1,3 +1,7 @@
+/**
+ * Class for Suite form object
+ * @class
+ */
 CodeReuse.Suite = function() {
 	
 	this.suiteId;
@@ -21,6 +25,10 @@ CodeReuse.Suite = function() {
 
 CodeReuse.Suite.prototype = {
 			
+	/**
+	 * Array to store old values for inserting and updating records in Suite form object
+	 * @var {Array} arrayOldValuesTable
+	 */	
 	arrayOldValuesTable: [],
 	
 	getFieldsInfo: function() {
@@ -46,6 +54,14 @@ CodeReuse.Suite.prototype = {
 
 	},
 	
+	/**
+	 * Setting values in this object constructor from the html inputs for inserting or updating
+	 * @function
+	 * @name Suite#setFieldValuesFromInputs
+	 * 
+	 * @param {Array} inputValueArray array of html input values
+	 * @param {string} primaryKey primary key of the record we are updating
+	 */
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
 		this.suiteId = primaryKey;
@@ -56,6 +72,13 @@ CodeReuse.Suite.prototype = {
 		this.location = inputValueArray["inputLocation"];
 	},
 	
+	/**
+	 * Returns an array with values that have been preset in this object for updating
+	 * @function
+	 * @name Suite#fieldsValuesUpdate
+	 * 
+	 * @returns {Array} array of the field values of this object
+	 */
 	fieldsValuesUpdate: function() {
 		
 		var fieldsValuesUpdateArray = [];
@@ -69,6 +92,13 @@ CodeReuse.Suite.prototype = {
 		
 	},
 	
+	/**
+	 * Returns an array with values that have been preset in this object for inserting
+	 * @function
+	 * @name Suite#fieldsValuesInsert
+	 * 
+	 * @returns {Array} array of the field values of this object
+	 */
 	fieldsValuesInsert: function() {
 		
 		var fieldsValuesInsertArray = [];
@@ -81,22 +111,39 @@ CodeReuse.Suite.prototype = {
 		
 	},
 	
+	/**
+	 * Refresh Suite form grid by calling the SuiteGrid object refreshSuiteGrid function
+	 * @function
+	 * @name Suite#refreshSuiteGrid
+	 * 
+	 * @param {string} highlightId the row primary key to highlight
+	 */
 	refreshSuiteGrid: function(highlightId) {
-		
+
 		var suiteGrid = new CodeReuse.SuiteGrid();
 		
 		suiteGrid.refreshSuiteGrid(this.getPhpFile(),this.getFieldsInfo(), highlightId);
 		
 	},
 	
+	/**
+	 * Refresh Suite form grid when updating the building select value by calling the SuiteGrid object refreshSelectSuiteGrid function
+	 * @function
+	 * @name Suite#refreshSelectSuiteGrid
+	 */
 	refreshSelectSuiteGrid: function() {
-		
+
 		var suiteGrid = new CodeReuse.SuiteGrid();
 		
 		suiteGrid.refreshSelectSuiteGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuildingSuite").value);
 		
 	},
-			
+	
+	/**
+	 * Suite form update
+	 * @function
+	 * @name Suite#suiteUpdate
+	 */
 	suiteUpdate: function() {
 			
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();	
@@ -116,6 +163,11 @@ CodeReuse.Suite.prototype = {
 		
 	},
 	
+	/**
+	 * Suite form insert
+	 * @function
+	 * @name Suite#suiteInsert
+	 */
 	suiteInsert: function() {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	

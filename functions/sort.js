@@ -1,9 +1,22 @@
+/**
+ * Class for storing sort functions
+ * @class
+ */
 CodeReuse.Sort = function() {
 	
 };
 
 CodeReuse.Sort.prototype = {
 
+/**
+ * Sort table in place without going to database applies to SuiteGrid and TenantGrid but not HomeTenantGrid
+ * @function
+ * @name Sort#sortTable
+ * 
+ * @param {string} tblId the table that we are sorting
+ * @param {string} column the column number we are sorting
+ * @param {Array} gridColumnsInfo the grid columns in the grid object (SuiteGrid or TenantGrid)
+ */
 sortTable: function(tblId, column, gridColumnsInfo){
 
 	var sortColumn = gridColumnsInfo[column].id;
@@ -72,8 +85,6 @@ sortTable: function(tblId, column, gridColumnsInfo){
     var Arr = [];
     
 	var header = table.rows[0];
-		
-	//console.dir(header);
 
     for(var i=1, ln=table.rows.length; i<ln; i++){
 	    

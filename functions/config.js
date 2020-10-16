@@ -1,3 +1,7 @@
+/**
+ * Class for storing settings
+ * @class
+ */
 CodeReuse.Config = function() {
     
     this.serverUrl = "http://staging.closedarea.com";

@@ -1,35 +1,26 @@
-
+/**
+ * The CodeReuse object
+ */
 var CodeReuse = CodeReuse || {};
 
+
+/**
+ * Class for storing helper functions
+ * @class
+ */
 CodeReuse.Helper = function() {
 	
 };
 
 CodeReuse.Helper.prototype = {
 
-gridShow: function(divElement)
-{
-	var divTable = document.getElementById(divElement);
-	
-	if(document.getElementById(divElement).style.display == "none")
-	{
-		document.getElementById(divElement).style.display = "block";
-	}
-	
-},
-	
-gridHide: function(divElement)
-{
-	var divTable = document.getElementById(divElement);
-	
-	if(document.getElementById(divElement).style.display == "block")
-	{
-		document.getElementById(divElement).style.display = "none";
-	}
-	
-	//divTable.innerHTML = "";
-},
-
+/**
+ * Validate suite form for empty values
+ * @function
+ * @name Helper#validateHtmlObjectFieldsSuite
+ * 
+ * @param {Array} fieldsInfo the fields in the suite object
+ */
 validateHtmlObjectFieldsSuite: function(fieldsInfo)
 {
 	for(validate=0; validate<fieldsInfo.length; validate++)
@@ -50,6 +41,13 @@ validateHtmlObjectFieldsSuite: function(fieldsInfo)
 	return true;
 },
 
+/**
+ * Validate tenant form for empty values
+ * @function
+ * @name Helper#validateHtmlObjectFieldsTenant
+ * 
+ * @param {string} fieldsInfo the fields in the tenant object
+ */
 validateHtmlObjectFieldsTenant: function(fieldsInfo)
 {
 	for(validate=0; validate<fieldsInfo.length; validate++)
@@ -67,6 +65,13 @@ validateHtmlObjectFieldsTenant: function(fieldsInfo)
 	return true;
 },
 
+/**
+ * Validate tenant home grid for empty values
+ * @function
+ * @name Helper#validateHtmlObjectFieldsHomeTenantGrid
+ * 
+ * @param {string} columnsInfo the columns of the home grid
+ */
 validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 {
 	for(validate=0; validate<columnsInfo.length; validate++)
@@ -84,6 +89,13 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 	return true;
 },
 
+/**
+ * Update the grid page number (setting input box beside the go button) and refreshing the grid
+ * @function
+ * @name Helper#updateGridPage
+ * 
+ * @param {string} pageNumber gridGetPostHomePagingPageNumber input box value
+ */
 updateGridPage: function(pageNumber)
 {
 	if(localStorage.getItem("editMode") == "true")
@@ -109,6 +121,14 @@ updateGridPage: function(pageNumber)
 	home_tenant_grid.refreshTenantHomeGrid(home_tenant_grid.getPhpFile(), tenantModel.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumberUpdate);
 },
 
+/**
+ * Click on the left or right arrows to update the grid page number and refreshing the grid
+ * @function
+ * @name Helper#updateGridPageArrows
+ * 
+ * @param {string} direction the left or right arrow
+ * @param {string} pageNumber gridGetPostHomePagingPageNumber input box value before the update
+ */
 updateGridPageArrows: function(direction, pageNumber)
 {
 	if(localStorage.getItem("editMode") == "true")
@@ -147,6 +167,13 @@ updateGridPageArrows: function(direction, pageNumber)
 	home_tenant_grid.refreshTenantHomeGrid(home_tenant_grid.getPhpFile(), tenantModel.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumberUpdate.toString());
 },
 
+/**
+ * Convert date from database to dd-mmm-yyyy format
+ * @function
+ * @name Helper#convertDateFromDatabase
+ * 
+ * @param {string} date the date from the database
+ */
 convertDateFromDatabase: function(date)
 {	
 	var dateFromDatabase = date;
@@ -161,6 +188,13 @@ convertDateFromDatabase: function(date)
 
 },
 
+/**
+ * Convert date from system to database yyyy-mm-dd format
+ * @function
+ * @name Helper#convertDateFromSystem
+ * 
+ * @param {string} date the date from the system
+ */
 convertDateFromSystem: function(date)
 {	
 	var dateFromSystem = date;
@@ -175,6 +209,13 @@ convertDateFromSystem: function(date)
 
 },
 
+/**
+ * Convert month character string to number string
+ * @function
+ * @name Helper#dateMonthStringToNumberConversion
+ * 
+ * @param {string} monthString the month as character string
+ */
 dateMonthStringToNumberConversion: function(monthString)
 {
 	var monthArray = [];
@@ -195,6 +236,13 @@ dateMonthStringToNumberConversion: function(monthString)
 	return monthArray[monthString];
 },
 
+/**
+ * Convert month number to month character string
+ * @function
+ * @name Helper#dateMonthStringToNumberConversion
+ * 
+ * @param {string} monthNumber the month number we are converting
+ */
 dateMonthNumberToStringConversion: function(monthNumber)
 {
 	var monthArray = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
@@ -202,11 +250,18 @@ dateMonthNumberToStringConversion: function(monthNumber)
 	return monthArray[parseInt(monthNumber) - 1];
 },
 
+/**
+ * Custom message box for alert and confirm
+ * @function
+ * @name Helper#msgBox
+ * 
+ * @param {string} buttonType alert or confirm
+ * @param {string} msg the message that is shown
+ * @param {function} msgbox_callback the function called onclick of OK or Cancel button
+ */
 msgBox: function (buttonType, msg, msgbox_callback) {
 
 	var modal = document.getElementById("myModal");
-	
-	//var btn = document.getElementById("myBtn");
 	
 	document.getElementById('popupText').innerHTML = msg;
 	
@@ -230,7 +285,6 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 		modal.style.display = "none";
 	
-		//if(buttonType == "confirm")
 		msgbox_callback(true);
 	
 	};
@@ -256,6 +310,13 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 	
 },
 
+/**
+ * Preload images in the onload handler
+ * @function
+ * @name Helper#preload
+ * 
+ * @param {Array} preload array of images including path
+ */
 preload: function(preload) {
 
 	for (i = 0; i < preload.length; i++) {
@@ -264,6 +325,13 @@ preload: function(preload) {
 	}
 },
 
+/**
+ * On cursor mouse over the rows of Suite or Tenant form grid show pointer
+ * @function
+ * @name Helper#resetRowHighlight
+ * 
+ * @param {string} tableHtmlObjectId either tableSuite in SuiteGrid or tableTenant in TenantGrid
+ */
 resetRowHighlight: function(tableHtmlObjectId) {
 
 	var tableReset = document.getElementById(tableHtmlObjectId);
@@ -277,6 +345,11 @@ resetRowHighlight: function(tableHtmlObjectId) {
 
 },
 
+/**
+ * Check the platform which is in use
+ * @function
+ * @name Helper#checkPlatform
+ */
 checkPlatform: function() {
 
 	var isIOS_safari = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);

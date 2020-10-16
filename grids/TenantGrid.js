@@ -1,3 +1,7 @@
+/**
+ * Class for TenantGrid object
+ * @class
+ */
 CodeReuse.TenantGrid = function() {
 	
 	this.gridName = "TenantGrid";
@@ -65,6 +69,11 @@ CodeReuse.TenantGrid.prototype = {
 		return this.tableHtmlObjectId;
 	},
 
+	/**
+	 * Getting the selected row id for the row that is highlighted
+	 * @function
+	 * @name TenantGrid#getTenantSelectedRowId
+	 */
 	getTenantSelectedRowId: function() {
 
 		var table = document.getElementById(this.tableHtmlObjectId);
@@ -92,6 +101,15 @@ CodeReuse.TenantGrid.prototype = {
 
 	},
 
+	/**
+	 * Refreshes the tenant grid
+	 * @function
+	 * @name TenantGrid#refreshTenantGrid
+	 * 
+	 * @param {string} phpFile php file name and location
+	 * @param {Array} fieldsInfo form object array of fields
+	 * @param {string} highlightId row id of the row this is highlighted
+	 */
 	refreshTenantGrid: function(phpFile, fieldsInfo, highlightId) {
 
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -108,6 +126,15 @@ CodeReuse.TenantGrid.prototype = {
 		}
 	},
 	
+	/**
+	 * Refreshes the tenant grid when building select field is updated
+	 * @function
+	 * @name TenantGrid#refreshSelectTenantGrid
+	 * 
+	 * @param {string} phpFile php file name and location
+	 * @param {Array} fieldsInfo form object array of fields
+	 * @param {string} selectBuildingHtmlObjectValue the selected building value on the form
+	 */
 	refreshSelectTenantGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
 		
 		if(selectBuildingHtmlObjectValue != "")
@@ -125,17 +152,7 @@ CodeReuse.TenantGrid.prototype = {
 				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', this.getTenantSelectedRowId(), '', '', '');
 						
 			}
-		}
-		
-		/*
-		else
-		{
-			var helper = new CodeReuse.Helper();
-			
-			helper.gridHide(this.gridGetPostDivElement);
-		}
-		*/
-		
+		}		
 	}
 	
 };

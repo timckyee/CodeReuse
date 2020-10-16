@@ -1,3 +1,7 @@
+/**
+ * Class for Tenant form object
+ * @class
+ */
 CodeReuse.Tenant = function() {
 	
 	this.fieldPrimaryKey;
@@ -32,6 +36,10 @@ CodeReuse.Tenant = function() {
 
 CodeReuse.Tenant.prototype = {
 			
+	/**
+	 * Array to store old values for inserting and updating records in Tenant form object
+	 * @var {Array} arrayOldValuesTable
+	 */		
 	arrayOldValuesTable: [],
 	
 	getFieldsInfo: function() {
@@ -63,6 +71,14 @@ CodeReuse.Tenant.prototype = {
 
 	},
 	
+	/**
+	 * Setting values in this object constructor from the html inputs for inserting or updating
+	 * @function
+	 * @name Tenant#setFieldValuesFromInputs
+	 * 
+	 * @param {Array} inputValueArray array of html input values
+	 * @param {string} primaryKey primary key of the record we are updating
+	 */
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
 		this.fieldPrimaryKey = primaryKey;
@@ -74,6 +90,13 @@ CodeReuse.Tenant.prototype = {
 		
 	},
 	
+	/**
+	 * Returns an array with values that have been preset in this object for updating
+	 * @function
+	 * @name Tenant#fieldsValuesUpdate
+	 * 
+	 * @returns {Array} array of the field values of this object
+	 */
 	fieldsValuesUpdate: function() {
 		
 		var fieldsValuesUpdateArray = [];
@@ -88,6 +111,13 @@ CodeReuse.Tenant.prototype = {
 		
 	},
 	
+	/**
+	 * Returns an array with values that have been preset in this object for inserting
+	 * @function
+	 * @name Tenant#fieldsValuesInsert
+	 * 
+	 * @returns {Array} array of the field values of this object
+	 */
 	fieldsValuesInsert: function() {
 		
 		var fieldsValuesInsertArray = [];
@@ -101,14 +131,26 @@ CodeReuse.Tenant.prototype = {
 		
 	},
 	
+	/**
+	 * Refresh Tenant form grid by calling the TenantGrid object refreshTenantGrid function
+	 * @function
+	 * @name Tenant#refreshTenantGrid
+	 * 
+	 * @param {string} highlightId the row primary key to highlight
+	 */
 	refreshTenantGrid: function(highlightId) {
-		
+
 		var tenantGrid = new CodeReuse.TenantGrid();
 		
 		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo(), highlightId);
 		
 	},
 	
+	/**
+	 * Refresh Tenant form grid when updating the building select value by calling the TenantGrid object refreshSelectTenantGrid function
+	 * @function
+	 * @name Tenant#refreshSelectTenantGrid
+	 */
 	refreshSelectTenantGrid: function() {
 		
 		var tenantGrid = new CodeReuse.TenantGrid();
@@ -117,6 +159,11 @@ CodeReuse.Tenant.prototype = {
 		
 	},
 	
+	/**
+	 * Refresh the HomeTenantGrid by calling the HomeTenantGrid object refreshTenantHomeGrid function
+	 * @function
+	 * @name Tenant#refreshTenantGridHome	 
+	 */
 	refreshTenantGridHome: function() {
 		
 		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
@@ -124,15 +171,12 @@ CodeReuse.Tenant.prototype = {
 		homeTenantGrid.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"));
 		
 	},
-	
-	refreshSelectTenantGridHome: function() {
 		
-		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
-		
-		homeTenantGrid.refreshSelectTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuildingTenant").value);
-		
-	},	
-		
+	/**
+	 * Tenant form update
+	 * @function
+	 * @name Tenant#tenantUpdate
+	 */
 	tenantUpdate: function() {
 			
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();				
@@ -152,6 +196,11 @@ CodeReuse.Tenant.prototype = {
 		
 	},
 	
+	/**
+	 * Tenant form insert
+	 * @function
+	 * @name Tenant#tenantInsert
+	 */	
 	tenantInsert: function() {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	

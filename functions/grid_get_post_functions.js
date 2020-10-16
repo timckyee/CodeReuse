@@ -114,7 +114,7 @@ showTheGrid: function(primaryKeyValue, gridOrGridEdit)
  /**
   * Shows the grid after saving record with updated page number and highlight.
   * @function
-  * @name Grid_Get_Post_Functions#showTheGridAfterSaveRecordWithHighlight
+  * @name Grid_Get_Post_Functions#showTheGridAfterSaveRecord
   * 
   * @param {string} phpFile the php query name for http method get
   * @param {string} queryName the php query name for http method get
@@ -258,7 +258,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		if(htmlObjectFieldValue != arrayOldValuesTable[htmlObjectField])
 		{
 			if(fieldsInfo[update].dbType == "date")
-			{				
+			{	
 				var dateFromSystem = htmlObjectFieldValue;
 								
 				var helper = new CodeReuse.Helper();

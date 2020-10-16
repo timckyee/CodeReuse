@@ -50,7 +50,7 @@ focusOutHide: function(div) {
 	}
 	*/
 
-	if(div == "tenantSearchList")
+	if(div == "tenantSea`r`chList")
 	{
 		if(document.getElementById("tenantSearchList").innerHTML != "")
 		{
@@ -59,50 +59,6 @@ focusOutHide: function(div) {
 		}
 	}
 },
-
-/*
-oldValue: function(saveOrGet, arrayItem, arrayValue) {
-		
-	if(saveOrGet == "save")
-	{			
-		oldValuesArray[arrayItem] = arrayValue;
-	}
-	else if(saveOrGet == "get")
-	{		
-		return oldValuesArray[arrayItem];
-	}
-	
-},
-
-submitTest: function() {
-
-	var tenant_input_object = document.getElementById("tenant_input");
-	var tenant_input_old_values = oldValues("get", "tenant_input");
-	
-	if(tenant_input_object.value != "")
-	{		
-		if(tenant_input_object.value != tenant_input_old_values)
-		{
-			alert('not same');
-		}
-		else
-		{
-			alert('same');
-		}
-	}
-	
-	oldValues("save", "tenant_input", tenant_input_object.value);
-	
-},
-
-resetInputFields: function(queryName)
-{
-	if(queryName == "buildings")
-	{
-		document.getElementById("tenant_input").value = "";
-	}
-},
-*/
 
 /**
  * The main autocomplete function
@@ -168,20 +124,6 @@ autocomplete: function(event, object, divElement, itemColumns, valueField, httpG
 					var row = document.createElement("tr");
 					
 					row.onclick = function() {
-						
-						/*
-						var cellsCount = this.cells.length;
-						var cellValue = "";
-						
-						if(cellsCount == 1)
-							cellValue = this.cells[0].innerHTML;
-						else 
-						{
-														
-							for(i=0; i<this.cells.length; i++)
-								cellValue = cellValue + this.cells[i].innerHTML + ' ';
-						}
-						*/
 
 						var cellValue = this.cells[1].innerHTML;
 												

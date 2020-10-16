@@ -1,9 +1,20 @@
+/**
+ * Class for storing tab functions
+ * @class
+ */
 CodeReuse.Tabs = function() {
 	
 };
 
 CodeReuse.Tabs.prototype = {
 
+/**
+ * Changing the tab selection on the menu on left hand side
+ * @function
+ * @name Tabs#changeTab
+ * 
+ * @param {string} tab this is the div object that is clicked
+ */
 changeTab: function(tab) {
 
 	var currentTab = tab.id.substring(3, tab.id.length);

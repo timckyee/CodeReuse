@@ -1,15 +1,27 @@
+/**
+ * Class for creating autocomplete input box
+ * @class
+ */
 CodeReuse.Calendar = function() {
 		
 };
 
 CodeReuse.Calendar.prototype = {
-	
+
+/**
+ * Hide the div calendar
+ * @function
+ * @name Calendar#removeCalendarTable
+ * 
+ * @param {string} divCalendarId the calendar div id
+ */
 removeCalendarTable: function(divCalendarId) {
 	
 	document.getElementById(divCalendarId).innerHTML = "";
 
 },
 
+/*
 documentOnclick: function(e, divCalendarId) {
 
 	var calendarId = document.getElementById(divCalendarId);
@@ -19,7 +31,16 @@ documentOnclick: function(e, divCalendarId) {
 	}
 
 },
+*/
 
+/**
+ * Position the calendar div in line with the calendar input box
+ * @function
+ * @name Calendar#positionCalendar
+ * 
+ * @param {string} inputCalendarId the calendar input box
+ * @param {string} divCalendarId the calendar div id
+ */
 positionCalendar: function(inputCalendarId, divCalendarId) {	
 		
 	var positionInputCalendar = document.getElementById(inputCalendarId);
@@ -34,6 +55,16 @@ positionCalendar: function(inputCalendarId, divCalendarId) {
 	
 },
 
+/**
+ * Position the calendar div in line with the calendar input box
+ * @function
+ * @name Calendar#createCalendarTable
+ * 
+ * @param {string} inputCalendarId the calendar input box
+ * @param {string} divCalendarId the calendar div id
+ * @param {function} moveCalendar moves direction of the calendar div month forward or month backward
+ * @param {Array} monthsArray array holding the string months
+ */
 createCalendarTable: function(inputCalendarId, divCalendarId, moveCalendar, monthsArray) {
 		
 	var tbl = document.createElement("table");
@@ -198,7 +229,17 @@ createCalendarTable: function(inputCalendarId, divCalendarId, moveCalendar, mont
 	
 },
 
-showHideCalendar: function(event, showOrHide, inputCalendarId, divCalendarId, monthsArray) {
+/**
+ * Show or hide the calendar div
+ * @function
+ * @name Calendar#showHideCalendar
+ * 
+ * @param {string} showOrHide either show or hide the calendar
+ * @param {string} inputCalendarId the calendar input box
+ * @param {string} divCalendarId the calendar div id
+ * @param {Array} monthsArray array holding the string months
+ */
+showHideCalendar: function(showOrHide, inputCalendarId, divCalendarId, monthsArray) {
 	
 	var calendarId = document.getElementById(divCalendarId);	
 	
@@ -244,11 +285,15 @@ showHideCalendar: function(event, showOrHide, inputCalendarId, divCalendarId, mo
 
 },
 
+/**
+ * Validate the date in format dd-mmm-yyyy given calendar input box id
+ * @function
+ * @name Calendar#validateDate
+ * 
+ * @param {string} inputCalendarId the calendar input box to validate
+ */
 validateDate: function(inputCalendarId)
 {
-
-	//debugger
-
 	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
 
 	inputCalendarObject = document.getElementById(inputCalendarId);
@@ -266,6 +311,13 @@ validateDate: function(inputCalendarId)
 	}
 },
 
+/**
+ * Validate the date in format dd-mmm-yyyy given date string from system
+ * @function
+ * @name Calendar#validateDateFromString
+ * 
+ * @param {string} dateString date in string format to validate
+ */
 validateDateFromString: function(dateString)
 {
 	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
@@ -283,6 +335,15 @@ validateDateFromString: function(dateString)
 	}
 },
 
+/**
+ * Get the day, month, or year of the calendar input box date value
+ * @function
+ * @name Calendar#getInputCalendarValue
+ * 
+ * @param {string} dayMonthOrYear to get the day, month, or year
+ * @param {string} inputCalendarId the calendar input box
+ * @param {Array} monthsArray array holding the string months
+ */
 getInputCalendarValue: function(dayMonthOrYear, inputCalendarId, monthsArray) {
 	
 	var inputCalendar = document.getElementById(inputCalendarId);
@@ -329,6 +390,11 @@ getInputCalendarValue: function(dayMonthOrYear, inputCalendarId, monthsArray) {
 	}
 },
 
+/**
+ * Populate month array which holds the string months.
+ * @function
+ * @name Calendar#populateMonthsArray
+ */
 populateMonthsArray: function() {
 
 	monthsArray = new Array();
@@ -365,6 +431,17 @@ populateMonthsArray: function() {
 	
 },
 
+/**
+ * The main calendar function
+ * @function
+ * @name Calendar#calendar
+ * 
+ * @param {string} month the month to display
+ * @param {string} year the year to display
+ * @param {string} inputCalendarId the calendar input box
+ * @param {string} divCalendarId the calendar div id
+ * @param {Array} monthsArray array holding the string months
+ */
 calendar: function(month, year, inputCalendarId, divCalendarId, monthsArray) {
 		
 	this.clearCalendar();
@@ -485,12 +562,31 @@ calendar: function(month, year, inputCalendarId, divCalendarId, monthsArray) {
 	}
 },
 
+/**
+ * To find out the days in the month given month and year.
+ * @function
+ * @name Calendar#daysInMonth
+ * 
+ * @param {string} month the month to get the number of days 
+ * @param {string} year the year to get the number of days
+ */
 daysInMonth: function(month, year) {
 	
 	return new Date(year, month, 0).getDate();
 	
 },
 
+/**
+ * Move calendar backward or forward
+ * @function
+ * @name Calendar#moveCalendar
+ * 
+ * @param {string} backOrForward back or forward
+ * @param {Object} obj the table cell of the left or right arrow used to set the month and  year header
+ * @param {string} inputCalendarId the calendar input box
+ * @param {string} divCalendarId the calendar div id
+ * @param {Array} monthsArray array holding the string months
+ */
 moveCalendar: function(backOrForward, obj, inputCalendarId, divCalendarId, monthsArray) {
 	
 	var monthYear = obj.parentElement.parentElement.rows[0].cells[1].innerHTML;
@@ -549,6 +645,12 @@ moveCalendar: function(backOrForward, obj, inputCalendarId, divCalendarId, month
 	calendar.calendar(newMonth, newYear, inputCalendarId, divCalendarId, monthsArray);
 
 },
+
+/**
+ * Clear the calendar before creating the calendar moving from one month to another
+ * @function
+ * @name Calendar#clearCalendar
+ */
 
 clearCalendar: function() {
 	
