@@ -51,6 +51,7 @@ CodeReuse.GridEventFunctions.prototype = {
             return;
         }
     
+        /*
         var helper = new CodeReuse.Helper();
     
         helper.msgBox('confirm', 'Would you like to save this row?', function (result) {
@@ -64,7 +65,10 @@ CodeReuse.GridEventFunctions.prototype = {
             {
                 return;
             }
-        });	
+        });
+        */
+
+       controller.homeTenantGridSave();
     },
     
 	/**
