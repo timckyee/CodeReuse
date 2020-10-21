@@ -79,6 +79,8 @@ CodeReuse.SuiteGrid.prototype = {
 		}
 
 		var row;
+		var rowFound = false;
+		var primaryKey;
 
 		for(var i=1; i<table.rows.length; i++)
 		{
@@ -86,14 +88,20 @@ CodeReuse.SuiteGrid.prototype = {
 			
 			if(row.className == "tableHover highlightRow")
 			{
+				rowFound = true;
+				primaryKey = row.cells[0].innerText;
 				break;
 			}
 		}
 
-		var primaryKey = row.cells[0].innerText;
-
-		return primaryKey;
-
+		if(rowFound == true)
+		{
+			return primaryKey;
+		}
+		else
+		{
+			return "";
+		}
 	},
 
 	/**
@@ -140,11 +148,15 @@ CodeReuse.SuiteGrid.prototype = {
 			
 			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)
 			{
-				var sortColumn = localStorage.getItem("arraySortColumn_suite");
+				//var sortColumn = localStorage.getItem("arraySortColumn_suite");
 
-				var sortDirection = localStorage.getItem("arraySortDirection_suite");
+				//var sortDirection = localStorage.getItem("arraySortDirection_suite");
 
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', this.getSuiteSelectedRowId(), '' ,'' ,'');
+				var sortColumn = "suiteId";
+
+				var sortDirection = "asc";
+
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', '', '' ,'' ,'');
 			}
 		}
 	}

@@ -197,6 +197,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
 		var server = new CodeReuse.Config();
 
+		/*
 		var column;
 		var direction;
 
@@ -215,8 +216,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			column = localStorage.getItem("arraySortColumn_tenant");
 			direction = localStorage.getItem("arraySortDirection_tenant");
 		}
+		*/
 
-		if(gridColumnsInfo[i].id == column)
+		//var column = sortColumn;
+		//var direction = sortDirection;
+
+		if(gridColumnsInfo[i].id == sortColumn)
 		{
 			tableHeaderIcon.width = "14";
 			tableHeaderIcon.height = "14";
@@ -227,11 +232,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 			tableHeaderIcon.className = "icon";
 
-			if(direction == "asc")
+			if(sortDirection == "asc")
 			{
 				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.up.gif";
 			}
-			else if(direction == "desc")
+			else if(sortDirection == "desc")
 			{
 				tableHeaderIcon.src = server.getServerUrl() + "/images/pngfuel.com.down.gif";
 			}

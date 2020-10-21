@@ -84,6 +84,8 @@ CodeReuse.TenantGrid.prototype = {
 		}
 
 		var row;
+		var rowFound = false;
+		var primaryKey;
 
 		for(var i=1; i<table.rows.length; i++)
 		{
@@ -91,14 +93,20 @@ CodeReuse.TenantGrid.prototype = {
 			
 			if(row.className == "tableHover highlightRow")
 			{
+				rowFound = true;
+				primaryKey = row.cells[0].innerText;				
 				break;
 			}
 		}
 
-		var primaryKey = row.cells[0].innerText;
-
-		return primaryKey;
-
+		if(rowFound == true)
+		{
+			return primaryKey;
+		}
+		else
+		{
+			return "";
+		}
 	},
 
 	/**
@@ -145,11 +153,15 @@ CodeReuse.TenantGrid.prototype = {
 
 			if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
 			{	
-				var sortColumn = localStorage.getItem("arraySortColumn_tenant");
+				//var sortColumn = localStorage.getItem("arraySortColumn_tenant");
 
-				var sortDirection = localStorage.getItem("arraySortDirection_tenant");
+				//var sortDirection = localStorage.getItem("arraySortDirection_tenant");
 				
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', this.getTenantSelectedRowId(), '', '', '');
+				var sortColumn = "fieldPrimaryKey";
+
+				var sortDirection = "asc";
+
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', '', '', '', '');
 						
 			}
 		}		
