@@ -381,8 +381,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 						}
 					}
 					*/
-
-
+					
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 
 						if(result == true)
