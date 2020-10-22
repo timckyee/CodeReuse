@@ -336,7 +336,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			editButton = document.createElement("a");
 			editButton.innerText = "edit";
 			editButton.id = "editLink";
-			editButton.className = "underline";
+			editButton.className = "underlineNo";
 
 			var editButtonStyle = editButton.style;
 
@@ -353,6 +353,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			
 			editButton.onclick = function(tablePrimaryKey) 
 			{
+
+				var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
+
 				var helper = new CodeReuse.Helper();
 
 				if(localStorage.getItem("editMode") == "true")
@@ -365,13 +368,26 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				}
 				else
 				{
+
+					/*
+					var tableEdit = document.getElementById(tableHtmlObjectId);
+
+					for(var i=1; i<tableEdit.rows.length; i++)
+					{
+						var row = tableEdit.rows[i];
+						if(row.cells[1].innerText == tablePrimaryKeyValue)
+						{
+							row.cells[0].style.textDecoration = "underline";
+						}
+					}
+					*/
+
+
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 
 						if(result == true)
 						{
-							var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
-	
-	
+
 							var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
 	
 							var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -396,7 +412,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			saveButton = document.createElement("a");
 			saveButton.innerText = "save";
 			saveButton.id = "saveLink";
-			saveButton.className = "underline";
+			saveButton.className = "underlineNo";
 
 			var saveButtonStyle = saveButton.style;
 
@@ -465,7 +481,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell.appendChild(cellText);
 			
 			row.appendChild(cell);
-				
+			
 			row.setAttribute("gridIdField", response[tableRowCount][gridIdField]);
 		}
 		
@@ -488,7 +504,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 		var tableEdit = document.getElementById(tableHtmlObjectId);
 				
-		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getAutocompleteInputs(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue);
+		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue);
 	}
 
 },
@@ -500,12 +516,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
  * 
  * @param {string} response the response from the XMLHttpRequest get
  * @param {string} divElement the html div id to use to attach the table to 
- * @param {Array} autocompleteInputs array of autocomplete inputs
  * @param {Array} arrayOldValuesTableGridEdit array to keep track of row old values used for updating fields
  * @param {Object} tableHtml the html table object used to replace the row edited with form objects
  * @param {string} fieldPrimaryKey the table row primary key
  */
-get_populateGrid_callback: function(response, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey) {
+get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey) {
 
 	var record = response[0];
 

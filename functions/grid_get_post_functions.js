@@ -206,13 +206,12 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
  * @param {string} phpFile php file name and location 
  * @param {string} queryName the php query name for http method get 
  * @param {Array} gridColumnsInfo array of grid columns and properties
- * @param {Array} autocompleteInputs array of autocomplete inputs
  * @param {Array} arrayOldValuesTableGridEdit array to keep track of row old values used for updating fields
  * @param {function} callback the function to call when the XMLHttpRequest get method returns 
  * @param {Object} tableHtml the html table object used to replace the row edited with form objects
  * @param {string} htmlObjectPrimaryKeyValue the table row primary key
  */
-get_populateGrid: function(phpFile, queryName, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, callback, tableHtml, htmlObjectPrimaryKeyValue)
+get_populateGrid: function(phpFile, queryName, gridColumnsInfo, arrayOldValuesTableGridEdit, callback, tableHtml, htmlObjectPrimaryKeyValue)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -220,7 +219,7 @@ get_populateGrid: function(phpFile, queryName, gridColumnsInfo, autocompleteInpu
 			
 			var response = JSON.parse(this.responseText);
 
-			callback(response, gridColumnsInfo, autocompleteInputs, arrayOldValuesTableGridEdit, tableHtml, htmlObjectPrimaryKeyValue);
+			callback(response, gridColumnsInfo, arrayOldValuesTableGridEdit, tableHtml, htmlObjectPrimaryKeyValue);
 		
 		}
 	}

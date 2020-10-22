@@ -122,6 +122,23 @@ div.pageContentsForm {
 	text-align: left;
 }
 
+.underlineNo {
+	padding-left: 10px;
+   	cursor: default;
+	user-select: none;
+	text-align: left;
+}
+
+/*
+.underlineNo:hover {
+	padding-left: 10px;
+	text-decoration: underline;
+   	cursor: default;
+	user-select: none;
+	text-align: left;
+}
+*/
+
 table.homeGrid {
   table-layout: fixed;
   width: 70%;
