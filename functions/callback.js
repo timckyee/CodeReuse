@@ -112,7 +112,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	{
 		tableHeader = document.createElement("th");
 		
-		tableHeader.style.width = "100px";
+		tableHeader.style.width = "70px";
 		
 		tableHeaderRow.appendChild(tableHeader);
 	}
@@ -336,7 +336,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			editButton = document.createElement("a");
 			editButton.innerText = "edit";
 			editButton.id = "editLink";
-			editButton.className = "underlineNo";
+			editButton.className = "underline";
 
 			var editButtonStyle = editButton.style;
 
@@ -382,7 +382,13 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					}
 					*/
 
+					var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
+	
+					var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
+					grid_get_post_function.showTheGrid(tablePrimaryKeyValue, "gridEdit");
+
+					/*
 					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
 
 						if(result == true)
@@ -393,9 +399,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 							var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
 							grid_get_post_function.showTheGrid(tablePrimaryKeyValue, "gridEdit");
-	
-	
-							//grid_get_post_functions.gridEdit(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), gridColumnsInfo, home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridEditCallback, home_tenant_grid.getRowOnClick(), tablePrimaryKeyValue, sortColumn, sortDirection, pageNumber);	
 
 						}
 						else
@@ -403,12 +406,14 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 						{
 							return;
 						}
-					});					
+					});
+					*/			
 				}
 			}
 			
 			cell.appendChild(editButton);
 
+			/*
 			saveButton = document.createElement("a");
 			saveButton.innerText = "save";
 			saveButton.id = "saveLink";
@@ -443,6 +448,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			}
 			
 			cell.appendChild(saveButton)
+
+			*/
 			
 			//cell.height = 25;
 
@@ -535,17 +542,17 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 			break;
 		}
 	}
-
-	//tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" style=\"padding-left: 10px;\"><a id=\"editLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">edit</a><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendar_grid\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" value=\"\"</td>";
-
-	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" style=\"padding-left: 10px;\"><a id=\"editLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">edit</a><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
+	
+	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" style=\"padding-left: 10px;\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px;\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
 
 	var gridEventFunctions = new CodeReuse.GridEventFunctions();
 
+	/*
 	document.getElementById("editLink2").onclick = function() 
 	{
 		gridEventFunctions.editLink2Onclick();
 	}
+	*/
 
 	document.getElementById("saveLink2").onclick = function() 
 	{
