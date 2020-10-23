@@ -85,8 +85,8 @@
 	<div id="gridGetPostSuite" style="display:block">
 	</div>
 	<br>
-	<input class="button" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
-	<input class="button" type="submit" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());" />
+	<button class="button" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }">Save</button>
+	<button class="button" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());">New</button>
 	
 	</center>
 
@@ -155,8 +155,8 @@
 	<div id="gridGetPost" style="display:block"></div>
 	<br>
 	
-	<input class="button" type="submit" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
-	<input class="button" type="submit" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }; var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());" />
+	<button class="button" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }">Save</button>
+	<button class="button" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }; var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());">New</button>
 	
 	</center>
 

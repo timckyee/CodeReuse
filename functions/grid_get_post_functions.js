@@ -419,16 +419,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		
 			if(result == true)
 			{	
-				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-					
-				var tenantModel = new CodeReuse.Tenant();
-					
-				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-		
-				var callback = new CodeReuse.Callback();
-
-				//grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.rowOnClick, "showEdit", localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), pageNumber);
-
+				return;
 			}
 			else
 			if(result == false)
