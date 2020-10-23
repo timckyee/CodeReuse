@@ -327,9 +327,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell = document.createElement("td");
 			cell.className = "grid";
 			
-			var cellStyle = cell.style;
-
-			cellStyle.padding = "10px";
+			cell.style.padding = "10px";
 			
 			cell.value = response[tableRowCount]["fieldPrimaryKey"];
 			
@@ -463,6 +461,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell = document.createElement("td");
 			cell.className = "grid";
 
+			cell.style.padding = "10px";
+
 			var colType = gridColumnsInfo[i].colType;
 			
 			if(colType == "date")
@@ -543,7 +543,7 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 		}
 	}
 	
-	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
+	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
 
 	var gridEventFunctions = new CodeReuse.GridEventFunctions();
 
