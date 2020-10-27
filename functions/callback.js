@@ -113,7 +113,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeader = document.createElement("th");
 		
 		tableHeader.style.width = "70px";
-		
+		//tableHeader.style.height = "25px";
+
 		tableHeaderRow.appendChild(tableHeader);
 	}
 
@@ -125,10 +126,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
 		var tableHeaderStyle = tableHeader.style;
 
-		tableHeaderStyle.padding = "12";
+		//tableHeaderStyle.height = "25px";
+		tableHeaderStyle.paddingBottom = "10px";
 		tableHeaderStyle.textAlign = "left";
 		tableHeaderStyle.whiteSpace = "nowrap";
 		tableHeaderStyle.overflow = "hidden";
+		tableHeaderStyle.className = "grid";
 		tableHeaderStyle.textOverflow = "ellipsis";
 
         var columnName = gridColumnsInfo[i].colName;
@@ -141,8 +144,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
         tableHeaderSpanStyle.textDecoration = "underline";
         tableHeaderSpanStyle.userSelect = "none";
-        tableHeaderSpanStyle.cursor = "pointer";
-		tableHeaderSpanStyle.paddingRight = "10";
+		tableHeaderSpanStyle.cursor = "pointer";
+		tableHeaderSpanStyle.paddingLeft = "10px";
+		//tableHeaderSpanStyle.paddingRight = "10px";
 
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
@@ -327,7 +331,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell = document.createElement("td");
 			cell.className = "grid";
 			
-			cell.style.padding = "10px";
+			//cell.style.padding = "10px";
 			
 			cell.value = response[tableRowCount]["fieldPrimaryKey"];
 			
@@ -461,7 +465,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			cell = document.createElement("td");
 			cell.className = "grid";
 
-			cell.style.padding = "10px";
+			//cell.style.padding = "10px";
 
 			var colType = gridColumnsInfo[i].colType;
 			
@@ -499,6 +503,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 	divTable.appendChild(tbl);
 	
+
 	if(showEditRow == "true")
 	{
 		var tenantModel = new CodeReuse.Tenant();
@@ -543,7 +548,9 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 		}
 	}
 	
-	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
+	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\"><a id=\"saveLink2\" class=\"underlineSave\" style=\"cursor: pointer width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
+
+	//tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
 
 	var gridEventFunctions = new CodeReuse.GridEventFunctions();
 

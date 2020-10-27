@@ -37,7 +37,7 @@ CodeReuse.Grid_Get_Post_Functions.prototype = {
 grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow) {
 	
 	var divTable = document.getElementById(divElement);
-	
+
 	window.gridXmlHttpRequest.onreadystatechange = function() {
 				
 		if (this.readyState == 4 && this.status == 200) {

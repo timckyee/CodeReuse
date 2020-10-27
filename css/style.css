@@ -134,6 +134,13 @@ div.pageContentsForm {
 	text-align: left;
 }
 
+.underlineSave {
+    text-decoration: underline;
+   	cursor: default;
+	user-select: none;
+	text-align: left;	
+}
+
 .underlineNo {
 	padding-left: 10px;
    	cursor: default;
