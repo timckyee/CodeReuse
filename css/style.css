@@ -93,14 +93,14 @@ tr.autocomplete:hover {
   }
 
 
-  div.tabOptions {
+td.tabOptions {
 	
 	text-align: center;
 	padding: 25px;
 		
 }
 	
-div.tabOptions:hover {
+td.tabOptions:hover {
 	
 	background-color: lightgray;
 	cursor: default;
@@ -108,7 +108,7 @@ div.tabOptions:hover {
 
 }
 
-div.tabOptionsSelect {
+td.tabOptionsSelect {
 	
 	text-align: center;
 	padding: 25px;	
@@ -116,6 +116,7 @@ div.tabOptionsSelect {
 		
 }
 
+/*
 div.pageContentsForm {
 
 	top: 140px;
@@ -123,6 +124,13 @@ div.pageContentsForm {
 	border-left: none;
 	width: 100%;
 	height: 100%;
+		
+}
+*/
+
+div.buttonCenter {
+
+	text-align: center;
 		
 }
 

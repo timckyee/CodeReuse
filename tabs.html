@@ -9,18 +9,27 @@
 
 <body>
 	
-<div id="tabPanel" style="border:1px solid black; float:left; height:100%" onselectstart='return false;'>
+<div id="tabPanel" style="float:left; height:100%" onselectstart='return false;'>
 
+<!--
 <div id="tabHome" class="tabOptionsSelect" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Home Tab 1</div>
 <div id="tabSuites" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Suites Tab 2</div>
 <div id="tabTenants" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Tenants Tab 3</div>
 <div id="tabRentRollAndReports" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this)">Rent Roll & Reports Tab 4</div>
-	
+-->
+
+<table>
+	<tr><td id="tabHome" class="tabOptionsSelect" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Home Tab 1</td></tr>
+	<tr><td id="tabSuites" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Suites Tab 2</td></tr>
+	<tr><td id="tabTenants" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Tenants Tab 3</td></tr>
+	<tr><td id="tabRentRollAndReports" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this)">Rent Roll & Reports Tab 4</td></tr>
+	<tr><td id="tabFiller" style="height: 400px"></td></tr>
+</table>
+
 </div>
 	
 <div id="pageContentHome" class="pageContentsForm" style="display:block" onselectstart='return false;'>
-<br>
-<br>
+
 <br>
 <br>
 
@@ -28,22 +37,26 @@
 
 gridGetPostHome is the div which holds the tableHomeTenant
 
-tableTenantHome height is: height of header + (height of row * page size)
+tableTenantHome height is: height of header + (height of row * page size) + padding
 
-from clientHeight property in tableTenantHome before binding table to div
+from clientHeight property in tableTenantHome before binding table to div: 186px
 
-total: 186px
+set height to: 200px
 
 -->
 
-<center><div id="gridGetPostHome" class="table-wrapper" style="display:block; height: 186px"></div></center>
+<center>
+	
+<div id="gridGetPostHome" class="table-wrapper" style="display:block; height: 200px"></div>
+
 <br>
-<br>
-<center><div id="gridGetPostHomePaging">
+
+<div id="gridGetPostHomePaging">
 <span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('left',document.getElementById('gridGetPostHomePagingPageNumber').value)"><<</span>
 <span class="pagingElements">Page Number</span></span><input id="gridGetPostHomePagingPageNumber"/><button class="button" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(document.getElementById('gridGetPostHomePagingPageNumber').value)">Go</button>
 <span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('right',document.getElementById('gridGetPostHomePagingPageNumber').value)">>></span>
 </div>
+
 </center>
 
 </div>
@@ -54,6 +67,7 @@ total: 186px
 	<br>
 	<br>
 	<br>
+
 	<center>
 	
 	<span>select</span>
@@ -97,13 +111,20 @@ total: 186px
 		
 	<br>
 	<br>
+	<br>
+	<br>
+	<br>
+
 	<div id="gridGetPostSuite" style="display:block">
 	</div>
 	<br>
-	<button class="button" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }">Save</button>
-	<button class="button" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());">New</button>
 	
 	</center>
+
+	<div class="buttonCenter">
+		<input type="button" class="button" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
+		<input type="button" class="button" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());" />
+	</div>
 
 </div>
 
@@ -113,6 +134,7 @@ total: 186px
 	<br>
 	<br>
 	<br>
+
 	<center>
 
 	<span>select</span>
@@ -167,18 +189,25 @@ total: 186px
 
 	<br>
 	<br>
+	<br>
+	<br>
+	<br>
+	
 	<div id="gridGetPost" style="display:block"></div>
 	<br>
 	
-	<button class="button" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }">Save</button>
-	<button class="button" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }; var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());">New</button>
-	
 	</center>
+
+	<div class="buttonCenter">
+		<input type="button" class="button" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
+		<input type="button" class="button" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }; var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());" />
+	</div>
 
 </div>
 
-<div id="pageContentRentRollAndReports" class="pageContents" style="display:none">
+<div id="pageContentRentRollAndReports" style="display:none">
 <br>
+
 <span>&nbsp&nbsp Rent Roll & Reports</span>
 </div>
 
