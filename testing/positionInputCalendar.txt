@@ -1,0 +1,42 @@
+
+desktop
+
+date first
+
+left: 964
+top: 121
+
+
+date second
+
+left: 1120
+top: 121
+
+
+
+mobile
+
+date first
+
+left: 720
+top: 124
+
+
+date second
+
+left: 842
+top: 124
+
+
+ipad
+
+date first
+
+left: 711
+top: 131
+
+
+date second
+
+left: 838
+top: 131

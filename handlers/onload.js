@@ -100,8 +100,9 @@ function init_autocomplete_inputs() {
 		
 	});
 	
-	tenant_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });	
+	tenant_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });
 	
+	tenant_input.addEventListener("focusin", function() { this.select(); });	
 }
 
 function init_calendar_inputs() {

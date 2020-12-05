@@ -50,7 +50,7 @@ focusOutHide: function(div) {
 	}
 	*/
 
-	if(div == "tenantSea`r`chList")
+	if(div == "tenantSearchList")
 	{
 		if(document.getElementById("tenantSearchList").innerHTML != "")
 		{
@@ -154,7 +154,7 @@ autocomplete: function(event, object, divElement, itemColumns, valueField, httpG
 						row.setAttribute("value", item[valueField]);
 					}
 					
-					row.className = "autocomplete";
+					//row.className = "autocomplete";
 					
 					tbl.appendChild(row);
 					

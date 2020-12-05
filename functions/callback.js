@@ -586,6 +586,12 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 	{
 		gridEventFunctions.tenant_input_grid_onKeyUp();
 	}
+
+	document.getElementById("tenant_input_grid").onfocus = function() 
+	{
+		this.select();
+		//gridEventFunctions.tenant_input_grid_onFocus();
+	}	
 	
 	//document.getElementById("inputCalendar_grid").style.position = "relative";
 	//document.getElementById("inputCalendar_grid").style.zIndex = "1";
