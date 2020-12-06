@@ -194,7 +194,7 @@ table.homeGridMobile {
 
 table.tenantGrid {
   table-layout: fixed;
-  width: 70%;
+  width: 60%;
 }
 
 table.tenantGridIOS_safari {

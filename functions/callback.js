@@ -141,7 +141,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeaderSpan.innerHTML = columnName;
 
 		var tableHeaderSpanStyle = tableHeaderSpan.style;
-		
+
         tableHeaderSpanStyle.textDecoration = "underline";
         tableHeaderSpanStyle.userSelect = "none";
 		tableHeaderSpanStyle.cursor = "pointer";
@@ -194,7 +194,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			}
 		}
 		
-        tableHeader.appendChild(tableHeaderSpan);
+		tableHeader.appendChild(tableHeaderSpan);
+
+		tableHeaderSpaceFiller = document.createElement("span");
+		tableHeaderSpaceFiller.innerHTML = "&nbsp;&nbsp";
+
+		tableHeader.appendChild(tableHeaderSpaceFiller);
 
 		tableHeaderIcon = document.createElement("img");
 		tableHeaderIcon.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
@@ -230,11 +235,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			tableHeaderIcon.width = "14";
 			tableHeaderIcon.height = "14";
 
-			tableHeader.className = "description";
+			//tableHeader.className = "description";
 
-			tableHeaderSpan.className = "text";
+			//tableHeaderSpan.className = "text";
 
-			tableHeaderIcon.className = "icon";
+			//tableHeaderIcon.className = "icon";
 
 			if(sortDirection == "asc")
 			{
@@ -249,11 +254,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		}
 		else
 		{
-			tableHeader.className = "";
+			//tableHeader.className = "";
 
-			tableHeaderSpan.className = "text";
+			//tableHeaderSpan.className = "text";
 
-			tableHeaderIcon.className = "";
+			//tableHeaderIcon.className = "";
 
 			tableHeaderIcon.style.display = "none";
 		}

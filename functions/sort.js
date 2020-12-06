@@ -180,9 +180,9 @@ sortTable: function(tblId, column, gridColumnsInfo){
 			var tableHeaderSpan_update = tblId + "_" + column_update + "Span";
 			var tableHeaderIcon_update = tblId + "_" + column_update + "ColumnHeaderIcon";
 
-			document.getElementById(tableHeader_update).className = "description";
-			document.getElementById(tableHeaderSpan_update).className = "text";
-			document.getElementById(tableHeaderIcon_update).className = "icon";
+			//document.getElementById(tableHeader_update).className = "description";
+			//document.getElementById(tableHeaderSpan_update).className = "text";
+			//document.getElementById(tableHeaderIcon_update).className = "icon";
 
 			if(direction_update == "asc")
 			{
@@ -201,9 +201,9 @@ sortTable: function(tblId, column, gridColumnsInfo){
 			var tableHeaderSpan = tblId + "_" + gridColumnsInfo[i].id + "Span";
 			var tableHeaderIcon = tblId + "_" + gridColumnsInfo[i].id + "ColumnHeaderIcon";
 
-			document.getElementById(tableHeader).className = "";
-			document.getElementById(tableHeaderSpan).className = "text";
-			document.getElementById(tableHeaderIcon).className = "";
+			//document.getElementById(tableHeader).className = "";
+			//document.getElementById(tableHeaderSpan).className = "text";
+			//document.getElementById(tableHeaderIcon).className = "";
 
 			document.getElementById(tableHeaderIcon).style.display = "none";
 		}
