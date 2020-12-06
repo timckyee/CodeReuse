@@ -184,17 +184,17 @@ table.homeGridIOS_safari {
 
 table.homeGridIOS {
   table-layout: fixed;
-  width: 95%;
+  width: 70%;
 }
 
 table.homeGridMobile {
   table-layout: fixed;
-  width: 95%;
+  width: 90%;
 }
 
 table.tenantGrid {
   table-layout: fixed;
-  width: 57%;
+  width: 70%;
 }
 
 table.tenantGridIOS_safari {
@@ -214,7 +214,7 @@ table.tenantGridMobile {
 
 table.suiteGrid {
   table-layout: fixed;
-  width: 45%;
+  width: 52%;
 }
 
 table.suiteGridIOS_safari {
@@ -251,6 +251,12 @@ td.grid {
 	padding-left: 10px;
 }
 
+body {
+
+	min-width: 1280px;
+
+}
+
 /*
 
 .description, .text, and .icon
@@ -280,7 +286,7 @@ sorting header icon ellipsis
 
 .table-wrapper
 {
-	height: 40%;
+	/* height: 40%; */
     overflow: auto;
 }
 
