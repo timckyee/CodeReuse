@@ -6,6 +6,8 @@ window.addEventListener("load", function() {
 	
 	controller = new CodeReuse.Controller();
 	
+	htmlBody_init_class();
+
 	init_gridGetPost_xmlHttpRequests();
 	
 	init_autocomplete_inputs();
@@ -47,6 +49,23 @@ window.addEventListener("load", function() {
 	tenant.refreshTenantGridHome();
 	
 });
+
+function htmlBody_init_class() {
+
+	var helper = new CodeReuse.Helper();
+
+	var platform = helper.checkPlatform();
+
+	if(platform != "IOS")
+	{
+		document.body.className = "bodyDesktop";
+	}
+	else
+	{
+		document.body.className = "bodyIOS";
+	}
+
+}
 
 function init_gridGetPost_xmlHttpRequests() {
 	

@@ -184,7 +184,7 @@ table.homeGridIOS_safari {
 
 table.homeGridIOS {
   table-layout: fixed;
-  width: 70%;
+  width: 90%;
 }
 
 table.homeGridMobile {
@@ -251,9 +251,15 @@ td.grid {
 	padding-left: 10px;
 }
 
-body {
+.bodyDesktop {
 
 	min-width: 1280px;
+
+}
+
+.bodyIOS {
+
+	min-width: 1024px;
 
 }
 
