@@ -204,7 +204,7 @@ table.tenantGridIOS_safari {
 
 table.tenantGridIOS {
   table-layout: fixed;
-  width: 70%;
+  width: 90%;
 }
 
 table.tenantGridMobile {
@@ -224,7 +224,7 @@ table.suiteGridIOS_safari {
 
 table.suiteGridIOS {
   table-layout: fixed;
-  width: 57%;
+  width: 70%;
 }
 
 table.suiteGridMobile {
