@@ -42,6 +42,8 @@ CodeReuse.HomeTenantGrid = function() {
 	this.refreshHomeTenantGridQueryName = "gridtablehome";
 
 	this.homeTenantGridUpdateQueryName = "updateTableGridGetPost";
+
+	this.homeTenantGridPagingDiv = "gridGetPostHomePaging";
 };
 
 CodeReuse.HomeTenantGrid.prototype = {
@@ -101,6 +103,12 @@ CodeReuse.HomeTenantGrid.prototype = {
 	getHomeTenantGridUpdateQueryName: function () {
 
 		return this.homeTenantGridUpdateQueryName;
+
+	},
+
+	getHomeTenantGridPagingDiv: function () {
+
+		return this.homeTenantGridPagingDiv;
 
 	},
 
@@ -164,9 +172,11 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
+		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
 		var callback = new CodeReuse.Callback();
 
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, sortDirection, pageNumber, '', '', '' ,'');
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
 		
 	},
 	

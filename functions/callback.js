@@ -29,8 +29,10 @@ CodeReuse.Callback.prototype = {
  * @param {string} showEditRow show the edit row html objects
  * @param {string} savePrimaryKeyValue the primary key value of the edit row were are saving
  * @param {string} highlightRow flag to highlight the row after save
+ * @param {string} showPagingFooter if there is a grid footer for paging
+ * @param {string} divPagingFooter the paging footer div
  */
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -509,7 +511,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	divTable.innerHTML = "";
 	
 	divTable.appendChild(tbl);
-	
+
+	if(showPagingFooter == "true")
+	{
+		document.getElementById(divPagingFooter).style.display = "block";
+	}
 
 	if(showEditRow == "true")
 	{
@@ -525,6 +531,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				
 		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue);
 	}
+	
 
 },
 

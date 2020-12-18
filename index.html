@@ -2,9 +2,7 @@
 
 <head>
 
-<!--
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
--->
 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/calendar.css">
@@ -55,7 +53,7 @@ set height to: 200px
 
 <br>
 
-<div id="gridGetPostHomePaging">
+<div id="gridGetPostHomePaging" style="display: none">
 <span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('left',document.getElementById('gridGetPostHomePagingPageNumber').value)"><<</span>
 <span class="pagingElements">Page Number</span></span><input id="gridGetPostHomePagingPageNumber"/><button class="button" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(document.getElementById('gridGetPostHomePagingPageNumber').value)">Go</button>
 <span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('right',document.getElementById('gridGetPostHomePagingPageNumber').value)">>></span>
