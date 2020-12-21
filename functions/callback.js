@@ -41,11 +41,27 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 	var platform = helper.checkPlatform();
 
-	if(platform == "desktop")
+	if(platform == "desktop_safari")
 	{
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
-			tbl.className = "homeGrid";
+			tbl.className = "homeGrid_safari";
+		}
+		else if(tableHtmlObjectId == "tableSuite")
+		{
+			tbl.className = "suiteGrid";
+		}
+		else if(tableHtmlObjectId == "tableTenant")
+		{
+			tbl.className = "tenantGrid";
+		}
+	}
+	else
+	if(platform == "desktop_chrome")
+	{
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			tbl.className = "homeGrid_chrome";
 		}
 		else if(tableHtmlObjectId == "tableSuite")
 		{
@@ -530,6 +546,16 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		var tableEdit = document.getElementById(tableHtmlObjectId);
 				
 		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue);
+	}
+
+	if(tableHtmlObjectId == "tableSuite")
+	{
+		document.getElementById("saveNewButtonSuite").style.display = "block";
+	}
+	else
+	if(tableHtmlObjectId == "tableTenant")
+	{
+		document.getElementById("saveNewButtonTenant").style.display = "block";
 	}
 	
 

@@ -35,21 +35,9 @@
 <br>
 <br>
 
-<!--
-
-gridGetPostHome is the div which holds the tableHomeTenant
-
-tableTenantHome height is: height of header + (height of row * page size) + padding
-
-from clientHeight property in tableTenantHome before binding table to div: 186px
-
-set height to: 200px
-
--->
-
 <center>
 	
-<div id="gridGetPostHome" class="table-wrapper" style="display:block; height: 200px"></div>
+<div id="gridGetPostHome" class="table-wrapper" style="display:block; height: 245px"></div>
 
 <br>
 
@@ -73,7 +61,7 @@ set height to: 200px
 	<center>
 	
 	<span>select</span>
-	<select id="selectBuildingSuite" onchange="if(this.value == ''){ document.getElementById('gridGetPostSuite').style.display = 'none'; } else { document.getElementById('gridGetPostSuite').style.display = 'block'; controller.refreshSelectSuiteGrid();controller.resetSuiteFields(); }">
+	<select id="selectBuildingSuite" onchange="if(this.value == ''){ document.getElementById('gridGetPostSuite').style.display = 'none'; document.getElementById('saveNewButtonSuite').style.display = 'none'; } else { document.getElementById('gridGetPostSuite').style.display = 'block'; controller.refreshSelectSuiteGrid();controller.resetSuiteFields();}">
 			<option value="" selected>None</option>
 			<option value="1">building</option>
 			<option value="2">building2</option>
@@ -117,13 +105,13 @@ set height to: 200px
 	<br>
 	<br>
 
-	<div id="gridGetPostSuite" class="table-wrapper" style="display:block">
+	<div id="gridGetPostSuite" class="table-wrapper" style="display:block; height: 245px; overflow: auto;">
 	</div>
 	<br>
 	
 	</center>
 
-	<div class="buttonCenter">
+	<div id="saveNewButtonSuite" class="buttonCenter" style="display: none">
 		<input type="button" class="button" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
 		<input type="button" class="button" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());" />
 	</div>
@@ -140,7 +128,7 @@ set height to: 200px
 	<center>
 
 	<span>select</span>
-	<select id="selectBuildingTenant" onchange="if(this.value == ''){ document.getElementById('gridGetPost').style.display = 'none'; } else { document.getElementById('gridGetPost').style.display = 'block'; controller.refreshSelectTenantGrid();controller.resetTenantFields(); }">
+	<select id="selectBuildingTenant" onchange="if(this.value == ''){ document.getElementById('gridGetPost').style.display = 'none'; document.getElementById('saveNewButtonTenant').style.display = 'none'; } else { document.getElementById('gridGetPost').style.display = 'block'; controller.refreshSelectTenantGrid();controller.resetTenantFields(); }">
 		<option value="" selected>None</option>
 		<option value="1">building</option>
 		<option value="2">building2</option>
@@ -195,12 +183,12 @@ set height to: 200px
 	<br>
 	<br>
 	
-	<div id="gridGetPost" class="table-wrapper" style="display:block"></div>
+	<div id="gridGetPost" class="table-wrapper" style="display:block; height: 245px; overflow: auto;"></div>
 	<br>
 	
 	</center>
 
-	<div class="buttonCenter">
+	<div id="saveNewButtonTenant" class="buttonCenter" style="display: none">
 		<input type="button" class="button" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
 		<input type="button" class="button" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }; var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());" />
 	</div>

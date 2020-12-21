@@ -360,7 +360,14 @@ checkPlatform: function() {
 
 	if(isIOS_safari == false && isIOS == false && isAndroid == false)
 	{
-		return "desktop";
+		if(navigator.userAgent.indexOf('Chrome') != -1)
+		{
+			return "desktop_chrome";
+		}
+		else
+		{
+			return "desktop_safari";
+		}
 	}
 	else
 	if(isIOS_safari == true)

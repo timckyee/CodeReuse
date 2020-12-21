@@ -172,10 +172,15 @@ a, span, button {
 }
 */
 
-table.homeGrid {
+table.homeGrid_safari {
   table-layout: fixed;
-  width: 70%;
+  width: 90%;
 }
+
+table.homeGrid_chrome {
+	table-layout: fixed;
+	width: 70%;
+  }
 
 table.homeGridIOS_safari {
   table-layout: fixed;
@@ -194,7 +199,7 @@ table.homeGridMobile {
 
 table.tenantGrid {
   table-layout: fixed;
-  width: 60%;
+  width: 70%;
 }
 
 table.tenantGridIOS_safari {
@@ -209,7 +214,7 @@ table.tenantGridIOS {
 
 table.tenantGridMobile {
   table-layout: fixed;
-  width: 70%;
+  width: 90%;
 }
 
 table.suiteGrid {
@@ -229,7 +234,7 @@ table.suiteGridIOS {
 
 table.suiteGridMobile {
   table-layout: fixed;
-  width: 57%;
+  width: 70%;
 }
 
 
@@ -294,6 +299,15 @@ sorting header icon ellipsis
 {
 	/* height: 40%; */
     overflow: auto;
+}
+
+th 
+{
+	background: lightgray;
+    border: solid 1px black;
+	padding-top: 10px;
+	position: sticky;
+	top: 0;
 }
 
 
