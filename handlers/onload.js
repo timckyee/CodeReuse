@@ -56,13 +56,13 @@ function htmlBody_init_class() {
 
 	var platform = helper.checkPlatform();
 
-	if(platform != "IOS")
+	if(platform == "IOS" || platform == "IOS_safari")
 	{
-		document.body.className = "bodyDesktop";
+		document.body.className = "bodyIOS";
 	}
 	else
 	{
-		document.body.className = "bodyIOS";
+		document.body.className = "bodyDesktop";
 	}
 
 }

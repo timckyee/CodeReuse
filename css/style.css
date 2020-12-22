@@ -113,7 +113,7 @@ td.tabOptionsSelect {
 	text-align: center;
 	padding: 25px;	
 	background-color: lightgray;
-		
+	
 }
 
 /*
@@ -249,11 +249,23 @@ table.formGrid {
 }
 
 td.grid {
-    max-width: 100px;
+	max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
 	white-space: nowrap;
 	padding-left: 10px;
+}
+
+td.gridBorderThick {
+
+	border: 1px solid black;
+
+}
+
+td.gridBorderThin {
+
+	border: 0.4px solid black;
+
 }
 
 .bodyDesktop {
@@ -276,6 +288,7 @@ sorting header icon ellipsis
 
 */
 
+/*
 .description {
 	display: flex;
   	align-items: center;
@@ -293,6 +306,7 @@ sorting header icon ellipsis
 .icon {
   padding: 2px;
 }
+*/
 
 
 .table-wrapper
@@ -301,15 +315,15 @@ sorting header icon ellipsis
     overflow: auto;
 }
 
-th 
+th
 {
-	background: lightgray;
-    border: solid 1px black;
-	padding-top: 10px;
-	position: sticky;
+	position: sticky; 
 	top: 0;
+	background: lightgray;
+	/* border-right: solid 1px black; */
+	padding-top: 10px; 
+	box-shadow: inset 1px 1px #000, 0 1px #000;
 }
-
 
 .button
 {
