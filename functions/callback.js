@@ -430,32 +430,31 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					}
 					*/
 
-					var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
+					var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions;
 	
-					var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+					var tenantModel = new CodeReuse.Tenant();
 
-					grid_get_post_function.showTheGrid(tablePrimaryKeyValue, "gridEdit");
+					var home_tenant_grid = new CodeReuse.HomeTenantGrid();	
+					
+					var callback = new CodeReuse.Callback();
+				
+					var column = localStorage.getItem("arraySortColumn");
+					var direction = localStorage.getItem("arraySortDirection");
+				
+					var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
+				
+					localStorage.setItem("editMode", "true");
+				
+					var searchValue = home_tenant_grid.getSearchValue();
 
-					/*
-					helper.msgBox('confirm', 'Would you like to edit this row?', function (result) {
-
-						if(result == true)
-						{
-
-							var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
-	
-							var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-							grid_get_post_function.showTheGrid(tablePrimaryKeyValue, "gridEdit");
-
-						}
-						else
-						if(result == false)
-						{
-							return;
-						}
-					});
-					*/			
+					if(searchValue == "" || searchValue == undefined)
+					{
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
+					}
+					else
+					{
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(),"searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
+					}
 				}
 			}
 			
@@ -556,7 +555,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	}
 
 	divTable.innerHTML = "";
-	
+
+	document.getElementById("homeTenantGridSearchInputAndButton").style.display = "block";
+
 	divTable.appendChild(tbl);
 
 	if(showPagingFooter == "true")
@@ -566,7 +567,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 	if(showEditRow == "true")
 	{
-		var tenantModel = new CodeReuse.Tenant();
+		//var tenantModel = new CodeReuse.Tenant();
 			
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 		
@@ -575,8 +576,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		var callback = new CodeReuse.Callback();
 
 		var tableEdit = document.getElementById(tableHtmlObjectId);
+
+		var searchValue = home_tenant_grid.getSearchValue();
 				
-		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tbl, savePrimaryKeyValue);
+		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, savePrimaryKeyValue, "searchValue", searchValue);
 	}
 
 	if(tableHtmlObjectId == "tableSuite")

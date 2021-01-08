@@ -12,7 +12,9 @@ CodeReuse.HomeTenantGrid = function() {
 	this.field1;
 	this.field2;
 	this.field3;
-	this.field4;	
+	this.field4;
+
+	this.searchValue;
 		
 	this.columns = [
 		
@@ -41,6 +43,8 @@ CodeReuse.HomeTenantGrid = function() {
 
 	this.refreshHomeTenantGridQueryName = "gridtablehome";
 
+	this.refreshHomeTenantGridQueryNameSearch = "gridtablehomeSearch";
+
 	this.homeTenantGridUpdateQueryName = "updateTableGridGetPost";
 
 	this.homeTenantGridPagingDiv = "gridGetPostHomePaging";
@@ -54,6 +58,8 @@ CodeReuse.HomeTenantGrid.prototype = {
 	 */
 	arrayOldValuesTableGridEdit: [],
 	
+	searchValue: [],
+
 	getGridName: function() {
 		
 		return this.gridName;
@@ -100,6 +106,12 @@ CodeReuse.HomeTenantGrid.prototype = {
 
 	},
 	
+	getRefreshHomeTenantGridQueryNameSearch: function() {
+
+		return this.refreshHomeTenantGridQueryNameSearch;
+
+	},
+
 	getHomeTenantGridUpdateQueryName: function () {
 
 		return this.homeTenantGridUpdateQueryName;
@@ -109,6 +121,18 @@ CodeReuse.HomeTenantGrid.prototype = {
 	getHomeTenantGridPagingDiv: function () {
 
 		return this.homeTenantGridPagingDiv;
+
+	},
+
+	setSearchValue: function(newSearchValue) {
+
+		this.searchValue[0] = newSearchValue;
+
+	},
+
+	getSearchValue: function() {
+
+		return this.searchValue[0];
 
 	},
 
@@ -169,7 +193,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 	 * @param {string} pageNumber the page number of the table we are currently showing
 	 */
 	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection, pageNumber) {
-		
+
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
