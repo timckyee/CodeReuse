@@ -247,30 +247,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		
 		var server = new CodeReuse.Config();
 
-		/*
-		var column;
-		var direction;
-
-		if(tableHtmlObjectId == "tableHomeTenant")
-		{
-			column = localStorage.getItem("arraySortColumn");
-			direction = localStorage.getItem("arraySortDirection");
-		}
-		else if(tableHtmlObjectId == "tableSuite")
-		{
-			column = localStorage.getItem("arraySortColumn_suite");
-			direction = localStorage.getItem("arraySortDirection_suite");
-		}
-		else if(tableHtmlObjectId == "tableTenant")
-		{
-			column = localStorage.getItem("arraySortColumn_tenant");
-			direction = localStorage.getItem("arraySortDirection_tenant");
-		}
-		*/
-
-		//var column = sortColumn;
-		//var direction = sortDirection;
-
 		if(gridColumnsInfo[i].id == sortColumn)
 		{
 			tableHeaderIcon.width = "14";
@@ -390,14 +366,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 			editButtonStyle.cursor = "pointer";
 			editButtonStyle.width = "50px";
-
-			//var tenantModel = new CodeReuse.Tenant();
-			
-			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-			
-			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-			
-			var callback = new CodeReuse.Callback();
 			
 			editButton.onclick = function(tablePrimaryKey) 
 			{
@@ -416,26 +384,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				}
 				else
 				{
-
-					/*
-					var tableEdit = document.getElementById(tableHtmlObjectId);
-
-					for(var i=1; i<tableEdit.rows.length; i++)
-					{
-						var row = tableEdit.rows[i];
-						if(row.cells[1].innerText == tablePrimaryKeyValue)
-						{
-							row.cells[0].style.textDecoration = "underline";
-						}
-					}
-					*/
-
 					var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions;
-	
-					var tenantModel = new CodeReuse.Tenant();
 
 					var home_tenant_grid = new CodeReuse.HomeTenantGrid();	
 					
+					var tenantModel = new CodeReuse.Tenant();
+
 					var callback = new CodeReuse.Callback();
 				
 					var column = localStorage.getItem("arraySortColumn");
@@ -459,44 +413,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 			}
 			
 			cell.appendChild(editButton);
-
-			/*
-			saveButton = document.createElement("a");
-			saveButton.innerText = "save";
-			saveButton.id = "saveLink";
-			saveButton.className = "underlineNo";
-
-			var saveButtonStyle = saveButton.style;
-
-			saveButtonStyle.cursor = "pointer";
-			saveButtonStyle.width = "50px";
-
-			saveButton.onclick = function(tablePrimaryKey) {
-
-				var helper = new CodeReuse.Helper();
-
-				if(localStorage.getItem("editMode") == "true")
-				{
-					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
-
-						return;
-
-					});
-				}
-				else
-				{
-					helper.msgBox('alert', 'You are not in edit mode. Please click on edit.', function (result) {
-
-						return;
-
-					});
-				}
-
-			}
-			
-			cell.appendChild(saveButton)
-
-			*/
 			
 			//cell.height = 25;
 
@@ -566,9 +482,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	}
 
 	if(showEditRow == "true")
-	{
-		//var tenantModel = new CodeReuse.Tenant();
-			
+	{			
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 		
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
@@ -662,7 +576,6 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 	document.getElementById("tenant_input_grid").onfocus = function() 
 	{
 		this.select();
-		//gridEventFunctions.tenant_input_grid_onFocus();
 	}	
 	
 	//document.getElementById("inputCalendar_grid").style.position = "relative";
@@ -776,30 +689,6 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 		else
 		{
 			arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].id];
-
-			/*
-			if(gridColumnsInfo[i].htmlObjectType == "autocomplete")
-			{
-				for(input=0; input<autocompleteInputs.length; input++)
-				{
-					if(gridColumnsInfo[i].id == autocompleteInputs[input].value)
-					{
-						//document.getElementById(gridColumnsInfo[i].htmlObjectId).value = record[autocompleteInputs[input].display];
-						//break;
-					}
-				}
-				
-				//document.getElementById(gridColumnsInfo[i].htmlObjectId).setAttribute("rowAttributeValue", record[gridColumnsInfo[i].id]);
-				
-				arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].id];
-			}
-			else
-			{	
-				//document.getElementById(gridColumnsInfo[i].htmlObjectId).value = record[gridColumnsInfo[i].id];
-				
-				arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].id];
-			}
-			*/
 		}
 	}
 },

@@ -13,8 +13,6 @@ CodeReuse.HomeTenantGrid = function() {
 	this.field2;
 	this.field3;
 	this.field4;
-
-	this.searchValue;
 		
 	this.columns = [
 		
