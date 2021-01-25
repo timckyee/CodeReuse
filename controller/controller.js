@@ -156,7 +156,7 @@ CodeReuse.Controller.prototype = {
 		}
 		
 		homeTenantGrid.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey_grid);
-		homeTenantGrid.homeTenantGridUpdate(tableRowNumber, localStorage.getItem("homeTenantGridPageNumber"));	
+		homeTenantGrid.homeTenantGridUpdate();	
 	},
 	
 	/**

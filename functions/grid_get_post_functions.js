@@ -37,7 +37,7 @@ CodeReuse.Grid_Get_Post_Functions.prototype = {
  * @param {string} divPagingFooter the paging footer div 
  */
 grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter) {
-
+	
 	var divTable = document.getElementById(divElement);
 
 	window.gridXmlHttpRequest.onreadystatechange = function() {
@@ -53,7 +53,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 	
 	var queryString;
 
-	if(tableHtmlObjectId == "tableHomeTenant")
+	if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 	{
 		if(additionalArgs != "")
 		{

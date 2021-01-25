@@ -78,8 +78,8 @@ focusOutHide: function(div) {
  * @param {string} positionResultsListInput input box html id
  * @param {string} positionResultsListDiv div list html id
  */
-autocomplete: function(event, object, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {		
-	
+autocomplete: function(event, object, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {
+
 	var input;
 
 	/*

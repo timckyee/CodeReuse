@@ -59,6 +59,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	else
 	if(platform == "desktop_chrome")
 	{
+		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+		{
+			tbl.className = "homeGrid_chrome";
+		}
+		else
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
 			tbl.className = "homeGrid_chrome";
@@ -145,7 +150,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		var tableHeaderStyle = tableHeader.style;
 
 		// set right border of the last th header or there will be no border
-		if(tableHtmlObjectId == "tableHomeTenant")
+		if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 		{
 			if(gridColumnsInfo[i].id == "field2")
 			{
@@ -292,7 +297,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	{
 		var row = document.createElement("tr");
 		
-		if(tableHtmlObjectId == "tableSuite" || tableHtmlObjectId == "tableTenant")
+		if(tableHtmlObjectId == "tableSuite" || tableHtmlObjectId == "tableTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 		{
 			row.className = "tableHover";
 		}
@@ -476,6 +481,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 	divTable.appendChild(tbl);
 
+
+	document.getElementById("gridGetPostHomeFormGridPaging").style.display = "block";
+
+
 	if(showPagingFooter == "true")
 	{
 		document.getElementById(divPagingFooter).style.display = "block";
@@ -505,7 +514,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	{
 		document.getElementById("saveNewButtonTenant").style.display = "block";
 	}
-	
 
 },
 
@@ -568,9 +576,9 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 	//document.getElementById("tenant_input_grid").style.backgroundColor = "white";
 	//document.getElementById("tenant_input_grid").width = "200";		
 
-	document.getElementById("tenant_input_grid").onkeyup = function() 
+	document.getElementById("tenant_input_grid").onkeyup = function(event) 
 	{
-		gridEventFunctions.tenant_input_grid_onKeyUp();
+		gridEventFunctions.tenant_input_grid_onKeyUp(event);
 	}
 
 	document.getElementById("tenant_input_grid").onfocus = function() 

@@ -148,13 +148,13 @@ CodeReuse.SuiteGrid.prototype = {
 			
 			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)
 			{
-				//var sortColumn = localStorage.getItem("arraySortColumn_suite");
+				localStorage.setItem("arraySortColumn_suite", "suiteId");
 
-				//var sortDirection = localStorage.getItem("arraySortDirection_suite");
-
-				var sortColumn = "suiteId";
-
-				var sortDirection = "asc";
+				localStorage.setItem("arraySortDirection_suite", "asc");
+	
+				var sortColumn = localStorage.getItem("arraySortColumn_suite");
+	
+				var sortDirection = localStorage.getItem("arraySortDirection_suite");
 
 				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', '', "false" ,'' ,'', "false", '');
 			}

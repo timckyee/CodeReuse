@@ -76,7 +76,7 @@ CodeReuse.GridEventFunctions.prototype = {
 	 * @function
 	 * @name GridEventFunctions#tenant_input_grid_onKeyUp
 	 */    
-    tenant_input_grid_onKeyUp: function() 
+    tenant_input_grid_onKeyUp: function(event) 
     {
         var autocomplete = new CodeReuse.Autocomplete();
     

@@ -18,7 +18,7 @@ CodeReuse.Sort.prototype = {
  * @param {Array} gridColumnsInfo the grid columns in the grid object (SuiteGrid or TenantGrid)
  */
 sortTable: function(tblId, column, gridColumnsInfo){
-
+	
 	var sortColumn = gridColumnsInfo[column].id;
 	
 	var column_update;

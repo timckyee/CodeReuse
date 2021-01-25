@@ -18,6 +18,51 @@ TenantHomeGridOnClickHandler: function() {
 },
 
 /**
+ * TenantFormGridPaging row onclick handler
+ * @function
+ * @name Handler#TenantGridOnClickHandler
+ * 
+ * @param {string} phpFile php file name and location
+ * @param {string} gridRowId row onclick primary key
+ * @param {Array} fieldsInfo form object array of fields
+ * @param {Array} gridColumnsInfo array of grid columns and properties
+ * @param {string} tableHtmlObjectId the table to set the row highlighting after onclick
+ */
+TenantFormGridPagingOnClickHandler: function(phpFile, gridRowId, fieldsInfo, gridColumnsInfo, tableHtmlObjectId) {
+
+	var tableTenant = document.getElementById(tableHtmlObjectId);
+	var row;
+
+	for(var i=0; i<tableTenant.rows.length; i++)
+	{
+		row = tableTenant.rows[i];
+		if(row.cells[0].innerText == gridRowId)
+		{
+			row.className = "tableHover highlightRow";
+		}
+		else
+		{
+			row.className = "rowClickCursor";
+		}
+	}
+
+	var tenantModel = new CodeReuse.TenantFormGridPaging();
+	
+	var autocompleteInputs = tenantModel.getAutocompleteInputs();			
+	
+	var arrayOldValuesTable = tenantModel.arrayOldValuesTable;
+	
+	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+	
+	var callback = new CodeReuse.Callback();
+	
+	grid_get_post_functions.get_populateForm(phpFile, "populate", gridRowId, tenantModel.getFieldsInfo(), autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
+
+	//grid_get_post_functions.get_populateForm(phpFile, "populate", gridRowId, fieldsInfo, autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
+	
+},
+
+/**
  * SuiteGrid row onclick handler
  * @function
  * @name Handler#SuiteGridOnClickHandler
@@ -119,7 +164,7 @@ sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, 
 	var sort = new CodeReuse.Sort();
 
 	sort.sortTable(sortTableHtmlObjectId, column, gridColumnsInfo);
-		
+	
 },
 
 /**
