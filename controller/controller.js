@@ -160,6 +160,73 @@ CodeReuse.Controller.prototype = {
 	},
 	
 	/**
+	 * Save the tenant form values
+	 * @function
+	 * @name Controller#tenantSave
+	 */
+	tenantFormGridPagingSave: function() {
+
+		var saveType;
+		
+		var inputPrimaryKey = document.getElementById("inputPrimaryKeyFormGridPaging").value;
+		
+		var inputCalendar = document.getElementById("inputCalendarFormGridPaging").value;
+		var inputCalendarTesting = document.getElementById("inputCalendarTestingFormGridPaging").value;
+
+		var building_option = document.getElementById("building_option_form_grid_paging").value;
+		var tenant_input = document.getElementById("tenant_input_form_grid_paging").getAttribute("rowAttributeValue");
+		
+		var TenantValues = new Array();
+		
+		TenantValues["inputCalendarFormGridPaging"] = inputCalendar;
+		TenantValues["inputCalendarTestingFormGridPaging"] = inputCalendarTesting;
+		TenantValues["building_option_form_grid_paging"] = building_option;
+		TenantValues["tenant_input_form_grid_paging"] = tenant_input;
+		
+		if(inputPrimaryKey != "")
+		{
+			saveType = "update";
+		}
+		else
+		{
+			saveType = "insert";
+		}
+		
+		var tenantFormGridPaging = new CodeReuse.TenantFormGridPaging();	
+				
+		if(saveType == "update")
+		{
+			tenantFormGridPaging.setFieldValuesFromInputs(TenantValues, inputPrimaryKey);
+			tenantFormGridPaging.tenantUpdate();
+		}
+		else
+		if(saveType == "insert")
+		{
+			tenantFormGridPaging.setFieldValuesFromInputs(TenantValues, "");
+			tenantFormGridPaging.tenantInsert();
+		}
+		
+	},
+
+	/**
+	 * Set the tenant form grid paging values to empty when clicking on new
+	 * @function
+	 * @name Controller#resetTenantFormGridPagingFields
+	 */
+	resetTenantFormGridPagingFields: function() {
+		
+		var tenantFormGridPaging = new CodeReuse.TenantFormGridPaging();
+		
+		var fieldsInfo = tenantFormGridPaging.getFieldsInfo();
+		
+		for(i=0; i<fieldsInfo.length; i++)
+		{
+			document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
+		}
+		
+	},
+
+	/**
 	 * Set the tenant form values to empty when clicking on new
 	 * @function
 	 * @name Controller#resetTenantFields

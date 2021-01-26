@@ -42,9 +42,9 @@
 <br>
 
 <div id="gridGetPostHomePaging" style="display: none">
-<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('left',document.getElementById('gridGetPostHomePagingPageNumber').value)"><<</span>
-<span class="pagingElements">Page Number</span></span><input id="gridGetPostHomePagingPageNumber"/><button class="button" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(document.getElementById('gridGetPostHomePagingPageNumber').value)">Go</button>
-<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows('right',document.getElementById('gridGetPostHomePagingPageNumber').value)">>></span>
+<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows(this,'left',document.getElementById('gridGetPostHomePagingPageNumber').value)"><<</span>
+<span class="pagingElements">Page Number</span></span><input id="gridGetPostHomePagingPageNumber"/><button class="button" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(this,document.getElementById('gridGetPostHomePagingPageNumber').value)">Go</button>
+<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows(this,'right',document.getElementById('gridGetPostHomePagingPageNumber').value)">>></span>
 </div>
 
 </center>
@@ -108,7 +108,25 @@
 	<br>
 	
 <center>
-<div id="gridGetPostHomeFormGridPaging" class="table-wrapper" style="display:block;"></div>
+
+<div id="gridGetPostHomeFormGridPaging" class="table-wrapper" style="display:block; height: 245px"></div>
+
+<br>
+
+<div id="gridGetPostHomeFormGridPagingFooter" style="display: none">
+	<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows(this,'left',document.getElementById('gridGetPostHomeFormGridPagingPageNumber').value)"><<</span>
+	<span class="pagingElements">Page Number</span></span><input id="gridGetPostHomeFormGridPagingPageNumber"/><button class="button" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPage(this,document.getElementById('gridGetPostHomeFormGridPagingPageNumber').value)">Go</button>
+	<span class="pagingElements" onclick="var helper = new CodeReuse.Helper(); helper.updateGridPageArrows(this,'right',document.getElementById('gridGetPostHomeFormGridPagingPageNumber').value)">>></span>
+</div>
+
+<br>
+<br>
+
+<div id="saveNewButtonTenantFormGridPaging" class="buttonCenter" style="display: block">
+	<input type="button" class="button" value="Save" onclick="controller.tenantFormGridPagingSave();" />
+	<input type="button" class="button" value="New" onclick="controller.resetTenantFormGridPagingFields(); var tenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantFormGridPaging.getTableHtmlObjectId());" />
+</div>
+
 </center>
 
 </div>
@@ -258,11 +276,13 @@
 
 </div>
 
+<!--
 <div id="pageContentRentRollAndReports" style="display:none">
 <br>
 
 <span>&nbsp&nbsp Rent Roll & Reports</span>
 </div>
+-->
 
 <div id="tenantSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div>
 <div id="buildingSearchList" style="position: absolute; cursor: default; user-select: none; z-index: 2; background-color: white"></div>

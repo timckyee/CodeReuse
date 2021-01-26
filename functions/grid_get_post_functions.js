@@ -37,7 +37,7 @@ CodeReuse.Grid_Get_Post_Functions.prototype = {
  * @param {string} divPagingFooter the paging footer div 
  */
 grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter) {
-	
+
 	var divTable = document.getElementById(divElement);
 
 	window.gridXmlHttpRequest.onreadystatechange = function() {
@@ -313,7 +313,13 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 						
 						var suiteGrid = new CodeReuse.SuiteGrid();
 						var tenantGrid = new CodeReuse.TenantGrid();
+						var homeTenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging();
 
+						if(tableHtmlObjectId == homeTenantFormGridPaging.getTableHtmlObjectId())
+						{
+							highlightId = homeTenantFormGridPaging.getHomeTenantFormGridPagingSelectedRowId();
+						}
+						else
 						if(tableHtmlObjectId == suiteGrid.getTableHtmlObjectId())
 						{
 							highlightId = suiteGrid.getSuiteSelectedRowId();
@@ -322,7 +328,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 						{
 							highlightId = tenantGrid.getTenantSelectedRowId();
 						}
-						
+
 						if(refreshGridCallback != undefined)
 							refreshGridCallback(highlightId);
 						

@@ -194,7 +194,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		tableHeaderSpanStyle.paddingLeft = "10px";
 		//tableHeaderSpanStyle.paddingRight = "10px";
 
-		if(tableHtmlObjectId == "tableHomeTenant")
+		if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 		{
 			tableHeaderSpan.onclick = function(headerCellSpan) {
 
@@ -219,7 +219,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					
 					var handler = new CodeReuse.Handler();
 					
-					handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column.toString(), pageNumber);					
+					if(tableHtmlObjectId == "tableHomeTenant")
+					{
+						handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column.toString(), pageNumber);
+					}
+					else
+					if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+					{
+						handler.sortTableColumnOnclickHandlerHomeTenantFormGridPaging(tableHtmlObjectId, gridColumnsInfo, column.toString(), pageNumber);
+					}
 				}
 			}
 		}
@@ -321,7 +329,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 			if(highlightRow == "true")
 			{
-				if(tableHtmlObjectId == "tableHomeTenant")
+				if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 				{
 					if(response[tableRowCount]["fieldPrimaryKey"] == highlightRowId)
 					{
@@ -482,11 +490,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	divTable.appendChild(tbl);
 
 
-	document.getElementById("gridGetPostHomeFormGridPaging").style.display = "block";
+	//document.getElementById("gridGetPostHomePaging").style.display = "block";
 
 
 	if(showPagingFooter == "true")
-	{
+	{			
 		document.getElementById(divPagingFooter).style.display = "block";
 	}
 
@@ -730,6 +738,22 @@ refreshGridCallback: function(highlightId)
 	var tenantModel = new CodeReuse.Tenant();
 	
 	tenantModel.refreshTenantGrid(highlightId);	
+	
+},
+
+/**
+ * Refresh Tenant grid after inserting or updating Tenant record
+ * @callback refreshGridCallbackTenantFormGridPaging
+ * @name Callback#refreshGridCallbackTenantFormGridPaging
+ * 
+ * @param {string} highlightId the primary key row id to highlight
+ */
+refreshGridCallbackTenantFormGridPaging: function(highlightId)
+{
+	
+	var tenantFormGridPaging = new CodeReuse.TenantFormGridPaging();
+	
+	tenantFormGridPaging.refreshTenantFormGridPaging(highlightId);	
 	
 },
 

@@ -81,10 +81,10 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		
 		this.fieldPrimaryKey = primaryKey;
 		
-		this.field1 = inputValueArray["inputCalendar"];
-		this.field2 = inputValueArray["inputCalendarTesting"];
-		this.field3 = inputValueArray["building_option"];
-		this.field4 = inputValueArray["tenant_input"];
+		this.field1 = inputValueArray["inputCalendarFormGridPaging"];
+		this.field2 = inputValueArray["inputCalendarTestingFormGridPaging"];
+		this.field3 = inputValueArray["building_option_form_grid_paging"];
+		this.field4 = inputValueArray["tenant_input_form_grid_paging"];
 		
 	},
 	
@@ -162,11 +162,11 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * @function
 	 * @name Tenant#refreshTenantGridHome	 
 	 */
-	refreshTenantGridHome: function() {
+	refreshTenantFormGridPaging: function(highlight) {
 		
-		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
+		var homeTenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging();
 
-		homeTenantGrid.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"));
+		homeTenantFormGridPaging.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), localStorage.getItem("arraySortColumn_tenant_form_grid_paging"), localStorage.getItem("arraySortDirection_tenant_form_grid_paging"), localStorage.getItem("homeTenantFormGridPagingPageNumber"), highlight);
 		
 	},
 		
@@ -187,9 +187,9 @@ CodeReuse.TenantFormGridPaging.prototype = {
 			
 			var callback = new CodeReuse.Callback();
 			
-			var tenantGrid = new CodeReuse.TenantGrid();
+			var homeTenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging();
 
-			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getTenantUpdateQueryName(), document.getElementById("inputPrimaryKey").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallback, tenantGrid.getTableHtmlObjectId());
+			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getTenantUpdateQueryName(), document.getElementById("inputPrimaryKeyFormGridPaging").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallbackTenantFormGridPaging, homeTenantFormGridPaging.getTableHtmlObjectId());
 		}
 		
 	},

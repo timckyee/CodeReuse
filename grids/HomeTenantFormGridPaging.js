@@ -45,7 +45,7 @@ CodeReuse.HomeTenantFormGridPaging = function() {
 
 	this.homeTenantGridUpdateQueryName = "updateTableGridGetPost";
 
-	this.homeTenantGridPagingDiv = "gridGetPostHomePaging";
+	this.homeTenantGridPagingDiv = "gridGetPostHomeFormGridPagingFooter";
 };
 
 CodeReuse.HomeTenantFormGridPaging.prototype = {
@@ -189,19 +189,60 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 	 * @param {string} sortColumn the grid column which is currently sorted
 	 * @param {string} sortDirection the direction which is currently sorted
 	 * @param {string} pageNumber the page number of the table we are currently showing
+	 * @param {string} highlight the row number to highlight after save
 	 */
-	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection, pageNumber) {
+	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection, pageNumber, highlight) {
 
-		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
-		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+		var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
 
 		var callback = new CodeReuse.Callback();
-
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
+		
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, '', sortColumn, sortDirection, pageNumber, highlight, "false", '' , "true", "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv());
 		
 	},
 	
+	/**
+	 * Getting the selected row id for the row that is highlighted
+	 * @function
+	 * @name TenantGrid#getTenantSelectedRowId
+	 */
+	getHomeTenantFormGridPagingSelectedRowId: function() {
+
+		var table = document.getElementById(this.tableHtmlObjectId);
+
+		if(table == null)
+		{
+			return;
+		}
+
+		var row;
+		var rowFound = false;
+		var primaryKey;
+
+		for(var i=1; i<table.rows.length; i++)
+		{
+			row = table.rows[i];
+			
+			if(row.className == "tableHover highlightRow")
+			{
+				rowFound = true;
+				primaryKey = row.cells[0].innerText;				
+				break;
+			}
+		}
+
+		if(rowFound == true)
+		{
+			return primaryKey;
+		}
+		else
+		{
+			return "";
+		}
+	},
+
 	/**
 	 * Updating the Home Tenant Grid table row values inline
 	 * @function

@@ -18,9 +18,16 @@ window.addEventListener("load", function() {
 
 	localStorage.setItem("editMode", "false");
 
+
 	localStorage.setItem("homeTenantGridPageNumber", "1");
 
+	localStorage.setItem("homeTenantFormGridPagingPageNumber", "1");
+
+
 	document.getElementById("gridGetPostHomePagingPageNumber").value = "1";
+
+	document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value = "1";
+
 
 	localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
 	
