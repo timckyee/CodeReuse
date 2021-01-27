@@ -88,22 +88,22 @@
 			{
 				if($sortDirection == "asc")
 				{
-					$orderBy = "ORDER BY date_format(field1, '%d-%b-%Y') asc";
+					$orderBy = "ORDER BY field1 asc";
 				}
 				else if($sortDirection == "desc")
 				{
-					$orderBy = "ORDER BY date_format(field1, '%d-%b-%Y') desc";
+					$orderBy = "ORDER BY field1 desc";
 				}
 			}
 			else if($sortColumn == "field2")
 			{
 				if($sortDirection == "asc")
 				{
-					$orderBy = "ORDER BY date_format(field2, '%d-%b-%Y') asc";
+					$orderBy = "ORDER BY field2 asc";
 				}
 				else if($sortDirection == "desc")
 				{
-					$orderBy = "ORDER BY date_format(field2, '%d-%b-%Y') desc";
+					$orderBy = "ORDER BY field2 desc";
 				}
 			}
 
@@ -238,22 +238,22 @@
 			{
 				if($sortDirection == "asc")
 				{
-					$orderBy = "ORDER BY date_format(field1, '%d-%b-%Y') asc";
+					$orderBy = "ORDER BY field1 asc";
 				}
 				else if($sortDirection == "desc")
 				{
-					$orderBy = "ORDER BY date_format(field1, '%d-%b-%Y') desc";
+					$orderBy = "ORDER BY field1 desc";
 				}
 			}
 			else if($sortColumn == "field2")
 			{
 				if($sortDirection == "asc")
 				{
-					$orderBy = "ORDER BY date_format(field2, '%d-%b-%Y') asc";
+					$orderBy = "ORDER BY field2 asc";
 				}
 				else if($sortDirection == "desc")
 				{
-					$orderBy = "ORDER BY date_format(field2, '%d-%b-%Y') desc";
+					$orderBy = "ORDER BY field2 desc";
 				}
 			}
 

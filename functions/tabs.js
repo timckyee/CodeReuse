@@ -21,6 +21,13 @@ changeTab: function(tab) {
 	
 	if(currentTab == "Home")
 	{
+
+		if(localStorage.getItem("editMode") == "true")
+		{
+			alert('Please cancel save mode in order to continue');
+			return;
+		}
+
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -40,6 +47,12 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "HomeFormGridPaging")
 	{
+		if(localStorage.getItem("editMode") == "true")
+		{
+			alert('Please cancel save mode in order to continue');
+			return;
+		}
+
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 	
 		var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();

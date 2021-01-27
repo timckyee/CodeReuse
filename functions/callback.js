@@ -218,15 +218,15 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					}
 					
 					var handler = new CodeReuse.Handler();
-					
+
 					if(tableHtmlObjectId == "tableHomeTenant")
 					{
-						handler.sortTableColumnOnclickHandlerHomeTenantGrid(tableHtmlObjectId, gridColumnsInfo, column.toString(), pageNumber);
+						handler.sortTableColumnOnclickHandlerHomeTenantGrid(gridColumnsInfo, column.toString(), pageNumber);
 					}
 					else
 					if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 					{
-						handler.sortTableColumnOnclickHandlerHomeTenantFormGridPaging(tableHtmlObjectId, gridColumnsInfo, column.toString(), pageNumber);
+						handler.sortTableColumnOnclickHandlerHomeTenantFormGridPaging(gridColumnsInfo, column.toString(), pageNumber);
 					}
 				}
 			}
@@ -319,7 +319,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					row.className = "tableHover highlightRow";
 				}
 			}
-			else if(tableHtmlObjectId == "tableTenant")
+			else if(tableHtmlObjectId == "tableTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 			{
 				if(response[tableRowCount]["fieldPrimaryKey"] == highlightRowId)
 				{
@@ -329,7 +329,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 			if(highlightRow == "true")
 			{
-				if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+				if(tableHtmlObjectId == "tableHomeTenant")
 				{
 					if(response[tableRowCount]["fieldPrimaryKey"] == highlightRowId)
 					{
@@ -408,7 +408,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					var column = localStorage.getItem("arraySortColumn");
 					var direction = localStorage.getItem("arraySortDirection");
 				
-					var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
+					var homeTenantGridPageNumber = localStorage.getItem("homeTenantGridPageNumber");
 				
 					localStorage.setItem("editMode", "true");
 				
@@ -416,11 +416,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 					if(searchValue == "" || searchValue == undefined)
 					{
-						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
 					}
 					else
 					{
-						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(),"searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(),"searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
 					}
 				}
 			}

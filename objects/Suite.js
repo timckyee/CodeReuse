@@ -180,7 +180,9 @@ CodeReuse.Suite.prototype = {
 			
 			var callback = new CodeReuse.Callback();
 			
-			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getSuiteInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeySuite", this.arrayOldValuesTable, callback.refreshGridCallbackSuite);
+			var suiteGrid = CodeReuse.HomeTenantFormGridPaging();
+
+			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getSuiteInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeySuite", this.arrayOldValuesTable, callback.refreshGridCallbackSuite, suiteGrid.getTableHtmlObjectId());
 		}	
 	
 	}

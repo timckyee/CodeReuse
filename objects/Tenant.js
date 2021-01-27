@@ -213,7 +213,9 @@ CodeReuse.Tenant.prototype = {
 			
 			var callback = new CodeReuse.Callback();
 			
-			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getTenantInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", this.arrayOldValuesTable, callback.refreshGridCallback);
+			var tenantGrid = CodeReuse.HomeTenantFormGridPaging();
+
+			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getTenantInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", this.arrayOldValuesTable, callback.refreshGridCallback, tenantGrid.getTableHtmlObjectId());
 		}	
 	
 	}
