@@ -21,6 +21,10 @@ changeTab: function(tab) {
 	
 	if(currentTab == "Home")
 	{
+		if(this.searchFieldEmptyToRefreshGrid() == "0")
+		{
+			return;
+		}	
 
 		if(localStorage.getItem("editMode") == "true")
 		{
@@ -47,6 +51,11 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "HomeFormGridPaging")
 	{
+		if(this.searchFieldEmptyToRefreshGrid() == "0")
+		{
+			return;
+		}
+
 		if(localStorage.getItem("editMode") == "true")
 		{
 			alert('Please cancel save mode in order to continue');
@@ -68,6 +77,22 @@ changeTab: function(tab) {
 		var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
 	
 		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), tenant.getFieldsInfo(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv());		
+	}
+	else
+	if(currentTab == "Suites")
+	{
+		if(this.searchFieldEmptyToRefreshGrid() == "0")
+		{
+			return;
+		}
+	}
+	else
+	if(currentTab == "Tenants")
+	{
+		if(this.searchFieldEmptyToRefreshGrid() == "0")
+		{
+			return;
+		}
 	}
 
 	var otherTabs = tab.parentElement.parentElement.children;
@@ -93,5 +118,27 @@ changeTab: function(tab) {
 		}
 	}
 },
+
+/**
+ * Search field empty check to refresh grid upon click on tab
+ * @function
+ * @name Tabs#searchFieldEmptyToRefreshGrid
+ */
+searchFieldEmptyToRefreshGrid: function() {
+
+	if(document.getElementById("homeTenantGridSearchValue").value !== "")
+	{
+		alert('Please clear search field before continuing');
+		return 0;
+	}
+
+	if(document.getElementById("homeTenantFormGridPagingSearchValue").value !== "")
+	{
+		alert('Please clear search field before continuing');
+		return 0;
+	}
+
+	return 1;
+}
 
 }
