@@ -184,9 +184,7 @@ showTheGridAfterSaveRecord: function(phpFile, queryName, queryType, savePrimaryK
 					else
 					{
 						grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), tenantFormGridPaging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), tenantFormGridPaging.getFieldsInfo(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, '', '', column, direction, pageNumberHomeTenantGrid, '', "false", '', '', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv());
-					}		
-
-					//grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), tenantFormGridPaging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), tenantFormGridPaging.getFieldsInfo(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, '', '', column, direction, pageNumberHomeTenantGrid, '', "false", '', '', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv());
+					}
 
 					document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value = pageNumberHomeTenantGrid;
 
@@ -202,8 +200,6 @@ showTheGridAfterSaveRecord: function(phpFile, queryName, queryType, savePrimaryK
 					{
 						grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), tenantFormGridPaging.getFieldsInfo(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, '', '', column, direction, pageNumberString, savePrimaryKeyValue, "false", '', "true", "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv());
 					}
-
-					//grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), tenantFormGridPaging.getFieldsInfo(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, '', '', column, direction, pageNumberString, savePrimaryKeyValue, "false", '', "true", "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv());
 
 					document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value = pageNumberString;
 
@@ -415,8 +411,6 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 							{
 								grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehomeSearch", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn_tenant_form_grid_paging"), localStorage.getItem("arraySortDirection_tenant_form_grid_paging"), "searchValue", searchValue, tableHtmlObjectId);
 							}
-							
-							//grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, localStorage.getItem("arraySortColumn_tenant_form_grid_paging"), localStorage.getItem("arraySortDirection_tenant_form_grid_paging"), '', '', tableHtmlObjectId);
 						}
 						
 					}
@@ -691,10 +685,6 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 						{
 							grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehomeSearch", "getPageNumber", "savePrimaryKey", insertId, localStorage.getItem("arraySortColumn_tenant_form_grid_paging"), localStorage.getItem("arraySortDirection_tenant_form_grid_paging"), "searchValue", searchValue, tableHtmlObjectId);
 						}
-
-						//var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
-
-						//grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", insertId, localStorage.getItem("arraySortColumn_tenant_form_grid_paging"), localStorage.getItem("arraySortDirection_tenant_form_grid_paging"), '', '', tableHtmlObjectId);
 					}
 		
 				}
