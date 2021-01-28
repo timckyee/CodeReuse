@@ -43,6 +43,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 	if(platform == "desktop_safari")
 	{
+		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+		{
+			tbl.className = "homeGrid_safari";
+		}
+		else
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
 			tbl.className = "homeGrid_safari";
@@ -80,6 +85,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	else
 	if(platform == "IOS_safari")
 	{
+		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+		{
+			tbl.className = "homeGridIOS_safari";
+		}
+		else
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
 			tbl.className = "homeGridIOS_safari";
@@ -96,6 +106,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	else
 	if(platform == "IOS")
 	{
+		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+		{
+			tbl.className = "homeGridIOS";
+		}
+		else		
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
 			tbl.className = "homeGridIOS";
@@ -112,6 +127,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	else
 	if(platform == "android")
 	{
+		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+		{
+			tbl.className = "homeGridMobile";
+		}
+		else		
 		if(tableHtmlObjectId == "tableHomeTenant")
 		{
 			tbl.className = "homeGridMobile";
