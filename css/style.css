@@ -179,7 +179,7 @@ table.homeGrid_safari {
 
 table.homeGrid_chrome {
 	table-layout: fixed;
-	width: 70%;
+	width: 95%;
   }
 
 table.homeGridIOS_safari {
@@ -199,7 +199,7 @@ table.homeGridMobile {
 
 table.tenantGrid {
   table-layout: fixed;
-  width: 70%;
+  width: 73%;
 }
 
 table.tenantGridIOS_safari {

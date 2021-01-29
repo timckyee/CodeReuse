@@ -20,7 +20,24 @@ changeTab: function(tab) {
 	var currentTab = tab.id.substring(3, tab.id.length);
 	
 	if(currentTab == "Home")
-	{
+	{	
+		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
+		
+		if(tenantSearchListOrCalendarShowing != "")
+		{
+			if(tenantSearchListOrCalendarShowing == "tenantSearchList")
+			{
+				alert('Please choose Tenant from list before continuing');
+				return;
+			}
+			else
+			if(tenantSearchListOrCalendarShowing == "calendar")
+			{
+				alert('Please close calendar picker before continuing');
+				return;
+			}
+		}
+
 		if(this.searchFieldEmptyToRefreshGrid() == "0")
 		{
 			return;
@@ -50,7 +67,24 @@ changeTab: function(tab) {
 	}
 	else
 	if(currentTab == "HomeFormGridPaging")
-	{
+	{		
+		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
+		
+		if(tenantSearchListOrCalendarShowing != "")
+		{
+			if(tenantSearchListOrCalendarShowing == "tenantSearchList")
+			{
+				alert('Please choose Tenant from list before continuing');
+				return;
+			}
+			else
+			if(tenantSearchListOrCalendarShowing == "calendar")
+			{
+				alert('Please close calendar picker before continuing');
+				return;
+			}
+		}
+
 		if(this.searchFieldEmptyToRefreshGrid() == "0")
 		{
 			return;
@@ -81,6 +115,23 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "Suites")
 	{
+		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
+		
+		if(tenantSearchListOrCalendarShowing != "")
+		{
+			if(tenantSearchListOrCalendarShowing == "tenantSearchList")
+			{
+				alert('Please choose Tenant from list before continuing');
+				return;
+			}
+			else
+			if(tenantSearchListOrCalendarShowing == "calendar")
+			{
+				alert('Please close calendar picker before continuing');
+				return;
+			}
+		}
+
 		if(this.searchFieldEmptyToRefreshGrid() == "0")
 		{
 			return;
@@ -89,6 +140,23 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "Tenants")
 	{
+		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
+		
+		if(tenantSearchListOrCalendarShowing != "")
+		{
+			if(tenantSearchListOrCalendarShowing == "tenantSearchList")
+			{
+				alert('Please choose Tenant from list before continuing');
+				return;
+			}
+			else
+			if(tenantSearchListOrCalendarShowing == "calendar")
+			{
+				alert('Please close calendar picker before continuing');
+				return;
+			}
+		}
+
 		if(this.searchFieldEmptyToRefreshGrid() == "0")
 		{
 			return;
@@ -117,6 +185,29 @@ changeTab: function(tab) {
 			document.getElementById("tab" + otherTab).className = "tabOptions";
 		}
 	}
+},
+
+/**
+ * If search list or calendar is still showing then notify user.
+ * @function
+ * @name Tabs#tenantSearchListOrCalendarShowing
+ */
+tenantSearchListOrCalendarShowing: function() {
+
+	if(document.getElementById("tenantSearchList").style.display == "block")
+	{
+		return "tenantSearchList";
+	}
+	else
+	if(document.getElementById("calendarId").style.display == "block")
+	{
+		return "calendar";
+	}
+	else
+	{
+		return "";
+	}
+
 },
 
 /**

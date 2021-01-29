@@ -137,7 +137,9 @@ autocomplete: function(event, object, divElement, itemColumns, valueField, httpG
 						if(queryName == "buildings")
 						{							
 							document.getElementById("tenant_input").value = "";
-						}						
+						}
+						
+						searchList.style.display = "none";
 					};
 					
 					var colArray = itemColumns.split(",");
@@ -161,6 +163,8 @@ autocomplete: function(event, object, divElement, itemColumns, valueField, httpG
 			  	});
 				
 				searchList.appendChild(tbl);
+
+				searchList.style.display = "block";
 			}
 		}
 		
