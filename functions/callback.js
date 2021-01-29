@@ -572,7 +572,7 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 		}
 	}
 	
-	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
+	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\" />&nbsp;&nbsp;<img id=\"inputCalendar_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\"></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\"/>&nbsp;&nbsp;<img id=\"inputCalendarTesting_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\"></td>";
 
 	//tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
 
@@ -622,36 +622,17 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 
 	var calendar = new CodeReuse.Calendar();
 	
+	/*
 	document.getElementById("inputCalendar_grid").onfocus = function() 
 	{
 		gridEventFunctions.inputCalendar_grid_onFocus();
 	}
-
-	/*
-	document.getElementById("inputCalendar_grid").addEventListener("focus", function(event){
-		
-		var calendar = new CodeReuse.Calendar();
-		calendar.showHideCalendar('show' ,'inputCalendar_grid', "calendarId", monthsArray);
-	
-	});
 	*/
 	
 	document.getElementById("inputCalendar_grid").onblur = function() 
 	{
 		gridEventFunctions.inputCalendar_grid_onBlur();
 	}
-
-	/*
-	document.getElementById("inputCalendar_grid").addEventListener("blur", function(event)
-	{
-		var calendar = new CodeReuse.Calendar();
-		
-		if(calendar.validateDate(this.id) == false)
-		{
-			alert("input format has to be dd-mmm-yyyy");
-		}
-	});
-	*/
 
 	var helper = new CodeReuse.Helper();
 				
@@ -663,43 +644,58 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 	//document.getElementById("inputCalendarTesting_grid").style.position = "relative";
 	//document.getElementById("inputCalendarTesting_grid").style.zIndex = "1";
 	//document.getElementById("inputCalendarTesting_grid").style.backgroundColor = "white";
-	//document.getElementById("inputCalendarTesting_grid").width = "142";			
+	//document.getElementById("inputCalendarTesting_grid").width = "142";
 	
 	/*
-	document.getElementById("inputCalendarTesting_grid").addEventListener("focus", function(event){
-		
-		var calendar = new CodeReuse.Calendar();
-		calendar.showHideCalendar('show' ,'inputCalendarTesting_grid', "calendarId", monthsArray)
-	
-	});
-	*/
-	
 	document.getElementById("inputCalendarTesting_grid").onfocus = function() 
 	{
 		gridEventFunctions.inputCalendarTesting_grid_onFocus();
 	}
-
-	/*
-	document.getElementById("inputCalendarTesting_grid").addEventListener("blur", function(event){
-	
-		var calendar = new CodeReuse.Calendar();
-		if(calendar.validateDate(this.id) == false)
-		{
-			alert("input format has to be dd-mmm-yyyy");
-		}
-	});
 	*/
 
 	document.getElementById("inputCalendarTesting_grid").onblur = function() 
 	{
 		gridEventFunctions.inputCalendarTesting_grid_onBlur();
-	}	
+	}
 				
 	var dateFormat = helper.convertDateFromDatabase(record["field2"]);
 
 	inputCalendarTesting_grid.value = dateFormat;
 
+
+	var divCalendarId = "calendarId";
+
+	document.getElementById("inputCalendar_grid_icon").onclick = function() {
+
+			var divCalendar = document.getElementById(divCalendarId);
+
+			if(divCalendar.style.display == "block")
+			{
+				calendar.showHideCalendar('hide' ,'inputCalendar_grid', divCalendarId, monthsArray);
+			}
+			else
+			if(divCalendar.style.display == "none")
+			{
+				calendar.showHideCalendar('show' ,'inputCalendar_grid', divCalendarId, monthsArray);
+			}
+	}
+
+	document.getElementById("inputCalendarTesting_grid_icon").onclick = function() {
+
+			var divCalendar = document.getElementById(divCalendarId);
+		
+			if(divCalendar.style.display == "block")
+			{
+				calendar.showHideCalendar('hide' ,'inputCalendarTesting_grid', divCalendarId, monthsArray);
+			}
+			else
+			if(divCalendar.style.display == "none")
+			{
+				calendar.showHideCalendar('show' ,'inputCalendarTesting_grid', divCalendarId, monthsArray);
+			}			
+	}	
 	
+
 	for(i=0; i<gridColumnsInfo.length; i++)
 	{
 		var hiddenFieldFlag = gridColumnsInfo[i].hasIdHiddenField;

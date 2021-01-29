@@ -3,7 +3,7 @@ table.calendar {
 	
 	border-collapse: collapse;
 	border: 1px solid black;
-	padding: 2px;
+	/* padding: 2px; */
 	text-align: center;
 	font-family: arial;
 	font-size: 14px;
@@ -12,24 +12,28 @@ table.calendar {
 
 .currentDay {
 	
+	padding: 2px;
 	background-color: lightgray;
 	
 }
 
 .normalDay {
 	
+	padding: 2px;
 	background-color: transparent;
 	
 }
 
 .normalDay:hover {
 	
+	padding: 2px;
 	background-color: lightgray;
 	
 }
 
 .selectedDay {
 	
+	padding: 2px;
 	background-color: lightgray;
 	
 }

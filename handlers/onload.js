@@ -193,19 +193,33 @@ function init_calendar_inputs() {
 	var inputCalendar = document.getElementById('inputCalendar');
 	
 	var inputCalendarTesting = document.getElementById('inputCalendarTesting');
-	
+
+
+	var inputCalendarIcon = document.getElementById('inputCalendarIcon');
+
+	var inputCalendarTestingIcon = document.getElementById('inputCalendarTestingIcon');
+
+
+
 	var inputCalendarFormGridPaging = document.getElementById('inputCalendarFormGridPaging');
 
 	var inputCalendarTestingFormGridPaging = document.getElementById('inputCalendarTestingFormGridPaging');
 
-	
-	inputCalendar.addEventListener("focus", function(event){
+
+	var inputCalendarFormGridPagingIcon = document.getElementById('inputCalendarFormGridPagingIcon');
+
+	var inputCalendarTestingFormGridPagingIcon = document.getElementById('inputCalendarTestingFormGridPagingIcon');
+
+
+	/*
+	inputCalendar.addEventListener("focus", function(event) {
 		
 		calendar.showHideCalendar('show' ,'inputCalendar', divCalendarId, monthsArray)
 		
 	});
+	*/
 	
-	inputCalendar.addEventListener("blur", function(event){
+	inputCalendar.addEventListener("blur", function(event) {
 		
 			if(calendar.validateDate(this.id) == false)
 			{
@@ -218,13 +232,15 @@ function init_calendar_inputs() {
 	inputCalendar.placeholder = "dd-mmm-yyyy";
 	
 	
+	/*
 	inputCalendarTesting.addEventListener("focus", function(event){
 		
 		calendar.showHideCalendar('show' ,'inputCalendarTesting', divCalendarId, monthsArray)
 		
 	});
+	*/
 	
-	inputCalendarTesting.addEventListener("blur", function(event){
+	inputCalendarTesting.addEventListener("blur", function(event) {
 		
 			if(calendar.validateDate(this.id) == false)
 			{
@@ -236,14 +252,52 @@ function init_calendar_inputs() {
 	
 	inputCalendarTesting.placeholder = "dd-mmm-yyyy";
 	
+	
+	inputCalendarIcon.addEventListener("click", function(event) {
 
+		var divCalendar = document.getElementById(divCalendarId);
+
+		if(divCalendar.style.display == "block")
+		{
+			calendar.showHideCalendar('hide' ,'inputCalendar', divCalendarId, monthsArray)
+		}
+		else
+		if(divCalendar.style.display == "none")
+		{
+			calendar.showHideCalendar('show' ,'inputCalendar', divCalendarId, monthsArray)
+		}
+	
+	}
+
+	);
+
+	inputCalendarTestingIcon.addEventListener("click", function(event) {
+
+			var divCalendar = document.getElementById(divCalendarId);
+
+			if(divCalendar.style.display == "block")
+			{
+				calendar.showHideCalendar('hide' ,'inputCalendarTesting', divCalendarId, monthsArray)
+			}
+			else
+			if(divCalendar.style.display == "none")
+			{
+				calendar.showHideCalendar('show' ,'inputCalendarTesting', divCalendarId, monthsArray)
+			}			
+		}
+	);
+
+
+
+	/*
 	inputCalendarFormGridPaging.addEventListener("focus", function(event){
 		
 		calendar.showHideCalendar('show' ,'inputCalendarFormGridPaging', divCalendarId, monthsArray)
 		
 	});
+	*/
 	
-	inputCalendarFormGridPaging.addEventListener("blur", function(event){
+	inputCalendarFormGridPaging.addEventListener("blur", function(event) {
 		
 			if(calendar.validateDate(this.id) == false)
 			{
@@ -255,14 +309,15 @@ function init_calendar_inputs() {
 	
 	inputCalendarFormGridPaging.placeholder = "dd-mmm-yyyy";
 
-
-	inputCalendarTestingFormGridPaging.addEventListener("focus", function(event){
+	/*
+	inputCalendarTestingFormGridPaging.addEventListener("focus", function(event) {
 		
 		calendar.showHideCalendar('show' ,'inputCalendarTestingFormGridPaging', divCalendarId, monthsArray)
 		
 	});
+	*/
 	
-	inputCalendarTestingFormGridPaging.addEventListener("blur", function(event){
+	inputCalendarTestingFormGridPaging.addEventListener("blur", function(event) {
 		
 			if(calendar.validateDate(this.id) == false)
 			{
@@ -272,5 +327,42 @@ function init_calendar_inputs() {
 		
 	);
 	
-	inputCalendarTestingFormGridPaging.placeholder = "dd-mmm-yyyy";	
+	inputCalendarTestingFormGridPaging.placeholder = "dd-mmm-yyyy";
+
+
+
+
+	inputCalendarFormGridPagingIcon.addEventListener("click", function(event) {
+
+			var divCalendar = document.getElementById(divCalendarId);
+
+			if(divCalendar.style.display == "block")
+			{
+				calendar.showHideCalendar('hide' ,'inputCalendarFormGridPaging', divCalendarId, monthsArray);
+			}
+			else
+			if(divCalendar.style.display == "none")
+			{
+				calendar.showHideCalendar('show' ,'inputCalendarFormGridPaging', divCalendarId, monthsArray);
+			}
+		
+		}
+
+	);
+
+	inputCalendarTestingFormGridPagingIcon.addEventListener("click", function(event) {
+
+			var divCalendar = document.getElementById(divCalendarId);
+
+			if(divCalendar.style.display == "block")
+			{
+				calendar.showHideCalendar('hide' ,'inputCalendarTestingFormGridPaging', divCalendarId, monthsArray);
+			}
+			else
+			if(divCalendar.style.display == "none")
+			{
+				calendar.showHideCalendar('show' ,'inputCalendarTestingFormGridPaging', divCalendarId, monthsArray);
+			}			
+		}
+	);
 }

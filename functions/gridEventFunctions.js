@@ -96,12 +96,15 @@ CodeReuse.GridEventFunctions.prototype = {
 	 * The input calendar inputCalendar_grid onfocus event
 	 * @function
 	 * @name GridEventFunctions#inputCalendar_grid_onFocus
-	 */        
+	 */       
+    
+    /*
     inputCalendar_grid_onFocus: function()
     {
         var calendar = new CodeReuse.Calendar();
         calendar.showHideCalendar('show' ,'inputCalendar_grid', "calendarId", monthsArray);	
     },
+    */
     
  	/**
 	 * The input calendar inputCalendar_grid onblur event
@@ -122,12 +125,15 @@ CodeReuse.GridEventFunctions.prototype = {
 	 * The input calendar inputCalendarTesting_grid onfocus event
 	 * @function
 	 * @name GridEventFunctions#inputCalendarTesting_grid_onFocus
-	 */        
+	 */
+
+    /*
     inputCalendarTesting_grid_onFocus: function()
     {
         var calendar = new CodeReuse.Calendar();
         calendar.showHideCalendar('show' ,'inputCalendarTesting_grid', "calendarId", monthsArray);	
     },
+    */
     
  	/**
 	 * The input calendar inputCalendarTesting_grid onblur event
