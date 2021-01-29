@@ -59,7 +59,7 @@
 
 	<center>
 
-	<div id="homeTenantFormGridPagingSearchInputAndButton" style="display: block;">
+	<div id="homeTenantFormGridPagingSearchInputAndButton" style="display: none;">
 		<input id="homeTenantFormGridPagingSearchValue"><button onclick="var helper = new CodeReuse.Helper(); helper.setHomeFormGridPagingSearchValue(); helper.getHomeFormGridPagingSearchValue()">Search</button>
 	</div>
 
@@ -127,7 +127,7 @@
 <br>
 <br>
 
-<div id="saveNewButtonTenantFormGridPaging" class="buttonCenter" style="display: block">
+<div id="saveNewButtonTenantFormGridPaging" class="buttonCenter" style="display: none;">
 	<input type="button" class="button" value="Save" onclick="controller.tenantFormGridPagingSave();" />
 	<input type="button" class="button" value="New" onclick="controller.resetTenantFormGridPagingFields(); var tenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantFormGridPaging.getTableHtmlObjectId());" />
 </div>

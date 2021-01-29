@@ -31,8 +31,9 @@ CodeReuse.Callback.prototype = {
  * @param {string} highlightRow flag to highlight the row after save
  * @param {string} showPagingFooter if there is a grid footer for paging
  * @param {string} divPagingFooter the paging footer div
+ * @param {string} onload whether this is the first time loading grid to load second grid
  */
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter, onload) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -505,12 +506,19 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 	divTable.innerHTML = "";
 
-	document.getElementById("homeTenantGridSearchInputAndButton").style.display = "block";
+	
+	if(tableHtmlObjectId == "tableHomeTenant")
+	{
+		document.getElementById("homeTenantGridSearchInputAndButton").style.display = "block";
+	}
+	else
+	if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+	{
+		document.getElementById("homeTenantFormGridPagingSearchInputAndButton").style.display = "block";
+	}
 
 	divTable.appendChild(tbl);
 
-
-	//document.getElementById("gridGetPostHomePaging").style.display = "block";
 
 
 	if(showPagingFooter == "true")
@@ -533,6 +541,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, savePrimaryKeyValue, "searchValue", searchValue);
 	}
 
+	if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+	{
+		document.getElementById("saveNewButtonTenantFormGridPaging").style.display = "block";
+	}	
+
+	else
 	if(tableHtmlObjectId == "tableSuite")
 	{
 		document.getElementById("saveNewButtonSuite").style.display = "block";
@@ -541,6 +555,25 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	if(tableHtmlObjectId == "tableTenant")
 	{
 		document.getElementById("saveNewButtonTenant").style.display = "block";
+	}
+
+	if(onload == "true")
+	{
+		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+	
+		var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
+	
+		var tenant = new CodeReuse.Tenant();
+	
+		var callback = new CodeReuse.Callback();
+	
+		var sortColumn = localStorage.getItem("arraySortColumn_tenant_form_grid_paging");
+	
+		var sortDirection = localStorage.getItem("arraySortDirection_tenant_form_grid_paging");
+	
+		var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
+	
+		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), tenant.getFieldsInfo(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv());
 	}
 
 },
