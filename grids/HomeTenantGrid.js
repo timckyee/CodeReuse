@@ -32,8 +32,10 @@ CodeReuse.HomeTenantGrid = function() {
 	];
 	
 	var handler = new CodeReuse.Handler();
-	
+
 	this.gridIdField = "fieldPrimaryKey";
+
+	this.pageSize = "4";
 
 	this.rowOnClick =  handler.TenantHomeGridOnClickHandler;
 	
@@ -92,7 +94,13 @@ CodeReuse.HomeTenantGrid.prototype = {
 		return this.gridGetPostDivElement;
 		
 	},
-	
+
+	getPageSize: function() {
+
+		return this.pageSize;
+
+	},
+
 	getGridColumnsInfo: function() {
 		
 		return this.columns;
@@ -198,7 +206,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 
 		var callback = new CodeReuse.Callback();
 
-		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv());
+		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
 		
 	},
 	

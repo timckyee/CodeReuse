@@ -136,6 +136,8 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * 
 	 * @param {string} highlightId the row primary key to highlight
 	 */
+
+	 /*
 	refreshTenantGrid: function(highlightId) {
 
 		var tenantGrid = new CodeReuse.TenantGrid();
@@ -143,12 +145,15 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo(), highlightId);
 		
 	},
+	*/
 	
 	/**
 	 * Refresh Tenant form grid when updating the building select value by calling the TenantGrid object refreshSelectTenantGrid function
 	 * @function
 	 * @name Tenant#refreshSelectTenantGrid
 	 */
+
+	 /*
 	refreshSelectTenantGrid: function() {
 		
 		var tenantGrid = new CodeReuse.TenantGrid();
@@ -156,12 +161,15 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuildingTenant").value);
 		
 	},
+	*/
 	
 	/**
 	 * Refresh the HomeTenantGrid by calling the HomeTenantGrid object refreshTenantHomeGrid function
 	 * @function
 	 * @name Tenant#refreshTenantGridHome	 
 	 */
+
+	 /*
 	refreshTenantFormGridPaging: function(highlight) {
 		
 		var homeTenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging();
@@ -169,6 +177,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		homeTenantFormGridPaging.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), localStorage.getItem("arraySortColumn_tenant_form_grid_paging"), localStorage.getItem("arraySortDirection_tenant_form_grid_paging"), localStorage.getItem("homeTenantFormGridPagingPageNumber"), highlight);
 		
 	},
+	*/
 		
 	/**
 	 * Tenant form update

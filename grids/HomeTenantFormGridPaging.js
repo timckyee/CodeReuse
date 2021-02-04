@@ -7,33 +7,22 @@ CodeReuse.HomeTenantFormGridPaging = function() {
 	this.gridName = "HomeTenantFormGridPaging";
 	this.gridGetPostDivElement = "gridGetPostHomeFormGridPaging";
 	this.tableHtmlObjectId = "tableHomeTenantFormGridPaging";
-		
-	this.fieldPrimaryKey;
-	this.field1;
-	this.field2;
-	this.field3;
-	this.field4;
-		
+			
 	this.columns = [
 		
-		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", htmlObjectId: "inputPrimaryKey_grid", htmlObjectType: "primaryKey" },
-		{ colName: "Building", id: "buildingName", colType: "string", htmlObjectId: "building_option_grid", htmlObjectType: "select", hasIdHiddenField: true, idDbField: "field3" },
-		{ colName: "Tenant Name", id: "tenantName", colType: "string", htmlObjectId: "tenant_input_grid", htmlObjectType: "autocomplete", hasIdHiddenField: true, idDbField: "field4" },
-		{ colName: "Date First", id: "field1", colType: "date", htmlObjectId: "inputCalendar_grid", htmlObjectType: "calendar" },
-		{ colName: "Date Second", id: "field2", colType: "date", htmlObjectId: "inputCalendarTesting_grid", htmlObjectType: "calendar" },
+		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int", htmlObjectId: "", htmlObjectType: "" },
+		{ colName: "Building", id: "buildingName", colType: "string", htmlObjectId: "", htmlObjectType: "" },
+		{ colName: "Tenant Name", id: "tenantName", colType: "string", htmlObjectId: "", htmlObjectType: "" },
+		{ colName: "Date First", id: "field1", colType: "date", htmlObjectId: "", htmlObjectType: "" },
+		{ colName: "Date Second", id: "field2", colType: "date", htmlObjectId: "", htmlObjectType: "" },
 		
 	];
-	
-	this.autocomplete_inputs = [
-	
-		//{ htmlObjectId: "building_input", value: "field3" , display: "field3display" },
-		{ htmlObjectId: "tenant_input", value: "field4" , display: "field4display" }
 		
-	];
-	
 	var handler = new CodeReuse.Handler();
 	
 	this.gridIdField = "fieldPrimaryKey";
+
+	this.pageSize = "4";
 
 	this.rowOnClick =  handler.TenantFormGridPagingOnClickHandler;
 	
@@ -74,12 +63,6 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 
 		return this.gridIdField;
 	},
-
-	getAutocompleteInputs: function() {
-	
-		return this.autocomplete_inputs;
-		
-	},	
 	
 	getPhpFile: function() {
 		
@@ -93,6 +76,12 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 		
 	},
 	
+	getPageSize: function() {
+
+		return this.pageSize;
+
+	},
+
 	getGridColumnsInfo: function() {
 		
 		return this.columns;
@@ -138,47 +127,7 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 		
 		return this.tableHtmlObjectId;
 	},
-	
-	/**
-	 * Setting values in this object constructor from the html inputs for inserting or updating
-	 * @function
-	 * @name HomeTenantGrid#setFieldValuesFromInputs
-	 * 
-	 * @param {Array} inputValueArray array of html input values
-	 * @param {string} primaryKey primary key of the record we are updating
-	 */
-	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
-		this.fieldPrimaryKey = primaryKey;
-		
-		this.field1 = inputValueArray["inputCalendar_grid"];
-		this.field2 = inputValueArray["inputCalendarTesting_grid"];
-		this.field3 = inputValueArray["building_option_grid"];
-		this.field4 = inputValueArray["tenant_input_grid"];
-		
-	},	
-	
-	/**
-	 * Returns an array with values that have been preset in this object for updating
-	 * @function
-	 * @name HomeTenantGrid#fieldsValuesUpdate
-	 * 
-	 * @returns {Array} array of the field values of this object
-	 */
-	fieldsValuesUpdate: function() {
-		
-		var fieldsValuesUpdateArray = [];
-		
-		fieldsValuesUpdateArray[0] = this.fieldPrimaryKey;
-		fieldsValuesUpdateArray[1] = this.field3;
-		fieldsValuesUpdateArray[2] = this.field4;
-		fieldsValuesUpdateArray[3] = this.field1;
-		fieldsValuesUpdateArray[4] = this.field2;
-		
-		return fieldsValuesUpdateArray;
-		
-	},	
-	
 	/**
 	 * Refreshes the home tenant grid
 	 * @function
@@ -191,6 +140,8 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 	 * @param {string} pageNumber the page number of the table we are currently showing
 	 * @param {string} highlight the row number to highlight after save
 	 */
+
+	 /*
 	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection, pageNumber, highlight) {
 
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -202,6 +153,7 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 		grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshHomeTenantGridQueryName(), this.getGridIdField(), fieldsInfo, this.getGridColumnsInfo(), this.tableHtmlObjectId, '', '', callback.gridCallback, this.rowOnClick, '', sortColumn, sortDirection, pageNumber, highlight, "false", '' , "true", "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv());
 		
 	},
+	*/
 	
 	/**
 	 * Getting the selected row id for the row that is highlighted

@@ -149,7 +149,7 @@
 
 				$rowNumber = $row->num;
 						
-				$pageSize = 4;
+				$pageSize = $_GET["pageSize"];
 				$pageNumber;
 
 				if($rowNumber % $pageSize > 0)
@@ -176,7 +176,7 @@
 
 				$pageNumber = $_GET["pageNumber"];
 
-				$pageSize = 4;
+				$pageSize = $_GET["pageSize"];
 
 				$limit = $pageSize;
 				$offset = ($pageNumber - 1) * $pageSize;
@@ -316,7 +316,7 @@
 
 				$rowNumber = $row->num;
 
-				$pageSize = 4;
+				$pageSize = $_GET["pageSize"];
 				$pageNumber;
 
 				if($rowNumber % $pageSize > 0)
@@ -343,7 +343,7 @@
 
 				$pageNumber = $_GET["pageNumber"];
 
-				$pageSize = 4;
+				$pageSize = $_GET["pageSize"];
 
 				$limit = $pageSize;
 				$offset = ($pageNumber - 1) * $pageSize;
