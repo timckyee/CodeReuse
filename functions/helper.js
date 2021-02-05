@@ -156,8 +156,6 @@ getHomeFormGridPagingSearchValue: function() {
 
 	document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value = "1";
 
-	//localStorage.setItem("editMode", "false");
-
 },
 
 /**

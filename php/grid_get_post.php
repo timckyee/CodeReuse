@@ -44,6 +44,82 @@
 						
 		}
 		else
+		if($queryName == "gridtablehomePages") {
+		
+			$searchValue = $_GET["searchValue"];
+
+			if($searchValue != "")
+			{
+				$pageSize = $_GET["pageSize"];
+				
+				$mysqli->query('SET @searchValue = \'' . $searchValue . '\'');
+				$sql = "select count(fieldPrimaryKey) as gridRows from tableGridGetPost2 where
+
+				date_format(field1, '%d-%b-%Y') like concat('%', @searchValue, '%') or
+				
+				date_format(field2, '%d-%b-%Y') like concat('%', @searchValue, '%') or
+				
+				(select buildingName from tableGridGetPostBuilding where buildingId = field3) like concat('%', @searchValue, '%')
+				
+				or
+				(select firstname from tableGridGetPostTenant where tenantId = field4) like concat('%', @searchValue, '%')
+				
+				or
+				(select lastname from tableGridGetPostTenant where tenantId = field4) like concat('%', @searchValue, '%')";
+
+				$stmt = $mysqli->prepare($sql);
+				$stmt->execute();
+
+				$result = $stmt->get_result();
+
+				$row = $result->fetch_object();
+
+				$gridRows = $row->gridRows;
+
+				$totalPagesRemainder = $gridRows % $pageSize;
+
+				if($totalPagesRemainder >= 1)
+				{
+					$totalPages = floor($gridRows / $pageSize) + 1;
+				}
+				else
+				{
+					$totalPages = $gridRows / $pageSize;
+				}
+
+				echo $totalPages;
+				
+				return;				
+
+			}			
+			else
+			{
+				$pageSize = $_GET["pageSize"];
+
+				$result = $mysqli->query("select count(fieldPrimaryKey) as gridRows from tableGridGetPost2");
+
+				$row = $result->fetch_object();
+
+				$gridRows = $row->gridRows;
+
+				$totalPagesRemainder = $gridRows % $pageSize;
+
+				if($totalPagesRemainder >= 1)
+				{
+					$totalPages = floor($gridRows / $pageSize) + 1;
+				}
+				else
+				{
+					$totalPages = $gridRows / $pageSize;
+				}
+				
+				echo $totalPages;
+				
+				return;
+			}
+
+		}
+		else
 		if($queryName == "gridtablehome") {
 			
 			$sortColumn = $_GET["sortColumn"];

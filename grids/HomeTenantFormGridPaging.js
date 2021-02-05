@@ -34,6 +34,8 @@ CodeReuse.HomeTenantFormGridPaging = function() {
 
 	this.homeTenantGridUpdateQueryName = "updateTableGridGetPost";
 
+	this.pageNumbersQueryName = "gridtablehomePages";
+
 	this.homeTenantGridPagingDiv = "gridGetPostHomeFormGridPagingFooter";
 };
 
@@ -102,6 +104,12 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 	getHomeTenantGridUpdateQueryName: function () {
 
 		return this.homeTenantGridUpdateQueryName;
+
+	},
+
+	getPageNumbersQueryName: function() {
+
+		return this.pageNumbersQueryName;
 
 	},
 

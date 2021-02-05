@@ -48,7 +48,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, fieldsInfo, gridColu
 
 			var response = JSON.parse(this.responseText);				
 						
-			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter, pageSize, onload);
+			callback(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter, onload);
 					
 		}
 	};
@@ -286,6 +286,57 @@ get_populateGrid: function(phpFile, queryName, gridColumnsInfo, arrayOldValuesTa
 	}
 	
 	var queryString = "queryName" + "=" + queryName + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue;
+	
+	window.getXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
+	window.getXmlHttpRequest.send();
+},
+
+/**
+ * Get the total page numbers
+ * @function
+ * @name Grid_Get_Post_Functions#get_populateGrid
+ * 
+ * @param {string} phpFile php file name and location
+ * @param {string} divPagingFooter the html div object containing the footer
+ * @param {string} queryName the php query name for http method get 
+ * @param {string} pageSize paging size for the grid
+ * @param {string} tableHtmlObjectId table name of the form grid
+ * @param {string} searchValueField the field name of the search value
+ * @param {string} searchValue the value of the search field
+ */
+get_pageNumbers: function(phpFile, divPagingFooter, queryName, pageSize, tableHtmlObjectId, searchValueField, searchValue)
+{	
+	window.getXmlHttpRequest.onreadystatechange = function() {
+		
+		if (this.readyState == 4 && this.status == 200) {
+			
+			var response = JSON.parse(this.responseText);
+			
+			if(tableHtmlObjectId == "tableHomeTenant")
+			{
+				document.getElementById("gridGetPostHomePagingPages").innerText = "of " + response;
+			}
+			else
+			if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+			{
+				document.getElementById("gridGetPostHomeFormGridPagingPages").innerText = "of " + response;
+			}
+
+			document.getElementById(divPagingFooter).style.display = "block";
+		
+		}
+	}
+	
+	var queryString;
+
+	if(searchValue != "")
+	{
+		queryString = "queryName" + "=" + queryName + "&" + "pageSize=" + pageSize + "&" + searchValueField + "=" + searchValue;
+	}
+	else
+	{
+		queryString = "queryName" + "=" + queryName + "&" + "pageSize=" + pageSize;
+	}
 	
 	window.getXmlHttpRequest.open("GET", phpFile + "?" + queryString, true);
 	window.getXmlHttpRequest.send();

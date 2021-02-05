@@ -38,32 +38,11 @@ changeTab: function(tab) {
 			}
 		}
 
-		if(this.searchFieldEmptyToRefreshGrid() == "0")
-		{
-			return;
-		}	
-
 		if(localStorage.getItem("editMode") == "true")
 		{
 			alert('Please cancel save mode in order to continue');
 			return;
 		}
-
-		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-		
-		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-	
-		var tenant = new CodeReuse.Tenant();
-	
-		var callback = new CodeReuse.Callback();
-	
-		var sortColumn = localStorage.getItem("arraySortColumn");
-	
-		var sortDirection = localStorage.getItem("arraySortDirection");
-	
-		var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
-	
-		grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenant.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.getRowOnClick(), "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
 	}
 	else
 	if(currentTab == "HomeFormGridPaging")
@@ -85,32 +64,11 @@ changeTab: function(tab) {
 			}
 		}
 
-		if(this.searchFieldEmptyToRefreshGrid() == "0")
-		{
-			return;
-		}
-
 		if(localStorage.getItem("editMode") == "true")
 		{
 			alert('Please cancel save mode in order to continue');
 			return;
 		}
-
-		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-	
-		var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
-	
-		var tenant = new CodeReuse.Tenant();
-	
-		var callback = new CodeReuse.Callback();
-	
-		var sortColumn = localStorage.getItem("arraySortColumn_tenant_form_grid_paging");
-	
-		var sortDirection = localStorage.getItem("arraySortDirection_tenant_form_grid_paging");
-	
-		var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
-	
-		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), tenant.getFieldsInfo(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');		
 	}
 	else
 	if(currentTab == "Suites")
@@ -131,11 +89,6 @@ changeTab: function(tab) {
 				return;
 			}
 		}
-
-		if(this.searchFieldEmptyToRefreshGrid() == "0")
-		{
-			return;
-		}
 	}
 	else
 	if(currentTab == "Tenants")
@@ -155,11 +108,6 @@ changeTab: function(tab) {
 				alert('Please close calendar picker before continuing');
 				return;
 			}
-		}
-
-		if(this.searchFieldEmptyToRefreshGrid() == "0")
-		{
-			return;
 		}
 	}
 
@@ -209,27 +157,5 @@ tenantSearchListOrCalendarShowing: function() {
 	}
 
 },
-
-/**
- * Search field empty check to refresh grid upon click on tab
- * @function
- * @name Tabs#searchFieldEmptyToRefreshGrid
- */
-searchFieldEmptyToRefreshGrid: function() {
-
-	if(document.getElementById("homeTenantGridSearchValue").value !== "")
-	{
-		alert('Please clear search field before continuing');
-		return 0;
-	}
-
-	if(document.getElementById("homeTenantFormGridPagingSearchValue").value !== "")
-	{
-		alert('Please clear search field before continuing');
-		return 0;
-	}
-
-	return 1;
-}
 
 }
