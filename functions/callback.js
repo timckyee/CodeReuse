@@ -637,8 +637,6 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 	
 	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\" />&nbsp;&nbsp;<img id=\"inputCalendar_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\"></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\"/>&nbsp;&nbsp;<img id=\"inputCalendarTesting_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\"></td>";
 
-	//tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\" /></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 142\" value=\"\"</td>";
-
 	var gridEventFunctions = new CodeReuse.GridEventFunctions();
 
 	/*
@@ -817,36 +815,6 @@ refreshGridCallback: function(highlightId)
 	var tenantModel = new CodeReuse.Tenant();
 	
 	tenantModel.refreshTenantGrid(highlightId);	
-	
-},
-
-/**
- * Refresh Tenant grid after inserting or updating Tenant record
- * @callback refreshGridCallbackTenantFormGridPaging
- * @name Callback#refreshGridCallbackTenantFormGridPaging
- * 
- * @param {string} highlightId the primary key row id to highlight
- */
-refreshGridCallbackTenantFormGridPaging: function(highlightId)
-{
-	
-	var tenantFormGridPaging = new CodeReuse.TenantFormGridPaging();
-	
-	tenantFormGridPaging.refreshTenantFormGridPaging(highlightId);	
-	
-},
-
-/**
- * Refresh Home Tenant grid after updating Tenant record
- * @callback refreshGridCallbackHomeTenantGrid
- * @name Callback#refreshGridCallbackHomeTenantGrid
- */
-refreshGridCallbackHomeTenantGrid: function()
-{
-	
-	var tenantModel = new CodeReuse.Tenant();
-	
-	tenantModel.refreshTenantGridHome();	
 	
 },
 

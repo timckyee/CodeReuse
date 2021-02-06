@@ -142,35 +142,9 @@ div.buttonCenter {
 	text-align: left;
 }
 
-/*
-.underlineSave {
-    text-decoration: underline;
-   	cursor: default;
-	user-select: none;
-	text-align: left;	
-}
-*/
-
-.underlineNo {
-	padding-left: 10px;
-   	cursor: default;
-	user-select: none;
-	text-align: left;
-}
-
 a, span, button {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-
-/*
-.underlineNo:hover {
-	padding-left: 10px;
-	text-decoration: underline;
-   	cursor: default;
-	user-select: none;
-	text-align: left;
-}
-*/
 
 table.homeGrid_safari {
   table-layout: fixed;

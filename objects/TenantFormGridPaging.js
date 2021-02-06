@@ -1,5 +1,5 @@
 /**
- * Class for Tenant form object
+ * Class for TenantFormGridPaging form object
  * @class
  */
 CodeReuse.TenantFormGridPaging = function() {
@@ -35,7 +35,7 @@ CodeReuse.TenantFormGridPaging = function() {
 CodeReuse.TenantFormGridPaging.prototype = {
 			
 	/**
-	 * Array to store old values for inserting and updating records in Tenant form object
+	 * Array to store old values for inserting and updating records in Tenant form grid paging object
 	 * @var {Array} arrayOldValuesTable
 	 */		
 	arrayOldValuesTable: [],
@@ -72,7 +72,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	/**
 	 * Setting values in this object constructor from the html inputs for inserting or updating
 	 * @function
-	 * @name Tenant#setFieldValuesFromInputs
+	 * @name TenantFormGridPaging#setFieldValuesFromInputs
 	 * 
 	 * @param {Array} inputValueArray array of html input values
 	 * @param {string} primaryKey primary key of the record we are updating
@@ -91,7 +91,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	/**
 	 * Returns an array with values that have been preset in this object for updating
 	 * @function
-	 * @name Tenant#fieldsValuesUpdate
+	 * @name TenantFormGridPaging#fieldsValuesUpdate
 	 * 
 	 * @returns {Array} array of the field values of this object
 	 */
@@ -112,7 +112,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	/**
 	 * Returns an array with values that have been preset in this object for inserting
 	 * @function
-	 * @name Tenant#fieldsValuesInsert
+	 * @name TenantFormGridPaging#fieldsValuesInsert
 	 * 
 	 * @returns {Array} array of the field values of this object
 	 */
@@ -128,61 +128,11 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		return fieldsValuesInsertArray;
 		
 	},
-	
-	/**
-	 * Refresh Tenant form grid by calling the TenantGrid object refreshTenantGrid function
-	 * @function
-	 * @name Tenant#refreshTenantGrid
-	 * 
-	 * @param {string} highlightId the row primary key to highlight
-	 */
-
-	 /*
-	refreshTenantGrid: function(highlightId) {
-
-		var tenantGrid = new CodeReuse.TenantGrid();
-		
-		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo(), highlightId);
-		
-	},
-	*/
-	
-	/**
-	 * Refresh Tenant form grid when updating the building select value by calling the TenantGrid object refreshSelectTenantGrid function
-	 * @function
-	 * @name Tenant#refreshSelectTenantGrid
-	 */
-
-	 /*
-	refreshSelectTenantGrid: function() {
-		
-		var tenantGrid = new CodeReuse.TenantGrid();
-		
-		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuildingTenant").value);
-		
-	},
-	*/
-	
-	/**
-	 * Refresh the HomeTenantGrid by calling the HomeTenantGrid object refreshTenantHomeGrid function
-	 * @function
-	 * @name Tenant#refreshTenantGridHome	 
-	 */
-
-	 /*
-	refreshTenantFormGridPaging: function(highlight) {
-		
-		var homeTenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging();
-
-		homeTenantFormGridPaging.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), localStorage.getItem("arraySortColumn_tenant_form_grid_paging"), localStorage.getItem("arraySortDirection_tenant_form_grid_paging"), localStorage.getItem("homeTenantFormGridPagingPageNumber"), highlight);
-		
-	},
-	*/
 		
 	/**
-	 * Tenant form update
+	 * Tenant form grid paging form update
 	 * @function
-	 * @name Tenant#tenantUpdate
+	 * @name TenantFormGridPaging#tenantUpdate
 	 */
 	tenantUpdate: function() {
 			
@@ -194,19 +144,17 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		{	
 			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
-			var callback = new CodeReuse.Callback();
-			
 			var homeTenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging();
 
-			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getTenantUpdateQueryName(), document.getElementById("inputPrimaryKeyFormGridPaging").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, callback.refreshGridCallbackTenantFormGridPaging, homeTenantFormGridPaging.getTableHtmlObjectId());
+			grid_get_post_functions.post_updateForm(this.getPhpFile(), this.getTenantUpdateQueryName(), document.getElementById("inputPrimaryKeyFormGridPaging").value, htmlObjectFieldsValuesUpdate, this.getFieldsInfo(), this.arrayOldValuesTable, '', homeTenantFormGridPaging.getTableHtmlObjectId());
 		}
 		
 	},
 	
 	/**
-	 * Tenant form insert
+	 * Tenant form grid paging insert
 	 * @function
-	 * @name Tenant#tenantInsert
+	 * @name TenantFormGridPaging#tenantInsert
 	 */	
 	tenantInsert: function() {
 	
@@ -218,11 +166,9 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		{
 			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
-			var callback = new CodeReuse.Callback();
-			
 			var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
 
-			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getTenantInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeyFormGridPaging", this.arrayOldValuesTable, callback.refreshGridCallback, home_tenant_form_grid_paging.getTableHtmlObjectId());
+			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getTenantInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeyFormGridPaging", this.arrayOldValuesTable, '', home_tenant_form_grid_paging.getTableHtmlObjectId());
 		}	
 	
 	}

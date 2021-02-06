@@ -160,9 +160,9 @@ CodeReuse.Controller.prototype = {
 	},
 	
 	/**
-	 * Save the tenant form values
+	 * Save the tenant form grid paging values
 	 * @function
-	 * @name Controller#tenantSave
+	 * @name Controller#tenantFormGridPagingSave
 	 */
 	tenantFormGridPagingSave: function() {
 

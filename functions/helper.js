@@ -89,7 +89,11 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 	return true;
 },
 
-
+/**
+ * Sets the home grid search field value
+ * @function
+ * @name Helper#setHomeGridSearchValue
+ */
 setHomeGridSearchValue: function() {
 
 	var searchValue = document.getElementById("homeTenantGridSearchValue").value;
@@ -101,6 +105,11 @@ setHomeGridSearchValue: function() {
 
 },
 
+/**
+ * Sets the home form grid paging search field value
+ * @function
+ * @name Helper#setHomeFormGridPagingSearchValue
+ */
 setHomeFormGridPagingSearchValue: function() {
 
 	var searchValue = document.getElementById("homeTenantFormGridPagingSearchValue").value;
@@ -112,6 +121,11 @@ setHomeFormGridPagingSearchValue: function() {
 
 },
 
+/**
+ * Show the home grid records with search filter
+ * @function
+ * @name Helper#getHomeGridSearchValue
+ */
 getHomeGridSearchValue: function() {
 
 	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -136,6 +150,11 @@ getHomeGridSearchValue: function() {
 
 },
 
+/**
+ * Show the home form grid paging records with search filter
+ * @function
+ * @name Helper#getHomeFormGridPagingSearchValue
+ */
 getHomeFormGridPagingSearchValue: function() {
 
 	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
