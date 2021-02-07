@@ -62,8 +62,6 @@ window.addEventListener("load", function() {
 		
 	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
-	var tenant = new CodeReuse.Tenant();
-
 	var callback = new CodeReuse.Callback();
 
 	var sortColumn = localStorage.getItem("arraySortColumn");
@@ -72,7 +70,7 @@ window.addEventListener("load", function() {
 
 	var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
 
-	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenant.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.getRowOnClick(), "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), "true");
+	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.getRowOnClick(), "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), "true");
 
 	//tenant.refreshTenantGridHome();
 	

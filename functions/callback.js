@@ -17,7 +17,6 @@ CodeReuse.Callback.prototype = {
  * @param {string} response the response from the XMLHttpRequest get
  * @param {string} divTable the html div object to attach the table to 
  * @param {string} tableHtmlObjectId the html table id
- * @param {Array} fieldsInfo form object array of fields
  * @param {string} gridIdField the primary key for the table rows
  * @param {Array} gridColumnsInfo grid object array of columns 
  * @param {function} rowOnClick the handler to call when the user clicks on row in the table
@@ -33,7 +32,7 @@ CodeReuse.Callback.prototype = {
  * @param {string} divPagingFooter the paging footer div
  * @param {string} onload whether this is the first time loading grid to load second grid
  */
-gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInfo, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter, onload) {
+gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter, onload) {
 
 	var tbl = document.createElement("table");
 	tbl.id = tableHtmlObjectId;
@@ -375,7 +374,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 					rowPrimaryKey = rowValues.target.parentNode.cells[0].innerText;
 				}
 
-				rowOnClick(phpFile, rowPrimaryKey, fieldsInfo, gridColumnsInfo, tableHtmlObjectId); 
+				rowOnClick(phpFile, rowPrimaryKey, tableHtmlObjectId); 
 			}
 		};
 			
@@ -420,9 +419,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 				{
 					var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions;
 
-					var home_tenant_grid = new CodeReuse.HomeTenantGrid();	
-					
-					var tenantModel = new CodeReuse.Tenant();
+					var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
 					var callback = new CodeReuse.Callback();
 				
@@ -437,11 +434,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 
 					if(searchValue == "" || searchValue == undefined)
 					{
-						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
 					}
 					else
 					{
-						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), tenantModel.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), tenantModel.getFieldsInfo(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(),"searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
+						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(),"searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
 					}
 				}
 			}
@@ -593,8 +590,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 		var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
 	
-		var tenant = new CodeReuse.Tenant();
-	
 		var callback = new CodeReuse.Callback();
 	
 		var sortColumn = localStorage.getItem("arraySortColumn_tenant_form_grid_paging");
@@ -603,7 +598,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, fieldsInf
 	
 		var pageNumber = localStorage.getItem("homeTenantFormGridPagingPageNumber");
 	
-		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), tenant.getFieldsInfo(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
+		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
 	}
 
 },
