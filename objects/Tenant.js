@@ -135,14 +135,15 @@ CodeReuse.Tenant.prototype = {
 	 * Refresh Tenant form grid by calling the TenantGrid object refreshTenantGrid function
 	 * @function
 	 * @name Tenant#refreshTenantGrid
-	 * 
+	 *
+	 * @param {string} phpFile php file name and location
 	 * @param {string} highlightId the row primary key to highlight
 	 */
 	refreshTenantGrid: function(highlightId) {
 
 		var tenantGrid = new CodeReuse.TenantGrid();
 		
-		tenantGrid.refreshTenantGrid(this.getPhpFile(),this.getFieldsInfo(), highlightId);
+		tenantGrid.refreshTenantGrid(this.getPhpFile(), highlightId);
 		
 	},
 	
@@ -155,7 +156,7 @@ CodeReuse.Tenant.prototype = {
 		
 		var tenantGrid = new CodeReuse.TenantGrid();
 		
-		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuildingTenant").value);
+		tenantGrid.refreshSelectTenantGrid(this.getPhpFile(), document.getElementById("selectBuildingTenant").value);
 		
 	},
 	
@@ -168,7 +169,7 @@ CodeReuse.Tenant.prototype = {
 		
 		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
 
-		homeTenantGrid.refreshTenantHomeGrid(this.getPhpFile(),this.getFieldsInfo(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"));
+		homeTenantGrid.refreshTenantHomeGrid(this.getPhpFile(), localStorage.getItem("arraySortColumn"), localStorage.getItem("arraySortDirection"), localStorage.getItem("homeTenantGridPageNumber"));
 		
 	},
 		

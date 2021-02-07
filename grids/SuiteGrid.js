@@ -110,10 +110,9 @@ CodeReuse.SuiteGrid.prototype = {
 	 * @name SuiteGrid#refreshSuiteGrid
 	 * 
 	 * @param {string} phpFile php file name and location
-	 * @param {Array} fieldsInfo form object array of fields
 	 * @param {string} highlightId row id of the row this is highlighted
 	 */
-	refreshSuiteGrid: function(phpFile, fieldsInfo, highlightId) {
+	refreshSuiteGrid: function(phpFile, highlightId) {
 		
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
@@ -135,10 +134,9 @@ CodeReuse.SuiteGrid.prototype = {
 	 * @name SuiteGrid#refreshSelectSuiteGrid
 	 * 
 	 * @param {string} phpFile php file name and location
-	 * @param {Array} fieldsInfo form object array of fields
 	 * @param {string} selectBuildingHtmlObjectValue the selected building value on the form
 	 */
-	refreshSelectSuiteGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
+	refreshSelectSuiteGrid: function(phpFile, selectBuildingHtmlObjectValue) {
 
 		if(selectBuildingHtmlObjectValue != "")
 		{

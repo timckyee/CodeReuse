@@ -122,7 +122,7 @@ CodeReuse.Suite.prototype = {
 
 		var suiteGrid = new CodeReuse.SuiteGrid();
 		
-		suiteGrid.refreshSuiteGrid(this.getPhpFile(),this.getFieldsInfo(), highlightId);
+		suiteGrid.refreshSuiteGrid(this.getPhpFile(), highlightId);
 		
 	},
 	
@@ -135,7 +135,7 @@ CodeReuse.Suite.prototype = {
 
 		var suiteGrid = new CodeReuse.SuiteGrid();
 		
-		suiteGrid.refreshSelectSuiteGrid(this.getPhpFile(),this.getFieldsInfo(), document.getElementById("selectBuildingSuite").value);
+		suiteGrid.refreshSelectSuiteGrid(this.getPhpFile(), document.getElementById("selectBuildingSuite").value);
 		
 	},
 	

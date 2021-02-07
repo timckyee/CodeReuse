@@ -201,12 +201,11 @@ CodeReuse.HomeTenantGrid.prototype = {
 	 * @name HomeTenantGrid#refreshTenantHomeGrid
 	 * 
 	 * @param {string} phpFile php file name and location
-	 * @param {Array} fieldsInfo form object array of fields
 	 * @param {string} sortColumn the grid column which is currently sorted
 	 * @param {string} sortDirection the direction which is currently sorted
 	 * @param {string} pageNumber the page number of the table we are currently showing
 	 */
-	refreshTenantHomeGrid: function(phpFile, fieldsInfo, sortColumn, sortDirection, pageNumber) {
+	refreshTenantHomeGrid: function(phpFile, sortColumn, sortDirection, pageNumber) {
 
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		

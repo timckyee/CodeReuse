@@ -115,10 +115,9 @@ CodeReuse.TenantGrid.prototype = {
 	 * @name TenantGrid#refreshTenantGrid
 	 * 
 	 * @param {string} phpFile php file name and location
-	 * @param {Array} fieldsInfo form object array of fields
 	 * @param {string} highlightId row id of the row this is highlighted
 	 */
-	refreshTenantGrid: function(phpFile, fieldsInfo, highlightId) {
+	refreshTenantGrid: function(phpFile, highlightId) {
 
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
@@ -140,10 +139,9 @@ CodeReuse.TenantGrid.prototype = {
 	 * @name TenantGrid#refreshSelectTenantGrid
 	 * 
 	 * @param {string} phpFile php file name and location
-	 * @param {Array} fieldsInfo form object array of fields
 	 * @param {string} selectBuildingHtmlObjectValue the selected building value on the form
 	 */
-	refreshSelectTenantGrid: function(phpFile, fieldsInfo, selectBuildingHtmlObjectValue) {
+	refreshSelectTenantGrid: function(phpFile, selectBuildingHtmlObjectValue) {
 		
 		if(selectBuildingHtmlObjectValue != "")
 		{
