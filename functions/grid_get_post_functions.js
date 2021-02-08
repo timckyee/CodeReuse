@@ -266,8 +266,9 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
  * @param {function} callback the function to call when the XMLHttpRequest get method returns 
  * @param {Object} tableHtml the html table object used to replace the row edited with form objects
  * @param {string} htmlObjectPrimaryKeyValue the table row primary key
+ * @param {string} tableHtmlObjectId the html table object
  */
-get_populateGrid: function(phpFile, queryName, gridColumnsInfo, arrayOldValuesTableGridEdit, callback, tableHtml, htmlObjectPrimaryKeyValue)
+get_populateGrid: function(phpFile, queryName, gridColumnsInfo, arrayOldValuesTableGridEdit, callback, tableHtml, htmlObjectPrimaryKeyValue, tableHtmlObjectId)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -275,7 +276,7 @@ get_populateGrid: function(phpFile, queryName, gridColumnsInfo, arrayOldValuesTa
 			
 			var response = JSON.parse(this.responseText);
 
-			callback(response, gridColumnsInfo, arrayOldValuesTableGridEdit, tableHtml, htmlObjectPrimaryKeyValue);
+			callback(response, gridColumnsInfo, arrayOldValuesTableGridEdit, tableHtml, htmlObjectPrimaryKeyValue, tableHtmlObjectId);
 		
 		}
 	}
@@ -298,8 +299,9 @@ get_populateGrid: function(phpFile, queryName, gridColumnsInfo, arrayOldValuesTa
  * @param {string} tableHtmlObjectId table name of the form grid
  * @param {string} searchValueField the field name of the search value
  * @param {string} searchValue the value of the search field
+ * @param {string} onload whether this is the first time loading grid to preload second grid
  */
-get_pageNumbers: function(phpFile, divPagingFooter, queryName, pageSize, tableHtmlObjectId, searchValueField, searchValue)
+get_pageNumbers: function(phpFile, divPagingFooter, queryName, pageSize, tableHtmlObjectId, searchValueField, searchValue, onload)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
 		
@@ -318,7 +320,24 @@ get_pageNumbers: function(phpFile, divPagingFooter, queryName, pageSize, tableHt
 			}
 
 			document.getElementById(divPagingFooter).style.display = "block";
-		
+			
+			// to preload the second grid, HomeTenantFormGridPaging
+			if(onload == "true")
+			{
+				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+			
+				var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
+			
+				var callback = new CodeReuse.Callback();
+			
+				var sortColumn = localStorage.getItem("arraySortColumn_tenant_form_grid_paging");
+			
+				var sortDirection = localStorage.getItem("arraySortDirection_tenant_form_grid_paging");
+			
+				var pageNumber = localStorage.getItem("homeTenantFormGridPagingPageNumber");
+			
+				grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
+			}
 		}
 	}
 	

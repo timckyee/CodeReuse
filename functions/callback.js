@@ -516,44 +516,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 
 	divTable.appendChild(tbl);
 
-
-	if(showPagingFooter == "true")
-	{		
-		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-		
-		if(tableHtmlObjectId == "tableHomeTenant")
-		{
-			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-			var searchValue = home_tenant_grid.getSearchValue();
-
-			if(searchValue == "" || searchValue == undefined)
-			{
-				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), divPagingFooter, home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), '', '');
-			}
-			else
-			{
-				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), divPagingFooter, home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", searchValue);
-			}
-		}
-		else
-		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
-		{
-			var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
-
-			var searchValue = home_tenant_form_grid_paging.getSearchValue();
-
-			if(searchValue == "" || searchValue == undefined)
-			{
-				grid_get_post_functions.get_pageNumbers(home_tenant_form_grid_paging.getPhpFile(), divPagingFooter, home_tenant_form_grid_paging.getPageNumbersQueryName(), home_tenant_form_grid_paging.getPageSize(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '');
-			}
-			else
-			{
-				grid_get_post_functions.get_pageNumbers(home_tenant_form_grid_paging.getPhpFile(), divPagingFooter, home_tenant_form_grid_paging.getPageNumbersQueryName(), home_tenant_form_grid_paging.getPageSize(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue);
-			}
-		}
-	}
-
+	// if showEditRow == "true" then the get_populateGrid_callback will include get_pageNumbers function to update the total pageNumbers
 	if(showEditRow == "true")
 	{			
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -566,7 +529,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 
 		var searchValue = home_tenant_grid.getSearchValue();
 				
-		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, savePrimaryKeyValue, "searchValue", searchValue);
+		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, savePrimaryKeyValue, "searchValue", searchValue, home_tenant_grid.getTableHtmlObjectId());
 	}
 
 	if(tableHtmlObjectId == "tableHomeTenantFormGridPaging" && document.getElementById("saveNewButtonTenantFormGridPaging").style.display != "block")
@@ -584,22 +547,46 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		document.getElementById("saveNewButtonTenant").style.display = "block";
 	}
 
-	if(onload == "true")
-	{
+	// if showPagingFooter == "true" and showEditRow != "true" 
+	// (the showEditRow == "true" will set the total page numbers so will not enter this function)
+	// then update the total pageNumbers
+	// the get_pageNumbers onload parameter will help preload the second grid, HomeTenantFormGridPaging
+	if(showPagingFooter == "true" && showEditRow != "true")
+	{	
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-	
-		var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
-	
-		var callback = new CodeReuse.Callback();
-	
-		var sortColumn = localStorage.getItem("arraySortColumn_tenant_form_grid_paging");
-	
-		var sortDirection = localStorage.getItem("arraySortDirection_tenant_form_grid_paging");
-	
-		var pageNumber = localStorage.getItem("homeTenantFormGridPagingPageNumber");
-	
-		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
-	}
+		
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+			var searchValue = home_tenant_grid.getSearchValue();
+
+			if(searchValue == "" || searchValue == undefined)
+			{
+				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), divPagingFooter, home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), '', '', onload);
+			}
+			else
+			{
+				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), divPagingFooter, home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", searchValue, onload);
+			}
+		}
+		else
+		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+		{
+			var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
+
+			var searchValue = home_tenant_form_grid_paging.getSearchValue();
+
+			if(searchValue == "" || searchValue == undefined)
+			{
+				grid_get_post_functions.get_pageNumbers(home_tenant_form_grid_paging.getPhpFile(), divPagingFooter, home_tenant_form_grid_paging.getPageNumbersQueryName(), home_tenant_form_grid_paging.getPageSize(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', onload);
+			}
+			else
+			{
+				grid_get_post_functions.get_pageNumbers(home_tenant_form_grid_paging.getPhpFile(), divPagingFooter, home_tenant_form_grid_paging.getPageNumbersQueryName(), home_tenant_form_grid_paging.getPageSize(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue, onload);
+			}
+		}
+	}	
 
 },
 
@@ -613,8 +600,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
  * @param {Array} arrayOldValuesTableGridEdit array to keep track of row old values used for updating fields
  * @param {Object} tableHtml the html table object used to replace the row edited with form objects
  * @param {string} fieldPrimaryKey the table row primary key
+ * @param {string} tableHtmlObjectId the html table object
  */
-get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey) {
+get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey, tableHtmlObjectId) {
 
 	var record = response[0];
 
@@ -778,6 +766,27 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 		{
 			arrayOldValuesTableGridEdit[gridColumnsInfo[i].htmlObjectId] = record[gridColumnsInfo[i].id];
 		}
+
+
+		// to update the total page numbers when entering edit mode
+		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+		
+		if(tableHtmlObjectId == "tableHomeTenant")
+		{
+			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+
+			var searchValue = home_tenant_grid.getSearchValue();
+
+			if(searchValue == "" || searchValue == undefined)
+			{
+				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), divPagingFooter, home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), '', '', onload);
+			}
+			else
+			{
+				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), divPagingFooter, home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", searchValue, onload);
+			}
+		}
+
 	}
 },
 
