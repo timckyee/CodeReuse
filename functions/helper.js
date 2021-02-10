@@ -186,9 +186,9 @@ updateGridPage: function(object, pageNumber)
 	{
 		alert('Please click on save to leave save mode');
 		return;
-	}	
+	}
 
-	if(pageNumber == "")
+	if(isNaN(parseInt(pageNumber)))
 	{
 		alert('Page number has to be an integer');
 		return;
@@ -296,7 +296,7 @@ updateGridPageArrows: function(object, direction, pageNumber)
 		return;
 	}		
 
-	if(pageNumber == "")
+	if(isNaN(parseInt(pageNumber)))
 	{
 		alert('Page number has to be an integer');
 		return;
@@ -328,7 +328,7 @@ updateGridPageArrows: function(object, direction, pageNumber)
 			var totalPagesString = document.getElementById("gridGetPostHomePagingPages").innerText;
 			var totalPages = totalPagesString.substr(3, totalPagesString.length);
 			
-			if(parseInt(inputPage) > parseInt(totalPages) - 1)
+			if(parseInt(inputPage) == parseInt(totalPages))
 			{
 				alert('You have reached the last page');
 				return;
@@ -378,7 +378,7 @@ updateGridPageArrows: function(object, direction, pageNumber)
 			var totalPagesString = document.getElementById("gridGetPostHomeFormGridPagingPages").innerText;
 			var totalPages = totalPagesString.substr(3, totalPagesString.length);
 			
-			if(parseInt(inputPage) > parseInt(totalPages) - 1)
+			if(parseInt(inputPage) == parseInt(totalPages))
 			{
 				alert('You have reached the last page');
 				return;
