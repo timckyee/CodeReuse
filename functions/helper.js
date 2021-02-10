@@ -194,12 +194,29 @@ updateGridPage: function(object, pageNumber)
 		return;
 	}
 
+	if(pageNumber == "0")
+	{
+		alert('Please enter page number greater than 0');
+		return;
+	}
+
 	var pagingFooter = object.parentNode.id;
 
 	var pageNumberUpdate;
 
 	if(pagingFooter == "gridGetPostHomePaging")
 	{
+		var inputPage = document.getElementById("gridGetPostHomePagingPageNumber").value;
+		var totalPagesString = document.getElementById("gridGetPostHomePagingPages").innerText;
+		var totalPages = totalPagesString.substr(3, totalPagesString.length);
+		
+		if(parseInt(inputPage) > totalPages)
+		{
+			alert('This page number is greater than the total number of pages');
+			return;
+		}
+
+
 		localStorage.setItem("homeTenantGridPageNumber", pageNumber);
 			
 		pageNumberUpdate = localStorage.getItem("homeTenantGridPageNumber");
@@ -226,6 +243,17 @@ updateGridPage: function(object, pageNumber)
 	else
 	if(pagingFooter == "gridGetPostHomeFormGridPagingFooter")
 	{
+		var inputPage = document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value;
+		var totalPagesString = document.getElementById("gridGetPostHomeFormGridPagingPages").innerText;
+		var totalPages = totalPagesString.substr(3, totalPagesString.length);
+		
+		if(parseInt(inputPage) > totalPages)
+		{
+			alert('This page number is greater than the total number of pages');
+			return;
+		}
+
+
 		localStorage.setItem("homeTenantFormGridPagingPageNumber", pageNumber);
 			
 		pageNumberUpdate = localStorage.getItem("homeTenantFormGridPagingPageNumber");
@@ -274,6 +302,12 @@ updateGridPageArrows: function(object, direction, pageNumber)
 		return;
 	}
 
+	if(pageNumber == "0")
+	{
+		alert('Please enter page number greater than 0');
+		return;
+	}
+
 	var pageNumberUpdate;
 
 	var pagingFooter = object.parentNode.id;
@@ -289,6 +323,18 @@ updateGridPageArrows: function(object, direction, pageNumber)
 				document.getElementById('gridGetPostHomePagingPageNumber').value = pageNumberUpdate;
 			}
 		} else if(direction == "right") {
+
+			var inputPage = pageNumber;
+			var totalPagesString = document.getElementById("gridGetPostHomePagingPages").innerText;
+			var totalPages = totalPagesString.substr(3, totalPagesString.length);
+			
+			if(parseInt(inputPage) > parseInt(totalPages) - 1)
+			{
+				alert('You have reached the last page');
+				return;
+			}
+
+
 			pageNumberUpdate = parseInt(pageNumber) + 1;
 			document.getElementById('gridGetPostHomePagingPageNumber').value = pageNumberUpdate;
 		}
@@ -327,6 +373,18 @@ updateGridPageArrows: function(object, direction, pageNumber)
 				document.getElementById('gridGetPostHomeFormGridPagingPageNumber').value = pageNumberUpdate;
 			}
 		} else if(direction == "right") {
+
+			var inputPage = pageNumber;
+			var totalPagesString = document.getElementById("gridGetPostHomeFormGridPagingPages").innerText;
+			var totalPages = totalPagesString.substr(3, totalPagesString.length);
+			
+			if(parseInt(inputPage) > parseInt(totalPages) - 1)
+			{
+				alert('You have reached the last page');
+				return;
+			}
+
+			
 			pageNumberUpdate = parseInt(pageNumber) + 1;
 			document.getElementById('gridGetPostHomeFormGridPagingPageNumber').value = pageNumberUpdate;
 		}
