@@ -1,0 +1,29 @@
+<html>
+
+<script>
+
+
+//var url = http://localhost:8888/parameters_passing.html?Use_id=abcd&Use_id_second=value
+
+
+var GET = {};
+var query = window.location.search.substring(1).split("&");
+
+for (var i = 0, max = query.length; i < max; i++)
+{
+    if (query[i] === "") // check for trailing & with no param
+        continue;
+
+    var param = query[i].split("=");
+    GET[decodeURIComponent(param[0])] = decodeURIComponent(param[1]);
+}
+
+alert(GET.Use_id);
+alert(GET["Use_id"]);
+
+alert(GET.Use_id_second);
+alert(GET["Use_id_second"]);
+
+</script>
+
+</html>
