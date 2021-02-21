@@ -97,14 +97,15 @@ td.tabOptions {
 	
 	text-align: center;
 	padding: 25px;
+	cursor: pointer;
 		
 }
 	
 td.tabOptions:hover {
 	
 	background-color: lightgray;
-	cursor: default;
 	user-select: none;
+	cursor: pointer;
 
 }
 
@@ -113,6 +114,7 @@ td.tabOptionsSelect {
 	text-align: center;
 	padding: 25px;	
 	background-color: lightgray;
+	cursor: pointer;
 	
 }
 

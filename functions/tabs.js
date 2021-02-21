@@ -46,7 +46,7 @@ changeTab: function(tab) {
 	}
 	else
 	if(currentTab == "HomeFormGridPaging")
-	{		
+	{
 		if(localStorage.getItem("editMode") == "true")
 		{
 			alert('Please cancel save mode in order to continue');
@@ -69,12 +69,6 @@ changeTab: function(tab) {
 				return;
 			}
 		}
-
-		if(localStorage.getItem("editMode") == "true")
-		{
-			alert('Please cancel save mode in order to continue');
-			return;
-		}
 	}
 	else
 	if(currentTab == "Suites")
@@ -83,7 +77,7 @@ changeTab: function(tab) {
 		{
 			alert('Please cancel save mode in order to continue');
 			return;
-		}		
+		}	
 		
 		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
 		
