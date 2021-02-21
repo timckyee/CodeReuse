@@ -21,6 +21,12 @@ changeTab: function(tab) {
 	
 	if(currentTab == "Home")
 	{	
+		if(localStorage.getItem("editMode") == "true")
+		{
+			alert('Please cancel save mode in order to continue');
+			return;
+		}
+
 		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
 		
 		if(tenantSearchListOrCalendarShowing != "")
@@ -37,16 +43,16 @@ changeTab: function(tab) {
 				return;
 			}
 		}
-
+	}
+	else
+	if(currentTab == "HomeFormGridPaging")
+	{		
 		if(localStorage.getItem("editMode") == "true")
 		{
 			alert('Please cancel save mode in order to continue');
 			return;
 		}
-	}
-	else
-	if(currentTab == "HomeFormGridPaging")
-	{		
+
 		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
 		
 		if(tenantSearchListOrCalendarShowing != "")
@@ -73,6 +79,12 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "Suites")
 	{
+		if(localStorage.getItem("editMode") == "true")
+		{
+			alert('Please cancel save mode in order to continue');
+			return;
+		}		
+		
 		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
 		
 		if(tenantSearchListOrCalendarShowing != "")
@@ -93,6 +105,12 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "Tenants")
 	{
+		if(localStorage.getItem("editMode") == "true")
+		{
+			alert('Please cancel save mode in order to continue');
+			return;
+		}
+
 		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
 		
 		if(tenantSearchListOrCalendarShowing != "")
