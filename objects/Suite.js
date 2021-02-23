@@ -5,15 +5,15 @@
 CodeReuse.Suite = function() {
 	
 	this.suiteId;
-	this.suiteNumber;
 	this.buildingId;
+	this.suiteNumber;
 	this.location;
 	
 	this.fields = [
-		{ name: "suiteId", dbType: "int", htmlObjectId: "inputPrimaryKeySuite", htmlObjectType: "primaryKey" },
-		{ name: "suiteNumber", dbType: "varchar(10)", htmlObjectId: "inputSuiteNumber", htmlObjectType: "text" },
-		{ name: "buildingId", dbType: "int", htmlObjectId: "inputBuildingId", htmlObjectType: "number" },
-		{ name: "location", dbType: "varchar(25)", htmlObjectId: "inputLocation", htmlObjectType: "text" },
+		{ name: "suiteId", dbType: "int", htmlObjectId: "inputPrimaryKeySuite", htmlObjectType: "primaryKey"},
+		{ name: "buildingId", dbType: "int", htmlObjectId: "inputBuildingId", htmlObjectType: "number", description: "Building" },
+		{ name: "suiteNumber", dbType: "varchar(10)", htmlObjectId: "inputSuiteNumber", htmlObjectType: "text", description: "Suite Number" },
+		{ name: "location", dbType: "varchar(25)", htmlObjectId: "inputLocation", htmlObjectType: "text", description: "Location" },
 	];
 		
 	this.phpFileGridGetPost = "php/grid_get_post.php";
@@ -65,10 +65,10 @@ CodeReuse.Suite.prototype = {
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
 		this.suiteId = primaryKey;
-		
-		this.suiteNumber = inputValueArray["inputSuiteNumber"];
+
 		this.buildingId = inputValueArray["inputBuildingId"];
-		
+		this.suiteNumber = inputValueArray["inputSuiteNumber"];
+
 		this.location = inputValueArray["inputLocation"];
 	},
 	
@@ -84,8 +84,8 @@ CodeReuse.Suite.prototype = {
 		var fieldsValuesUpdateArray = [];
 		
 		fieldsValuesUpdateArray[0] = this.suiteId;
-		fieldsValuesUpdateArray[1] = this.suiteNumber;
-		fieldsValuesUpdateArray[2] = this.buildingId;
+		fieldsValuesUpdateArray[1] = this.buildingId;		
+		fieldsValuesUpdateArray[2] = this.suiteNumber;
 		fieldsValuesUpdateArray[3] = this.location;
 		
 		return fieldsValuesUpdateArray;
@@ -103,8 +103,8 @@ CodeReuse.Suite.prototype = {
 		
 		var fieldsValuesInsertArray = [];
 		
-		fieldsValuesInsertArray[1] = this.suiteNumber;
-		fieldsValuesInsertArray[2] = this.buildingId;
+		fieldsValuesInsertArray[1] = this.buildingId;		
+		fieldsValuesInsertArray[2] = this.suiteNumber;
 		fieldsValuesInsertArray[3] = this.location;
 		
 		return fieldsValuesInsertArray;
@@ -180,7 +180,7 @@ CodeReuse.Suite.prototype = {
 			
 			var callback = new CodeReuse.Callback();
 			
-			var suiteGrid = CodeReuse.HomeTenantFormGridPaging();
+			var suiteGrid = new CodeReuse.SuiteGrid();
 
 			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getSuiteInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeySuite", this.arrayOldValuesTable, callback.refreshGridCallbackSuite, suiteGrid.getTableHtmlObjectId());
 		}	

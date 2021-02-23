@@ -31,7 +31,7 @@ validateHtmlObjectFieldsSuite: function(fieldsInfo)
 			{
 				if(document.getElementById(fieldsInfo[validate].htmlObjectId).value == "")
 				{
-					alert(fieldsInfo[validate].htmlObjectId + ' ' + 'cannot be empty');
+					alert(fieldsInfo[validate].description + ' ' + 'cannot be empty');
 					return false;
 				}
 			}
@@ -56,7 +56,7 @@ validateHtmlObjectFieldsTenant: function(fieldsInfo)
 		{
 			if(document.getElementById(fieldsInfo[validate].htmlObjectId).value == "")
 			{
-				alert(fieldsInfo[validate].htmlObjectId + ' ' + 'cannot be empty');
+				alert(fieldsInfo[validate].description + ' ' + 'cannot be empty');
 				return false;
 			}
 		}
@@ -537,7 +537,8 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 		modal.style.display = "none";
 	
-		msgbox_callback(true);
+		if(msgbox_callback != null)
+			msgbox_callback(true);
 	
 	};
 	
@@ -546,33 +547,10 @@ msgBox: function (buttonType, msg, msgbox_callback) {
 
 	buttonCancel.onclick = function() {
 
-		localStorage.setItem("editMode", "false");
-
 		modal.style.display = "none";
 
 		msgbox_callback(false);
-
-		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-
-		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 		
-		var callback = new CodeReuse.Callback();
-
-		var column = localStorage.getItem("arraySortColumn");
-		var direction = localStorage.getItem("arraySortDirection");
-
-		var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
-
-		var searchValue = home_tenant_grid.getSearchValue();
-
-		if(searchValue == "" || searchValue == undefined)
-		{
-			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "false", '', '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
-		}
-		else
-		{
-			grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "false", '', '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
-		}
 	}
 	
 },

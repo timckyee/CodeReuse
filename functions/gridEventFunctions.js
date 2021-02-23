@@ -7,30 +7,6 @@ CodeReuse.GridEventFunctions = function() {
 };
 
 CodeReuse.GridEventFunctions.prototype = {
-
-	/**
-	 * The edit link onclick event
-	 * @function
-	 * @name GridEventFunctions#editLink2Onclick
-	 */
-    editLink2Onclick: function()
-    {
-    
-        if(localStorage.getItem("editMode") == "true")
-        {
-            var helper = new CodeReuse.Helper();
-    
-            helper.msgBox('confirm', 'You are in edit mode. Please click on OK then save or Cancel.', function (result) {	
-                
-                if(result == true)
-                {
-    
-                }
-    
-            });				
-        }	
-    
-    },
     
 	/**
 	 * The save link onclick event
@@ -50,23 +26,6 @@ CodeReuse.GridEventFunctions.prototype = {
             alert('Please select field date');
             return;
         }
-    
-        /*
-        var helper = new CodeReuse.Helper();
-    
-        helper.msgBox('confirm', 'Would you like to save this row?', function (result) {
-    
-            if(result == true)
-            {
-                controller.homeTenantGridSave();
-            }
-            else
-            if(result == false)
-            {
-                return;
-            }
-        });
-        */
 
        controller.homeTenantGridSave();
     },
@@ -117,7 +76,7 @@ CodeReuse.GridEventFunctions.prototype = {
     
         if(calendar.validateDate("inputCalendar_grid") == false)
         {
-            alert("input format has to be dd-mmm-yyyy");
+            alert("input format date has to be dd-mmm-yyyy");
         }
     },
     
@@ -146,7 +105,7 @@ CodeReuse.GridEventFunctions.prototype = {
             
         if(calendar.validateDate("inputCalendarTesting_grid") == false)
         {
-            alert("input format has to be dd-mmm-yyyy");
+            alert("input format date has to be dd-mmm-yyyy");
         }
     }
 

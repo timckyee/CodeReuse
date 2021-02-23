@@ -92,7 +92,7 @@
 		
 		<tr>
 		<td><span>tenant</span></td>
-		<td><input type="text" name="tenant" id="tenant_input_form_grid_paging" style="position:relative; z-index: 1; background-color: white; width: 142" /></td>
+		<td><input type="text" name="tenant" id="tenant_input_form_grid_paging" style="position:relative; z-index: 1; background-color: white; width: 200" /></td>
 		</tr>
 		
 		<tr>
@@ -198,8 +198,8 @@
 	</center>
 
 	<div id="saveNewButtonSuite" class="buttonCenter" style="display: none">
-		<input type="button" class="button" value="Save" onclick="if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } else { controller.suiteSave(); }" />
-		<input type="button" class="button" value="New" onclick="controller.resetSuiteFields(); if(document.getElementById('selectBuildingSuite').value == '') { alert('Please Select Building'); } var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());" />
+		<input type="button" class="button" value="Save" onclick="controller.suiteSave();" />
+		<input type="button" class="button" value="New" onclick="controller.resetSuiteFields(); var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());" />
 	</div>
 
 </div>
@@ -248,7 +248,7 @@
 	
 	<tr>
 	<td><span>tenant</span></td>
-    <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 142" /></td>
+    <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 200" /></td>
 	</tr>
     
     <tr>
@@ -275,8 +275,8 @@
 	</center>
 
 	<div id="saveNewButtonTenant" class="buttonCenter" style="display: none">
-		<input type="button" class="button" value="Save" onclick="if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); } else { controller.tenantSave(); }" />
-		<input type="button" class="button" value="New" onclick="controller.resetTenantFields(); if(document.getElementById('selectBuildingTenant').value == '') { alert('Please Select Building'); }; var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());" />
+		<input type="button" class="button" value="Save" onclick="controller.tenantSave();" />
+		<input type="button" class="button" value="New" onclick="controller.resetTenantFields(); var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());" />
 	</div>
 
 </div>

@@ -103,33 +103,14 @@ function init_gridGetPost_xmlHttpRequests() {
 }
 
 function init_autocomplete_inputs() {
-	
+
 	window.autocompleteXmlHttpRequest = new XMLHttpRequest();
 	
 	var tenantModel = new CodeReuse.Tenant();
 
 	var phpFile = tenantModel.getPhpFile();
-	
-	//var building_input = document.getElementById("building_input");
 		
 	var autocomplete = new CodeReuse.Autocomplete();
-	
-	/*	
-	building_input.addEventListener("keyup", function(event){ 
-		
-		if(document.getElementById("building_input").value == "")
-		{
-			document.getElementById("buildingSearchList").innerHTML = "";
-		}
-		else
-		{
-			autocomplete.autocomplete(event, "buildingSearchList", "buildingName", "buildingId",  "GET", phpFile, "buildings", "", "", "building_input", "buildingSearchList");
-		}
-	});
-	
-	building_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("buildingSearchList"); });
-	*/		
-	
 
 	var tenant_input_form_grid_paging = document.getElementById("tenant_input_form_grid_paging");
 	
@@ -145,11 +126,16 @@ function init_autocomplete_inputs() {
 		}
 		
 	});
+
+	tenant_input_form_grid_paging.addEventListener("focusout", function(event) { 
+
+		autocomplete.focusOutHide ("tenantSearchList");
 	
-	tenant_input_form_grid_paging.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });
+	});
 	
 	tenant_input_form_grid_paging.addEventListener("focusin", function() { this.select(); });
 
+	tenant_input_form_grid_paging.placeholder = "suite# or first or last name";
 
 
 	var tenant_input = document.getElementById("tenant_input");
@@ -167,9 +153,15 @@ function init_autocomplete_inputs() {
 		
 	});
 	
-	tenant_input.addEventListener("focusout", function() { autocomplete.focusOutHide ("tenantSearchList"); });
+	tenant_input.addEventListener("focusout", function(event) { 
+		
+		autocomplete.focusOutHide ("tenantSearchList"); 
+	
+	});
 	
 	tenant_input.addEventListener("focusin", function() { this.select(); });
+
+	tenant_input.placeholder = "suite# or first or last name";
 }
 
 function init_calendar_inputs() {
@@ -218,10 +210,10 @@ function init_calendar_inputs() {
 	*/
 	
 	inputCalendar.addEventListener("blur", function(event) {
-		
+
 			if(calendar.validateDate(this.id) == false)
 			{
-				alert("input format has to be dd-mmm-yyyy");
+				alert("input format date has to be dd-mmm-yyyy");			
 			}
 		}
 		
@@ -242,7 +234,7 @@ function init_calendar_inputs() {
 		
 			if(calendar.validateDate(this.id) == false)
 			{
-				alert("input format has to be dd-mmm-yyyy");
+				alert("input format date has to be dd-mmm-yyyy");
 			}
 		}
 		
@@ -299,7 +291,7 @@ function init_calendar_inputs() {
 		
 			if(calendar.validateDate(this.id) == false)
 			{
-				alert("input format has to be dd-mmm-yyyy");
+				alert("input format date has to be dd-mmm-yyyy");
 			}
 		}
 		
@@ -319,7 +311,7 @@ function init_calendar_inputs() {
 		
 			if(calendar.validateDate(this.id) == false)
 			{
-				alert("input format has to be dd-mmm-yyyy");
+				alert("input format date has to be dd-mmm-yyyy");
 			}
 		}
 		

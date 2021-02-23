@@ -5,17 +5,17 @@
 CodeReuse.TenantFormGridPaging = function() {
 	
 	this.fieldPrimaryKey;
+	this.field3;
+	this.field4;	
 	this.field1;
 	this.field2;
-	this.field3;
-	this.field4;
 	
 	this.fields = [
 		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectId: "inputPrimaryKeyFormGridPaging", htmlObjectType: "primaryKey" },
-		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendarFormGridPaging", htmlObjectType: "calendar" },
-		{ name: "field2", dbType: "date", htmlObjectId: "inputCalendarTestingFormGridPaging", htmlObjectType: "calendar" },
-		{ name: "field3", dbType: "int", htmlObjectId: "building_option_form_grid_paging", htmlObjectType: "select" },
-		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input_form_grid_paging", htmlObjectType: "autocomplete" }
+		{ name: "field3", dbType: "int", htmlObjectId: "building_option_form_grid_paging", htmlObjectType: "select", description: "Building" },
+		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input_form_grid_paging", htmlObjectType: "autocomplete", description: "Tenant" },		
+		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendarFormGridPaging", htmlObjectType: "calendar", description: "Date" },
+		{ name: "field2", dbType: "date", htmlObjectId: "inputCalendarTestingFormGridPaging", htmlObjectType: "calendar", description: "Date" }
 	];
 	
 	this.autocomplete_inputs = [
@@ -81,10 +81,10 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		
 		this.fieldPrimaryKey = primaryKey;
 		
+		this.field3 = inputValueArray["building_option_form_grid_paging"];
+		this.field4 = inputValueArray["tenant_input_form_grid_paging"];	
 		this.field1 = inputValueArray["inputCalendarFormGridPaging"];
 		this.field2 = inputValueArray["inputCalendarTestingFormGridPaging"];
-		this.field3 = inputValueArray["building_option_form_grid_paging"];
-		this.field4 = inputValueArray["tenant_input_form_grid_paging"];
 		
 	},
 	
@@ -100,10 +100,10 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		var fieldsValuesUpdateArray = [];
 		
 		fieldsValuesUpdateArray[0] = this.fieldPrimaryKey;
-		fieldsValuesUpdateArray[1] = this.field1;
-		fieldsValuesUpdateArray[2] = this.field2;
-		fieldsValuesUpdateArray[3] = this.field3;
-		fieldsValuesUpdateArray[4] = this.field4;
+		fieldsValuesUpdateArray[1] = this.field3;
+		fieldsValuesUpdateArray[2] = this.field4;		
+		fieldsValuesUpdateArray[3] = this.field1;
+		fieldsValuesUpdateArray[4] = this.field2;
 		
 		return fieldsValuesUpdateArray;
 		
@@ -120,10 +120,10 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		
 		var fieldsValuesInsertArray = [];
 		
+		fieldsValuesInsertArray[3] = this.field3;
+		fieldsValuesInsertArray[4] = this.field4;		
 		fieldsValuesInsertArray[1] = this.field1;
 		fieldsValuesInsertArray[2] = this.field2;
-		fieldsValuesInsertArray[3] = this.field3;
-		fieldsValuesInsertArray[4] = this.field4;
 		
 		return fieldsValuesInsertArray;
 		
@@ -134,7 +134,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * @function
 	 * @name TenantFormGridPaging#tenantUpdate
 	 */
-	tenantUpdate: function() {
+	tenantFormGridUpdate: function() {
 			
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();				
 										
@@ -156,7 +156,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * @function
 	 * @name TenantFormGridPaging#tenantInsert
 	 */	
-	tenantInsert: function() {
+	tenantFormGridInsert: function() {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	
 				

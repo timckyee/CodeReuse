@@ -222,11 +222,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 				{
 					var helper = new CodeReuse.Helper();
 
-					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode before sorting.', function (result) {
+					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode before sorting.');
 
-						return;
-						
-					});
+					return;
 				}
 				else
 				{
@@ -409,11 +407,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 
 				if(localStorage.getItem("editMode") == "true")
 				{
-					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.', function (result) {
-
-						return;
-						
-					});
+					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.');
+				
+					return;
 				}
 				else
 				{
@@ -622,13 +618,6 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 
 	var gridEventFunctions = new CodeReuse.GridEventFunctions();
 
-	/*
-	document.getElementById("editLink2").onclick = function() 
-	{
-		gridEventFunctions.editLink2Onclick();
-	}
-	*/
-
 	document.getElementById("saveLink2").onclick = function() 
 	{
 		gridEventFunctions.saveLink2Onclick();
@@ -656,7 +645,9 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 	document.getElementById("tenant_input_grid").onfocus = function() 
 	{
 		this.select();
-	}	
+	}
+
+	document.getElementById("tenant_input_grid").placeholder = "suite# or first or last name";
 	
 	//document.getElementById("inputCalendar_grid").style.position = "relative";
 	//document.getElementById("inputCalendar_grid").style.zIndex = "1";

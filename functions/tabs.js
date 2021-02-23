@@ -23,7 +23,10 @@ changeTab: function(tab) {
 	{	
 		if(localStorage.getItem("editMode") == "true")
 		{
-			alert('Please cancel save mode in order to continue');
+			var helper = new CodeReuse.Helper();
+
+			helper.msgBox('alert', 'Please cancel save mode in order to continue');
+
 			return;
 		}
 
@@ -49,7 +52,10 @@ changeTab: function(tab) {
 	{
 		if(localStorage.getItem("editMode") == "true")
 		{
-			alert('Please cancel save mode in order to continue');
+			var helper = new CodeReuse.Helper();
+
+			helper.msgBox('alert', 'Please cancel save mode in order to continue');
+
 			return;
 		}
 
@@ -75,7 +81,10 @@ changeTab: function(tab) {
 	{
 		if(localStorage.getItem("editMode") == "true")
 		{
-			alert('Please cancel save mode in order to continue');
+			var helper = new CodeReuse.Helper();
+
+			helper.msgBox('alert', 'Please cancel save mode in order to continue');
+
 			return;
 		}	
 		
@@ -101,7 +110,10 @@ changeTab: function(tab) {
 	{
 		if(localStorage.getItem("editMode") == "true")
 		{
-			alert('Please cancel save mode in order to continue');
+			var helper = new CodeReuse.Helper();
+
+			helper.msgBox('alert', 'Please cancel save mode in order to continue');
+
 			return;
 		}
 

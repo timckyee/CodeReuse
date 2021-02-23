@@ -19,16 +19,16 @@ CodeReuse.Controller.prototype = {
 		var saveType;
 		
 		var inputPrimaryKey = document.getElementById("inputPrimaryKeySuite").value;
-		
+	
+		var inputBuildingId = document.getElementById("inputBuildingId").value;		
 		var inputSuiteNumber = document.getElementById("inputSuiteNumber").value;
-		var inputBuildingId = document.getElementById("inputBuildingId").value;
 		
 		var inputLocation = document.getElementById("inputLocation").value;
 		
 		var SuiteValues = new Array();
 		
+		SuiteValues["inputBuildingId"] = inputBuildingId;		
 		SuiteValues["inputSuiteNumber"] = inputSuiteNumber;
-		SuiteValues["inputBuildingId"] = inputBuildingId;
 		SuiteValues["inputLocation"] = inputLocation;
 		
 		if(inputPrimaryKey != "")
@@ -67,20 +67,18 @@ CodeReuse.Controller.prototype = {
 		
 		var inputPrimaryKey = document.getElementById("inputPrimaryKey").value;
 		
-		var inputCalendar = document.getElementById("inputCalendar").value;
-		var inputCalendarTesting = document.getElementById("inputCalendarTesting").value;
-		//var selectBuilding = document.getElementById("selectBuildingTenant").value;
-		
-		//var building_input = document.getElementById("building_input").getAttribute("rowAttributeValue");
 		var building_option = document.getElementById("building_option").value;
 		var tenant_input = document.getElementById("tenant_input").getAttribute("rowAttributeValue");
+
+		var inputCalendar = document.getElementById("inputCalendar").value;
+		var inputCalendarTesting = document.getElementById("inputCalendarTesting").value;
 		
 		var TenantValues = new Array();
 		
+		TenantValues["building_option"] = building_option;
+		TenantValues["tenant_input"] = tenant_input;		
 		TenantValues["inputCalendar"] = inputCalendar;
 		TenantValues["inputCalendarTesting"] = inputCalendarTesting;
-		TenantValues["building_option"] = building_option;
-		TenantValues["tenant_input"] = tenant_input;
 		
 		if(inputPrimaryKey != "")
 		{
@@ -118,21 +116,19 @@ CodeReuse.Controller.prototype = {
 		
 		var inputPrimaryKey_grid = document.getElementById("inputPrimaryKey_grid").innerHTML;
 		
-		var inputCalendar_grid = document.getElementById("inputCalendar_grid").value;
-		
-		var inputCalendarTesting_grid = document.getElementById("inputCalendarTesting_grid").value;
-		
-		//var building_input_grid = document.getElementById("building_input_grid").getAttribute("rowAttributeValue");
-		
 		var building_option_grid = document.getElementById("building_option_grid").selectedIndex;
 		var tenant_input_grid = document.getElementById("tenant_input_grid").getAttribute("rowAttributeValue");	
+
+		var inputCalendar_grid = document.getElementById("inputCalendar_grid").value;
+		var inputCalendarTesting_grid = document.getElementById("inputCalendarTesting_grid").value;
 				
 		var HomeTenantGridValues = new Array();
 		
+		HomeTenantGridValues["building_option_grid"] = building_option_grid;
+		HomeTenantGridValues["tenant_input_grid"] = tenant_input_grid;		
+
 		HomeTenantGridValues["inputCalendar_grid"] = inputCalendar_grid;
 		HomeTenantGridValues["inputCalendarTesting_grid"] = inputCalendarTesting_grid;
-		HomeTenantGridValues["building_option_grid"] = building_option_grid;
-		HomeTenantGridValues["tenant_input_grid"] = tenant_input_grid;
 		
 		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
 		
@@ -170,18 +166,18 @@ CodeReuse.Controller.prototype = {
 		
 		var inputPrimaryKey = document.getElementById("inputPrimaryKeyFormGridPaging").value;
 		
-		var inputCalendar = document.getElementById("inputCalendarFormGridPaging").value;
-		var inputCalendarTesting = document.getElementById("inputCalendarTestingFormGridPaging").value;
-
 		var building_option = document.getElementById("building_option_form_grid_paging").value;
 		var tenant_input = document.getElementById("tenant_input_form_grid_paging").getAttribute("rowAttributeValue");
+
+		var inputCalendar = document.getElementById("inputCalendarFormGridPaging").value;
+		var inputCalendarTesting = document.getElementById("inputCalendarTestingFormGridPaging").value;
 		
-		var TenantValues = new Array();
+		var TenantFormGridValues = new Array();
 		
-		TenantValues["inputCalendarFormGridPaging"] = inputCalendar;
-		TenantValues["inputCalendarTestingFormGridPaging"] = inputCalendarTesting;
-		TenantValues["building_option_form_grid_paging"] = building_option;
-		TenantValues["tenant_input_form_grid_paging"] = tenant_input;
+		TenantFormGridValues["building_option_form_grid_paging"] = building_option;
+		TenantFormGridValues["tenant_input_form_grid_paging"] = tenant_input;		
+		TenantFormGridValues["inputCalendarFormGridPaging"] = inputCalendar;
+		TenantFormGridValues["inputCalendarTestingFormGridPaging"] = inputCalendarTesting;
 		
 		if(inputPrimaryKey != "")
 		{
@@ -196,14 +192,14 @@ CodeReuse.Controller.prototype = {
 				
 		if(saveType == "update")
 		{
-			tenantFormGridPaging.setFieldValuesFromInputs(TenantValues, inputPrimaryKey);
-			tenantFormGridPaging.tenantUpdate();
+			tenantFormGridPaging.setFieldValuesFromInputs(TenantFormGridValues, inputPrimaryKey);
+			tenantFormGridPaging.tenantFormGridUpdate();
 		}
 		else
 		if(saveType == "insert")
 		{
-			tenantFormGridPaging.setFieldValuesFromInputs(TenantValues, "");
-			tenantFormGridPaging.tenantInsert();
+			tenantFormGridPaging.setFieldValuesFromInputs(TenantFormGridValues, "");
+			tenantFormGridPaging.tenantFormGridInsert();
 		}
 		
 	},
