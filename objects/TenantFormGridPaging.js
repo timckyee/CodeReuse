@@ -135,7 +135,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * @name TenantFormGridPaging#tenantUpdate
 	 */
 	tenantFormGridUpdate: function() {
-			
+
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();				
 										
 		var helper = new CodeReuse.Helper();								

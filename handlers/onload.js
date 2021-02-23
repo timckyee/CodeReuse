@@ -43,7 +43,7 @@ window.addEventListener("load", function() {
 	
 	localStorage.setItem("arraySortDirection_suite", "asc");
 	
-	localStorage.setItem("arraySortColumn_tenant", "fieldPrimaryKey");
+	localStorage.setItem("arraySortColumn_tenant", "tenantId");
 	
 	localStorage.setItem("arraySortDirection_tenant", "asc");
 
@@ -138,30 +138,7 @@ function init_autocomplete_inputs() {
 	tenant_input_form_grid_paging.placeholder = "suite# or first or last name";
 
 
-	var tenant_input = document.getElementById("tenant_input");
-	
-	tenant_input.addEventListener("keyup", function(event){
 
-		if(document.getElementById("tenant_input").value == "")
-		{
-			document.getElementById("tenantSearchList").innerHTML = "";			
-		}
-		else
-		{
-			autocomplete.autocomplete(event, "formInput", "tenantSearchList", "suiteNumber,tenantName", "tenantId",  "GET", phpFile, "tenants", "building", document.getElementById("building_option").value, "tenant_input", "tenantSearchList");
-		}
-		
-	});
-	
-	tenant_input.addEventListener("focusout", function(event) { 
-		
-		autocomplete.focusOutHide ("tenantSearchList"); 
-	
-	});
-	
-	tenant_input.addEventListener("focusin", function() { this.select(); });
-
-	tenant_input.placeholder = "suite# or first or last name";
 }
 
 function init_calendar_inputs() {
@@ -180,17 +157,6 @@ function init_calendar_inputs() {
 	}
 	*/
 
-	var inputCalendar = document.getElementById('inputCalendar');
-	
-	var inputCalendarTesting = document.getElementById('inputCalendarTesting');
-
-
-	var inputCalendarIcon = document.getElementById('inputCalendarIcon');
-
-	var inputCalendarTestingIcon = document.getElementById('inputCalendarTestingIcon');
-
-
-
 	var inputCalendarFormGridPaging = document.getElementById('inputCalendarFormGridPaging');
 
 	var inputCalendarTestingFormGridPaging = document.getElementById('inputCalendarTestingFormGridPaging');
@@ -201,92 +167,6 @@ function init_calendar_inputs() {
 	var inputCalendarTestingFormGridPagingIcon = document.getElementById('inputCalendarTestingFormGridPagingIcon');
 
 
-	/*
-	inputCalendar.addEventListener("focus", function(event) {
-		
-		calendar.showHideCalendar('show' ,'inputCalendar', divCalendarId, monthsArray)
-		
-	});
-	*/
-	
-	inputCalendar.addEventListener("blur", function(event) {
-
-			if(calendar.validateDate(this.id) == false)
-			{
-				alert("input format date has to be dd-mmm-yyyy");			
-			}
-		}
-		
-	);
-	
-	inputCalendar.placeholder = "dd-mmm-yyyy";
-	
-	
-	/*
-	inputCalendarTesting.addEventListener("focus", function(event){
-		
-		calendar.showHideCalendar('show' ,'inputCalendarTesting', divCalendarId, monthsArray)
-		
-	});
-	*/
-	
-	inputCalendarTesting.addEventListener("blur", function(event) {
-		
-			if(calendar.validateDate(this.id) == false)
-			{
-				alert("input format date has to be dd-mmm-yyyy");
-			}
-		}
-		
-	);	
-	
-	inputCalendarTesting.placeholder = "dd-mmm-yyyy";
-	
-	
-	inputCalendarIcon.addEventListener("click", function(event) {
-
-		var divCalendar = document.getElementById(divCalendarId);
-
-		if(divCalendar.style.display == "block")
-		{
-			calendar.showHideCalendar('hide' ,'inputCalendar', divCalendarId, monthsArray)
-		}
-		else
-		if(divCalendar.style.display == "none")
-		{
-			calendar.showHideCalendar('show' ,'inputCalendar', divCalendarId, monthsArray)
-		}
-	
-	}
-
-	);
-
-	inputCalendarTestingIcon.addEventListener("click", function(event) {
-
-			var divCalendar = document.getElementById(divCalendarId);
-
-			if(divCalendar.style.display == "block")
-			{
-				calendar.showHideCalendar('hide' ,'inputCalendarTesting', divCalendarId, monthsArray)
-			}
-			else
-			if(divCalendar.style.display == "none")
-			{
-				calendar.showHideCalendar('show' ,'inputCalendarTesting', divCalendarId, monthsArray)
-			}			
-		}
-	);
-
-
-
-	/*
-	inputCalendarFormGridPaging.addEventListener("focus", function(event){
-		
-		calendar.showHideCalendar('show' ,'inputCalendarFormGridPaging', divCalendarId, monthsArray)
-		
-	});
-	*/
-	
 	inputCalendarFormGridPaging.addEventListener("blur", function(event) {
 		
 			if(calendar.validateDate(this.id) == false)
@@ -299,14 +179,7 @@ function init_calendar_inputs() {
 	
 	inputCalendarFormGridPaging.placeholder = "dd-mmm-yyyy";
 
-	/*
-	inputCalendarTestingFormGridPaging.addEventListener("focus", function(event) {
-		
-		calendar.showHideCalendar('show' ,'inputCalendarTestingFormGridPaging', divCalendarId, monthsArray)
-		
-	});
-	*/
-	
+
 	inputCalendarTestingFormGridPaging.addEventListener("blur", function(event) {
 		
 			if(calendar.validateDate(this.id) == false)
@@ -318,8 +191,6 @@ function init_calendar_inputs() {
 	);
 	
 	inputCalendarTestingFormGridPaging.placeholder = "dd-mmm-yyyy";
-
-
 
 
 	inputCalendarFormGridPagingIcon.addEventListener("click", function(event) {

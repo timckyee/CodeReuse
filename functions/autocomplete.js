@@ -50,6 +50,7 @@ focusOutHide: function(div) {
 	}
 	*/
 
+	/*
 	if(div == "tenantSearchList")
 	{
 		if(document.getElementById("tenantSearchList").innerHTML != "")
@@ -58,6 +59,7 @@ focusOutHide: function(div) {
 			return;
 		}
 	}
+	*/
 },
 
 /**

@@ -138,7 +138,7 @@ TenantGridOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
 	
 	var callback = new CodeReuse.Callback();
 	
-	grid_get_post_functions.get_populateForm(phpFile, "populate", gridRowId, tenantModel.getFieldsInfo(), autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
+	grid_get_post_functions.get_populateForm(phpFile, "populateTenant", gridRowId, tenantModel.getFieldsInfo(), autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
 	
 },
 

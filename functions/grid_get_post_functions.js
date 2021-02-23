@@ -371,7 +371,7 @@ get_pageNumbers: function(phpFile, divPagingFooter, queryName, pageSize, tableHt
  * @param {string} tableHtmlObjectId table name of the form grid
  */
 post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback, tableHtmlObjectId)
-{		
+{	
 	var updateString = "";
 	
 	for(update=0; update<fieldsInfo.length; update++)
@@ -414,6 +414,8 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		return;
 	}
 	
+	//alert(updateString);
+
 	if(updateString != "")
 	{
 		var helper = new CodeReuse.Helper();
@@ -422,8 +424,6 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 
 			if(result == true)
 			{
-				//alert(updateString);
-
 				updateString = updateString.substr(0, updateString.length - 1);
 						
 				window.postXmlHttpRequest.onreadystatechange = function() {
@@ -434,7 +434,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 						{			
 							arrayOldValuesTable[fieldsInfo[update].htmlObjectId] = htmlObjectFieldsValuesUpdate[update];
 						}
-			
+						
 						var suiteGrid = new CodeReuse.SuiteGrid();
 						var tenantGrid = new CodeReuse.TenantGrid();
 						var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
@@ -663,7 +663,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
  * @param {string} postType php post query name
  * @param {Array} htmlObjectFieldsValuesInsert the html objects new values
  * @param {Array} fieldsInfo form object array of fields
- * @param {string} inputPrimaryKeyId the new primary key id generated after insert
+ * @param {string} inputPrimaryKeyId the input object id to set the new insert id
  * @param {Array} arrayOldValuesTable array of old values before the insert. is set to the new values after an insert.
  * @param {function} refreshGridCallback refresh grid callback when the XMLHttpRequest post method returns
  * @param {string} tableHtmlObjectId table name of the form grid

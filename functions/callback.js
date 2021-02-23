@@ -337,13 +337,20 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 					row.className = "tableHover highlightRow";
 				}
 			}
-			else if(tableHtmlObjectId == "tableTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+			else if(tableHtmlObjectId == "tableTenant")
+			{
+				if(response[tableRowCount]["tenantId"] == highlightRowId)
+				{
+					row.className = "tableHover highlightRow";
+				}
+			}
+			else if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 			{
 				if(response[tableRowCount]["fieldPrimaryKey"] == highlightRowId)
 				{
 					row.className = "tableHover highlightRow";
 				}
-			}
+			}			
 
 			if(highlightRow == "true")
 			{

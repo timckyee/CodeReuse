@@ -4,31 +4,22 @@
  */
 CodeReuse.Tenant = function() {
 	
-	this.fieldPrimaryKey;
-	this.field1;
-	this.field2;
-	this.field3;
-	this.field4;
+	this.tenantId;
+	this.buildingId;
+	this.suiteId;
+	this.firstname;
+	this.lastname;
 	
 	this.fields = [
-		{ name: "fieldPrimaryKey", dbType: "int", htmlObjectId: "inputPrimaryKey", htmlObjectType: "primaryKey" },
-		{ name: "field1", dbType: "date", htmlObjectId: "inputCalendar", htmlObjectType: "calendar" },
-		{ name: "field2", dbType: "date", htmlObjectId: "inputCalendarTesting", htmlObjectType: "calendar" },
-		//{ name: "field3", dbType: "int", htmlObjectId: "building_input", htmlObjectType: "autocomplete" },
-		{ name: "field3", dbType: "int", htmlObjectId: "building_option", htmlObjectType: "select" },
-		{ name: "field4", dbType: "int", htmlObjectId: "tenant_input", htmlObjectType: "autocomplete" }
-	];
-	
-	this.autocomplete_inputs = [
-	
-		//{ htmlObjectId: "building_input", value: "field3" , display: "field3display" },
-		{ htmlObjectId: "tenant_input", value: "field4" , display: "field4display" }
-		
+		{ name: "tenantId", dbType: "int", htmlObjectId: "inputPrimaryKey", htmlObjectType: "primaryKey" },
+		{ name: "suiteId", dbType: "int", htmlObjectId: "tenantSelectSuiteList", htmlObjectType: "select", description: "Suite" },
+		{ name: "firstname", dbType: "string", htmlObjectId: "tenantFirstName", htmlObjectType: "text", description: "First Name" },
+		{ name: "lastname", dbType: "string", htmlObjectId: "tenantLastName", htmlObjectType: "text", description: "Last Name" }
 	];
 	
 	this.phpFileGridGetPost = "php/grid_get_post.php";
 
-	this.tenantUpdateQueryName = "updateTableGridGetPost";
+	this.tenantUpdateQueryName = "updateTableTenant";
 
 	this.tenantInsertQueryName = "createRecordTableGridGetPost";
 	
@@ -81,12 +72,11 @@ CodeReuse.Tenant.prototype = {
 	 */
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
-		this.fieldPrimaryKey = primaryKey;
+		this.tenantId = primaryKey;
 		
-		this.field1 = inputValueArray["inputCalendar"];
-		this.field2 = inputValueArray["inputCalendarTesting"];
-		this.field3 = inputValueArray["building_option"];
-		this.field4 = inputValueArray["tenant_input"];
+		this.suiteId = inputValueArray["tenantSelectSuiteList"];
+		this.firstname = inputValueArray["tenantFirstName"];
+		this.lastname = inputValueArray["tenantLastName"];
 		
 	},
 	
@@ -101,11 +91,10 @@ CodeReuse.Tenant.prototype = {
 		
 		var fieldsValuesUpdateArray = [];
 		
-		fieldsValuesUpdateArray[0] = this.fieldPrimaryKey;
-		fieldsValuesUpdateArray[1] = this.field1;
-		fieldsValuesUpdateArray[2] = this.field2;
-		fieldsValuesUpdateArray[3] = this.field3;
-		fieldsValuesUpdateArray[4] = this.field4;
+		fieldsValuesUpdateArray[0] = this.tenantId;
+		fieldsValuesUpdateArray[1] = this.suiteId;
+		fieldsValuesUpdateArray[2] = this.firstname;
+		fieldsValuesUpdateArray[3] = this.lastname;
 		
 		return fieldsValuesUpdateArray;
 		
@@ -122,10 +111,9 @@ CodeReuse.Tenant.prototype = {
 		
 		var fieldsValuesInsertArray = [];
 		
-		fieldsValuesInsertArray[1] = this.field1;
-		fieldsValuesInsertArray[2] = this.field2;
-		fieldsValuesInsertArray[3] = this.field3;
-		fieldsValuesInsertArray[4] = this.field4;
+		fieldsValuesInsertArray[1] = this.suiteId;
+		fieldsValuesInsertArray[2] = this.firstname;
+		fieldsValuesInsertArray[3] = this.lastname;
 		
 		return fieldsValuesInsertArray;
 		
@@ -179,7 +167,7 @@ CodeReuse.Tenant.prototype = {
 	 * @name Tenant#tenantUpdate
 	 */
 	tenantUpdate: function() {
-			
+
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();				
 										
 		var helper = new CodeReuse.Helper();								

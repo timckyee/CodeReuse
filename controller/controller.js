@@ -62,23 +62,21 @@ CodeReuse.Controller.prototype = {
 	 * @name Controller#tenantSave
 	 */
 	tenantSave: function() {
-		
+
 		var saveType;
 		
 		var inputPrimaryKey = document.getElementById("inputPrimaryKey").value;
 		
-		var building_option = document.getElementById("building_option").value;
-		var tenant_input = document.getElementById("tenant_input").getAttribute("rowAttributeValue");
+		var tenantSelectSuiteList = document.getElementById("tenantSelectSuiteList").value;
 
-		var inputCalendar = document.getElementById("inputCalendar").value;
-		var inputCalendarTesting = document.getElementById("inputCalendarTesting").value;
+		var tenantFirstName = document.getElementById("tenantFirstName").value;
+		var tenantLastName = document.getElementById("tenantLastName").value;
 		
 		var TenantValues = new Array();
 		
-		TenantValues["building_option"] = building_option;
-		TenantValues["tenant_input"] = tenant_input;		
-		TenantValues["inputCalendar"] = inputCalendar;
-		TenantValues["inputCalendarTesting"] = inputCalendarTesting;
+		TenantValues["tenantSelectSuiteList"] = tenantSelectSuiteList;		
+		TenantValues["tenantFirstName"] = tenantFirstName;
+		TenantValues["tenantLastName"] = tenantLastName;
 		
 		if(inputPrimaryKey != "")
 		{
@@ -90,7 +88,7 @@ CodeReuse.Controller.prototype = {
 		}
 		
 		var tenantModel = new CodeReuse.Tenant();	
-				
+		
 		if(saveType == "update")
 		{
 			tenantModel.setFieldValuesFromInputs(TenantValues, inputPrimaryKey);
@@ -205,6 +203,52 @@ CodeReuse.Controller.prototype = {
 	},
 
 	/**
+	 * Load the suite selection list based on the building id, refreshes select tenant grid,
+	 * and resets Tenant fields.
+	 * 
+	 * @function
+	 * @name Controller#loadSuiteSelections
+	 * 
+	 * @param {string} buildingId filter selection list by building id
+	 */
+	loadSuiteSelections: function(obj) 
+	{
+		window.getXmlHttpRequest.onreadystatechange = function() {
+		
+			if (this.readyState == 4 && this.status == 200) {
+
+				var response = JSON.parse(this.responseText); 
+	
+				var select = "";
+	
+				select += "<select id=\"tenantSelectSuiteList\">";
+	
+				select += "<option value=\"\"></option>";
+	
+				for (item in response) {
+					select += "<option value=\"" + response[item].suiteId + "\">" + response[item].suiteNumber + "</option>";
+				}
+				select += "</select>"
+
+				document.getElementById("selectSuites").innerHTML = select;
+
+
+				controller.refreshSelectTenantGrid();
+				controller.resetTenantFields();
+			}
+		}
+
+		var tenant_building_option = obj.value;
+
+		var queryString;
+	
+		queryString = "queryName" + "=" + "selectSuites" + "&" + "buildingId=" + tenant_building_option;
+		
+		window.getXmlHttpRequest.open("GET", "php/grid_get_post.php" + "?" + queryString, true);
+		window.getXmlHttpRequest.send();
+	},
+
+	/**
 	 * Set the tenant form grid paging values to empty when clicking on new
 	 * @function
 	 * @name Controller#resetTenantFormGridPagingFields
@@ -228,14 +272,21 @@ CodeReuse.Controller.prototype = {
 	 * @name Controller#resetTenantFields
 	 */
 	resetTenantFields: function() {
-		
+
 		var tenantModel = new CodeReuse.Tenant();
 		
 		var fieldsInfo = tenantModel.getFieldsInfo();
-		
+
 		for(i=0; i<fieldsInfo.length; i++)
 		{
-			document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
+			if(fieldsInfo[i].htmlObjectType == "select")
+			{
+				document.getElementById(fieldsInfo[i].htmlObjectId).selectedIndex = 0;
+			}
+			else
+			{
+				document.getElementById(fieldsInfo[i].htmlObjectId).value = "";
+			}
 		}
 		
 	},

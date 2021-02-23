@@ -24,11 +24,11 @@
 		$queryName = $_GET["queryName"];
 		
 		if($queryName == "gridtable") {
-								
+
 			$sortColumn = $_GET["sortColumn"];
 			$sortDirection = $_GET["sortDirection"];
 
-			$buildingId = $_GET["building"];
+			$buildingId = $_GET["buildingId"];
 			
 			$fieldPrimaryKeySortSecondColumnDirection;
 			if($sortDirection == "asc")
@@ -38,9 +38,9 @@
 			else if($sortDirection == "desc")
 			{
 				$fieldPrimaryKeySortSecondColumnDirection = "desc";
-			}			
+			}
 
-			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3,field4, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as buildingName, (select concat(firstname,' ',lastname) from tableGridGetPostTenant where tenantId = field4) as tenantName from tableGridGetPost2 where (select buildingId from tableGridGetPostBuilding where buildingId = field3)=" . $buildingId . " order by " . $sortColumn . " " . $sortDirection . ", fieldPrimaryKey " . $fieldPrimaryKeySortSecondColumnDirection);
+			$result = $mysqli->query("select tenantId, tableGridGetPostBuilding.buildingId, tableGridGetPostBuilding.buildingName, tableGridGetPostSuite.suiteId, tableGridGetPostSuite.suiteNumber, firstname, lastname from tableGridGetPostBuilding inner join tableGridGetPostSuite on tableGridGetPostBuilding.buildingId = tableGridGetPostSuite.buildingId inner join tableGridGetPostTenant on tableGridGetPostSuite.suiteId = tableGridGetPostTenant.suiteId where tableGridGetPostBuilding.buildingId=" . $buildingId . " order by " . $sortColumn . " " . $sortDirection . ", tenantId " . $fieldPrimaryKeySortSecondColumnDirection);
 						
 		}
 		else
@@ -456,9 +456,21 @@
 
 		}
 		else
+		if($queryName == "selectSuites") {
+			
+			$result = $mysqli->query("select suiteId, suiteNumber from tableGridGetPostSuite where buildingid = " . $_GET["buildingId"]);
+		
+		}		
+		else
 		if($queryName == "populateSuite") {
 			
 			$result = $mysqli->query("select suiteId, suiteNumber, tableGridGetPostSuite.buildingId, buildingName, location from tableGridGetPostSuite inner join tableGridGetPostBuilding on tableGridGetPostSuite.buildingId = tableGridGetPostBuilding.buildingId where suiteId = " . $_GET["htmlObjectPrimaryKeyValue"]);
+		
+		}
+		else
+		if($queryName == "populateTenant") {
+			
+			$result = $mysqli->query("select tenantId, tableGridGetPostBuilding.buildingId, tableGridGetPostBuilding.buildingName, tableGridGetPostSuite.suiteId, tableGridGetPostSuite.suiteNumber, firstname, lastname from tableGridGetPostBuilding inner join tableGridGetPostSuite on tableGridGetPostBuilding.buildingId = tableGridGetPostSuite.buildingId inner join tableGridGetPostTenant on tableGridGetPostSuite.suiteId = tableGridGetPostTenant.suiteId where tenantId = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		
 		}
 		else
@@ -466,7 +478,7 @@
 			
 			$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as field3display, (select concat(firstname, ' ', lastname) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4display, field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
 		
-		}
+		}		
 		else
 		if($queryName == "populategrid") {
 		
@@ -548,14 +560,19 @@
 				echo $last_id;
 			}
 	    }
-	    else	    
+	    else
 		if($_POST["postType"] == "updateTableGridGetPost")
 	    {   		    
 			$result = $mysqli->query("update tableGridGetPost2 set " . $_POST["updateString"] . " where " . "fieldPrimaryKey = " . $_POST["htmlObjectPrimaryKeyValue"]);
 	    }
+		else		
+		if($_POST["postType"] == "updateTableTenant")
+	    {   		    
+			$result = $mysqli->query("update tableGridGetPostTenant set " . $_POST["updateString"] . " where " . "tenantId = " . $_POST["htmlObjectPrimaryKeyValue"]);
+	    }
 	    else if($_POST["postType"] == "createRecordTableGridGetPost")
 	    {
-            if($mysqli->query("insert into tableGridGetPost2 " . $_POST["insertString"]) === true);
+            if($mysqli->query("insert into tableGridGetPostTenant " . $_POST["insertString"]) === true);
             {
             	$last_id = $mysqli->insert_id;
 				echo $last_id;

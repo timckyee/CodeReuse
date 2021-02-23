@@ -70,7 +70,7 @@
 	
 		<tr>
 		<td><span>primary key</span></td>
-		<td><input "text" id="inputPrimaryKeyFormGridPaging" readonly /></td>
+		<td><input type="text" id="inputPrimaryKeyFormGridPaging" readonly /></td>
 		</tr>
 	
 		<!--
@@ -159,7 +159,7 @@
 
 	<tr>
 	<td><span>primary key</span></td>
-	<td><input "text" id="inputPrimaryKeySuite" readonly /></td>
+	<td><input type="text" id="inputPrimaryKeySuite" readonly /></td>
 	</tr>
 
 	<tr>
@@ -214,7 +214,7 @@
 	<center>
 
 	<span>select</span>
-	<select id="selectBuildingTenant" onchange="if(this.value == ''){ document.getElementById('gridGetPost').style.display = 'none'; document.getElementById('saveNewButtonTenant').style.display = 'none'; } else { document.getElementById('gridGetPost').style.display = 'block'; controller.refreshSelectTenantGrid();controller.resetTenantFields(); }">
+	<select id="selectBuildingTenant" onchange="if(this.value == ''){ document.getElementById('gridGetPost').style.display = 'none'; document.getElementById('saveNewButtonTenant').style.display = 'none'; } else { document.getElementById('gridGetPost').style.display = 'block'; controller.loadSuiteSelections(this); }">
 		<option value="" selected>None</option>
 		<option value="1">building</option>
 		<option value="2">building2</option>
@@ -226,39 +226,30 @@
 	
 	<tr>
 	<td><span>primary key</span></td>
-	<td><input "text" id="inputPrimaryKey" readonly /></td>
+	<td><input type="text" id="inputPrimaryKey" readonly /></td>
 	</tr>
 
-	<!--
 	<tr>
-	<td><span>input</span></td>
-    <td><input type="text" name="building" id="building_input" style="position: relative; z-index: 1; background-color: white; width: 200"></td>
-    </tr>
-    -->
-	
-	<tr>
-	<td><span>building</span></td>
-	<td><select id="building_option">
-		<option value ""></option>
-		<option value="1">building</option>
-		<option value="2">building2</option>
-		</select>	
-	</td>	
+		<td><span>suite number</span></td>
+		<td>
+			<div id="selectSuites">
+				<select id="tenantSelectSuiteList">
+					<option value=""></option>
+					<option value="1">101</option>
+					<option value="2">102</option>
+				</select>
+			</div>
+		</td>	
 	</tr>
-	
+
 	<tr>
-	<td><span>tenant</span></td>
-    <td><input type="text" name="tenant" id="tenant_input" style="position:relative; z-index: 1; background-color: white; width: 200" /></td>
+	<td><span>firstname</span></td>
+    <td><input type="text" name="tenantFirstName" id="tenantFirstName" /></td>
 	</tr>
     
-    <tr>
-	<td><span>field date</span></td>
-	<td><input type="text" id="inputCalendar" style="position: relative; z-index: 1; background-color: white; width: 142" />&nbsp;&nbsp;<img id="inputCalendarIcon" src="images/favpng_font-awesome-calendar-font.png" width="14" height="14" style="cursor: pointer"></td>
-    </tr>
-
 	<tr>
-	<td><span>field date</span></td>
-	<td><input type="text" id="inputCalendarTesting" style="position: relative; z-index: 1; background-color: white; width: 142" />&nbsp;&nbsp;<img id="inputCalendarTestingIcon" src="images/favpng_font-awesome-calendar-font.png" width="14" height="14" style="cursor: pointer"></td>
+		<td><span>lastname</span></td>
+		<td><input type="text" name="tenantLastName" id="tenantLastName" /></td>
 	</tr>
 
 	</table>

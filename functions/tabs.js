@@ -166,12 +166,12 @@ changeTab: function(tab) {
  */
 tenantSearchListOrCalendarShowing: function() {
 
-	if(document.getElementById("tenantSearchList").style.display == "block")
+	if(document.getElementById("tenantSearchList").innerHTML != "")
 	{
 		return "tenantSearchList";
 	}
 	else
-	if(document.getElementById("calendarId").style.display == "block")
+	if(document.getElementById("calendarId").innerHTML != "")
 	{
 		return "calendar";
 	}

@@ -10,16 +10,16 @@ CodeReuse.TenantGrid = function() {
 		
 	this.columns = [
 		
-		{ colName: "Primary Key", id: "fieldPrimaryKey", colType: "int" },
+		{ colName: "Primary Key", id: "tenantId", colType: "int" },
 		{ colName: "Building", id: "buildingName", colType: "string" },
-		{ colName: "Tenant Name", id: "tenantName", colType: "string" },
-		{ colName: "Date First", id: "field1", colType: "date" },
-		{ colName: "Date Second", id: "field2", colType: "date" }
+		{ colName: "Tenant Name", id: "suiteNumber", colType: "string" },
+		{ colName: "First Name", id: "firstname", colType: "string" },
+		{ colName: "Last Name", id: "lastname", colType: "string" }
 	];
 	
 	var handler = new CodeReuse.Handler();
 	
-	this.gridIdField = "fieldPrimaryKey";
+	this.gridIdField = "tenantId";
 
 	this.rowOnClick =  handler.TenantGridOnClickHandler;
 
@@ -119,7 +119,7 @@ CodeReuse.TenantGrid.prototype = {
 	 */
 	refreshTenantGrid: function(phpFile, highlightId) {
 
-		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
+		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var callback = new CodeReuse.Callback();
 		
@@ -129,7 +129,7 @@ CodeReuse.TenantGrid.prototype = {
 
 			var sortDirection = localStorage.getItem("arraySortDirection_tenant");
 
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshTenantGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId, "false", '', '', "false", '', '', '');
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshTenantGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "buildingId", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId, "false", '', '', "false", '', '', '');
 		}
 	},
 	
@@ -151,7 +151,7 @@ CodeReuse.TenantGrid.prototype = {
 
 			if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
 			{					
-				localStorage.setItem("arraySortColumn_tenant", "fieldPrimaryKey");
+				localStorage.setItem("arraySortColumn_tenant", "tenantId");
 
 				localStorage.setItem("arraySortDirection_tenant", "asc");
 	
@@ -159,7 +159,7 @@ CodeReuse.TenantGrid.prototype = {
 
 				var sortDirection = localStorage.getItem("arraySortDirection_tenant");
 
-				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', '', "false", '', '', "false", '', '', '');
+				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "buildingId", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', '', "false", '', '', "false", '', '', '');
 						
 			}
 		}		

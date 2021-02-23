@@ -12,8 +12,8 @@ CodeReuse.Suite = function() {
 	this.fields = [
 		{ name: "suiteId", dbType: "int", htmlObjectId: "inputPrimaryKeySuite", htmlObjectType: "primaryKey"},
 		{ name: "buildingId", dbType: "int", htmlObjectId: "inputBuildingId", htmlObjectType: "number", description: "Building" },
-		{ name: "suiteNumber", dbType: "varchar(10)", htmlObjectId: "inputSuiteNumber", htmlObjectType: "text", description: "Suite Number" },
-		{ name: "location", dbType: "varchar(25)", htmlObjectId: "inputLocation", htmlObjectType: "text", description: "Location" },
+		{ name: "suiteNumber", dbType: "string", htmlObjectId: "inputSuiteNumber", htmlObjectType: "text", description: "Suite Number" },
+		{ name: "location", dbType: "string", htmlObjectId: "inputLocation", htmlObjectType: "text", description: "Location" },
 	];
 		
 	this.phpFileGridGetPost = "php/grid_get_post.php";
