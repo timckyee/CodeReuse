@@ -80,7 +80,7 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 		{
 			if(document.getElementById(columnsInfo[validate].htmlObjectId).value == "")
 			{
-				alert(columnsInfo[validate].htmlObjectId + ' ' + 'cannot be empty');
+				alert(columnsInfo[validate].description + ' ' + 'cannot be empty');
 				return false;
 			}
 		}

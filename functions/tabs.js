@@ -18,7 +18,7 @@ CodeReuse.Tabs.prototype = {
 changeTab: function(tab) {
 
 	var currentTab = tab.id.substring(3, tab.id.length);
-	
+
 	if(currentTab == "Home")
 	{	
 		if(localStorage.getItem("editMode") == "true")
@@ -30,22 +30,25 @@ changeTab: function(tab) {
 			return;
 		}
 
-		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
-		
-		if(tenantSearchListOrCalendarShowing != "")
+		if(document.getElementById("tenantSearchList").style.display == "block")
 		{
-			if(tenantSearchListOrCalendarShowing == "tenantSearchList")
-			{
-				alert('Please choose Tenant from list before continuing');
-				return;
-			}
-			else
-			if(tenantSearchListOrCalendarShowing == "calendar")
-			{
-				alert('Please close calendar picker before continuing');
-				return;
-			}
+			alert('Please choose Tenant from list before continuing');
+			return;
 		}
+
+        var calendar = new CodeReuse.Calendar();
+    
+        if(calendar.validateDate("inputCalendarFormGridPaging") == false)
+        {
+            alert("input format date has to be dd-mmm-yyyy");
+			return;
+        }
+
+        if(calendar.validateDate("inputCalendarTestingFormGridPaging") == false)
+        {
+            alert("input format date has to be dd-mmm-yyyy");
+			return;
+        }
 	}
 	else
 	if(currentTab == "HomeFormGridPaging")
@@ -58,23 +61,26 @@ changeTab: function(tab) {
 
 			return;
 		}
-
-		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
 		
-		if(tenantSearchListOrCalendarShowing != "")
+		if(document.getElementById("tenantSearchList").style.display == "block")
 		{
-			if(tenantSearchListOrCalendarShowing == "tenantSearchList")
-			{
-				alert('Please choose Tenant from list before continuing');
-				return;
-			}
-			else
-			if(tenantSearchListOrCalendarShowing == "calendar")
-			{
-				alert('Please close calendar picker before continuing');
-				return;
-			}
+			alert('Please choose Tenant from list before continuing');
+			return;
 		}
+
+        var calendar = new CodeReuse.Calendar();
+    
+        if(calendar.validateDate("inputCalendarFormGridPaging") == false)
+        {
+            alert("input format date has to be dd-mmm-yyyy");
+			return;
+        }
+
+        if(calendar.validateDate("inputCalendarTestingFormGridPaging") == false)
+        {
+            alert("input format date has to be dd-mmm-yyyy");
+			return;
+        }
 	}
 	else
 	if(currentTab == "Suites")
@@ -88,22 +94,25 @@ changeTab: function(tab) {
 			return;
 		}	
 		
-		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
-		
-		if(tenantSearchListOrCalendarShowing != "")
+		if(document.getElementById("tenantSearchList").style.display == "block")
 		{
-			if(tenantSearchListOrCalendarShowing == "tenantSearchList")
-			{
-				alert('Please choose Tenant from list before continuing');
-				return;
-			}
-			else
-			if(tenantSearchListOrCalendarShowing == "calendar")
-			{
-				alert('Please close calendar picker before continuing');
-				return;
-			}
+			alert('Please choose Tenant from list before continuing');
+			return;
 		}
+
+        var calendar = new CodeReuse.Calendar();
+    
+        if(calendar.validateDate("inputCalendarFormGridPaging") == false)
+        {
+            alert("input format date has to be dd-mmm-yyyy");
+			return;
+        }
+
+        if(calendar.validateDate("inputCalendarTestingFormGridPaging") == false)
+        {
+            alert("input format date has to be dd-mmm-yyyy");
+			return;
+        }
 	}
 	else
 	if(currentTab == "Tenants")
@@ -117,22 +126,25 @@ changeTab: function(tab) {
 			return;
 		}
 
-		var tenantSearchListOrCalendarShowing = this.tenantSearchListOrCalendarShowing();
-		
-		if(tenantSearchListOrCalendarShowing != "")
+		if(document.getElementById("tenantSearchList").style.display == "block")
 		{
-			if(tenantSearchListOrCalendarShowing == "tenantSearchList")
-			{
-				alert('Please choose Tenant from list before continuing');
-				return;
-			}
-			else
-			if(tenantSearchListOrCalendarShowing == "calendar")
-			{
-				alert('Please close calendar picker before continuing');
-				return;
-			}
+			alert('Please choose Tenant from list before continuing');
+			return;
 		}
+
+        var calendar = new CodeReuse.Calendar();
+    
+        if(calendar.validateDate("inputCalendarFormGridPaging") == false)
+        {
+            alert("input format date has to be dd-mmm-yyyy");
+			return;
+        }
+
+        if(calendar.validateDate("inputCalendarTestingFormGridPaging") == false)
+        {
+            alert("input format date has to be dd-mmm-yyyy");
+			return;
+        }
 	}
 
 	var otherTabs = tab.parentElement.parentElement.children;
@@ -157,29 +169,6 @@ changeTab: function(tab) {
 			document.getElementById("tab" + otherTab).className = "tabOptions";
 		}
 	}
-},
-
-/**
- * If search list or calendar is still showing then notify user.
- * @function
- * @name Tabs#tenantSearchListOrCalendarShowing
- */
-tenantSearchListOrCalendarShowing: function() {
-
-	if(document.getElementById("tenantSearchList").innerHTML != "")
-	{
-		return "tenantSearchList";
-	}
-	else
-	if(document.getElementById("calendarId").innerHTML != "")
-	{
-		return "calendar";
-	}
-	else
-	{
-		return "";
-	}
-
-},
+}
 
 }
