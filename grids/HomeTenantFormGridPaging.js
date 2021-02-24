@@ -32,20 +32,12 @@ CodeReuse.HomeTenantFormGridPaging = function() {
 
 	this.refreshHomeTenantGridQueryNameSearch = "gridtablehomeSearch";
 
-	this.homeTenantGridUpdateQueryName = "updateTableGridGetPost";
-
 	this.pageNumbersQueryName = "gridtablehomePages";
 
 	this.homeTenantGridPagingDiv = "gridGetPostHomeFormGridPagingFooter";
 };
 
 CodeReuse.HomeTenantFormGridPaging.prototype = {
-	
-	/**
-	 * Array to store old values for updating records in HomeTenantFormGridPaging
-	 * @var {Array} arrayOldValuesTableGridEdit
-	 */
-	arrayOldValuesTableGridEdit: [],
 	
 	searchValue: [],
 
@@ -101,12 +93,6 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 
 	},
 
-	getHomeTenantGridUpdateQueryName: function () {
-
-		return this.homeTenantGridUpdateQueryName;
-
-	},
-
 	getPageNumbersQueryName: function() {
 
 		return this.pageNumbersQueryName;
@@ -134,46 +120,6 @@ CodeReuse.HomeTenantFormGridPaging.prototype = {
 	getTableHtmlObjectId: function() {
 		
 		return this.tableHtmlObjectId;
-	},
-
-	/**
-	 * Getting the selected row id for the row that is highlighted
-	 * @function
-	 * @name HomeTenantFormGridPaging#getHomeTenantFormGridPagingSelectedRowId
-	 */
-	getHomeTenantFormGridPagingSelectedRowId: function() {
-
-		var table = document.getElementById(this.tableHtmlObjectId);
-
-		if(table == null)
-		{
-			return;
-		}
-
-		var row;
-		var rowFound = false;
-		var primaryKey;
-
-		for(var i=1; i<table.rows.length; i++)
-		{
-			row = table.rows[i];
-			
-			if(row.className == "tableHover highlightRow")
-			{
-				rowFound = true;
-				primaryKey = row.cells[0].innerText;				
-				break;
-			}
-		}
-
-		if(rowFound == true)
-		{
-			return primaryKey;
-		}
-		else
-		{
-			return "";
-		}
-	},
+	}
 	
 };
