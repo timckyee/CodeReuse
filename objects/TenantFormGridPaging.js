@@ -1,7 +1,7 @@
 /**
  * Class for TenantFormGridPaging form object
  * @class
- */
+ **/
 CodeReuse.TenantFormGridPaging = function() {
 	
 	this.fieldPrimaryKey;
@@ -37,7 +37,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	/**
 	 * Array to store old values for inserting and updating records in Tenant form grid paging object
 	 * @var {Array} arrayOldValuesTable
-	 */		
+	 **/		
 	arrayOldValuesTable: [],
 	
 	getFieldsInfo: function() {
@@ -76,7 +76,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * 
 	 * @param {Array} inputValueArray array of html input values
 	 * @param {string} primaryKey primary key of the record we are updating
-	 */
+	 **/
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
 		this.fieldPrimaryKey = primaryKey;
@@ -94,7 +94,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * @name TenantFormGridPaging#fieldsValuesUpdate
 	 * 
 	 * @returns {Array} array of the field values of this object
-	 */
+	 **/
 	fieldsValuesUpdate: function() {
 		
 		var fieldsValuesUpdateArray = [];
@@ -115,7 +115,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * @name TenantFormGridPaging#fieldsValuesInsert
 	 * 
 	 * @returns {Array} array of the field values of this object
-	 */
+	 **/
 	fieldsValuesInsert: function() {
 		
 		var fieldsValuesInsertArray = [];
@@ -133,7 +133,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * Tenant form grid paging form update
 	 * @function
 	 * @name TenantFormGridPaging#tenantUpdate
-	 */
+	 **/
 	tenantFormGridUpdate: function() {
 
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();				
@@ -155,7 +155,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * Tenant form grid paging insert
 	 * @function
 	 * @name TenantFormGridPaging#tenantInsert
-	 */	
+	 **/	
 	tenantFormGridInsert: function() {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	

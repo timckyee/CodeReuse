@@ -1,7 +1,7 @@
 /**
  * Class for creating autocomplete input box
  * @class
- */
+ **/
 CodeReuse.Autocomplete = function() {
 		
 };
@@ -15,7 +15,7 @@ CodeReuse.Autocomplete.prototype = {
  * 
  * @param {string} inputAutocompleteId input box html id
  * @param {string} divListId div list html id
- */
+ **/
 positionAutocomplete: function(inputAutocompleteId, divListId) {
 		
 	var positionInputAutocomplete = document.getElementById(inputAutocompleteId);
@@ -36,7 +36,7 @@ positionAutocomplete: function(inputAutocompleteId, divListId) {
  * @name Autocomplete#focusOutHide
  * 
  * @param {string} div id of the autocomplete drop down list
- */
+ **/
 focusOutHide: function(div) {
 	
 	/*
@@ -79,7 +79,7 @@ focusOutHide: function(div) {
  * @param {string} additionalArgsValue additional arguments value to pass into the XMLHttpRequest get
  * @param {string} positionResultsListInput input box html id
  * @param {string} positionResultsListDiv div list html id
- */
+ **/
 autocomplete: function(event, object, divElement, itemColumns, valueField, httpGetOrPost, phpFile, queryName, additionalArgs, additionalArgsValue, positionResultsListInput, positionResultsListDiv) {
 
 	var input;

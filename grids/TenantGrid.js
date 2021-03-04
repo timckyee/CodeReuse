@@ -1,7 +1,7 @@
 /**
  * Class for TenantGrid object
  * @class
- */
+ **/
 CodeReuse.TenantGrid = function() {
 	
 	this.gridName = "TenantGrid";
@@ -73,7 +73,7 @@ CodeReuse.TenantGrid.prototype = {
 	 * Getting the selected row id for the row that is highlighted
 	 * @function
 	 * @name TenantGrid#getTenantSelectedRowId
-	 */
+	 **/
 	getTenantSelectedRowId: function() {
 
 		var table = document.getElementById(this.tableHtmlObjectId);
@@ -116,7 +116,7 @@ CodeReuse.TenantGrid.prototype = {
 	 * 
 	 * @param {string} phpFile php file name and location
 	 * @param {string} highlightId row id of the row this is highlighted
-	 */
+	 **/
 	refreshTenantGrid: function(phpFile, highlightId) {
 
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -140,7 +140,7 @@ CodeReuse.TenantGrid.prototype = {
 	 * 
 	 * @param {string} phpFile php file name and location
 	 * @param {string} selectBuildingHtmlObjectValue the selected building value on the form
-	 */
+	 **/
 	refreshSelectTenantGrid: function(phpFile, selectBuildingHtmlObjectValue) {
 		
 		if(selectBuildingHtmlObjectValue != "")

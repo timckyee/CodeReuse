@@ -1,7 +1,7 @@
 /**
  * Class for storing tab functions
  * @class
- */
+ **/
 CodeReuse.Tabs = function() {
 	
 };
@@ -14,7 +14,7 @@ CodeReuse.Tabs.prototype = {
  * @name Tabs#changeTab
  * 
  * @param {string} tab this is the div object that is clicked
- */
+ **/
 changeTab: function(tab) {
 
 	var currentTab = tab.id.substring(3, tab.id.length);

@@ -1,4 +1,4 @@
-/**
+/*
  * The CodeReuse object
  */
 var CodeReuse = CodeReuse || {};
@@ -7,7 +7,7 @@ var CodeReuse = CodeReuse || {};
 /**
  * Class for storing helper functions
  * @class
- */
+ **/
 CodeReuse.Helper = function() {
 	
 };
@@ -20,7 +20,7 @@ CodeReuse.Helper.prototype = {
  * @name Helper#validateHtmlObjectFieldsSuite
  * 
  * @param {Array} fieldsInfo the fields in the suite object
- */
+ **/
 validateHtmlObjectFieldsSuite: function(fieldsInfo)
 {
 	for(validate=0; validate<fieldsInfo.length; validate++)
@@ -47,7 +47,7 @@ validateHtmlObjectFieldsSuite: function(fieldsInfo)
  * @name Helper#validateHtmlObjectFieldsTenant
  * 
  * @param {string} fieldsInfo the fields in the tenant object
- */
+ **/
 validateHtmlObjectFieldsTenant: function(fieldsInfo)
 {
 	for(validate=0; validate<fieldsInfo.length; validate++)
@@ -71,7 +71,7 @@ validateHtmlObjectFieldsTenant: function(fieldsInfo)
  * @name Helper#validateHtmlObjectFieldsHomeTenantGrid
  * 
  * @param {string} columnsInfo the columns of the home grid
- */
+ **/
 validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 {
 	for(validate=0; validate<columnsInfo.length; validate++)
@@ -93,7 +93,7 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
  * Sets the home grid search field value
  * @function
  * @name Helper#setHomeGridSearchValue
- */
+ **/
 setHomeGridSearchValue: function() {
 
 	var searchValue = document.getElementById("homeTenantGridSearchValue").value;
@@ -109,7 +109,7 @@ setHomeGridSearchValue: function() {
  * Sets the home form grid paging search field value
  * @function
  * @name Helper#setHomeFormGridPagingSearchValue
- */
+ **/
 setHomeFormGridPagingSearchValue: function() {
 
 	var searchValue = document.getElementById("homeTenantFormGridPagingSearchValue").value;
@@ -125,7 +125,7 @@ setHomeFormGridPagingSearchValue: function() {
  * Show the home grid records with search filter
  * @function
  * @name Helper#getHomeGridSearchValue
- */
+ **/
 getHomeGridSearchValue: function() {
 
 	if(localStorage.getItem("editMode") == "true")
@@ -158,7 +158,7 @@ getHomeGridSearchValue: function() {
  * Show the home form grid paging records with search filter
  * @function
  * @name Helper#getHomeFormGridPagingSearchValue
- */
+ **/
 getHomeFormGridPagingSearchValue: function() {
 
 	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -185,7 +185,7 @@ getHomeFormGridPagingSearchValue: function() {
  * @name Helper#updateGridPage
  * 
  * @param {string} pageNumber gridGetPostHomePagingPageNumber input box value
- */
+ **/
 updateGridPage: function(object, pageNumber)
 {
 	if(localStorage.getItem("editMode") == "true")
@@ -293,7 +293,7 @@ updateGridPage: function(object, pageNumber)
  * 
  * @param {string} direction the left or right arrow
  * @param {string} pageNumber gridGetPostHomePagingPageNumber input box value before the update
- */
+ **/
 updateGridPageArrows: function(object, direction, pageNumber)
 {
 	if(localStorage.getItem("editMode") == "true")
@@ -425,7 +425,7 @@ updateGridPageArrows: function(object, direction, pageNumber)
  * @name Helper#convertDateFromDatabase
  * 
  * @param {string} date the date from the database
- */
+ **/
 convertDateFromDatabase: function(date)
 {	
 	var dateFromDatabase = date;
@@ -446,7 +446,7 @@ convertDateFromDatabase: function(date)
  * @name Helper#convertDateFromSystem
  * 
  * @param {string} date the date from the system
- */
+ **/
 convertDateFromSystem: function(date)
 {	
 	var dateFromSystem = date;
@@ -467,7 +467,7 @@ convertDateFromSystem: function(date)
  * @name Helper#dateMonthStringToNumberConversion
  * 
  * @param {string} monthString the month as character string
- */
+ **/
 dateMonthStringToNumberConversion: function(monthString)
 {
 	var monthArray = [];
@@ -494,7 +494,7 @@ dateMonthStringToNumberConversion: function(monthString)
  * @name Helper#dateMonthStringToNumberConversion
  * 
  * @param {string} monthNumber the month number we are converting
- */
+ **/
 dateMonthNumberToStringConversion: function(monthNumber)
 {
 	var monthArray = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
@@ -510,7 +510,7 @@ dateMonthNumberToStringConversion: function(monthNumber)
  * @param {string} buttonType alert or confirm
  * @param {string} msg the message that is shown
  * @param {function} msgbox_callback the function called onclick of OK or Cancel button
- */
+ **/
 msgBox: function (buttonType, msg, msgbox_callback) {
 
 	var modal = document.getElementById("myModal");
@@ -561,7 +561,7 @@ msgBox: function (buttonType, msg, msgbox_callback) {
  * @name Helper#preload
  * 
  * @param {Array} preload array of images including path
- */
+ **/
 preload: function(preload) {
 
 	for (i = 0; i < preload.length; i++) {
@@ -576,7 +576,7 @@ preload: function(preload) {
  * @name Helper#resetRowHighlight
  * 
  * @param {string} tableHtmlObjectId either tableSuite in SuiteGrid or tableTenant in TenantGrid
- */
+ **/
 resetRowHighlight: function(tableHtmlObjectId) {
 
 	var tableReset = document.getElementById(tableHtmlObjectId);
@@ -594,7 +594,7 @@ resetRowHighlight: function(tableHtmlObjectId) {
  * Check the platform which is in use
  * @function
  * @name Helper#checkPlatform
- */
+ **/
 checkPlatform: function() {
 
 	var isIOS_safari = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);

@@ -1,7 +1,7 @@
 /**
  * Class for storing sort functions
  * @class
- */
+ **/
 CodeReuse.Sort = function() {
 	
 };
@@ -16,7 +16,7 @@ CodeReuse.Sort.prototype = {
  * @param {string} tblId the table that we are sorting
  * @param {string} column the column number we are sorting
  * @param {Array} gridColumnsInfo the grid columns in the grid object (SuiteGrid or TenantGrid)
- */
+ **/
 sortTable: function(tblId, column, gridColumnsInfo){
 	
 	var sortColumn = gridColumnsInfo[column].id;

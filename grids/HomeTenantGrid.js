@@ -1,7 +1,7 @@
 /**
  * Class for HomeTenantGrid object
  * @class
- */
+ **/
 CodeReuse.HomeTenantGrid = function() {
 	
 	this.gridName = "HomeTenantGrid";
@@ -57,9 +57,13 @@ CodeReuse.HomeTenantGrid.prototype = {
 	/**
 	 * Array to store old values for updating records in HomeTenantGrid
 	 * @var {Array} arrayOldValuesTableGridEdit
-	 */
+	 **/
 	arrayOldValuesTableGridEdit: [],
 	
+	/**
+	 * Search value of this grid
+	 * @var {Array} searchValue
+	 **/	
 	searchValue: [],
 
 	getGridName: function() {
@@ -162,7 +166,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 	 * 
 	 * @param {Array} inputValueArray array of html input values
 	 * @param {string} primaryKey primary key of the record we are updating
-	 */
+	 **/
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
 		this.fieldPrimaryKey = primaryKey;
@@ -180,7 +184,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 	 * @name HomeTenantGrid#fieldsValuesUpdate
 	 * 
 	 * @returns {Array} array of the field values of this object
-	 */
+	 **/
 	fieldsValuesUpdate: function() {
 		
 		var fieldsValuesUpdateArray = [];
@@ -204,7 +208,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 	 * @param {string} sortColumn the grid column which is currently sorted
 	 * @param {string} sortDirection the direction which is currently sorted
 	 * @param {string} pageNumber the page number of the table we are currently showing
-	 */
+	 **/
 	refreshTenantHomeGrid: function(phpFile, sortColumn, sortDirection, pageNumber) {
 
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -221,7 +225,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 	 * Updating the Home Tenant Grid table row values inline
 	 * @function
 	 * @name HomeTenantGrid#homeTenantGridUpdate 
-	 */
+	 **/
 	homeTenantGridUpdate: function() {
 
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();

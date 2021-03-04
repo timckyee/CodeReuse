@@ -1,7 +1,7 @@
 /**
  * Class for storing callback functions
  * @class
- */
+ **/
 CodeReuse.Callback = function() {
 	
 };
@@ -10,7 +10,7 @@ CodeReuse.Callback.prototype = {
 
 /**
  * Callback when the XMLHttpRequest get method returns from function Grid_Get_Post_Functions grid
- * @callback gridCallback
+ * @function
  * @name Callback#gridCallback
  * 
  * @param {string} phpFile php file name and location
@@ -31,7 +31,7 @@ CodeReuse.Callback.prototype = {
  * @param {string} showPagingFooter if there is a grid footer for paging
  * @param {string} divPagingFooter the paging footer div
  * @param {string} onload whether this is the first time loading grid to load second grid
- */
+ **/
 gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdField, gridColumnsInfo, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter, onload) {
 
 	var tbl = document.createElement("table");
@@ -595,7 +595,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 
 /**
  * Callback when the XMLHttpRequest get method returns from function Grid_Get_Post_Functions get_populateGrid
- * @callback get_populateGrid_callback
+ * @function
  * @name Callback#get_populateGrid_callback
  * 
  * @param {string} response the response from the XMLHttpRequest get
@@ -604,7 +604,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
  * @param {Object} tableHtml the html table object used to replace the row edited with form objects
  * @param {string} fieldPrimaryKey the table row primary key
  * @param {string} tableHtmlObjectId the html table object
- */
+ **/
 get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey, tableHtmlObjectId) {
 
 	var record = response[0];
@@ -790,11 +790,11 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 
 /**
  * Refresh Suite grid after inserting or updating Suite record
- * @callback refreshGridCallbackSuite
+ * @function
  * @name Callback#refreshGridCallbackSuite
  * 
  * @param {string} highlightId the primary key row id to highlight
- */
+ **/
 refreshGridCallbackSuite: function(highlightId)
 {
 	
@@ -806,11 +806,11 @@ refreshGridCallbackSuite: function(highlightId)
 
 /**
  * Refresh Tenant grid after inserting or updating Tenant record
- * @callback refreshGridCallback
+ * @function
  * @name Callback#refreshGridCallback
  * 
  * @param {string} highlightId the primary key row id to highlight
- */
+ **/
 refreshGridCallback: function(highlightId)
 {
 	
@@ -822,14 +822,14 @@ refreshGridCallback: function(highlightId)
 
 /**
  * Callback when the XMLHttpRequest get method returns from function Grid_Get_Post_Functions get_populateForm
- * @callback get_populateForm_callback
+ * @function
  * @name Callback#get_populateForm_callback
  * 
  * @param {string} response the response from the XMLHttpRequest get
  * @param {Array} fieldsInfo form object array of fields
  * @param {Array} autocompleteInputs array of autocomplete inputs
  * @param {Array} arrayOldValuesTable array to keep track of form old values used for updating fields
- */
+ **/
 get_populateForm_callback: function(response, fieldsInfo, autocompleteInputs, arrayOldValuesTable)
 {	
 	var record = response[0];

@@ -1,7 +1,7 @@
 /**
  * Class for HomeTenantFormGridPaging object
  * @class
- */
+ **/
 CodeReuse.HomeTenantFormGridPaging = function() {
 	
 	this.gridName = "HomeTenantFormGridPaging";
@@ -39,6 +39,10 @@ CodeReuse.HomeTenantFormGridPaging = function() {
 
 CodeReuse.HomeTenantFormGridPaging.prototype = {
 	
+	/**
+	 * Search value of this grid
+	 * @var {Array} searchValue
+	 **/
 	searchValue: [],
 
 	getGridName: function() {

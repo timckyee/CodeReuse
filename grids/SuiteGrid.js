@@ -1,7 +1,7 @@
 /**
  * Class for SuiteGrid object
  * @class
- */
+ **/
 CodeReuse.SuiteGrid = function() {
 	
 	this.gridName = "SuiteGrid";
@@ -68,7 +68,7 @@ CodeReuse.SuiteGrid.prototype = {
 	 * Getting the selected row id for the row that is highlighted
 	 * @function
 	 * @name SuiteGrid#getSuiteSelectedRowId
-	 */
+	 **/
 	getSuiteSelectedRowId: function() {
 
 		var table = document.getElementById(this.tableHtmlObjectId);
@@ -111,7 +111,7 @@ CodeReuse.SuiteGrid.prototype = {
 	 * 
 	 * @param {string} phpFile php file name and location
 	 * @param {string} highlightId row id of the row this is highlighted
-	 */
+	 **/
 	refreshSuiteGrid: function(phpFile, highlightId) {
 		
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -135,7 +135,7 @@ CodeReuse.SuiteGrid.prototype = {
 	 * 
 	 * @param {string} phpFile php file name and location
 	 * @param {string} selectBuildingHtmlObjectValue the selected building value on the form
-	 */
+	 **/
 	refreshSelectSuiteGrid: function(phpFile, selectBuildingHtmlObjectValue) {
 
 		if(selectBuildingHtmlObjectValue != "")

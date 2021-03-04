@@ -1,7 +1,7 @@
 /**
  * Class for Tenant form object
  * @class
- */
+ **/
 CodeReuse.Tenant = function() {
 	
 	this.tenantId;
@@ -30,7 +30,7 @@ CodeReuse.Tenant.prototype = {
 	/**
 	 * Array to store old values for inserting and updating records in Tenant form object
 	 * @var {Array} arrayOldValuesTable
-	 */		
+	 **/		
 	arrayOldValuesTable: [],
 	
 	getFieldsInfo: function() {
@@ -69,7 +69,7 @@ CodeReuse.Tenant.prototype = {
 	 * 
 	 * @param {Array} inputValueArray array of html input values
 	 * @param {string} primaryKey primary key of the record we are updating
-	 */
+	 **/
 	setFieldValuesFromInputs: function(inputValueArray, primaryKey) {
 		
 		this.tenantId = primaryKey;
@@ -86,7 +86,7 @@ CodeReuse.Tenant.prototype = {
 	 * @name Tenant#fieldsValuesUpdate
 	 * 
 	 * @returns {Array} array of the field values of this object
-	 */
+	 **/
 	fieldsValuesUpdate: function() {
 		
 		var fieldsValuesUpdateArray = [];
@@ -106,7 +106,7 @@ CodeReuse.Tenant.prototype = {
 	 * @name Tenant#fieldsValuesInsert
 	 * 
 	 * @returns {Array} array of the field values of this object
-	 */
+	 **/
 	fieldsValuesInsert: function() {
 		
 		var fieldsValuesInsertArray = [];
@@ -126,7 +126,7 @@ CodeReuse.Tenant.prototype = {
 	 *
 	 * @param {string} phpFile php file name and location
 	 * @param {string} highlightId the row primary key to highlight
-	 */
+	 **/
 	refreshTenantGrid: function(highlightId) {
 
 		var tenantGrid = new CodeReuse.TenantGrid();
@@ -139,7 +139,7 @@ CodeReuse.Tenant.prototype = {
 	 * Refresh Tenant form grid when updating the building select value by calling the TenantGrid object refreshSelectTenantGrid function
 	 * @function
 	 * @name Tenant#refreshSelectTenantGrid
-	 */
+	 **/
 	refreshSelectTenantGrid: function() {
 		
 		var tenantGrid = new CodeReuse.TenantGrid();
@@ -152,7 +152,7 @@ CodeReuse.Tenant.prototype = {
 	 * Refresh the HomeTenantGrid by calling the HomeTenantGrid object refreshTenantHomeGrid function
 	 * @function
 	 * @name Tenant#refreshTenantGridHome	 
-	 */
+	 **/
 	refreshTenantGridHome: function() {
 		
 		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
@@ -165,7 +165,7 @@ CodeReuse.Tenant.prototype = {
 	 * Tenant form update
 	 * @function
 	 * @name Tenant#tenantUpdate
-	 */
+	 **/
 	tenantUpdate: function() {
 
 		var htmlObjectFieldsValuesUpdate = this.fieldsValuesUpdate();				
@@ -189,7 +189,7 @@ CodeReuse.Tenant.prototype = {
 	 * Tenant form insert
 	 * @function
 	 * @name Tenant#tenantInsert
-	 */	
+	 **/	
 	tenantInsert: function() {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	

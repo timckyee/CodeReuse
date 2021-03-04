@@ -1,8 +1,7 @@
 /**
- * Class for creating grid with row editing, http method get populate form, get populate grid,
- * post update form, post update grid, post insert record form
+ * Class for creating grid with or without row editing, http method get populate form, get populate grid, post update form, post update grid, post insert record form
  * @class
- */
+ **/
 CodeReuse.Grid_Get_Post_Functions = function() {
 	
 };
@@ -36,7 +35,7 @@ CodeReuse.Grid_Get_Post_Functions.prototype = {
  * @param {string} divPagingFooter the paging footer div
  * @param {string} pageSize paging size for the grid
  * @param {string} onload whether this is the first time loading grid to load second grid
- */
+ **/
 grid: function(divElement, phpFile, queryName, gridIdField, gridColumnsInfo, tableHtmlObjectId, additionalArgs, additionalArgsValue, callback, rowOnClick, showEditColumn, sortColumn, sortDirection, pageNumber, highlightRowId, showEditRow, savePrimaryKeyValue, highlightRow, showPagingFooter, divPagingFooter, pageSize, onload) {
 
 	var divTable = document.getElementById(divElement);
@@ -95,7 +94,7 @@ grid: function(divElement, phpFile, queryName, gridIdField, gridColumnsInfo, tab
   * @param {string} searchValue the value of the search field
   * @param {string} tableHtmlObjectId table name of the form grid
   * @param {string} pageSize paging size for the grid
-  */
+  **/
 showTheGridAfterSaveRecord: function(phpFile, queryName, queryType, savePrimaryKey, savePrimaryKeyValue, sortColumn, sortDirection, searchValueField, searchValue, tableHtmlObjectId, pageSize) 
 {
 	window.getPageNumberHttpRequest.onreadystatechange = function() {
@@ -234,7 +233,7 @@ showTheGridAfterSaveRecord: function(phpFile, queryName, queryType, savePrimaryK
  * @param {Array} autocompleteInputs array of autocomplete inputs
  * @param {Array} arrayOldValuesTable array to keep track of form old values used for updating fields
  * @param {function} callback the function to call when the XMLHttpRequest get method returns
- */
+ **/
 get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fieldsInfo, autocompleteInputs, arrayOldValuesTable, callback)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
@@ -267,7 +266,7 @@ get_populateForm: function(phpFile, queryName, htmlObjectPrimaryKeyValue, fields
  * @param {Object} tableHtml the html table object used to replace the row edited with form objects
  * @param {string} htmlObjectPrimaryKeyValue the table row primary key
  * @param {string} tableHtmlObjectId the html table object
- */
+ **/
 get_populateGrid: function(phpFile, queryName, gridColumnsInfo, arrayOldValuesTableGridEdit, callback, tableHtml, htmlObjectPrimaryKeyValue, tableHtmlObjectId)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
@@ -300,7 +299,7 @@ get_populateGrid: function(phpFile, queryName, gridColumnsInfo, arrayOldValuesTa
  * @param {string} searchValueField the field name of the search value
  * @param {string} searchValue the value of the search field
  * @param {string} onload whether this is the first time loading grid to preload second grid
- */
+ **/
 get_pageNumbers: function(phpFile, divPagingFooter, queryName, pageSize, tableHtmlObjectId, searchValueField, searchValue, onload)
 {	
 	window.getXmlHttpRequest.onreadystatechange = function() {
@@ -369,7 +368,7 @@ get_pageNumbers: function(phpFile, divPagingFooter, queryName, pageSize, tableHt
  * @param {Array} arrayOldValuesTable array of old values before the update. is set to the new values after an update.
  * @param {function} refreshGridCallback refresh grid callback when the XMLHttpRequest post method returns
  * @param {string} tableHtmlObjectId table name of the form grid
- */
+ **/
 post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, fieldsInfo, arrayOldValuesTable, refreshGridCallback, tableHtmlObjectId)
 {	
 	var updateString = "";
@@ -497,7 +496,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
  * @param {Array} columnsInfo array of grid columns and properties
  * @param {Array} arrayOldValuesTableGridEdit array of old values before the update. is set to the new values after an update.
  * @param {string} tableHtmlObjectId table name of the form grid
- */
+ **/
 post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObjectFieldsValuesUpdate, columnsInfo, arrayOldValuesTableGridEdit, tableHtmlObjectId)
 {	
 	var updateString = "";
@@ -667,7 +666,7 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
  * @param {Array} arrayOldValuesTable array of old values before the insert. is set to the new values after an insert.
  * @param {function} refreshGridCallback refresh grid callback when the XMLHttpRequest post method returns
  * @param {string} tableHtmlObjectId table name of the form grid
- */
+ **/
 post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert, fieldsInfo, inputPrimaryKeyId, arrayOldValuesTable, refreshGridCallback, tableHtmlObjectId)
 {	
 	var helper = new CodeReuse.Helper();

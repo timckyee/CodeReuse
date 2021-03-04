@@ -1,7 +1,7 @@
 /**
  * Class for storing grid handlers
  * @class
- */
+ **/
 CodeReuse.Handler = function() {
 	
 };
@@ -12,7 +12,7 @@ CodeReuse.Handler.prototype = {
  * TenantHomeGrid row onclick handler
  * @function
  * @name Handler#TenantHomeGridOnClickHandler
- */
+ **/
 TenantHomeGridOnClickHandler: function() {
 	
 },
@@ -25,7 +25,7 @@ TenantHomeGridOnClickHandler: function() {
  * @param {string} phpFile php file name and location
  * @param {string} gridRowId row onclick primary key
  * @param {string} tableHtmlObjectId the table to set the row highlighting after onclick
- */
+ **/
 TenantFormGridPagingOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
 
 	var tableTenant = document.getElementById(tableHtmlObjectId);
@@ -66,7 +66,7 @@ TenantFormGridPagingOnClickHandler: function(phpFile, gridRowId, tableHtmlObject
  * @param {string} phpFile php file name and location
  * @param {string} gridRowId row onclick primary key
  * @param {string} tableHtmlObjectId the table to set the row highlighting after onclick
- */
+ **/
 SuiteGridOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
 
 	//var rowAttributeValue = row.attributes["gridIdField"].value;
@@ -107,7 +107,7 @@ SuiteGridOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
  * @param {string} phpFile php file name and location
  * @param {string} gridRowId row onclick primary key
  * @param {string} tableHtmlObjectId the table to set the row highlighting after onclick
- */
+ **/
 TenantGridOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
 		
 	//var rowAttributeValue = row.attributes["gridIdField"].value;
@@ -150,7 +150,7 @@ TenantGridOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
  * @param {string} sortTableHtmlObjectId the table being sorted
  * @param {Array} gridColumnsInfo array of grid columns and properties
  * @param {string} column the column number that is being sorted
- */
+ **/
 sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, column) {
 	
 	var sort = new CodeReuse.Sort();
@@ -168,7 +168,7 @@ sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, 
  * @param {Array} gridColumnsInfo array of grid columns and properties
  * @param {string} column the column number that is being sorted
  * @param {string} pageNumber the current page number of the grid
- */
+ **/
 sortTableColumnOnclickHandlerHomeTenantFormGridPaging: function(gridColumnsInfo, column, pageNumber) {
 	
 	var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
@@ -224,7 +224,7 @@ sortTableColumnOnclickHandlerHomeTenantFormGridPaging: function(gridColumnsInfo,
  * 
  * @param {Array} gridColumnsInfo array of grid columns and properties
  * @param {string} column the column number that is being sorted
- */
+ **/
 sortTableColumnOnclickHandlerHomeTenantGrid: function(gridColumnsInfo, column) {
 
 	var tenantModel = new CodeReuse.Tenant();

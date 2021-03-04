@@ -1,8 +1,7 @@
 /**
- * The app controller to save suite form, tenant form, and home tenant grid,
- * reset form fields when click on new, and refresh form data when change building selection
+ * The app controller to save suite form, tenant form, home tenant grid, home tenant grid paging form, reset form fields when click on new, and refresh form data when change building selection
  * @class
- */
+ **/
 CodeReuse.Controller = function () {
 		
 };
@@ -13,7 +12,7 @@ CodeReuse.Controller.prototype = {
 	 * Save the suite form values
 	 * @function
 	 * @name Controller#suiteSave
-	 */
+	 **/
 	suiteSave: function() {
 		
 		var saveType;
@@ -60,7 +59,7 @@ CodeReuse.Controller.prototype = {
 	 * Save the tenant form values
 	 * @function
 	 * @name Controller#tenantSave
-	 */
+	 **/
 	tenantSave: function() {
 
 		var saveType;
@@ -107,7 +106,7 @@ CodeReuse.Controller.prototype = {
 	 * Save the home tenant grid values
 	 * @function
 	 * @name Controller#homeTenantGridSave
-	 */	
+	 **/	
 	homeTenantGridSave: function() {
 		
 		var saveType;
@@ -157,7 +156,7 @@ CodeReuse.Controller.prototype = {
 	 * Save the tenant form grid paging values
 	 * @function
 	 * @name Controller#tenantFormGridPagingSave
-	 */
+	 **/
 	tenantFormGridPagingSave: function() {
 
 		var saveType;
@@ -203,14 +202,12 @@ CodeReuse.Controller.prototype = {
 	},
 
 	/**
-	 * Load the suite selection list based on the building id, refreshes select tenant grid,
-	 * and resets Tenant fields.
-	 * 
+	 * Load the suite selection list based on the building id, refreshes select tenant grid, and resets Tenant fields.
 	 * @function
 	 * @name Controller#loadSuiteSelections
 	 * 
 	 * @param {string} buildingId filter selection list by building id
-	 */
+	 **/
 	loadSuiteSelections: function(obj) 
 	{
 		window.getXmlHttpRequest.onreadystatechange = function() {
@@ -252,7 +249,7 @@ CodeReuse.Controller.prototype = {
 	 * Set the tenant form grid paging values to empty when clicking on new
 	 * @function
 	 * @name Controller#resetTenantFormGridPagingFields
-	 */
+	 **/
 	resetTenantFormGridPagingFields: function() {
 		
 		var tenantFormGridPaging = new CodeReuse.TenantFormGridPaging();
@@ -270,7 +267,7 @@ CodeReuse.Controller.prototype = {
 	 * Set the tenant form values to empty when clicking on new
 	 * @function
 	 * @name Controller#resetTenantFields
-	 */
+	 **/
 	resetTenantFields: function() {
 
 		var tenantModel = new CodeReuse.Tenant();
@@ -295,7 +292,7 @@ CodeReuse.Controller.prototype = {
 	 * Refresh tenant grid when changing the building select on tenant form
 	 * @function
 	 * @name Controller#refreshSelectTenantGrid
-	 */	
+	 **/	
 	refreshSelectTenantGrid: function() {
 		
 		var tenantModel = new CodeReuse.Tenant();
@@ -308,7 +305,7 @@ CodeReuse.Controller.prototype = {
 	 * Set the suite form values to empty when clicking on new
 	 * @function
 	 * @name Controller#resetSuiteFields
-	 */	
+	 **/	
 	resetSuiteFields: function() {
 		
 		var suiteModel = new CodeReuse.Suite();
@@ -326,7 +323,7 @@ CodeReuse.Controller.prototype = {
 	 * Refresh suite grid when changing the building select on tenant form
 	 * @function
 	 * @name Controller#refreshSelectSuiteGrid
-	 */		
+	 **/		
 	refreshSelectSuiteGrid: function() {
 		
 		var suiteModel = new CodeReuse.Suite();

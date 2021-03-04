@@ -1,7 +1,7 @@
 /**
  * Class for creating autocomplete input box
  * @class
- */
+ **/
 CodeReuse.Calendar = function() {
 		
 };
@@ -14,7 +14,7 @@ CodeReuse.Calendar.prototype = {
  * @name Calendar#removeCalendarTable
  * 
  * @param {string} divCalendarId the calendar div id
- */
+ **/
 removeCalendarTable: function(divCalendarId) {
 	
 	document.getElementById(divCalendarId).innerHTML = "";
@@ -40,7 +40,7 @@ documentOnclick: function(e, divCalendarId) {
  * 
  * @param {string} inputCalendarId the calendar input box
  * @param {string} divCalendarId the calendar div id
- */
+ **/
 positionCalendar: function(inputCalendarId, divCalendarId) {	
 		
 	var positionInputCalendar = document.getElementById(inputCalendarId);
@@ -64,7 +64,7 @@ positionCalendar: function(inputCalendarId, divCalendarId) {
  * @param {string} divCalendarId the calendar div id
  * @param {function} moveCalendar moves direction of the calendar div month forward or month backward
  * @param {Array} monthsArray array holding the string months
- */
+ **/
 createCalendarTable: function(inputCalendarId, divCalendarId, moveCalendar, monthsArray) {
 		
 	var tbl = document.createElement("table");
@@ -238,7 +238,7 @@ createCalendarTable: function(inputCalendarId, divCalendarId, moveCalendar, mont
  * @param {string} inputCalendarId the calendar input box
  * @param {string} divCalendarId the calendar div id
  * @param {Array} monthsArray array holding the string months
- */
+ **/
 showHideCalendar: function(showOrHide, inputCalendarId, divCalendarId, monthsArray) {
 	
 	var calendarId = document.getElementById(divCalendarId);	
@@ -291,7 +291,7 @@ showHideCalendar: function(showOrHide, inputCalendarId, divCalendarId, monthsArr
  * @name Calendar#validateDate
  * 
  * @param {string} inputCalendarId the calendar input box to validate
- */
+ **/
 validateDate: function(inputCalendarId)
 {
 	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
@@ -317,7 +317,7 @@ validateDate: function(inputCalendarId)
  * @name Calendar#validateDateFromString
  * 
  * @param {string} dateString date in string format to validate
- */
+ **/
 validateDateFromString: function(dateString)
 {
 	var regularExpressionValidation = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\-\d{4}$/g;
@@ -343,7 +343,7 @@ validateDateFromString: function(dateString)
  * @param {string} dayMonthOrYear to get the day, month, or year
  * @param {string} inputCalendarId the calendar input box
  * @param {Array} monthsArray array holding the string months
- */
+ **/
 getInputCalendarValue: function(dayMonthOrYear, inputCalendarId, monthsArray) {
 	
 	var inputCalendar = document.getElementById(inputCalendarId);
@@ -394,7 +394,7 @@ getInputCalendarValue: function(dayMonthOrYear, inputCalendarId, monthsArray) {
  * Populate month array which holds the string months.
  * @function
  * @name Calendar#populateMonthsArray
- */
+ **/
 populateMonthsArray: function() {
 
 	monthsArray = new Array();
@@ -441,7 +441,7 @@ populateMonthsArray: function() {
  * @param {string} inputCalendarId the calendar input box
  * @param {string} divCalendarId the calendar div id
  * @param {Array} monthsArray array holding the string months
- */
+ **/
 calendar: function(month, year, inputCalendarId, divCalendarId, monthsArray) {
 		
 	this.clearCalendar();
@@ -569,7 +569,7 @@ calendar: function(month, year, inputCalendarId, divCalendarId, monthsArray) {
  * 
  * @param {string} month the month to get the number of days 
  * @param {string} year the year to get the number of days
- */
+ **/
 daysInMonth: function(month, year) {
 	
 	return new Date(year, month, 0).getDate();
@@ -586,7 +586,7 @@ daysInMonth: function(month, year) {
  * @param {string} inputCalendarId the calendar input box
  * @param {string} divCalendarId the calendar div id
  * @param {Array} monthsArray array holding the string months
- */
+ **/
 moveCalendar: function(backOrForward, obj, inputCalendarId, divCalendarId, monthsArray) {
 	
 	var monthYear = obj.parentElement.parentElement.rows[0].cells[1].innerHTML;
@@ -650,8 +650,7 @@ moveCalendar: function(backOrForward, obj, inputCalendarId, divCalendarId, month
  * Clear the calendar before creating the calendar moving from one month to another
  * @function
  * @name Calendar#clearCalendar
- */
-
+ **/
 clearCalendar: function() {
 	
 	for(calCellDay=1; calCellDay<=42; calCellDay++)
