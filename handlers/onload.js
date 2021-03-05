@@ -76,7 +76,22 @@ window.addEventListener("load", function() {
 	
 });
 
-function htmlBody_init_class() {
+/**
+ * Class for onload functions
+ * @class
+ **/
+CodeReuse.Onload = function() {
+	
+};
+
+CodeReuse.Onload.prototype = {
+
+/**
+ * init html body
+ * @function
+ * @name Onload#htmlBody_init_class
+ **/
+htmlBody_init_class: function() {
 
 	var helper = new CodeReuse.Helper();
 
@@ -91,18 +106,28 @@ function htmlBody_init_class() {
 		document.body.className = "bodyDesktop";
 	}
 
-}
+},
 
-function init_gridGetPost_xmlHttpRequests() {
+/**
+ * init grid get post http requests
+ * @function
+ * @name Onload#init_gridGetPost_xmlHttpRequests
+ **/
+init_gridGetPost_xmlHttpRequests: function() {
 	
 	window.gridXmlHttpRequest = new XMLHttpRequest();
 	window.getXmlHttpRequest = new XMLHttpRequest();
 	window.postXmlHttpRequest = new XMLHttpRequest();
 	window.getPageNumberHttpRequest = new XMLHttpRequest();
 	
-}
+},
 
-function init_autocomplete_inputs() {
+/**
+ * init autocomplete inputs
+ * @function
+ * @name Onload#init_autocomplete_inputs
+ **/
+init_autocomplete_inputs: function() {
 
 	window.autocompleteXmlHttpRequest = new XMLHttpRequest();
 	
@@ -137,11 +162,14 @@ function init_autocomplete_inputs() {
 
 	tenant_input_form_grid_paging.placeholder = "suite# or first or last name";
 
+},
 
-
-}
-
-function init_calendar_inputs() {
+/**
+ * init calendar inputs
+ * @function
+ * @name Onload#init_calendar_inputs
+ **/
+init_calendar_inputs: function() {
 	
 	var calendar = new CodeReuse.Calendar();
 	
@@ -226,4 +254,6 @@ function init_calendar_inputs() {
 			}			
 		}
 	);
+}
+
 }
