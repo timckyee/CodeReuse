@@ -36,7 +36,7 @@
     //var_dump($files);
     //echo '</pre>';
 
-    for($file = 3; $file < count($files); $file++)
+    for($file = 2; $file < count($files); $file++)
     { 
 
         $newContent = "";
