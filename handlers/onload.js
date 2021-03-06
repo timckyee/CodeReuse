@@ -6,13 +6,15 @@ window.addEventListener("load", function() {
 	
 	controller = new CodeReuse.Controller();
 	
-	htmlBody_init_class();
+	var onload = new CodeReuse.Onload;
 
-	init_gridGetPost_xmlHttpRequests();
+	onload.htmlBody_init_class();
+
+	onload.init_gridGetPost_xmlHttpRequests();
 	
-	init_autocomplete_inputs();
+	onload.init_autocomplete_inputs();
 	
-	init_calendar_inputs();
+	onload.init_calendar_inputs();
 	
 	localStorage.clear();
 
