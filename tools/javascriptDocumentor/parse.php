@@ -36,8 +36,13 @@
     //var_dump($files);
     //echo '</pre>';
 
-    for($file = 2; $file < count($files); $file++)
+    //return;
+
+    for($file = 0; $file < count($files); $file++)
     { 
+
+        if($files[$file] == "." || $files[$file] == ".." || $files[$file] == ".DS_Store")
+            continue;
 
         $newContent = "";
         $array = [];
@@ -362,7 +367,7 @@
     for($filesIndex = 3; $filesIndex < count($files); $filesIndex++)
     {
         if($files[$filesIndex] != "index.html")
-            $mainPage = $mainPage . "&nbsp;&nbsp<a href=\"" . $files[$filesIndex] . "\">" . $files[$filesIndex] . "</a><br>";
+            $mainPage = $mainPage . "&nbsp;&nbsp;<a href=\"" . $files[$filesIndex] . "\">" . $files[$filesIndex] . "</a><br>";
     }
 
     file_put_contents('./docs/index.html', $mainPage);
