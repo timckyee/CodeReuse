@@ -186,9 +186,9 @@
 
     $classFunctionName = trim($functionNameTemp[0]);
 
-    $newContent = $newContent . "<br>" . "<u><b>Name:</b></u>&nbsp;&nbsp" . $functionName . "<br><br>";
+    $newContent = $newContent . "<br>" . "<u><b>Name:</b></u>&nbsp;&nbsp;" . $functionName . "<br><br>";
 
-    $newContent = $newContent . "<u><b>Description:</b></u>&nbsp;&nbsp" . substr(trim($lines[$begin + 1]), 2) . "<br>";
+    $newContent = $newContent . "<u><b>Description:</b></u>&nbsp;&nbsp;" . substr(trim($lines[$begin + 1]), 2) . "<br>";
 
     $newContent = $newContent . "<br><br>";
 
@@ -218,9 +218,9 @@
 
         $functionName = trim($functionNameTemp[0]);
 
-        $newContent = $newContent . "<br>" . "<u><b>Name:</b></u>&nbsp;&nbsp" . $functionName . "<br><br>";
+        $newContent = $newContent . "<br>" . "<u><b>Name:</b></u>&nbsp;&nbsp;" . $functionName . "<br><br>";
 
-        $newContent = $newContent . "<u><b>Description:</b></u>&nbsp;&nbsp" . substr(trim($lines[$begin + 1]), 2) . "<br>";
+        $newContent = $newContent . "<u><b>Description:</b></u>&nbsp;&nbsp;" . substr(trim($lines[$begin + 1]), 2) . "<br>";
 
         $newContent = $newContent . "<br>";
 
@@ -262,9 +262,9 @@
 
       $functionName = trim($functionNameTemp[0]);
 
-      $newContent = $newContent . "<br>" . "<u><b>Name:</b></u>&nbsp;&nbsp" . $functionName . "<br><br>";
+      $newContent = $newContent . "<br>" . "<u><b>Name:</b></u>&nbsp;&nbsp;" . $functionName . "<br><br>";
 
-      $newContent = $newContent . "<u><b>Description:</b></u>&nbsp;&nbsp" . substr(trim($lines[$begin + 1]), 2) . "<br>";
+      $newContent = $newContent . "<u><b>Description:</b></u>&nbsp;&nbsp;" . substr(trim($lines[$begin + 1]), 2) . "<br>";
 
       $newContent = $newContent . "<br>";
 

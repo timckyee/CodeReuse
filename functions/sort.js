@@ -9,7 +9,7 @@ CodeReuse.Sort = function() {
 CodeReuse.Sort.prototype = {
 
 /**
- * Sort table in place without going to database applies to SuiteGrid and TenantGrid but not HomeTenantGrid
+ * Sort table in place without going to database applies to SuiteGrid and TenantGrid but not HomeTenantGrid nor HomeTenantFormGrid
  * @function
  * @name Sort#sortTable
  * 

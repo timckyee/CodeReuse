@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 10, 2020 at 04:44 AM
--- Server version: 5.6.38
--- PHP Version: 7.2.1
+-- Host: localhost:8889
+-- Generation Time: Mar 06, 2021 at 05:17 PM
+-- Server version: 5.7.32
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -47,8 +47,9 @@ INSERT INTO `tableGridGetPost2` (`fieldPrimaryKey`, `field1`, `field2`, `field3`
 (4, '2019-08-04', '2019-08-01', 1, 2),
 (5, '2019-08-01', '2019-08-04', 2, 3),
 (6, '2019-08-04', '2019-08-01', 2, 4),
-(7, '2019-08-01', '2019-08-04', 2, 3),
-(8, '2019-08-04', '2019-08-01', 2, 4);
+(7, '2019-08-04', '2019-08-01', 2, 3),
+(8, '2019-08-01', '2019-08-04', 2, 4),
+(9, '2019-08-04', '2019-08-01', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -88,7 +89,7 @@ CREATE TABLE `tableGridGetPostSuite` (
 
 INSERT INTO `tableGridGetPostSuite` (`suiteId`, `suiteNumber`, `buildingId`, `location`) VALUES
 (1, '101', 1, ''),
-(2, '102', 1, ''),
+(2, '102', 1, 'test'),
 (3, '101', 2, ''),
 (4, '102', 2, '');
 
@@ -114,6 +115,19 @@ INSERT INTO `tableGridGetPostTenant` (`tenantId`, `suiteId`, `firstname`, `lastn
 (2, 2, 'firstname2', 'lastname'),
 (3, 3, 'firstname3', 'lastname'),
 (4, 4, 'firstname4', 'lastname');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tableGridGetPostUsers`
+--
+
+CREATE TABLE `tableGridGetPostUsers` (
+  `userId` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -144,6 +158,12 @@ ALTER TABLE `tableGridGetPostTenant`
   ADD PRIMARY KEY (`tenantId`);
 
 --
+-- Indexes for table `tableGridGetPostUsers`
+--
+ALTER TABLE `tableGridGetPostUsers`
+  ADD PRIMARY KEY (`userId`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -151,7 +171,7 @@ ALTER TABLE `tableGridGetPostTenant`
 -- AUTO_INCREMENT for table `tableGridGetPost2`
 --
 ALTER TABLE `tableGridGetPost2`
-  MODIFY `fieldPrimaryKey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `fieldPrimaryKey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tableGridGetPostBuilding`
@@ -170,6 +190,12 @@ ALTER TABLE `tableGridGetPostSuite`
 --
 ALTER TABLE `tableGridGetPostTenant`
   MODIFY `tenantId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tableGridGetPostUsers`
+--
+ALTER TABLE `tableGridGetPostUsers`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

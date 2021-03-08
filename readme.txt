@@ -4,16 +4,31 @@ This project includes reusable components that can be used in web applications.
 
 There is an api library of code which can be used to create these components.
 
+To view the api library navigate to CodeReuse/tools/javascriptDocumentor/docs folder 
+and click on index.html.
+
+To re-generate, view the readme.txt in CodeReuse/tools/javascriptDocumentor
+
+
 The main important components:
-- autocomplete (input box with drop down selection list)
-- calendar (calendar picker)
+- autocomplete (input box with drop down selection list) - onkey press filters results
+- calendar (date picker) - format is dd-mmm-yyyy
 - grid sorting (on server using paging, or client side) - two way sorting ascending or descending
 - grid paging (navigate using left and right arrows, also update page number and clicking on go)
 - grid search (server, enter search string, click on search then data filters)
 - saving of grid edit record or form record will preserve sort order of record
 on the grid if sort column is clicked.
+- clicking on grid populates form, can click save to update record or new.
+- grids with paging show the total number of pages
 - dynamically populating select list html object
-(shown on Tenants Form - Suite Number field when updating Building selection)
+(shown on Tenants Form - Suite Number select field refreshes when updating Building selection)
+
+
+Password Encryption component (php files):
+- description: two methods for encrypting passwords or sensitive data.
+- php/password_encrypt_hash_verify.php - one-way encryption method used for passwords using hash (recommended)
+- php/password_encrypt_openssl.php - two-way encryption used for passwords or sensitive data using openssl
+- view the comments in the appropriate files for instructions on how to test encryption or decryption
 
 
 Programming Languages:
@@ -40,7 +55,7 @@ autocomplete: this is an input box which when entering text will show drop down 
 in this project the autocomplete box is the tenant name (found on Home Grid Edit or Home Form Grid Paging tab). 
 user either enters in a suite number or tenant first or last name in the input box then filters accordingly.
 
-calendar: this is a custom calendar picker. onclick on icon to show the picker or can enter date text in
+calendar: this is a custom date picker. onclick on icon to show the picker or can enter date text in
 dd-mmm-yyyy format
 
 grids: 4 grids
@@ -77,6 +92,7 @@ Suites Form (left hand side tab selection): shows the suites in the system. Grid
 On click of the grid row will populate the form. Can update or create new records. Sorting columns onclick ascending or descending
 on client. There is no paging but shows list with scrolling. There is highlight of the record after saving.
 
-Tenants Form (left hand side tab selection): shows the tenants in the system. Grid refreshes when pudating Building selection.
+Tenants Form (left hand side tab selection): shows the tenants in the system. Grid refreshes when updating Building selection.
+There is select list (Suite Number) which is dynamically popuated when updating Building selection.
 On click of the grid row will populate the form. Can update or create new records. Sorting columns onclick ascending or descending
 on client. There is no paging but shows list with scrolling. There is highlight of the record after saving.
