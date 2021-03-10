@@ -186,7 +186,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		}
 		else if(tableHtmlObjectId == "tableTenant")
 		{ 
-			if(gridColumnsInfo[i].id == "field2")
+			if(gridColumnsInfo[i].id == "lastname")
 			{
 				tableHeaderStyle.borderRight = "solid 1px black";
 			}
