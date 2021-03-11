@@ -169,29 +169,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		
 		var tableHeaderStyle = tableHeader.style;
 
-		// set right border of the last th header or there will be no border
-		if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
-		{
-			if(gridColumnsInfo[i].id == "field2")
-			{
-				tableHeaderStyle.borderRight = "solid 1px black";
-			}			
-		}
-		else if(tableHtmlObjectId == "tableSuite")
-		{
-			if(gridColumnsInfo[i].id == "location")
-			{
-				tableHeaderStyle.borderRight = "solid 1px black";
-			}			
-		}
-		else if(tableHtmlObjectId == "tableTenant")
-		{ 
-			if(gridColumnsInfo[i].id == "lastname")
-			{
-				tableHeaderStyle.borderRight = "solid 1px black";
-			}
-		}
-
 		//tableHeaderStyle.height = "25px";
 		tableHeaderStyle.paddingBottom = "10px";
 		tableHeaderStyle.textAlign = "left";
@@ -389,7 +366,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		if(showEditColumn == "showEdit")
 		{			
 			cell = document.createElement("td");
-			cell.className = "grid gridBorderThin";
+			cell.className = "grid";
 			
 			cell.style.padding = "10px";
 			
@@ -460,15 +437,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		for(var i=0; i<gridColumnsInfo.length; i++)
 		{	
 			cell = document.createElement("td");
-
-			if(platform == "IOS" || platform == "IOS_safari" || platform == "desktop_safari" || platform == "android")
-			{
-				cell.className = "grid gridBorderThin";
-			}
-			else if(platform == "desktop_chrome")
-			{
-				cell.className = "grid gridBorderThick";
-			}
 
 			cell.style.padding = "10px";
 
