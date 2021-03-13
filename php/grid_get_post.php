@@ -495,7 +495,17 @@
 				$result = $mysqli->query("select fieldPrimaryKey,field1,field2,field3, (select buildingName from tableGridGetPostBuilding where buildingId = field3) as field3display, (select concat(firstname, ' ', lastname) from tableGridGetPostTenant inner join tableGridGetPostSuite on tableGridGetPostTenant.suiteId = tableGridGetPostSuite.suiteId where tenantId = field4) as field4display, field4 from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["htmlObjectPrimaryKeyValue"]);
 			}
 		
-		}	
+		}
+		else if($queryName == "recordExistsHomeTenantFormGridPaging") {
+
+			$result = $mysqli->query("select count(fieldPrimaryKey) as numberOfRecords from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["inputPrimaryKey"]);
+
+			$row = $result->fetch_assoc();
+
+			echo $row["numberOfRecords"];
+
+			return;
+		}
 		else if($queryName == "buildings") {
 		
 			$filter = $_GET["filter"];		
@@ -571,6 +581,14 @@
 			$result = $mysqli->query("update tableGridGetPostTenant set " . $_POST["updateString"] . " where " . "tenantId = " . $_POST["htmlObjectPrimaryKeyValue"]);
 	    }
 	    else if($_POST["postType"] == "createRecordTableGridGetPost")
+	    {
+            if($mysqli->query("insert into tableGridGetPost2 " . $_POST["insertString"]) === true);
+            {
+            	$last_id = $mysqli->insert_id;
+				echo $last_id;
+			}
+	    }		
+	    else if($_POST["postType"] == "createRecordTableGridGetPostTenant")
 	    {
             if($mysqli->query("insert into tableGridGetPostTenant " . $_POST["insertString"]) === true);
             {

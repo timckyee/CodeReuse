@@ -187,18 +187,17 @@ CodeReuse.Controller.prototype = {
 		
 		var tenantFormGridPaging = new CodeReuse.TenantFormGridPaging();	
 				
-		if(saveType == "update")
+		if(saveType == "update") 
 		{
-			tenantFormGridPaging.setFieldValuesFromInputs(TenantFormGridValues, inputPrimaryKey);
-			tenantFormGridPaging.tenantFormGridUpdate();
+			// only update record if exists
+			tenantFormGridPaging.recordExists(TenantFormGridValues, inputPrimaryKey);
 		}
-		else
-		if(saveType == "insert")
+		else if(saveType == "insert") 
 		{
+			// if save type not update then insert
 			tenantFormGridPaging.setFieldValuesFromInputs(TenantFormGridValues, "");
-			tenantFormGridPaging.tenantFormGridInsert();
-		}
-		
+			tenantFormGridPaging.tenantFormGridInsert();			
+		}		
 	},
 
 	/**

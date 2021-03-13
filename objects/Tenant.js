@@ -21,7 +21,7 @@ CodeReuse.Tenant = function() {
 
 	this.tenantUpdateQueryName = "updateTableTenant";
 
-	this.tenantInsertQueryName = "createRecordTableGridGetPost";
+	this.tenantInsertQueryName = "createRecordTableGridGetPostTenant";
 	
 };
 

@@ -49,6 +49,8 @@ CodeReuse.HomeTenantGrid = function() {
 
 	this.pageNumbersQueryName = "gridtablehomePages";
 
+	this.divPagingFooter = "gridGetPostHomePaging";
+
 	this.homeTenantGridPagingDiv = "gridGetPostHomePaging";
 };
 
@@ -134,6 +136,12 @@ CodeReuse.HomeTenantGrid.prototype = {
 
 		return this.pageNumbersQueryName;
 
+	},
+
+	getDivPagingFooter: function() {
+
+		return this.divPagingFooter;
+		
 	},
 
 	getHomeTenantGridPagingDiv: function () {

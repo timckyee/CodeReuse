@@ -25,7 +25,7 @@ CodeReuse.Callback.prototype = {
  * @param {string} sortDirection the direction which is currently sorted
  * @param {string} pageNumber the page number of the table we are currently showing
  * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
- * @param {string} showEditRow show the edit row html objects
+ * @param {string} showEditRow show the edit row html objects - not using this field
  * @param {string} savePrimaryKeyValue the primary key value of the edit row were are saving
  * @param {string} highlightRow flag to highlight the row after save
  * @param {string} showPagingFooter if there is a grid footer for paging
@@ -168,6 +168,31 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		tableHeader.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeader";
 		
 		var tableHeaderStyle = tableHeader.style;
+
+
+		// set right border of the last th header or there will be no border
+		// this is when using box-shadow in style.css to fix the table header and preserve borders when scrolling
+		if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+		{
+			if(gridColumnsInfo[i].id == "field2")
+			{
+				tableHeaderStyle.borderRight = "solid 1px black";
+			}			
+		}
+		else if(tableHtmlObjectId == "tableSuite")
+		{
+			if(gridColumnsInfo[i].id == "location")
+			{
+				tableHeaderStyle.borderRight = "solid 1px black";
+			}			
+		}
+		else if(tableHtmlObjectId == "tableTenant")
+		{ 
+			if(gridColumnsInfo[i].id == "lastname")
+			{
+				tableHeaderStyle.borderRight = "solid 1px black";
+			}
+		}
 
 		//tableHeaderStyle.height = "25px";
 		tableHeaderStyle.paddingBottom = "10px";
@@ -366,7 +391,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		if(showEditColumn == "showEdit")
 		{			
 			cell = document.createElement("td");
-			cell.className = "grid";
+			//cell.className = "grid";
+			
+			cell.className = "grid gridBorderThin";
 			
 			cell.style.padding = "10px";
 			
@@ -384,7 +411,40 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 			
 			editButton.onclick = function(tablePrimaryKey) 
 			{
+				
+				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+		
+				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
+				
+				var callback = new CodeReuse.Callback();
+		
+				var tableEdit = document.getElementById(tableHtmlObjectId);
 
+				var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
+
+
+				//var searchValue = home_tenant_grid.getSearchValue();
+						
+				//grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, savePrimaryKeyValue, "searchValue", searchValue, home_tenant_grid.getTableHtmlObjectId());
+
+				//var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
+				
+				var helper = new CodeReuse.Helper();
+
+				if(localStorage.getItem("editMode") == "true")
+				{
+					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.');
+				
+					return;
+				}
+				else
+				{
+					grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, tablePrimaryKeyValue, home_tenant_grid.getTableHtmlObjectId());				
+
+					localStorage.setItem("editMode", "true");					
+				}
+
+				/*
 				var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
 
 				var helper = new CodeReuse.Helper();
@@ -421,6 +481,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(),"searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
 					}
 				}
+				*/
 			}
 			
 			cell.appendChild(editButton);
@@ -437,6 +498,16 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		for(var i=0; i<gridColumnsInfo.length; i++)
 		{	
 			cell = document.createElement("td");
+
+			// for making sure borders of th headers line up with borders of td cell
+			if(platform == "IOS" || platform == "IOS_safari" || platform == "desktop_safari" || platform == "android")
+			{
+				cell.className = "grid gridBorderThin";
+			}
+			else if(platform == "desktop_chrome")
+			{
+				cell.className = "grid gridBorderThick";
+			}
 
 			cell.style.padding = "10px";
 
@@ -488,8 +559,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 	divTable.appendChild(tbl);
 
 	// if showEditRow == "true" then the get_populateGrid_callback will include get_pageNumbers function to update the total pageNumbers
+	
+	/*
 	if(showEditRow == "true")
-	{			
+	{
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 		
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
@@ -502,6 +575,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 				
 		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, savePrimaryKeyValue, "searchValue", searchValue, home_tenant_grid.getTableHtmlObjectId());
 	}
+	*/
 
 	if(tableHtmlObjectId == "tableHomeTenantFormGridPaging" && document.getElementById("saveNewButtonTenantFormGridPaging").style.display != "block")
 	{
@@ -518,11 +592,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		document.getElementById("saveNewButtonTenant").style.display = "block";
 	}
 
-	// if showPagingFooter == "true" and showEditRow != "true" 
-	// (the showEditRow == "true" will set the total page numbers so will not enter this function)
+	// if showPagingFooter == "true" and localStorage.getItem("editMode") != "true"
 	// then update the total pageNumbers
 	// the get_pageNumbers onload parameter will help preload the second grid, HomeTenantFormGridPaging
-	if(showPagingFooter == "true" && showEditRow != "true")
+	if(showPagingFooter == "true" && localStorage.getItem("editMode") != "true")
 	{	
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
@@ -588,8 +661,8 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 			break;
 		}
 	}
-	
-	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\" />&nbsp;&nbsp;<img id=\"inputCalendar_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\"/>&nbsp;&nbsp;<img id=\"inputCalendarTesting_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td>";
+
+	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid gridBorderThin\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\" />&nbsp;&nbsp;<img id=\"inputCalendar_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\"/>&nbsp;&nbsp;<img id=\"inputCalendarTesting_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td>";
 
 	var gridEventFunctions = new CodeReuse.GridEventFunctions();
 
@@ -742,14 +815,14 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
 			var searchValue = home_tenant_grid.getSearchValue();
-
+			
 			if(searchValue == "" || searchValue == undefined)
 			{
-				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), divPagingFooter, home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), '', '', onload);
+				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), home_tenant_grid.getDivPagingFooter(), home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), '', '', onload);
 			}
 			else
 			{
-				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), divPagingFooter, home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", searchValue, onload);
+				grid_get_post_functions.get_pageNumbers(home_tenant_grid.getPhpFile(), home_tenant_grid.getDivPagingFooter(), home_tenant_grid.getPageNumbersQueryName(), home_tenant_grid.getPageSize(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", searchValue, onload);
 			}
 		}
 
@@ -802,6 +875,12 @@ get_populateForm_callback: function(response, fieldsInfo, autocompleteInputs, ar
 {	
 	var record = response[0];
 	
+	if(record == undefined)
+	{
+		alert('Record no longer exists. Please refresh the grid.');
+		return;
+	}
+
 	for(i=0; i<fieldsInfo.length; i++)
 	{		
 		if(fieldsInfo[i].dbType == "date")

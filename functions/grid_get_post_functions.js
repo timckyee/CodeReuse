@@ -694,7 +694,7 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 			for(insert=0; insert<fieldsInfo.length; insert++)
 			{	
 				if(fieldsInfo[insert].htmlObjectType != "primaryKey")
-				{
+				{					
 					var htmlObjectValueInsert = htmlObjectFieldsValuesInsert[insert];
 				
 					if(fieldsInfo[insert].dbType == "date")

@@ -28,6 +28,8 @@ CodeReuse.TenantFormGridPaging = function() {
 
 	this.tenantUpdateQueryName = "updateTableGridGetPost";
 
+	this.recordExist = "recordExistsHomeTenantFormGridPaging";
+
 	this.tenantInsertQueryName = "createRecordTableGridGetPost";
 	
 };
@@ -50,6 +52,12 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		return this.autocomplete_inputs;
 		
 	},
+		
+	getRecordExistsHomeTenantFormGridPaging: function() {
+
+		return this.recordExist;
+
+	},	
 	
 	getPhpFile: function() {
 		
@@ -120,10 +128,10 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		
 		var fieldsValuesInsertArray = [];
 		
-		fieldsValuesInsertArray[3] = this.field3;
-		fieldsValuesInsertArray[4] = this.field4;		
-		fieldsValuesInsertArray[1] = this.field1;
-		fieldsValuesInsertArray[2] = this.field2;
+		fieldsValuesInsertArray[1] = this.field3;
+		fieldsValuesInsertArray[2] = this.field4;		
+		fieldsValuesInsertArray[3] = this.field1;
+		fieldsValuesInsertArray[4] = this.field2;
 		
 		return fieldsValuesInsertArray;
 		
@@ -159,7 +167,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	tenantFormGridInsert: function() {
 	
 		var htmlObjectFieldsValuesInsert = this.fieldsValuesInsert();	
-				
+		
 		var helper = new CodeReuse.Helper();		
 				
 		if(helper.validateHtmlObjectFieldsTenant(this.fields))
@@ -171,5 +179,45 @@ CodeReuse.TenantFormGridPaging.prototype = {
 			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getTenantInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeyFormGridPaging", this.arrayOldValuesTable, '', home_tenant_form_grid_paging.getTableHtmlObjectId());
 		}	
 	
-	}
+	},
+
+	/**
+	 * To check if record exists before saving
+	 * @function
+	 * @name TenantFormGridPaging#recordExists
+	 * 
+	 * @param {Array} TenantFormGridValues tenant form grid values to save
+	 * @param {string} inputPrimaryKey the primary key
+	 **/
+	recordExists: function(TenantFormGridValues, inputPrimaryKey) {
+
+		window.getXmlHttpRequest.onreadystatechange = function() {
+		
+			if (this.readyState == 4 && this.status == 200) {
+
+				var response = JSON.parse(this.responseText);
+
+				if(response == "0")
+				{
+					alert('Record no longer exists. Please refresh form.')
+					return;
+				}
+				else
+				{
+					// record exists so update record
+					var tenantFormGridPaging = new CodeReuse.TenantFormGridPaging();
+
+					tenantFormGridPaging.setFieldValuesFromInputs(TenantFormGridValues, inputPrimaryKey);
+					tenantFormGridPaging.tenantFormGridUpdate();
+				}
+			
+			}
+		}
+		
+		var queryString = "queryName" + "=" + this.recordExist + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
+		
+		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
+		window.getXmlHttpRequest.send();		
+		
+	}	
 }

@@ -232,6 +232,18 @@ td.grid {
 	padding-left: 10px;
 }
 
+td.gridBorderThick {
+
+	border: 1px solid black;
+
+}
+
+td.gridBorderThin {
+
+	border: 0.4px solid black;
+
+}
+
 .bodyDesktop {
 
 	min-width: 1280px;
@@ -285,7 +297,8 @@ th
 	top: 0;
 	background: lightgray;
 	padding-top: 10px; 
-	border: solid 1px black;
+	/* border: solid 1px black; */
+	box-shadow: inset 1px 1px #000, 0 1px #000;
 }
 
 .button
