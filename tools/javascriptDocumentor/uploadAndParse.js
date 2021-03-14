@@ -1,5 +1,28 @@
+function resetFilesFolder() {
 
-function sendFile() {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "resetFilesFolder.php", true);
+
+    xhr.onload = function () {
+
+        if (xhr.status === 200) {
+
+            alert("Files folder has been reset")
+
+        } else {
+
+            alert("Files folder reset failed");
+
+        }
+
+    };
+
+    xhr.send();
+
+}
+
+function sendFiles() {
 
     var myFile = document.getElementById("myFile");
     
@@ -19,15 +42,15 @@ function sendFile() {
 
     xhr.onload = function () {
 
-    if (xhr.status === 200) {
+        if (xhr.status === 200) {
 
-        alert("File successfully uploaded")
+            alert("File successfully uploaded")
 
-    } else {
+        } else {
 
-        alert("File upload failed");
+            alert("File upload failed");
 
-    }
+        }
 
     };
 

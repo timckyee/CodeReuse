@@ -20,6 +20,8 @@ CodeReuse.Suite = function() {
 	
 	this.suiteUpdateQueryName = "updateTableGridGetPostSuite";
 
+	this.recordExist = "recordExistsSuiteForm";
+
 	this.suiteInsertQueryName = "createRecordTableGridGetPostSuite";
 };
 
@@ -35,7 +37,13 @@ CodeReuse.Suite.prototype = {
 		
 		return this.fields;
 	},
-		
+
+	getRecordExistsSuiteForm: function() {
+
+		return this.recordExist;
+
+	},
+	
 	getPhpFile: function() {
 		
 		return this.phpFileGridGetPost;	
@@ -185,5 +193,45 @@ CodeReuse.Suite.prototype = {
 			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getSuiteInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKeySuite", this.arrayOldValuesTable, callback.refreshGridCallbackSuite, suiteGrid.getTableHtmlObjectId());
 		}	
 	
-	}
+	},
+
+	/**
+	 * To check if record exists before saving
+	 * @function
+	 * @name Suite#recordExists
+	 * 
+	 * @param {Array} SuiteValues suite form values to save
+	 * @param {string} inputPrimaryKey the primary key
+	 **/
+	 recordExists: function(SuiteValues, inputPrimaryKey) {
+
+		window.getXmlHttpRequest.onreadystatechange = function() {
+		
+			if (this.readyState == 4 && this.status == 200) {
+
+				var response = JSON.parse(this.responseText);
+
+				if(response == "0")
+				{
+					alert('Record no longer exists. Please refresh the form.')
+					return;
+				}
+				else
+				{
+					// record exists so update record
+					var suiteForm = new CodeReuse.Suite();
+
+					suiteForm.setFieldValuesFromInputs(SuiteValues, inputPrimaryKey);
+					suiteForm.suiteUpdate();
+				}
+			
+			}
+		}
+		
+		var queryString = "queryName" + "=" + this.recordExist + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
+		
+		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
+		window.getXmlHttpRequest.send();		
+		
+	}	
 }

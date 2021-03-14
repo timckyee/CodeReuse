@@ -9,18 +9,25 @@ installation:
 
 usage:
 
-Two methods to upload the javascript source files:
+First click on Reset Files Folder to clear old source files from the ./files directory
 
-1. go to the javascriptDocumenter/files folder on the web server and copy in the javascript source files
-2. create a folder and place the javascript source files in there
-   then on the index.html page click on Choose Files and navigate to the folder with the files and select the files
-   then click on Send Files to send the javascript source files to the server folder javascriptDocumentor/files
 
-Once you have either chosen 1 or 2 methods of uploading then click on Create Files.
+Then use either one of two methods to upload the javascript source files:
 
-To get the javascript documents go to the folder on the web server javascriptDocumentor/docs
+Create a folder and place the javascript source files in there
 
-To view the files click on the index.html file
+1. go to index.html page under tools/javascriptDocumenter click on Choose Files and navigate to the folder with the source files and select the files
+   then click on Send Files to send the javascript source files to the server folder tools/javascriptDocumentor/files
+
+2. or go to the tools/javascriptDocumenter/files folder on the web server and copy the source files to there
+   note: in this case there is no need to click on Send Files
+
+After choosing one of the options above and there are source files in the tools/javascriptDocumenter/files directory
+then click on Create Files to generate the documents
+
+To get the javascript documents go to the folder on the web server tools/javascriptDocumentor/docs
+
+To view the documents click on tools/javascriptDocumentor/docs/index.html
 
 
 the format of the comments:
@@ -55,10 +62,10 @@ After the variables of the class comment the functions of the class
   * @function
   * @name className#functionName
   * 
-  * @param {paramType} paramName paramDescription
-  * @param {paramType} paramName paramDescription
+  * @param {paramType} paramNameFirst paramDescription
+  * @param {paramType} paramNameSecond paramDescription
   **/
-functionName: function(arguments) {
+functionName: function(paramNameFirst, paramNameSecond) {
 
 
 If there is a function that has a return value use this comment block
@@ -78,9 +85,9 @@ If there is a function that has a return value with parameters use this comment 
 	* @function
 	* @name className#functionName
 	* 
-  * @param {paramType} paramName paramDescription
-  * @param {paramType} paramName paramDescription
+  * @param {paramType} paramNameFirst paramDescription
+  * @param {paramType} paramNameSecond paramDescription
 	* 
 	* @returns {returnType} description of the return object
 	**/
-  functionName: function() {
+  functionName: function(paramNameFirst, paramNameSecond) {

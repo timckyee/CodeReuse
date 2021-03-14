@@ -39,18 +39,18 @@ CodeReuse.Controller.prototype = {
 			saveType = "insert";
 		}
 		
-		var suiteModel = new CodeReuse.Suite();
-		
-		if(saveType == "update")
+		var suiteForm = new CodeReuse.Suite();	
+				
+		if(saveType == "update") 
 		{
-			suiteModel.setFieldValuesFromInputs(SuiteValues, inputPrimaryKey);
-			suiteModel.suiteUpdate();
+			// only update record if exists
+			suiteForm.recordExists(SuiteValues, inputPrimaryKey);
 		}
-		else
-		if(saveType == "insert")
+		else if(saveType == "insert") 
 		{
-			suiteModel.setFieldValuesFromInputs(SuiteValues, "");
-			suiteModel.suiteInsert();
+			// if save type not update then insert
+			suiteForm.setFieldValuesFromInputs(SuiteValues, "");
+			suiteForm.suiteInsert();		
 		}
 		
 	},	
@@ -85,19 +85,19 @@ CodeReuse.Controller.prototype = {
 		{
 			saveType = "insert";
 		}
-		
-		var tenantModel = new CodeReuse.Tenant();	
-		
-		if(saveType == "update")
+
+		var tenantForm = new CodeReuse.Tenant();	
+				
+		if(saveType == "update") 
 		{
-			tenantModel.setFieldValuesFromInputs(TenantValues, inputPrimaryKey);
-			tenantModel.tenantUpdate();
+			// only update record if exists
+			tenantForm.recordExists(TenantValues, inputPrimaryKey);
 		}
-		else
-		if(saveType == "insert")
+		else if(saveType == "insert") 
 		{
-			tenantModel.setFieldValuesFromInputs(TenantValues, "");
-			tenantModel.tenantInsert();
+			// if save type not update then insert
+			tenantForm.setFieldValuesFromInputs(TenantValues, "");
+			tenantForm.tenantInsert();		
 		}
 		
 	},
@@ -127,8 +127,6 @@ CodeReuse.Controller.prototype = {
 		HomeTenantGridValues["inputCalendar_grid"] = inputCalendar_grid;
 		HomeTenantGridValues["inputCalendarTesting_grid"] = inputCalendarTesting_grid;
 		
-		var homeTenantGrid = new CodeReuse.HomeTenantGrid();
-		
 		var tablePrimaryKey = document.getElementById("inputPrimaryKey_grid").innerText;
 			
 		var tableHomeTenant = document.getElementById("tableHomeTenant");
@@ -148,8 +146,10 @@ CodeReuse.Controller.prototype = {
 			}
 		}
 		
-		homeTenantGrid.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey_grid);
-		homeTenantGrid.homeTenantGridUpdate();	
+		var homeTenantGridEdit = new CodeReuse.HomeTenantGrid();	
+				
+		// only update record if exists
+		homeTenantGridEdit.recordExists(HomeTenantGridValues, inputPrimaryKey_grid);
 	},
 	
 	/**
@@ -197,7 +197,7 @@ CodeReuse.Controller.prototype = {
 			// if save type not update then insert
 			tenantFormGridPaging.setFieldValuesFromInputs(TenantFormGridValues, "");
 			tenantFormGridPaging.tenantFormGridInsert();			
-		}		
+		}
 	},
 
 	/**

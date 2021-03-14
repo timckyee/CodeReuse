@@ -21,6 +21,8 @@ CodeReuse.Tenant = function() {
 
 	this.tenantUpdateQueryName = "updateTableTenant";
 
+	this.recordExist = "recordExistsTenantForm";
+
 	this.tenantInsertQueryName = "createRecordTableGridGetPostTenant";
 	
 };
@@ -38,6 +40,12 @@ CodeReuse.Tenant.prototype = {
 		return this.fields;
 	},
 	
+	getRecordExistsTenantForm: function() {
+
+		return this.recordExist;
+
+	},
+
 	getAutocompleteInputs: function() {
 	
 		return this.autocomplete_inputs;
@@ -207,5 +215,46 @@ CodeReuse.Tenant.prototype = {
 			grid_get_post_functions.post_insertRecordForm(this.getPhpFile(), this.getTenantInsertQueryName(), htmlObjectFieldsValuesInsert, this.getFieldsInfo(), "inputPrimaryKey", this.arrayOldValuesTable, callback.refreshGridCallback, tenantGrid.getTableHtmlObjectId());
 		}	
 	
-	}
+	},
+
+	/**
+	 * To check if record exists before saving
+	 * @function
+	 * @name Tenant#recordExists
+	 * 
+	 * @param {Array} TenantValues tenant form values to save
+	 * @param {string} inputPrimaryKey the primary key
+	 **/
+	 recordExists: function(TenantValues, inputPrimaryKey) {
+
+		window.getXmlHttpRequest.onreadystatechange = function() {
+		
+			if (this.readyState == 4 && this.status == 200) {
+
+				var response = JSON.parse(this.responseText);
+
+				if(response == "0")
+				{
+					alert('Record no longer exists. Please refresh the form.')
+					return;
+				}
+				else
+				{
+					// record exists so update record
+					var tenantForm = new CodeReuse.Tenant();
+
+					tenantForm.setFieldValuesFromInputs(TenantValues, inputPrimaryKey);
+					tenantForm.tenantUpdate();
+				}
+			
+			}
+		}
+		
+		var queryString = "queryName" + "=" + this.recordExist + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
+		
+		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
+		window.getXmlHttpRequest.send();		
+		
+	}	
+	
 }

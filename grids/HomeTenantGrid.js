@@ -51,6 +51,8 @@ CodeReuse.HomeTenantGrid = function() {
 
 	this.divPagingFooter = "gridGetPostHomePaging";
 
+	this.recordExist = "recordExistsHomeTenantGrid";
+
 	this.homeTenantGridPagingDiv = "gridGetPostHomePaging";
 };
 
@@ -91,6 +93,12 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 	},	
 	
+	getRecordExistsHomeTenantGrid: function() {
+
+		return this.recordExist;
+
+	},
+
 	getPhpFile: function() {
 		
 		return this.phpFileGridGetPost;	
@@ -255,4 +263,44 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 	},
 	
+	/**
+	 * To check if record exists before saving
+	 * @function
+	 * @name HomeTenantGrid#recordExists
+	 * 
+	 * @param {Array} HomeTenantGridValues home tenant grid values to save
+	 * @param {string} inputPrimaryKey the primary key
+	 **/
+	recordExists: function(HomeTenantGridValues, inputPrimaryKey) {
+
+		window.getXmlHttpRequest.onreadystatechange = function() {
+
+			if (this.readyState == 4 && this.status == 200) {
+
+				var response = JSON.parse(this.responseText);
+
+				if(response == "0")
+				{
+					alert('Record no longer exists. Please refresh the form.')
+					return;
+				}
+				else
+				{
+					// record exists so update record
+					var homeTenantGridEdit = new CodeReuse.HomeTenantGrid();
+
+					homeTenantGridEdit.setFieldValuesFromInputs(HomeTenantGridValues, inputPrimaryKey);
+					homeTenantGridEdit.homeTenantGridUpdate();
+				}
+			
+			}
+		}
+		
+		var queryString = "queryName" + "=" + this.recordExist + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
+		
+		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
+		window.getXmlHttpRequest.send();		
+		
+	}
+
 };

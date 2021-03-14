@@ -506,6 +506,36 @@
 
 			return;
 		}
+		else if($queryName == "recordExistsHomeTenantGrid") {
+
+			$result = $mysqli->query("select count(fieldPrimaryKey) as numberOfRecords from tableGridGetPost2 where fieldPrimaryKey = " . $_GET["inputPrimaryKey"]);
+
+			$row = $result->fetch_assoc();
+
+			echo $row["numberOfRecords"];
+
+			return;
+		}		
+		else if($queryName == "recordExistsSuiteForm") {
+
+			$result = $mysqli->query("select count(suiteId) as numberOfRecords from tableGridGetPostSuite where suiteId = " . $_GET["inputPrimaryKey"]);
+
+			$row = $result->fetch_assoc();
+
+			echo $row["numberOfRecords"];
+
+			return;
+		}
+		else if($queryName == "recordExistsTenantForm") {
+
+			$result = $mysqli->query("select count(tenantId) as numberOfRecords from tableGridGetPostTenant where tenantId = " . $_GET["inputPrimaryKey"]);
+
+			$row = $result->fetch_assoc();
+
+			echo $row["numberOfRecords"];
+
+			return;
+		}		
 		else if($queryName == "buildings") {
 		
 			$filter = $_GET["filter"];		

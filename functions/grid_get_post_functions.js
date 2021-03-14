@@ -28,7 +28,7 @@ CodeReuse.Grid_Get_Post_Functions.prototype = {
  * @param {string} sortDirection the direction which is currently sorted
  * @param {string} pageNumber the page number of the table we are currently showing
  * @param {string} highlightRowId the row in the table which is highlighted after editing and saving the row
- * @param {string} showEditRow show the edit row html objects
+ * @param {string} showEditRow show the edit row html objects - not using this field
  * @param {string} savePrimaryKeyValue the primary key value of the edit row were are saving
  * @param {string} highlightRow flag to highlight the row after save
  * @param {string} showPagingFooter if there is a grid footer for paging

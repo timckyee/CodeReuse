@@ -57,7 +57,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 
 		return this.recordExist;
 
-	},	
+	},
 	
 	getPhpFile: function() {
 		
@@ -199,7 +199,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 
 				if(response == "0")
 				{
-					alert('Record no longer exists. Please refresh form.')
+					alert('Record no longer exists. Please refresh the form.')
 					return;
 				}
 				else
@@ -219,5 +219,5 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
 		window.getXmlHttpRequest.send();		
 		
-	}	
+	}
 }

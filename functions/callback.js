@@ -149,7 +149,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 	var tableHeaderRow = document.createElement("tr");
 
 	var tableHeader;
-	var tableHeaderText;
 	
 	if(showEditColumn == "showEdit")
 	{
@@ -421,13 +420,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 				var tableEdit = document.getElementById(tableHtmlObjectId);
 
 				var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
-
-
-				//var searchValue = home_tenant_grid.getSearchValue();
-						
-				//grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, savePrimaryKeyValue, "searchValue", searchValue, home_tenant_grid.getTableHtmlObjectId());
-
-				//var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
 				
 				var helper = new CodeReuse.Helper();
 
@@ -443,45 +435,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 
 					localStorage.setItem("editMode", "true");					
 				}
-
-				/*
-				var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
-
-				var helper = new CodeReuse.Helper();
-
-				if(localStorage.getItem("editMode") == "true")
-				{
-					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.');
-				
-					return;
-				}
-				else
-				{
-					var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions;
-
-					var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-					var callback = new CodeReuse.Callback();
-				
-					var column = localStorage.getItem("arraySortColumn");
-					var direction = localStorage.getItem("arraySortDirection");
-				
-					var homeTenantGridPageNumber = localStorage.getItem("homeTenantGridPageNumber");
-				
-					localStorage.setItem("editMode", "true");
-				
-					var searchValue = home_tenant_grid.getSearchValue();
-
-					if(searchValue == "" || searchValue == undefined)
-					{
-						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
-					}
-					else
-					{
-						grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(),"searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, homeTenantGridPageNumber, '', "true", tablePrimaryKeyValue, '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
-					}
-				}
-				*/
 			}
 			
 			cell.appendChild(editButton);
@@ -499,7 +452,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		{	
 			cell = document.createElement("td");
 
-			// for making sure borders of th headers line up with borders of td cell
+			// IOS, IOS safari, desktop safari and android: table borders of th headers not lining up with the td cells
+			// desktop chrome is working ok. for the others make the border thinner.
 			if(platform == "IOS" || platform == "IOS_safari" || platform == "desktop_safari" || platform == "android")
 			{
 				cell.className = "grid gridBorderThin";
@@ -557,25 +511,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 	}	
 
 	divTable.appendChild(tbl);
-
-	// if showEditRow == "true" then the get_populateGrid_callback will include get_pageNumbers function to update the total pageNumbers
-	
-	/*
-	if(showEditRow == "true")
-	{
-		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-		
-		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-		
-		var callback = new CodeReuse.Callback();
-
-		var tableEdit = document.getElementById(tableHtmlObjectId);
-
-		var searchValue = home_tenant_grid.getSearchValue();
-				
-		grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, savePrimaryKeyValue, "searchValue", searchValue, home_tenant_grid.getTableHtmlObjectId());
-	}
-	*/
 
 	if(tableHtmlObjectId == "tableHomeTenantFormGridPaging" && document.getElementById("saveNewButtonTenantFormGridPaging").style.display != "block")
 	{
@@ -649,6 +584,13 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTableGridEdit, tableHtml, fieldPrimaryKey, tableHtmlObjectId) {
 
 	var record = response[0];
+
+	if(record == undefined)
+	{
+		alert('Record no longer exists. Please refresh the grid.');
+		localStorage.setItem("editMode", "false");	
+		return;
+	}
 
 	var tableEdit = tableHtml;
 
