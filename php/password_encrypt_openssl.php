@@ -29,8 +29,10 @@ function encrypt($string_to_encrypt, $con) {
     
     //$iv = substr(hash('sha256', $secret_iv), 0, 16);
 
-	$iv_bin = openssl_random_pseudo_bytes(openssl_cipher_iv_length('AES-256-CBC'));
-		
+	//$iv_bin = openssl_random_pseudo_bytes(openssl_cipher_iv_length('AES-256-CBC'));
+	
+    $iv_bin = random_bytes(16);
+
     $iv_hex = bin2hex($iv_bin);
 
     $encrypted_string = openssl_encrypt($string_to_encrypt, $encrypt_method, $key, 0, $iv_bin);

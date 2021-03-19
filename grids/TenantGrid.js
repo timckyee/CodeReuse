@@ -125,9 +125,9 @@ CodeReuse.TenantGrid.prototype = {
 		
 		if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
 		{
-			var sortColumn = localStorage.getItem("arraySortColumn_tenant");
+			var sortColumn = sessionStorage.getItem("arraySortColumn_tenant");
 
-			var sortDirection = localStorage.getItem("arraySortDirection_tenant");
+			var sortDirection = sessionStorage.getItem("arraySortDirection_tenant");
 
 			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshTenantGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "buildingId", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId, "false", '', '', "false", '', '', '');
 		}
@@ -151,13 +151,13 @@ CodeReuse.TenantGrid.prototype = {
 
 			if(document.getElementById("selectBuildingTenant").selectedIndex != 0)
 			{					
-				localStorage.setItem("arraySortColumn_tenant", "tenantId");
+				sessionStorage.setItem("arraySortColumn_tenant", "tenantId");
 
-				localStorage.setItem("arraySortDirection_tenant", "asc");
+				sessionStorage.setItem("arraySortDirection_tenant", "asc");
 	
-				var sortColumn = localStorage.getItem("arraySortColumn_tenant");
+				var sortColumn = sessionStorage.getItem("arraySortColumn_tenant");
 
-				var sortDirection = localStorage.getItem("arraySortDirection_tenant");
+				var sortDirection = sessionStorage.getItem("arraySortDirection_tenant");
 
 				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectTenantGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "buildingId", document.getElementById("selectBuildingTenant").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', '', "false", '', '', "false", '', '', '');
 						

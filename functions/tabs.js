@@ -21,7 +21,7 @@ changeTab: function(tab) {
 
 	if(currentTab == "Home")
 	{	
-		if(localStorage.getItem("editMode") == "true")
+		if(sessionStorage.getItem("editMode") == "true")
 		{
 			var helper = new CodeReuse.Helper();
 
@@ -53,7 +53,7 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "HomeFormGridPaging")
 	{
-		if(localStorage.getItem("editMode") == "true")
+		if(sessionStorage.getItem("editMode") == "true")
 		{
 			var helper = new CodeReuse.Helper();
 
@@ -85,7 +85,7 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "Suites")
 	{
-		if(localStorage.getItem("editMode") == "true")
+		if(sessionStorage.getItem("editMode") == "true")
 		{
 			var helper = new CodeReuse.Helper();
 
@@ -117,7 +117,7 @@ changeTab: function(tab) {
 	else
 	if(currentTab == "Tenants")
 	{
-		if(localStorage.getItem("editMode") == "true")
+		if(sessionStorage.getItem("editMode") == "true")
 		{
 			var helper = new CodeReuse.Helper();
 

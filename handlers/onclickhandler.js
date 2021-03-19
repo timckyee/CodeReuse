@@ -53,6 +53,9 @@ TenantFormGridPagingOnClickHandler: function(phpFile, gridRowId, tableHtmlObject
 	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 	
 	var callback = new CodeReuse.Callback();
+
+	// save the previous grid rowd id selection for unlocking the record after moving to other record
+	tenantFormGridPagingModel.setPreviousSelection(gridRowId);
 	
 	grid_get_post_functions.get_populateForm(phpFile, "populate", gridRowId, tenantFormGridPagingModel.getFieldsInfo(), autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
 	
@@ -179,31 +182,31 @@ sortTableColumnOnclickHandlerHomeTenantFormGridPaging: function(gridColumnsInfo,
 
 	var sortColumn = gridColumnsInfo[column].id;		
 	
-	var sortDirection = localStorage.getItem("arraySortDirection_tenant_form_grid_paging");	
+	var sortDirection = sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging");	
 	
-	if(sortColumn != localStorage.getItem("arraySortColumn_tenant_form_grid_paging"))
+	if(sortColumn != sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging"))
 	{
-		localStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
+		sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
 	}
 	else
 	{
 		if(sortDirection == "asc")
 		{
-			localStorage.setItem("arraySortDirection_tenant_form_grid_paging", "desc");	
+			sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "desc");	
 		}
 		else
 		{
 			if(sortDirection == "desc")
 			{
-				localStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
+				sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
 			}
 		}			
 	}
 	
-	localStorage.setItem("arraySortColumn_tenant_form_grid_paging", sortColumn);
+	sessionStorage.setItem("arraySortColumn_tenant_form_grid_paging", sortColumn);
 
-	var column = localStorage.getItem("arraySortColumn_tenant_form_grid_paging");
-	var direction = localStorage.getItem("arraySortDirection_tenant_form_grid_paging");
+	var column = sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging");
+	var direction = sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging");
 
 	var searchValue = home_tenant_form_grid_paging.getSearchValue();
 
@@ -237,28 +240,28 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(gridColumnsInfo, column) {
 
 	var sortColumn = gridColumnsInfo[column].id;		
 	
-	var sortDirection = localStorage.getItem("arraySortDirection");	
+	var sortDirection = sessionStorage.getItem("arraySortDirection");	
 	
-	if(sortColumn != localStorage.getItem("arraySortColumn"))
+	if(sortColumn != sessionStorage.getItem("arraySortColumn"))
 	{
-		localStorage.setItem("arraySortDirection", "asc");
+		sessionStorage.setItem("arraySortDirection", "asc");
 	}
 	else
 	{
 		if(sortDirection == "asc")
 		{
-			localStorage.setItem("arraySortDirection", "desc");	
+			sessionStorage.setItem("arraySortDirection", "desc");	
 		}
 		else
 		{
 			if(sortDirection == "desc")
 			{
-				localStorage.setItem("arraySortDirection", "asc");
+				sessionStorage.setItem("arraySortDirection", "asc");
 			}
 		}			
 	}
 	
-	localStorage.setItem("arraySortColumn", sortColumn);
+	sessionStorage.setItem("arraySortColumn", sortColumn);
 
 	
 	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -267,10 +270,10 @@ sortTableColumnOnclickHandlerHomeTenantGrid: function(gridColumnsInfo, column) {
 
 	var callback = new CodeReuse.Callback();
 
-	var column = localStorage.getItem("arraySortColumn");
-	var direction = localStorage.getItem("arraySortDirection");
+	var column = sessionStorage.getItem("arraySortColumn");
+	var direction = sessionStorage.getItem("arraySortDirection");
 
-	var homeTenantGridPageNumber = localStorage.getItem("homeTenantGridPageNumber");
+	var homeTenantGridPageNumber = sessionStorage.getItem("homeTenantGridPageNumber");
 
 	var searchValue = home_tenant_grid.getSearchValue();
 

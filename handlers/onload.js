@@ -16,14 +16,14 @@ window.addEventListener("load", function() {
 	
 	onload.init_calendar_inputs();
 	
-	localStorage.clear();
+	sessionStorage.clear();
 
-	localStorage.setItem("editMode", "false");
+	sessionStorage.setItem("editMode", "false");
 
 
-	localStorage.setItem("homeTenantGridPageNumber", "1");
+	sessionStorage.setItem("homeTenantGridPageNumber", "1");
 
-	localStorage.setItem("homeTenantFormGridPagingPageNumber", "1");
+	sessionStorage.setItem("homeTenantFormGridPagingPageNumber", "1");
 
 
 	document.getElementById("gridGetPostHomePagingPageNumber").value = "1";
@@ -31,23 +31,23 @@ window.addEventListener("load", function() {
 	document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value = "1";
 
 
-	localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
+	sessionStorage.setItem("arraySortColumn", "fieldPrimaryKey");
 	
-	localStorage.setItem("arraySortDirection", "asc");
+	sessionStorage.setItem("arraySortDirection", "asc");
 
 
-	localStorage.setItem("arraySortColumn_tenant_form_grid_paging", "fieldPrimaryKey");
+	sessionStorage.setItem("arraySortColumn_tenant_form_grid_paging", "fieldPrimaryKey");
 	
-	localStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
+	sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
 
 
-	localStorage.setItem("arraySortColumn_suite", "suiteId");
+	sessionStorage.setItem("arraySortColumn_suite", "suiteId");
 	
-	localStorage.setItem("arraySortDirection_suite", "asc");
+	sessionStorage.setItem("arraySortDirection_suite", "asc");
 	
-	localStorage.setItem("arraySortColumn_tenant", "tenantId");
+	sessionStorage.setItem("arraySortColumn_tenant", "tenantId");
 	
-	localStorage.setItem("arraySortDirection_tenant", "asc");
+	sessionStorage.setItem("arraySortDirection_tenant", "asc");
 
 
 	var server = new CodeReuse.Config();
@@ -66,11 +66,11 @@ window.addEventListener("load", function() {
 
 	var callback = new CodeReuse.Callback();
 
-	var sortColumn = localStorage.getItem("arraySortColumn");
+	var sortColumn = sessionStorage.getItem("arraySortColumn");
 
-	var sortDirection = localStorage.getItem("arraySortDirection");
+	var sortDirection = sessionStorage.getItem("arraySortDirection");
 
-	var pageNumber = localStorage.getItem("homeTenantGridPageNumber");
+	var pageNumber = sessionStorage.getItem("homeTenantGridPageNumber");
 
 	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.getRowOnClick(), "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), "true");
 

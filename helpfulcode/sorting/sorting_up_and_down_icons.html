@@ -8,11 +8,11 @@
 
 window.addEventListener("load", function() {
 
-    localStorage.clear();
+    sessionStorage.clear();
 
-	localStorage.setItem("arraySortColumn", "column1id");
+	sessionStorage.setItem("arraySortColumn", "column1id");
 	
-	localStorage.setItem("arraySortDirection", "asc");
+	sessionStorage.setItem("arraySortDirection", "asc");
 
 	var columns = [
 		
@@ -135,29 +135,29 @@ function sortTableColumnOnclickHandlerHomeTenantGrid(sortTableHtmlObjectId, grid
 
     var sortColumn = gridColumnsInfo[column].id;		
     
-    var sortDirection = localStorage.getItem("arraySortDirection");	
+    var sortDirection = sessionStorage.getItem("arraySortDirection");	
     
-    if(sortColumn != localStorage.getItem("arraySortColumn"))
+    if(sortColumn != sessionStorage.getItem("arraySortColumn"))
     {
-        localStorage.setItem("arraySortDirection", "asc");
+        sessionStorage.setItem("arraySortDirection", "asc");
     }
     else
     {
         if(sortDirection == "asc")
         {
-            localStorage.setItem("arraySortDirection", "desc");	
+            sessionStorage.setItem("arraySortDirection", "desc");	
         }
         else
         {
             if(sortDirection == "desc")
-                localStorage.setItem("arraySortDirection", "asc");
+                sessionStorage.setItem("arraySortDirection", "asc");
         }			
     }
         
-    localStorage.setItem("arraySortColumn", sortColumn);
+    sessionStorage.setItem("arraySortColumn", sortColumn);
 
-    var column = localStorage.getItem("arraySortColumn");
-    var direction = localStorage.getItem("arraySortDirection");
+    var column = sessionStorage.getItem("arraySortColumn");
+    var direction = sessionStorage.getItem("arraySortDirection");
 
     console.dir(column);
     console.dir(direction);

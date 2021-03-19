@@ -120,9 +120,9 @@ CodeReuse.SuiteGrid.prototype = {
 				
 		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)
 		{
-			var sortColumn = localStorage.getItem("arraySortColumn_suite");
+			var sortColumn = sessionStorage.getItem("arraySortColumn_suite");
 
-			var sortDirection = localStorage.getItem("arraySortDirection_suite");
+			var sortDirection = sessionStorage.getItem("arraySortDirection_suite");
 
 			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId, "false", '', '', "false", '', '', '');
 		}
@@ -146,13 +146,13 @@ CodeReuse.SuiteGrid.prototype = {
 			
 			if(document.getElementById("selectBuildingSuite").selectedIndex != 0)
 			{
-				localStorage.setItem("arraySortColumn_suite", "suiteId");
+				sessionStorage.setItem("arraySortColumn_suite", "suiteId");
 
-				localStorage.setItem("arraySortDirection_suite", "asc");
+				sessionStorage.setItem("arraySortDirection_suite", "asc");
 	
-				var sortColumn = localStorage.getItem("arraySortColumn_suite");
+				var sortColumn = sessionStorage.getItem("arraySortColumn_suite");
 	
-				var sortDirection = localStorage.getItem("arraySortDirection_suite");
+				var sortDirection = sessionStorage.getItem("arraySortDirection_suite");
 
 				grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSelectSuiteGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', '', "false" ,'' ,'', "false", '', '', '');
 			}

@@ -1,3 +1,3 @@
 cd /var/www/html
-sudo ./buildcodereuse
+sudo /root/passwords/mysql/buildcodereuse
 exit

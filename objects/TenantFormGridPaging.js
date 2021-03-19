@@ -41,6 +41,12 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	 * @var {Array} arrayOldValuesTable
 	 **/		
 	arrayOldValuesTable: [],
+
+	/**
+	 * Save the record id of the previous selection to unlock the record
+	 * @var {Array} previousSelection
+	 **/
+	previousSelection: [],
 	
 	getFieldsInfo: function() {
 		
@@ -76,6 +82,18 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		return this.tenantInsertQueryName;
 
 	},
+
+	getPreviousSelection: function() {
+
+		return this.previousSelection[0];
+
+	},
+
+	setPreviousSelection: function(newSelection) {
+
+		this.previousSelection[0] = newSelection;
+
+	},	
 	
 	/**
 	 * Setting values in this object constructor from the html inputs for inserting or updating

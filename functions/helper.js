@@ -128,7 +128,7 @@ setHomeFormGridPagingSearchValue: function() {
  **/
 getHomeGridSearchValue: function() {
 
-	if(localStorage.getItem("editMode") == "true")
+	if(sessionStorage.getItem("editMode") == "true")
 	{
 		alert('Please cancel save mode in order to continue');
 		return;
@@ -142,15 +142,15 @@ getHomeGridSearchValue: function() {
 
 	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", home_tenant_grid.getSearchValue(), callback.gridCallback, home_tenant_grid.getRowOnClick(), "showEdit", "fieldPrimaryKey", "asc", "1", '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');	
 
-	localStorage.setItem("arraySortColumn", "fieldPrimaryKey");
+	sessionStorage.setItem("arraySortColumn", "fieldPrimaryKey");
 	
-	localStorage.setItem("arraySortDirection", "asc");
+	sessionStorage.setItem("arraySortDirection", "asc");
 
-	localStorage.setItem("homeTenantGridPageNumber", "1");
+	sessionStorage.setItem("homeTenantGridPageNumber", "1");
 
 	document.getElementById("gridGetPostHomePagingPageNumber").value = "1";
 
-	localStorage.setItem("editMode", "false");
+	sessionStorage.setItem("editMode", "false");
 
 },
 
@@ -169,11 +169,11 @@ getHomeFormGridPagingSearchValue: function() {
 
 	grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", home_tenant_form_grid_paging.getSearchValue(), callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', "fieldPrimaryKey", "asc", "1", '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');	
 
-	localStorage.setItem("arraySortColumn_tenant_form_grid_paging", "fieldPrimaryKey");
+	sessionStorage.setItem("arraySortColumn_tenant_form_grid_paging", "fieldPrimaryKey");
 	
-	localStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
+	sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
 
-	localStorage.setItem("homeTenantFormGridPagingPageNumber", "1");
+	sessionStorage.setItem("homeTenantFormGridPagingPageNumber", "1");
 
 	document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value = "1";
 
@@ -188,7 +188,7 @@ getHomeFormGridPagingSearchValue: function() {
  **/
 updateGridPage: function(object, pageNumber)
 {
-	if(localStorage.getItem("editMode") == "true")
+	if(sessionStorage.getItem("editMode") == "true")
 	{
 		alert('Please click on save to leave save mode');
 		return;
@@ -223,17 +223,17 @@ updateGridPage: function(object, pageNumber)
 		}
 
 
-		localStorage.setItem("homeTenantGridPageNumber", pageNumber);
+		sessionStorage.setItem("homeTenantGridPageNumber", pageNumber);
 			
-		pageNumberUpdate = localStorage.getItem("homeTenantGridPageNumber");
+		pageNumberUpdate = sessionStorage.getItem("homeTenantGridPageNumber");
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
 
 		var callback = new CodeReuse.Callback();
 
-		var column = localStorage.getItem("arraySortColumn");
-		var direction = localStorage.getItem("arraySortDirection");
+		var column = sessionStorage.getItem("arraySortColumn");
+		var direction = sessionStorage.getItem("arraySortDirection");
 
 		var searchValue = home_tenant_grid.getSearchValue();
 		
@@ -260,9 +260,9 @@ updateGridPage: function(object, pageNumber)
 		}
 
 
-		localStorage.setItem("homeTenantFormGridPagingPageNumber", pageNumber);
+		sessionStorage.setItem("homeTenantFormGridPagingPageNumber", pageNumber);
 			
-		pageNumberUpdate = localStorage.getItem("homeTenantFormGridPagingPageNumber");
+		pageNumberUpdate = sessionStorage.getItem("homeTenantFormGridPagingPageNumber");
 		
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 	
@@ -270,8 +270,8 @@ updateGridPage: function(object, pageNumber)
 	
 		var callback = new CodeReuse.Callback();
 	
-		var column = localStorage.getItem("arraySortColumn_tenant_form_grid_paging");
-		var direction = localStorage.getItem("arraySortDirection_tenant_form_grid_paging");
+		var column = sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging");
+		var direction = sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging");
 	
 		var searchValue = home_tenant_form_grid_paging.getSearchValue();
 		
@@ -296,7 +296,7 @@ updateGridPage: function(object, pageNumber)
  **/
 updateGridPageArrows: function(object, direction, pageNumber)
 {
-	if(localStorage.getItem("editMode") == "true")
+	if(sessionStorage.getItem("editMode") == "true")
 	{
 		alert('Please click on save to leave save mode');
 		return;
@@ -345,7 +345,7 @@ updateGridPageArrows: function(object, direction, pageNumber)
 			document.getElementById('gridGetPostHomePagingPageNumber').value = pageNumberUpdate;
 		}
 	
-		localStorage.setItem("homeTenantGridPageNumber", pageNumberUpdate.toString());
+		sessionStorage.setItem("homeTenantGridPageNumber", pageNumberUpdate.toString());
 
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 	
@@ -353,8 +353,8 @@ updateGridPageArrows: function(object, direction, pageNumber)
 	
 		var callback = new CodeReuse.Callback();
 	
-		var column = localStorage.getItem("arraySortColumn");
-		var direction = localStorage.getItem("arraySortDirection");
+		var column = sessionStorage.getItem("arraySortColumn");
+		var direction = sessionStorage.getItem("arraySortDirection");
 	
 		var searchValue = home_tenant_grid.getSearchValue();
 	
@@ -395,7 +395,7 @@ updateGridPageArrows: function(object, direction, pageNumber)
 			document.getElementById('gridGetPostHomeFormGridPagingPageNumber').value = pageNumberUpdate;
 		}
 	
-		localStorage.setItem("homeTenantFormGridPagingPageNumber", pageNumberUpdate.toString());		
+		sessionStorage.setItem("homeTenantFormGridPagingPageNumber", pageNumberUpdate.toString());		
 	
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 	
@@ -403,8 +403,8 @@ updateGridPageArrows: function(object, direction, pageNumber)
 	
 		var callback = new CodeReuse.Callback();
 	
-		var column = localStorage.getItem("arraySortColumn_tenant_form_grid_paging");
-		var direction = localStorage.getItem("arraySortDirection_tenant_form_grid_paging");
+		var column = sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging");
+		var direction = sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging");
 	
 		var searchValue = home_tenant_form_grid_paging.getSearchValue();
 	

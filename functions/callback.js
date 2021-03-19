@@ -219,7 +219,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		{
 			tableHeaderSpan.onclick = function(headerCellSpan) {
 
-				if(localStorage.getItem("editMode") == "true")
+				if(sessionStorage.getItem("editMode") == "true")
 				{
 					var helper = new CodeReuse.Helper();
 
@@ -380,7 +380,21 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 					rowPrimaryKey = rowValues.target.parentNode.cells[0].innerText;
 				}
 
-				rowOnClick(phpFile, rowPrimaryKey, tableHtmlObjectId); 
+				
+				// unlock the previous record using tenantFormGridPagingModel.getPreviousSelection()
+
+				var tenantFormGridPagingModel = new CodeReuse.TenantFormGridPaging();
+				alert(tenantFormGridPagingModel.getPreviousSelection());
+
+				// to check if the record is locked by a user (session id)
+
+				// if not lock the record then populate the grid
+
+				
+				var tenantFormGridPagingModel = new CodeReuse.TenantFormGridPaging();
+				alert(tenantFormGridPagingModel.getPreviousSelection());
+
+				rowOnClick(phpFile, rowPrimaryKey, tableHtmlObjectId);
 			}
 		};
 			
@@ -423,7 +437,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 				
 				var helper = new CodeReuse.Helper();
 
-				if(localStorage.getItem("editMode") == "true")
+				if(sessionStorage.getItem("editMode") == "true")
 				{
 					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode.');
 				
@@ -433,7 +447,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 				{
 					grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, tablePrimaryKeyValue, home_tenant_grid.getTableHtmlObjectId());				
 
-					localStorage.setItem("editMode", "true");					
+					sessionStorage.setItem("editMode", "true");					
 				}
 			}
 			
@@ -527,10 +541,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		document.getElementById("saveNewButtonTenant").style.display = "block";
 	}
 
-	// if showPagingFooter == "true" and localStorage.getItem("editMode") != "true"
+	// if showPagingFooter == "true" and sessionStorage.getItem("editMode") != "true"
 	// then update the total pageNumbers
 	// the get_pageNumbers onload parameter will help preload the second grid, HomeTenantFormGridPaging
-	if(showPagingFooter == "true" && localStorage.getItem("editMode") != "true")
+	if(showPagingFooter == "true" && sessionStorage.getItem("editMode") != "true")
 	{	
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
@@ -588,7 +602,7 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 	if(record == undefined)
 	{
 		alert('Record no longer exists. Please refresh the grid.');
-		localStorage.setItem("editMode", "false");	
+		sessionStorage.setItem("editMode", "false");	
 		return;
 	}
 
