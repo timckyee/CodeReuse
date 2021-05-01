@@ -56,7 +56,7 @@ positionCalendar: function(inputCalendarId, divCalendarId) {
 },
 
 /**
- * Position the calendar div in line with the calendar input box
+ * Create the calendar table
  * @function
  * @name Calendar#createCalendarTable
  * 

@@ -19,6 +19,10 @@ changeTab: function(tab) {
 
 	var currentTab = tab.id.substring(3, tab.id.length);
 
+	var recordLockInformation = sessionStorage.getItem("recordLockInformation");
+	
+	//var recordLockInformationSplit = recordLockInformation.split("&");
+
 	if(currentTab == "Home")
 	{	
 		if(sessionStorage.getItem("editMode") == "true")
@@ -29,6 +33,16 @@ changeTab: function(tab) {
 
 			return;
 		}
+
+		if(recordLockInformation != "")
+		{
+			//var tableName = recordLockInformationSplit[0].split("=")[1];
+			//var primaryKey = recordLockInformationSplit[1].split("=")[1];
+			
+			alert("Please click on Clear Lock button to unlock record before leaving tab");
+			return;
+		}
+
 
 		if(document.getElementById("tenantSearchList").style.display == "block")
 		{
@@ -59,6 +73,12 @@ changeTab: function(tab) {
 
 			helper.msgBox('alert', 'Please cancel save mode in order to continue');
 
+			return;
+		}
+
+		if(sessionStorage.getItem("recordLockInformation") != "")
+		{			
+			alert("Please click on Clear Lock button to unlock record before leaving tab");
 			return;
 		}
 		
@@ -92,7 +112,13 @@ changeTab: function(tab) {
 			helper.msgBox('alert', 'Please cancel save mode in order to continue');
 
 			return;
-		}	
+		}
+
+		if(sessionStorage.getItem("recordLockInformation") != "")
+		{			
+			alert("Please click on Clear Lock button to unlock record before leaving tab");
+			return;
+		}
 		
 		if(document.getElementById("tenantSearchList").style.display == "block")
 		{
@@ -126,6 +152,12 @@ changeTab: function(tab) {
 			return;
 		}
 
+		if(sessionStorage.getItem("recordLockInformation") != "")
+		{			
+			alert("Please click on Clear Lock button to unlock record before leaving tab");
+			return;
+		}
+
 		if(document.getElementById("tenantSearchList").style.display == "block")
 		{
 			alert('Please choose Tenant from list before continuing');
@@ -153,7 +185,7 @@ changeTab: function(tab) {
 	{
 		var otherTab = otherTabs[i].cells[0].id.substring(3, otherTabs[i].length);
 		
-		if(otherTab == "Filler")
+		if(otherTab == "Filler" || otherTab == "")
 		{
 			continue;
 		}

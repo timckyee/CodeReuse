@@ -1,0 +1,46 @@
+<html>
+
+<head>
+
+<script>
+
+function test_synchronous()
+{
+	var request = new XMLHttpRequest();
+	request.open('GET', 'test_synchronous.php?arg1=test1', false);  // `false` makes the request synchronous
+	request.send(null);
+	
+	if (request.status === 200) {
+
+	  alert(request.responseText);
+	}
+
+	var request = new XMLHttpRequest();
+	request.open('GET', 'test_synchronous.php?arg1=test2', false);  // `false` makes the request synchronous
+	request.send(null);
+	
+	if (request.status === 200) {
+
+	  alert(request.responseText);
+	}	
+}
+
+
+window.addEventListener("load", function() {
+
+	test_synchronous();
+
+	return;
+});
+
+</script>
+
+</head>
+
+<body>
+
+<button onclick="test_synchronous()">Test</button>
+
+</body>
+
+</html>

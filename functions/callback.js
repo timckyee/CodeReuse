@@ -380,21 +380,94 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 					rowPrimaryKey = rowValues.target.parentNode.cells[0].innerText;
 				}
 
+				if(tableHtmlObjectId == "tableHomeTenant")
+				{
+					return;
+				}
 				
-				// unlock the previous record using tenantFormGridPagingModel.getPreviousSelection()
-
-				var tenantFormGridPagingModel = new CodeReuse.TenantFormGridPaging();
-				alert(tenantFormGridPagingModel.getPreviousSelection());
-
-				// to check if the record is locked by a user (session id)
-
-				// if not lock the record then populate the grid
-
+				var formObject;
+				var previousSelection;
+				var tableNameInDb;
+				var primaryKeyFieldName;
+				var inputPrimaryKey;
+				var gridObject;
+				var selectedRowId;
 				
-				var tenantFormGridPagingModel = new CodeReuse.TenantFormGridPaging();
-				alert(tenantFormGridPagingModel.getPreviousSelection());
+				if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
+				{
+					formObject = new CodeReuse.TenantFormGridPaging();
 
-				rowOnClick(phpFile, rowPrimaryKey, tableHtmlObjectId);
+					tableNameInDb = formObject.getTableNameInDb();
+
+					primaryKeyFieldName = formObject.getFieldsInfo()[0].name;
+
+					previousSelection = formObject.getPreviousSelection();
+
+					inputPrimaryKey = document.getElementById("inputPrimaryKeyFormGridPaging").value;
+
+					gridObject = new CodeReuse.HomeTenantFormGridPaging();
+
+					selectedRowId = gridObject.getTenantForGridPagingSelectedRowId();
+				}
+				else
+				if(tableHtmlObjectId == "tableSuite")
+				{
+					formObject = new CodeReuse.Suite();
+
+					tableNameInDb = formObject.getTableNameInDb();
+
+					primaryKeyFieldName = formObject.getFieldsInfo()[0].name;
+
+					previousSelection = formObject.getPreviousSelection();
+
+					inputPrimaryKey = document.getElementById("inputPrimaryKeySuite").value;
+				
+					gridObject = new CodeReuse.SuiteGrid();
+
+					selectedRowId = gridObject.getSuiteSelectedRowId();
+				}
+				else
+				if(tableHtmlObjectId == "tableTenant")
+				{
+					formObject = new CodeReuse.Tenant();
+
+					tableNameInDb = formObject.getTableNameInDb();
+
+					primaryKeyFieldName = formObject.getFieldsInfo()[0].name;
+
+					previousSelection = formObject.getPreviousSelection();
+
+					inputPrimaryKey = document.getElementById("inputPrimaryKey").value;
+				
+					gridObject = new CodeReuse.TenantGrid();
+
+					selectedRowId = gridObject.getTenantSelectedRowId();
+				}
+
+				if(inputPrimaryKey != "" && selectedRowId != "")
+				{
+					if(previousSelection != undefined)
+					{
+						if(previousSelection == rowPrimaryKey)
+						{
+							alert('You have selected the same record.');
+							return;
+						}
+					}
+				}
+
+				var lock = new CodeReuse.Lock();
+
+				if(previousSelection == undefined)
+				{
+					//alert('no unlock');
+					lock.form_checkdelete_checklock_lock(tableNameInDb, primaryKeyFieldName, rowPrimaryKey, sessionStorage.getItem("userId"), rowOnClick, phpFile, tableHtmlObjectId);
+				}
+				else
+				{
+					//alert('unlock');
+					lock.form_unlock(tableNameInDb, previousSelection, primaryKeyFieldName, rowPrimaryKey, sessionStorage.getItem("userId"), rowOnClick, phpFile, tableHtmlObjectId);
+				}
 			}
 		};
 			
@@ -423,14 +496,7 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 			editButtonStyle.width = "50px";
 			
 			editButton.onclick = function(tablePrimaryKey) 
-			{
-				
-				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-		
-				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();	
-				
-				var callback = new CodeReuse.Callback();
-		
+			{		
 				var tableEdit = document.getElementById(tableHtmlObjectId);
 
 				var tablePrimaryKeyValue = tablePrimaryKey.target.parentNode.parentNode.cells[1].innerText;
@@ -443,12 +509,30 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 				
 					return;
 				}
-				else
-				{
-					grid_get_post_functions.get_populateGrid(home_tenant_grid.getPhpFile(), "populategrid", home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.arrayOldValuesTableGridEdit, callback.get_populateGrid_callback, tableEdit, tablePrimaryKeyValue, home_tenant_grid.getTableHtmlObjectId());				
 
-					sessionStorage.setItem("editMode", "true");					
+				
+				var gridObject;
+				var tableNameInDb;
+				var primaryKeyFieldName;
+				
+				if(tableHtmlObjectId == "tableHomeTenant")
+				{
+					gridObject = new CodeReuse.HomeTenantGrid();
+
+					tableNameInDb = gridObject.getTableNameInDb();
+
+					primaryKeyFieldName = gridObject.getGridColumnsInfo()[0].id;
 				}
+
+
+				var tableName_primaryKey = "tableName=" + tableNameInDb + "&primaryKey=" + tablePrimaryKeyValue;
+
+				sessionStorage.setItem("recordLockInformation", tableName_primaryKey);				
+
+				
+				var lock = new CodeReuse.Lock();
+
+				lock.grid_checkdelete_checklock_lock(tableNameInDb, primaryKeyFieldName, tablePrimaryKeyValue, sessionStorage.getItem("userId"), tableEdit);
 			}
 			
 			cell.appendChild(editButton);
@@ -618,6 +702,14 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 		}
 	}
 
+	var helper = new CodeReuse.Helper();
+
+	var homeTenantGrid = new CodeReuse.HomeTenantGrid();
+
+	helper.resetRowHighlight(homeTenantGrid.getTableHtmlObjectId());
+
+	tableEdit.rows[tableEditCount + 1].className = "highlightRow";
+	
 	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid gridBorderThin\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\" />&nbsp;&nbsp;<img id=\"inputCalendar_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\"/>&nbsp;&nbsp;<img id=\"inputCalendarTesting_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td>";
 
 	var gridEventFunctions = new CodeReuse.GridEventFunctions();

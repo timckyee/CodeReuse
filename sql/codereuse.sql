@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.10
--- https://www.phpmyadmin.net
+-- version 4.9.7
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 12, 2021 at 12:50 AM
--- Server version: 5.5.65-MariaDB
--- PHP Version: 5.4.16
+-- Host: localhost:8889
+-- Generation Time: May 01, 2021 at 12:55 AM
+-- Server version: 5.7.32
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,13 +28,13 @@ USE `codereuse`;
 -- Table structure for table `tableGridGetPost2`
 --
 
-CREATE TABLE IF NOT EXISTS `tableGridGetPost2` (
+CREATE TABLE `tableGridGetPost2` (
   `fieldPrimaryKey` int(11) NOT NULL,
   `field1` date NOT NULL,
   `field2` date NOT NULL,
   `field3` int(11) NOT NULL,
   `field4` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tableGridGetPost2`
@@ -56,10 +56,10 @@ INSERT INTO `tableGridGetPost2` (`fieldPrimaryKey`, `field1`, `field2`, `field3`
 -- Table structure for table `tableGridGetPostBuilding`
 --
 
-CREATE TABLE IF NOT EXISTS `tableGridGetPostBuilding` (
+CREATE TABLE `tableGridGetPostBuilding` (
   `buildingId` int(11) NOT NULL,
   `buildingName` varchar(14) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tableGridGetPostBuilding`
@@ -72,15 +72,38 @@ INSERT INTO `tableGridGetPostBuilding` (`buildingId`, `buildingName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tableGridGetPostLock`
+--
+
+CREATE TABLE `tableGridGetPostLock` (
+  `TableName` varchar(40) NOT NULL,
+  `PrimaryKey` int(11) NOT NULL,
+  `UserId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tableGridGetPostSession`
+--
+
+CREATE TABLE `tableGridGetPostSession` (
+  `UserId` int(11) NOT NULL,
+  `SessionId` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tableGridGetPostSuite`
 --
 
-CREATE TABLE IF NOT EXISTS `tableGridGetPostSuite` (
+CREATE TABLE `tableGridGetPostSuite` (
   `suiteId` int(11) NOT NULL,
   `suiteNumber` varchar(10) NOT NULL,
   `buildingId` int(11) NOT NULL,
   `location` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tableGridGetPostSuite`
@@ -98,12 +121,12 @@ INSERT INTO `tableGridGetPostSuite` (`suiteId`, `suiteNumber`, `buildingId`, `lo
 -- Table structure for table `tableGridGetPostTenant`
 --
 
-CREATE TABLE IF NOT EXISTS `tableGridGetPostTenant` (
+CREATE TABLE `tableGridGetPostTenant` (
   `tenantId` int(11) NOT NULL,
   `suiteId` int(11) NOT NULL,
   `firstname` varchar(40) NOT NULL,
   `lastname` varchar(40) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tableGridGetPostTenant`
@@ -114,6 +137,29 @@ INSERT INTO `tableGridGetPostTenant` (`tenantId`, `suiteId`, `firstname`, `lastn
 (2, 2, 'firstname2', 'lastname'),
 (3, 3, 'firstname3', 'lastname'),
 (4, 4, 'firstname4', 'lastname');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tableGridGetPostUsers`
+--
+
+CREATE TABLE `tableGridGetPostUsers` (
+  `userId` int(11) NOT NULL,
+  `firstname` varchar(40) NOT NULL,
+  `lastname` varchar(40) NOT NULL,
+  `username` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `password` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tableGridGetPostUsers`
+--
+
+INSERT INTO `tableGridGetPostUsers` (`userId`, `firstname`, `lastname`, `username`, `email`, `password`) VALUES
+(1, 'Firstname', 'Lastname', 'TestUser', 'testuser@testing.com', '$2y$10$Mbhw1I1.5L9TIRQIT6kjquroeot9yjk5XEi.USwoT3txl4uT6Ns0G'),
+(2, 'Firstname', 'Lastname', 'TestUser4', 'testuser4@testing.com', '$2y$10$TDXeoaQbUTs5QMK6mX83fO8g.F.s1PxThBo6jOjKxuG4R6jY0nKS2');
 
 --
 -- Indexes for dumped tables
@@ -132,6 +178,12 @@ ALTER TABLE `tableGridGetPostBuilding`
   ADD PRIMARY KEY (`buildingId`);
 
 --
+-- Indexes for table `tableGridGetPostLock`
+--
+ALTER TABLE `tableGridGetPostLock`
+  ADD PRIMARY KEY (`TableName`,`PrimaryKey`);
+
+--
 -- Indexes for table `tableGridGetPostSuite`
 --
 ALTER TABLE `tableGridGetPostSuite`
@@ -144,6 +196,12 @@ ALTER TABLE `tableGridGetPostTenant`
   ADD PRIMARY KEY (`tenantId`);
 
 --
+-- Indexes for table `tableGridGetPostUsers`
+--
+ALTER TABLE `tableGridGetPostUsers`
+  ADD PRIMARY KEY (`userId`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -151,22 +209,32 @@ ALTER TABLE `tableGridGetPostTenant`
 -- AUTO_INCREMENT for table `tableGridGetPost2`
 --
 ALTER TABLE `tableGridGetPost2`
-  MODIFY `fieldPrimaryKey` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `fieldPrimaryKey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `tableGridGetPostBuilding`
 --
 ALTER TABLE `tableGridGetPostBuilding`
-  MODIFY `buildingId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `buildingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `tableGridGetPostSuite`
 --
 ALTER TABLE `tableGridGetPostSuite`
-  MODIFY `suiteId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `suiteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `tableGridGetPostTenant`
 --
 ALTER TABLE `tableGridGetPostTenant`
-  MODIFY `tenantId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `tenantId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tableGridGetPostUsers`
+--
+ALTER TABLE `tableGridGetPostUsers`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

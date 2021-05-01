@@ -20,7 +20,7 @@ TenantHomeGridOnClickHandler: function() {
 /**
  * TenantFormGridPaging row onclick handler
  * @function
- * @name Handler#TenantGridOnClickHandler
+ * @name Handler#TenantFormGridPagingOnClickHandler
  * 
  * @param {string} phpFile php file name and location
  * @param {string} gridRowId row onclick primary key
@@ -98,6 +98,9 @@ SuiteGridOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
 	
 	var callback = new CodeReuse.Callback();
 	
+	// save the previous grid rowd id selection for unlocking the record after moving to other record
+	suiteModel.setPreviousSelection(gridRowId);
+	
 	grid_get_post_functions.get_populateForm(phpFile, "populateSuite", gridRowId, suiteModel.getFieldsInfo(), '', arrayOldValuesTable, callback.get_populateForm_callback);
 	
 },
@@ -141,6 +144,9 @@ TenantGridOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
 	
 	var callback = new CodeReuse.Callback();
 	
+	// save the previous grid rowd id selection for unlocking the record after moving to other record
+	tenantModel.setPreviousSelection(gridRowId);
+
 	grid_get_post_functions.get_populateForm(phpFile, "populateTenant", gridRowId, tenantModel.getFieldsInfo(), autocompleteInputs, arrayOldValuesTable, callback.get_populateForm_callback);
 	
 },
@@ -163,17 +169,30 @@ sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, 
 },
 
 /**
- * Clicking on HomeTenantGrid header row that goes to the server
+ * Clicking on HomeTenantGridPaging header row that goes to the server
  * @function
  * @name Handler#sortTableColumnOnclickHandlerHomeTenantFormGridPaging
  * 
- * @param {string} sortTableHtmlObjectId the table being sorted
  * @param {Array} gridColumnsInfo array of grid columns and properties
  * @param {string} column the column number that is being sorted
  * @param {string} pageNumber the current page number of the grid
  **/
 sortTableColumnOnclickHandlerHomeTenantFormGridPaging: function(gridColumnsInfo, column, pageNumber) {
 	
+	var homeTenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging()
+
+	var formObject = new CodeReuse.TenantFormGridPaging();
+
+	var tableNameInDb = formObject.getTableNameInDb();
+
+	var selectedId = homeTenantFormGridPaging.getTenantForGridPagingSelectedRowId()
+
+	var lock = new CodeReuse.Lock();
+		
+	lock.unlock_sort(gridColumnsInfo, column, pageNumber, tableNameInDb, selectedId, sessionStorage.getItem("userId"));
+
+
+	/*
 	var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
 	
 	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
@@ -218,6 +237,8 @@ sortTableColumnOnclickHandlerHomeTenantFormGridPaging: function(gridColumnsInfo,
 	{
 		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', column, direction, pageNumber, '', "false", '', '', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
 	}
+	*/
+	
 },
 
 /**

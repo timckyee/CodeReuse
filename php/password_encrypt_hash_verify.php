@@ -22,7 +22,7 @@ There is no way you can decrypt that easily, so you will have
 to ask the user for a new password for password recovery.
 */
 
-function addUser($name, $email, $password, $con){
+function addUser($firstname, $lastname, $username, $email, $password, $con){
 
 
 	$sql = "SELECT count(userId) as UserId FROM `tableGridGetPostUsers` WHERE `email`='" . $email . "'";
@@ -38,9 +38,9 @@ function addUser($name, $email, $password, $con){
     }
 
 
-    $sql = "INSERT INTO `tableGridGetPostUsers` (`name`, `email`, `password`) VALUES (?,?,?)";
+    $sql = "INSERT INTO `tableGridGetPostUsers` (`firstname`,`lastname`,`username`,`email`,`password`) VALUES (?,?,?,?,?)";
     $stmt = $con->prepare($sql);
-    $stmt->bind_param("sss", $name, $email, $hash);
+    $stmt->bind_param("sssss", $firstname, $lastname, $username, $email, $hash);
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     $stmt->execute();
@@ -72,7 +72,7 @@ function addUser($name, $email, $password, $con){
   // refresh the page
   // there should now be an entry in the tableGridGetPostUsers
 
-  //$pass = addUser("John Doe", "john@doe.com", "password123", $mysqli);
+  //$pass = addUser("John", "Doe", "jdoe", "john@doe.com", "password123", $mysqli);
 
 
   // instructions to decrypt data

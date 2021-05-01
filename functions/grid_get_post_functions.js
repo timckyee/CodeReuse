@@ -424,7 +424,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 			if(result == true)
 			{
 				updateString = updateString.substr(0, updateString.length - 1);
-						
+
 				window.postXmlHttpRequest.onreadystatechange = function() {
 					
 					if (this.readyState == 4 && this.status == 200) {
@@ -463,11 +463,11 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 	
 							if(searchValue == "" || searchValue == undefined)
 							{
-								grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging"), sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging"), '', '', tableHtmlObjectId, home_tenant_form_grid_paging.getPageSize(), '');
+								grid_get_post_function.showTheGridAfterSaveRecord(home_tenant_form_grid_paging.getPhpFile(), "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging"), sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging"), '', '', tableHtmlObjectId, home_tenant_form_grid_paging.getPageSize(), '');
 							}
 							else
 							{
-								grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehomeSearch", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging"), sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging"), "searchValue", searchValue, tableHtmlObjectId, home_tenant_form_grid_paging.getPageSize(), '');
+								grid_get_post_function.showTheGridAfterSaveRecord(home_tenant_form_grid_paging.getPhpFile(), "gridtablehomeSearch", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging"), sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging"), "searchValue", searchValue, tableHtmlObjectId, home_tenant_form_grid_paging.getPageSize(), '');
 							}
 						}
 						
@@ -480,7 +480,7 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 				window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				window.postXmlHttpRequest.send(formVariables);
 			}
-		});		
+		});	
 	}
 },
 
@@ -557,27 +557,20 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 		{
 			sessionStorage.setItem("editMode", "false");
 
-			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-
-			var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+			var gridObject;
+			var tableNameInDb;
+			var primaryKeyFieldName;
 			
-			var callback = new CodeReuse.Callback();
-	
-			var column = sessionStorage.getItem("arraySortColumn");
-			var direction = sessionStorage.getItem("arraySortDirection");
-	
-			var pageNumber = sessionStorage.getItem("homeTenantGridPageNumber");
-	
-			var searchValue = home_tenant_grid.getSearchValue();
-	
-			if(searchValue == "" || searchValue == undefined)
+			if(tableHtmlObjectId == "tableHomeTenant")
 			{
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "false", '', '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
+				gridObject = new CodeReuse.HomeTenantGrid();
+
+				tableNameInDb = gridObject.getTableNameInDb();
 			}
-			else
-			{
-				grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "false", '', '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
-			}
+
+			var lock = new CodeReuse.Lock();
+
+			lock.grid_unlock_cancel(tableNameInDb, htmlObjectPrimaryKeyValue, sessionStorage.getItem("userId"));
 		}
 
 		});
@@ -599,20 +592,20 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 					
 					if (this.readyState == 4 && this.status == 200) {
 
-						var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
-
-						var home_tenant_grid = new CodeReuse.HomeTenantGrid();
-
-						var searchValue = home_tenant_grid.getSearchValue();
-
-						if(searchValue == "" || searchValue == undefined)
+						var gridObject;
+						var tableNameInDb;
+						var primaryKeyFieldName;
+						
+						if(tableHtmlObjectId == "tableHomeTenant")
 						{
-							grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, sessionStorage.getItem("arraySortColumn"), sessionStorage.getItem("arraySortDirection"), '', '', tableHtmlObjectId, home_tenant_grid.getPageSize(), '');
+							gridObject = new CodeReuse.HomeTenantGrid();
+			
+							tableNameInDb = gridObject.getTableNameInDb();
 						}
-						else
-						{
-							grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehomeSearch", "getPageNumber", "savePrimaryKey", htmlObjectPrimaryKeyValue, sessionStorage.getItem("arraySortColumn"), sessionStorage.getItem("arraySortDirection"), "searchValue", searchValue, tableHtmlObjectId, home_tenant_grid.getPageSize(), '');
-						}
+			
+						var lock = new CodeReuse.Lock();
+			
+						lock.grid_unlock_update(tableNameInDb, htmlObjectPrimaryKeyValue, sessionStorage.getItem("userId"));
 					}
 				}
 
@@ -627,27 +620,20 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 			{
 				sessionStorage.setItem("editMode", "false");
 
-				var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-	
-				var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+				var gridObject;
+				var tableNameInDb;
+				var primaryKeyFieldName;
 				
-				var callback = new CodeReuse.Callback();
-		
-				var column = sessionStorage.getItem("arraySortColumn");
-				var direction = sessionStorage.getItem("arraySortDirection");
-		
-				var pageNumber = sessionStorage.getItem("homeTenantGridPageNumber");
-		
-				var searchValue = home_tenant_grid.getSearchValue();
-		
-				if(searchValue == "" || searchValue == undefined)
+				if(tableHtmlObjectId == "tableHomeTenant")
 				{
-					grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "false", '', '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
+					gridObject = new CodeReuse.HomeTenantGrid();
+	
+					tableNameInDb = gridObject.getTableNameInDb();
 				}
-				else
-				{
-					grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, '', "showEdit", column, direction, pageNumber, '', "false", '', '', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), '');
-				}
+	
+				var lock = new CodeReuse.Lock();
+	
+				lock.grid_unlock_cancel(tableNameInDb, htmlObjectPrimaryKeyValue, sessionStorage.getItem("userId"));
 			}
 		});
 	}
@@ -742,37 +728,50 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 							arrayOldValuesTable[fieldsInfo[insert].htmlObjectId] = htmlObjectFieldsValuesInsert[insert];
 					}		
 					
-					var suiteGrid = new CodeReuse.SuiteGrid();
-					var tenantGrid = new CodeReuse.TenantGrid();
-					var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
+					var formObject;
+					var previousSelection;
+					var tableNameInDb;
 
-					if(tableHtmlObjectId == suiteGrid.getTableHtmlObjectId() || tableHtmlObjectId == tenantGrid.getTableHtmlObjectId())
+					
+					if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 					{
-						var highlightId = insertId;
+						formObject = new CodeReuse.TenantFormGridPaging();
+	
+						tableNameInDb = formObject.getTableNameInDb();
 
-						if(refreshGridCallback != undefined)
-							refreshGridCallback(highlightId);						
+						formObject.setPreviousSelection(insertId);
 					}
 					else
-					if(tableHtmlObjectId == home_tenant_form_grid_paging.getTableHtmlObjectId())
+					if(tableHtmlObjectId == "tableSuite")
 					{
-
-						var grid_get_post_function = new CodeReuse.Grid_Get_Post_Functions;
-
-						var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
-
-						var searchValue = home_tenant_form_grid_paging.getSearchValue();
-
-						if(searchValue == "" || searchValue == undefined)
-						{
-							grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehome", "getPageNumber", "savePrimaryKey", insertId, sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging"), sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging"), '', '', tableHtmlObjectId, home_tenant_form_grid_paging.getPageSize(), '');
-						}
-						else
-						{
-							grid_get_post_function.showTheGridAfterSaveRecord(phpFile, "gridtablehomeSearch", "getPageNumber", "savePrimaryKey", insertId, sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging"), sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging"), "searchValue", searchValue, tableHtmlObjectId, home_tenant_form_grid_paging.getPageSize(), '');
-						}
+						formObject = new CodeReuse.Suite();
+	
+						tableNameInDb = formObject.getTableNameInDb();
+	
+						formObject.setPreviousSelection(insertId);
 					}
-		
+					else
+					if(tableHtmlObjectId == "tableTenant")
+					{
+						formObject = new CodeReuse.Tenant();
+	
+						tableNameInDb = formObject.getTableNameInDb();
+	
+						formObject.setPreviousSelection(insertId);
+					}
+	
+					var tableName_primaryKey = "tableName=" + tableNameInDb + "&primaryKey=" + insertId;
+
+					sessionStorage.setItem("recordLockInformation", tableName_primaryKey);
+
+					if(tableHtmlObjectId == "tableSuite")
+					{
+						document.getElementById("inputSuiteNumber").readOnly = true;
+					}
+
+					var lock = new CodeReuse.Lock();
+
+					lock.form_lock_insertRecord(tableNameInDb, insertId, sessionStorage.getItem("userId"), tableHtmlObjectId, refreshGridCallback);		
 				}
 			}	
 			

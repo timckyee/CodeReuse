@@ -22,6 +22,10 @@ CodeReuse.Suite = function() {
 
 	this.recordExist = "recordExistsSuiteForm";
 
+	this.suiteNumberExistsQuery = "suiteNumberExists";	
+
+	this.tableNameInDb = "tableGridGetPostSuite";
+
 	this.suiteInsertQueryName = "createRecordTableGridGetPostSuite";
 };
 
@@ -33,10 +37,22 @@ CodeReuse.Suite.prototype = {
 	 **/	
 	arrayOldValuesTable: [],
 	
+	/**
+	 * Save the record id of the previous selection to unlock the record
+	 * @var {Array} previousSelection
+	 **/
+	 previousSelection: [],
+
 	getFieldsInfo: function() {
 		
 		return this.fields;
 	},
+
+	getTableNameInDb: function() {
+
+		return this.tableNameInDb;
+
+	},	
 
 	getRecordExistsSuiteForm: function() {
 
@@ -48,6 +64,12 @@ CodeReuse.Suite.prototype = {
 		
 		return this.phpFileGridGetPost;	
 		
+	},
+
+	getSuiteNumberExistsQuery: function() {
+
+		return this.suiteNumberExistsQuery;
+
 	},
 
 	getSuiteUpdateQueryName: function() {
@@ -62,6 +84,18 @@ CodeReuse.Suite.prototype = {
 
 	},
 	
+	getPreviousSelection: function() {
+
+		return this.previousSelection[0];
+
+	},
+
+	setPreviousSelection: function(newSelection) {
+
+		this.previousSelection[0] = newSelection;
+
+	},	
+
 	/**
 	 * Setting values in this object constructor from the html inputs for inserting or updating
 	 * @function
@@ -202,15 +236,18 @@ CodeReuse.Suite.prototype = {
 	 * 
 	 * @param {Array} SuiteValues suite form values to save
 	 * @param {string} inputPrimaryKey the primary key
+	 * @param {string} inputBuildingId the building id
+	 * @param {string} inputSuiteNumber the suite number
+	 * @param {string} saveType either update or insert
 	 **/
-	 recordExists: function(SuiteValues, inputPrimaryKey) {
+	 recordExists: function(SuiteValues, inputPrimaryKey, inputBuildingId, inputSuiteNumber, saveType) {
 
 		window.getXmlHttpRequest.onreadystatechange = function() {
 		
 			if (this.readyState == 4 && this.status == 200) {
 
 				var response = JSON.parse(this.responseText);
-
+				
 				if(response == "0")
 				{
 					alert('Record no longer exists. Please refresh the form.')
@@ -218,7 +255,6 @@ CodeReuse.Suite.prototype = {
 				}
 				else
 				{
-					// record exists so update record
 					var suiteForm = new CodeReuse.Suite();
 
 					suiteForm.setFieldValuesFromInputs(SuiteValues, inputPrimaryKey);
@@ -228,10 +264,56 @@ CodeReuse.Suite.prototype = {
 			}
 		}
 		
-		var queryString = "queryName" + "=" + this.recordExist + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
+		var queryString = "queryName" + "=" + this.getRecordExistsSuiteForm() + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
 		
 		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
 		window.getXmlHttpRequest.send();		
 		
-	}	
+	},
+
+	/**
+	 * To check if record suite number exists before saving or inserting
+	 * @function
+	 * @name Suite#suiteNumberExists
+	 * 
+	 * @param {Array} SuiteValues suite form values to save
+	 * @param {string} inputPrimaryKey the primary key
+	 * @param {string} inputBuildingId building id
+	 * @param {string} inputSuiteNumber the suite number
+	 * @param {string} saveType either update or insert 
+	 **/
+	 suiteNumberExists: function(SuiteValues, inputPrimaryKey, inputBuildingId, inputSuiteNumber, saveType) {
+		
+		window.getXmlHttpRequest.onreadystatechange = function() {
+		
+			if (this.readyState == 4 && this.status == 200) {
+
+				var response = this.responseText;
+
+				if(response == "1" && saveType != "update")
+				{
+					alert("Suite Number with Building Id exists. Please choose another.");
+					return;
+				}
+
+				var suiteForm = new CodeReuse.Suite();
+
+				if(saveType == "update") 
+				{
+					suiteForm.recordExists(SuiteValues, inputPrimaryKey, inputBuildingId, inputSuiteNumber, saveType);	
+				}
+				else if(saveType == "insert") 
+				{				
+					suiteForm.setFieldValuesFromInputs(SuiteValues, "");
+					suiteForm.suiteInsert();
+				}
+			}
+		}
+		
+		var queryString = "queryName" + "=" + this.getSuiteNumberExistsQuery() + "&" + "inputBuildingId" + "=" + inputBuildingId + "&" + "inputSuiteNumber" + "=" + inputSuiteNumber;
+		
+		window.getXmlHttpRequest.open("GET", this.getPhpFile() + "?" + queryString, true);
+		window.getXmlHttpRequest.send();		
+		
+	}
 }

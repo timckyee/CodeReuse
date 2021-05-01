@@ -15,6 +15,8 @@ CodeReuse.Controller.prototype = {
 	 **/
 	suiteSave: function() {
 		
+		// check if suite number exists
+
 		var saveType;
 		
 		var inputPrimaryKey = document.getElementById("inputPrimaryKeySuite").value;
@@ -40,18 +42,8 @@ CodeReuse.Controller.prototype = {
 		}
 		
 		var suiteForm = new CodeReuse.Suite();	
-				
-		if(saveType == "update") 
-		{
-			// only update record if exists
-			suiteForm.recordExists(SuiteValues, inputPrimaryKey);
-		}
-		else if(saveType == "insert") 
-		{
-			// if save type not update then insert
-			suiteForm.setFieldValuesFromInputs(SuiteValues, "");
-			suiteForm.suiteInsert();		
-		}
+		
+		suiteForm.suiteNumberExists(SuiteValues, inputPrimaryKey, inputBuildingId, inputSuiteNumber, saveType);
 		
 	},	
 	
@@ -231,6 +223,23 @@ CodeReuse.Controller.prototype = {
 
 				controller.refreshSelectTenantGrid();
 				controller.resetTenantFields();
+
+
+				var formObject = new CodeReuse.Tenant();
+
+				var tableNameInDb = formObject.getTableNameInDb();
+		
+				var gridObject = new CodeReuse.TenantGrid();
+		
+				var selectedRowId = gridObject.getTenantSelectedRowId();
+		
+				if(selectedRowId != undefined)
+				{
+					var lock = new CodeReuse.Lock();
+		
+					lock.unlock(tableNameInDb, selectedRowId, sessionStorage.getItem("userId"));
+				}
+
 			}
 		}
 

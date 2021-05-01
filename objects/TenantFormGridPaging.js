@@ -30,6 +30,8 @@ CodeReuse.TenantFormGridPaging = function() {
 
 	this.recordExist = "recordExistsHomeTenantFormGridPaging";
 
+	this.tableNameInDb = "tableGridGetPost2";
+
 	this.tenantInsertQueryName = "createRecordTableGridGetPost";
 	
 };
@@ -53,6 +55,12 @@ CodeReuse.TenantFormGridPaging.prototype = {
 		return this.fields;
 	},
 	
+	getTableNameInDb: function() {
+
+		return this.tableNameInDb;
+
+	},
+
 	getAutocompleteInputs: function() {
 	
 		return this.autocomplete_inputs;
@@ -158,7 +166,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 	/**
 	 * Tenant form grid paging form update
 	 * @function
-	 * @name TenantFormGridPaging#tenantUpdate
+	 * @name TenantFormGridPaging#tenantFormGridUpdate
 	 **/
 	tenantFormGridUpdate: function() {
 
@@ -166,7 +174,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 										
 		var helper = new CodeReuse.Helper();								
 												
-		if(helper.validateHtmlObjectFieldsTenant(this.fields))
+		if(helper.validateHtmlObjectFieldsTenantFormGridPaging(this.fields))
 		{	
 			var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 			
@@ -232,7 +240,7 @@ CodeReuse.TenantFormGridPaging.prototype = {
 			}
 		}
 		
-		var queryString = "queryName" + "=" + this.recordExist + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
+		var queryString = "queryName" + "=" + this.getRecordExistsHomeTenantFormGridPaging() + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
 		
 		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
 		window.getXmlHttpRequest.send();		

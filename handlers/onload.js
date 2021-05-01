@@ -3,79 +3,37 @@
 var images = [];
 
 window.addEventListener("load", function() {
+
+    var currpage    = window.location.href;
+    var lasturl     = sessionStorage.getItem("last_url");
+
+    if(lasturl == null || lasturl.length === 0 || currpage !== lasturl ){
+
+        alert("Initial page load");
+
+        sessionStorage.setItem("last_url", currpage);
+
+    } else {
+
+		alert("Refreshed page"); 
+
+		var onunload = new CodeReuse.Onunload();
+    
+		onunload.unlock_remove_session(); 
+    }
 	
-	controller = new CodeReuse.Controller();
-	
-	var onload = new CodeReuse.Onload;
-
-	onload.htmlBody_init_class();
-
-	onload.init_gridGetPost_xmlHttpRequests();
-	
-	onload.init_autocomplete_inputs();
-	
-	onload.init_calendar_inputs();
-	
-	sessionStorage.clear();
-
-	sessionStorage.setItem("editMode", "false");
-
-
-	sessionStorage.setItem("homeTenantGridPageNumber", "1");
-
-	sessionStorage.setItem("homeTenantFormGridPagingPageNumber", "1");
-
-
-	document.getElementById("gridGetPostHomePagingPageNumber").value = "1";
-
-	document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value = "1";
-
-
-	sessionStorage.setItem("arraySortColumn", "fieldPrimaryKey");
-	
-	sessionStorage.setItem("arraySortDirection", "asc");
-
-
-	sessionStorage.setItem("arraySortColumn_tenant_form_grid_paging", "fieldPrimaryKey");
-	
-	sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
-
-
-	sessionStorage.setItem("arraySortColumn_suite", "suiteId");
-	
-	sessionStorage.setItem("arraySortDirection_suite", "asc");
-	
-	sessionStorage.setItem("arraySortColumn_tenant", "tenantId");
-	
-	sessionStorage.setItem("arraySortDirection_tenant", "asc");
-
-
-	var server = new CodeReuse.Config();
+	var query = window.location.search.substring(1).split("&");
 
 	var helper = new CodeReuse.Helper();
 
-	helper.preload(
-		[server.getServerUrl() + "/images/pngfuel.com.up.gif", 
-		server.getServerUrl() + "/images/pngfuel.com.down.gif"]
-	);
+	var GET_parameters = helper.parameterPassingUrl(query);
 
+	var sessionId = GET_parameters["sessionId"];
 
-	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-		
-	var home_tenant_grid = new CodeReuse.HomeTenantGrid();
+	var session = new CodeReuse.Session();
 
-	var callback = new CodeReuse.Callback();
+	session.verify_session(sessionId);
 
-	var sortColumn = sessionStorage.getItem("arraySortColumn");
-
-	var sortDirection = sessionStorage.getItem("arraySortDirection");
-
-	var pageNumber = sessionStorage.getItem("homeTenantGridPageNumber");
-
-	grid_get_post_functions.grid(home_tenant_grid.getGridGetPostDivElement(), home_tenant_grid.getPhpFile(), home_tenant_grid.getRefreshHomeTenantGridQueryName(), home_tenant_grid.getGridIdField(), home_tenant_grid.getGridColumnsInfo(), home_tenant_grid.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_grid.getRowOnClick(), "showEdit", sortColumn, sortDirection, pageNumber, '', "false", '' ,'', "true", home_tenant_grid.getHomeTenantGridPagingDiv(), home_tenant_grid.getPageSize(), "true");
-
-	//tenant.refreshTenantGridHome();
-	
 });
 
 /**

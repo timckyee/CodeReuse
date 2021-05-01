@@ -12,7 +12,7 @@ CodeReuse.TenantGrid = function() {
 		
 		{ colName: "Primary Key", id: "tenantId", colType: "int" },
 		{ colName: "Building", id: "buildingName", colType: "string" },
-		{ colName: "Tenant Name", id: "suiteNumber", colType: "string" },
+		{ colName: "Suite Number", id: "suiteNumber", colType: "string" },
 		{ colName: "First Name", id: "firstname", colType: "string" },
 		{ colName: "Last Name", id: "lastname", colType: "string" }
 	];

@@ -53,6 +53,8 @@ CodeReuse.HomeTenantGrid = function() {
 
 	this.recordExist = "recordExistsHomeTenantGrid";
 
+	this.tableNameInDb = "tableGridGetPost2";
+
 	this.homeTenantGridPagingDiv = "gridGetPostHomePaging";
 };
 
@@ -76,6 +78,12 @@ CodeReuse.HomeTenantGrid.prototype = {
 		
 	},
 	
+	getTableNameInDb: function() {
+
+		return this.tableNameInDb;
+
+	},
+
 	getRowOnClick: function() {
 		
 		return this.rowOnClick;
@@ -296,7 +304,7 @@ CodeReuse.HomeTenantGrid.prototype = {
 			}
 		}
 		
-		var queryString = "queryName" + "=" + this.recordExist + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
+		var queryString = "queryName" + "=" + this.getRecordExistsHomeTenantGrid() + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
 		
 		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
 		window.getXmlHttpRequest.send();		

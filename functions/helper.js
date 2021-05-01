@@ -15,6 +15,30 @@ CodeReuse.Helper = function() {
 CodeReuse.Helper.prototype = {
 
 /**
+ * Validate tenant form grid paging for empty values
+ * @function
+ * @name Helper#c
+ * 
+ * @param {string} fieldsInfo the fields in the tenant form grid paging object
+ **/
+ validateHtmlObjectFieldsTenantFormGridPaging: function(fieldsInfo)
+ {
+	 for(validate=0; validate<fieldsInfo.length; validate++)
+	 {
+		 if(fieldsInfo[validate].htmlObjectType != "primaryKey")
+		 {
+			 if(document.getElementById(fieldsInfo[validate].htmlObjectId).value == "")
+			 {
+				 alert(fieldsInfo[validate].description + ' ' + 'cannot be empty');
+				 return false;
+			 }
+		 }
+	 }
+	 
+	 return true;
+ },
+
+/**
  * Validate suite form for empty values
  * @function
  * @name Helper#validateHtmlObjectFieldsSuite
@@ -66,13 +90,13 @@ validateHtmlObjectFieldsTenant: function(fieldsInfo)
 },
 
 /**
- * Validate tenant home grid for empty values
+ * Validate tenant form grid paging for empty values
  * @function
  * @name Helper#validateHtmlObjectFieldsHomeTenantGrid
  * 
- * @param {string} columnsInfo the columns of the home grid
+ * @param {string} columnsInfo the columns of the home tenant grid
  **/
-validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
+ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 {
 	for(validate=0; validate<columnsInfo.length; validate++)
 	{
@@ -87,6 +111,151 @@ validateHtmlObjectFieldsHomeTenantGrid: function(columnsInfo)
 	}
 	
 	return true;
+},
+
+/**
+ * Updating building selection for suite form
+ * @function
+ * @name Helper#selectBuildingSuite
+ **/
+ selectBuildingSuite: function(object) {
+
+	if(object.value == '')
+	{ 
+		document.getElementById('gridGetPostSuite').style.display = 'none';
+		document.getElementById('saveNewButtonSuite').style.display = 'none';
+	}
+	else 
+	{
+		document.getElementById('gridGetPostSuite').style.display = 'block';
+		document.getElementById("inputSuiteNumber").readOnly = true;
+	}
+
+	controller.refreshSelectSuiteGrid();
+	controller.resetSuiteFields();
+
+	var formObject = new CodeReuse.Suite();
+
+	var tableNameInDb = formObject.getTableNameInDb();
+
+	var gridObject = new CodeReuse.SuiteGrid();
+
+	var selectedRowId = gridObject.getSuiteSelectedRowId();
+
+	document.getElementById("inputSuiteNumber").readOnly = false;
+
+	if(selectedRowId != undefined)
+	{
+		var lock = new CodeReuse.Lock();
+
+		lock.unlock(tableNameInDb, selectedRowId, sessionStorage.getItem("userId"));
+	}
+},
+
+/**
+ * Updating building selection for tenant form
+ * @function
+ * @name Helper#selectBuildingTenant
+ **/
+ selectBuildingTenant: function(object) {
+
+	if(object.value == '')
+	{ 
+		document.getElementById('gridGetPost').style.display = 'none';
+		document.getElementById('saveNewButtonTenant').style.display = 'none';
+
+		controller.refreshSelectTenantGrid();
+		controller.resetTenantFields();
+
+		var formObject = new CodeReuse.Tenant();
+
+		var tableNameInDb = formObject.getTableNameInDb();
+
+		var gridObject = new CodeReuse.TenantGrid();
+
+		var selectedRowId = gridObject.getTenantSelectedRowId();
+
+		if(selectedRowId != undefined)
+		{
+			var lock = new CodeReuse.Lock();
+
+			lock.unlock(tableNameInDb, selectedRowId, sessionStorage.getItem("userId"));
+		}
+	} 
+	else
+	{ 
+		document.getElementById('gridGetPost').style.display = 'block';
+		controller.loadSuiteSelections(object); 
+	}
+},
+
+/**
+ * Clicking on new or clear lock on Tenant Form Grid Paging
+ * @function
+ * @name Helper#newTenantFormGridPaging
+ **/
+ newTenantFormGridPaging: function() {
+
+	var tenantFormGridPagingPrimaryKey = document.getElementById("inputPrimaryKeyFormGridPaging").value;
+
+	controller.resetTenantFormGridPagingFields(); 
+	var tenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging();
+	var helper = new CodeReuse.Helper();
+	helper.resetRowHighlight(tenantFormGridPaging.getTableHtmlObjectId());
+
+	var formObject = new CodeReuse.TenantFormGridPaging();
+	var tableNameInDb = formObject.getTableNameInDb();
+
+	var lock = new CodeReuse.Lock();
+
+	lock.unlock(tableNameInDb, tenantFormGridPagingPrimaryKey, sessionStorage.getItem("userId"));
+
+},
+
+/**
+ * Clicking on new or clear lock on Suite Form
+ * @function
+ * @name Helper#newSuiteForm
+ **/
+ newSuiteForm: function() {
+ 
+	var suiteFormPrimaryKey = document.getElementById("inputPrimaryKeySuite").value;
+	
+	controller.resetSuiteFields();
+	var suiteGrid = new CodeReuse.SuiteGrid();
+	var helper = new CodeReuse.Helper();
+	helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());
+
+	var formObject = new CodeReuse.Suite();
+	var tableNameInDb = formObject.getTableNameInDb();
+
+	var lock = new CodeReuse.Lock();
+
+	lock.unlock(tableNameInDb, suiteFormPrimaryKey, sessionStorage.getItem("userId"));
+
+},
+
+/**
+ * Clicking on new or clear lock on Tenant Form
+ * @function
+ * @name Helper#newTenantForm
+ **/
+ newTenantForm: function() {
+ 
+	var tenantFormPrimaryKey = document.getElementById("inputPrimaryKey").value;
+
+	controller.resetTenantFields();
+	var tenantGrid = new CodeReuse.TenantGrid();
+	var helper = new CodeReuse.Helper();
+	helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());
+
+	var formObject = new CodeReuse.Tenant();
+	var tableNameInDb = formObject.getTableNameInDb();
+
+	var lock = new CodeReuse.Lock();
+
+	lock.unlock(tableNameInDb, tenantFormPrimaryKey, sessionStorage.getItem("userId"));
+
 },
 
 /**
@@ -130,7 +299,7 @@ getHomeGridSearchValue: function() {
 
 	if(sessionStorage.getItem("editMode") == "true")
 	{
-		alert('Please cancel save mode in order to continue');
+		alert('Please cancel save mode in order to make this search');
 		return;
 	}
 
@@ -161,29 +330,67 @@ getHomeGridSearchValue: function() {
  **/
 getHomeFormGridPagingSearchValue: function() {
 
-	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-		
+	var formObject = new CodeReuse.TenantFormGridPaging();
+
+	var tableNameInDb = formObject.getTableNameInDb();
+
 	var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
 
-	var callback = new CodeReuse.Callback();
+	var selectedRowId = home_tenant_form_grid_paging.getTenantForGridPagingSelectedRowId();
 
-	grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", home_tenant_form_grid_paging.getSearchValue(), callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', "fieldPrimaryKey", "asc", "1", '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');	
+	var lock = new CodeReuse.Lock();
 
-	sessionStorage.setItem("arraySortColumn_tenant_form_grid_paging", "fieldPrimaryKey");
-	
-	sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
-
-	sessionStorage.setItem("homeTenantFormGridPagingPageNumber", "1");
-
-	document.getElementById("gridGetPostHomeFormGridPagingPageNumber").value = "1";
-
+	lock.unlock_search_home_form_grid_paging(tableNameInDb, selectedRowId, sessionStorage.getItem("userId"));
 },
 
 /**
- * Update the grid page number (setting input box beside the go button) and refreshing the grid
+ * Get url string parameters
+ * @function
+ * @name Helper#parameterPassingUrl
+ * 
+ * @param {string} query the url including parameters
+ **/
+ parameterPassingUrl: function(query) {
+
+	var GET = {};
+
+	for (var i = 0, max = query.length; i < max; i++)
+	{
+		if (query[i] === "") // check for trailing & with no param
+			continue;
+	
+		var param = query[i].split("=");
+		GET[decodeURIComponent(param[0])] = decodeURIComponent(param[1]);
+	}
+
+	return GET;
+ },
+
+/**
+ * Logout
+ * @function
+ * @name Helper#logout
+ **/
+ logout: function() {
+	
+	//needToConfirm = false;
+	
+	var confirmChoice = confirm("Do you want to logout of the system?");
+
+	if(confirmChoice == true)
+	{
+		var onunload = new CodeReuse.Onunload();
+    
+		onunload.unlock_remove_session();
+	}
+ },
+
+/**
+ * Update the grid page number (setting input box beside the go button) and refresh the grid
  * @function
  * @name Helper#updateGridPage
  * 
+ * @param {string} object points to the current html object (this)
  * @param {string} pageNumber gridGetPostHomePagingPageNumber input box value
  **/
 updateGridPage: function(object, pageNumber)
@@ -226,6 +433,7 @@ updateGridPage: function(object, pageNumber)
 		sessionStorage.setItem("homeTenantGridPageNumber", pageNumber);
 			
 		pageNumberUpdate = sessionStorage.getItem("homeTenantGridPageNumber");
+
 		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 
 		var home_tenant_grid = new CodeReuse.HomeTenantGrid();
@@ -259,38 +467,26 @@ updateGridPage: function(object, pageNumber)
 			return;
 		}
 
+		var formObject = new CodeReuse.TenantFormGridPaging();
 
-		sessionStorage.setItem("homeTenantFormGridPagingPageNumber", pageNumber);
-			
-		pageNumberUpdate = sessionStorage.getItem("homeTenantFormGridPagingPageNumber");
-		
-		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-	
+		var tableNameInDb = formObject.getTableNameInDb();
+
 		var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
-	
-		var callback = new CodeReuse.Callback();
-	
-		var column = sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging");
-		var direction = sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging");
-	
-		var searchValue = home_tenant_form_grid_paging.getSearchValue();
-		
-		if(searchValue == "" || searchValue == undefined)
-		{
-			grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', column, direction, pageNumberUpdate, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
-		}
-		else
-		{
-			grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', column, direction, pageNumberUpdate, '', "false", '' ,'', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
-		}
+
+		var selectedRowId = home_tenant_form_grid_paging.getTenantForGridPagingSelectedRowId();
+
+		var lock = new CodeReuse.Lock();
+
+		lock.unlock_update_page_number(pageNumber, tableNameInDb, selectedRowId, sessionStorage.getItem("userId"));
 	}
 },
 
 /**
- * Click on the left or right arrows to update the grid page number and refreshing the grid
+ * Click on the left or right arrows to update the grid page number and refresh the grid
  * @function
  * @name Helper#updateGridPageArrows
  * 
+ * @param {string} object points to the current html object (this) 
  * @param {string} direction the left or right arrow
  * @param {string} pageNumber gridGetPostHomePagingPageNumber input box value before the update
  **/
@@ -371,13 +567,12 @@ updateGridPageArrows: function(object, direction, pageNumber)
 	if(pagingFooter == "gridGetPostHomeFormGridPagingFooter")
 	{
 		if(direction == "left") {
+
 			if(pageNumber == "1") {
 				alert('You are on the first page');
 				return;
-			} else {
-				pageNumberUpdate = parseInt(pageNumber) - 1;
-				document.getElementById('gridGetPostHomeFormGridPagingPageNumber').value = pageNumberUpdate;
 			}
+
 		} else if(direction == "right") {
 
 			var inputPage = pageNumber;
@@ -389,33 +584,19 @@ updateGridPageArrows: function(object, direction, pageNumber)
 				alert('You have reached the last page');
 				return;
 			}
+		}
 
-			
-			pageNumberUpdate = parseInt(pageNumber) + 1;
-			document.getElementById('gridGetPostHomeFormGridPagingPageNumber').value = pageNumberUpdate;
-		}
-	
-		sessionStorage.setItem("homeTenantFormGridPagingPageNumber", pageNumberUpdate.toString());		
-	
-		var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-	
+		var formObject = new CodeReuse.TenantFormGridPaging();
+
+		var tableNameInDb = formObject.getTableNameInDb();
+
 		var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
-	
-		var callback = new CodeReuse.Callback();
-	
-		var column = sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging");
-		var direction = sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging");
-	
-		var searchValue = home_tenant_form_grid_paging.getSearchValue();
-	
-		if(searchValue == "" || searchValue == undefined)
-		{
-			grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', column, direction, pageNumberUpdate.toString(), '', "false", '', '', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
-		}
-		else
-		{
-			grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', column, direction, pageNumberUpdate.toString(), '', "false", '', '', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
-		}
+
+		var selectedRowId = home_tenant_form_grid_paging.getTenantForGridPagingSelectedRowId();
+		
+		var lock = new CodeReuse.Lock();
+		
+		lock.unlock_update_page_direction(direction, pageNumber, tableNameInDb, selectedRowId, sessionStorage.getItem("userId"));
 	}
 },
 
@@ -571,11 +752,11 @@ preload: function(preload) {
 },
 
 /**
- * On cursor mouse over the rows of Suite or Tenant form grid show pointer
+ * Clear the row highlight for the given table
  * @function
  * @name Helper#resetRowHighlight
  * 
- * @param {string} tableHtmlObjectId either tableSuite in SuiteGrid or tableTenant in TenantGrid
+ * @param {string} tableHtmlObjectId the html table object
  **/
 resetRowHighlight: function(tableHtmlObjectId) {
 

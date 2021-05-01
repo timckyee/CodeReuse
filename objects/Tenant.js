@@ -23,6 +23,8 @@ CodeReuse.Tenant = function() {
 
 	this.recordExist = "recordExistsTenantForm";
 
+	this.tableNameInDb = "tableGridGetPostTenant";
+
 	this.tenantInsertQueryName = "createRecordTableGridGetPostTenant";
 	
 };
@@ -35,11 +37,23 @@ CodeReuse.Tenant.prototype = {
 	 **/		
 	arrayOldValuesTable: [],
 	
+	/**
+	 * Save the record id of the previous selection to unlock the record
+	 * @var {Array} previousSelection
+	 **/
+	 previousSelection: [],
+
 	getFieldsInfo: function() {
 		
 		return this.fields;
 	},
 	
+	getTableNameInDb: function() {
+
+		return this.tableNameInDb;
+
+	},	
+
 	getRecordExistsTenantForm: function() {
 
 		return this.recordExist;
@@ -69,6 +83,18 @@ CodeReuse.Tenant.prototype = {
 		return this.tenantInsertQueryName;
 
 	},
+
+	getPreviousSelection: function() {
+
+		return this.previousSelection[0];
+
+	},
+
+	setPreviousSelection: function(newSelection) {
+
+		this.previousSelection[0] = newSelection;
+
+	},		
 	
 	/**
 	 * Setting values in this object constructor from the html inputs for inserting or updating
@@ -250,7 +276,7 @@ CodeReuse.Tenant.prototype = {
 			}
 		}
 		
-		var queryString = "queryName" + "=" + this.recordExist + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
+		var queryString = "queryName" + "=" + this.getRecordExistsTenantForm() + "&" + "inputPrimaryKey" + "=" + inputPrimaryKey;
 		
 		window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
 		window.getXmlHttpRequest.send();		

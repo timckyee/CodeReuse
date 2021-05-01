@@ -9,7 +9,7 @@
 
 </head>
 
-<body>
+<body id="tabsBody">
 	
 <div id="tabPanel" style="float:left; height:100%" onselectstart='return false;'>
 
@@ -19,6 +19,7 @@
 	<tr><td id="tabSuites" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Suites Form</td></tr>
 	<tr><td id="tabTenants" class="tabOptions" onclick="var tabs = new CodeReuse.Tabs(); tabs.changeTab(this);">Tenants Form</td></tr>
 	<tr><td id="tabFiller" style="height: 400px"></td></tr>
+	<tr><td style="padding: 10px"><center><span onclick="var helper = new CodeReuse.Helper(); helper.logout();" style="text-decoration: underline; cursor: pointer;">Logout</span></center></td></tr>
 </table>
 
 </div>
@@ -129,7 +130,8 @@
 
 <div id="saveNewButtonTenantFormGridPaging" class="buttonCenter" style="display: none;">
 	<input type="button" class="button" value="Save" onclick="controller.tenantFormGridPagingSave();" />
-	<input type="button" class="button" value="New" onclick="controller.resetTenantFormGridPagingFields(); var tenantFormGridPaging = new CodeReuse.HomeTenantFormGridPaging(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantFormGridPaging.getTableHtmlObjectId());" />
+	<input type="button" class="button" value="New" onclick="var helper = new CodeReuse.Helper(); helper.newTenantFormGridPaging();" />
+	<input type="button" class="button" value="Clear Lock" onclick="var helper = new CodeReuse.Helper(); helper.newTenantFormGridPaging();" />
 </div>
 
 </center>
@@ -147,7 +149,7 @@
 	<center>
 	
 	<span>select</span>
-	<select id="selectBuildingSuite" onchange="if(this.value == ''){ document.getElementById('gridGetPostSuite').style.display = 'none'; document.getElementById('saveNewButtonSuite').style.display = 'none'; } else { document.getElementById('gridGetPostSuite').style.display = 'block'; controller.refreshSelectSuiteGrid();controller.resetSuiteFields();}">
+	<select id="selectBuildingSuite" onchange="var helper = new CodeReuse.Helper(); helper.selectBuildingSuite(this)">
 			<option value="" selected>None</option>
 			<option value="1">building</option>
 			<option value="2">building2</option>
@@ -175,7 +177,7 @@
 
 	<tr>
 	<td><span>suite number</span></td>
-	<td><input "text" id="inputSuiteNumber" /></td>
+	<td><input "text" id="inputSuiteNumber" readonly /></td>
 	</tr>
 
 	<tr>
@@ -199,7 +201,8 @@
 
 	<div id="saveNewButtonSuite" class="buttonCenter" style="display: none">
 		<input type="button" class="button" value="Save" onclick="controller.suiteSave();" />
-		<input type="button" class="button" value="New" onclick="controller.resetSuiteFields(); var suiteGrid = new CodeReuse.SuiteGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(suiteGrid.getTableHtmlObjectId());" />
+		<input type="button" class="button" value="New" onclick="var helper = new CodeReuse.Helper(); helper.newSuiteForm();" />
+		<input type="button" class="button" value="Clear Lock" onclick="var helper = new CodeReuse.Helper(); helper.newSuiteForm();" />
 	</div>
 
 </div>
@@ -214,7 +217,7 @@
 	<center>
 
 	<span>select</span>
-	<select id="selectBuildingTenant" onchange="if(this.value == ''){ document.getElementById('gridGetPost').style.display = 'none'; document.getElementById('saveNewButtonTenant').style.display = 'none'; } else { document.getElementById('gridGetPost').style.display = 'block'; controller.loadSuiteSelections(this); }">
+	<select id="selectBuildingTenant" onchange="var helper = new CodeReuse.Helper(); helper.selectBuildingTenant(this)">
 		<option value="" selected>None</option>
 		<option value="1">building</option>
 		<option value="2">building2</option>
@@ -267,7 +270,8 @@
 
 	<div id="saveNewButtonTenant" class="buttonCenter" style="display: none">
 		<input type="button" class="button" value="Save" onclick="controller.tenantSave();" />
-		<input type="button" class="button" value="New" onclick="controller.resetTenantFields(); var tenantGrid = new CodeReuse.TenantGrid(); var helper = new CodeReuse.Helper(); helper.resetRowHighlight(tenantGrid.getTableHtmlObjectId());" />
+		<input type="button" class="button" value="New" onclick="var helper = new CodeReuse.Helper(); helper.newTenantForm();" />
+		<input type="button" class="button" value="Clear Lock" onclick="var helper = new CodeReuse.Helper(); helper.newTenantForm();" />
 	</div>
 
 </div>
@@ -301,14 +305,17 @@
 </div>
 
 <script src="functions/helper.js" type="text/javascript"></script>
+<script src="functions/session.js" type="text/javascript"></script>
+<script src="functions/lock.js" type="text/javascript"></script>
 <script src="handlers/onload.js" type="text/javascript"></script>
+<script src="handlers/unload.js" type="text/javascript"></script>
 <script src="grids/HomeTenantGrid.js" type="text/javascript"></script>
 <script src="grids/HomeTenantFormGridPaging.js" type="text/javascript"></script>
 <script src="functions/config.js" type="text/javascript"></script>
 <script src="functions/tabs.js" type="text/javascript"></script>
+<script src="objects/Suite.js" type="text/javascript"></script>
 <script src="controller/controller.js" type="text/javascript"></script>
 <script src="objects/TenantFormGridPaging.js" type="text/javascript"></script>
-<script src="objects/Suite.js" type="text/javascript"></script>
 <script src="objects/Tenant.js" type="text/javascript"></script>
 <script src="grids/TenantGrid.js" type="text/javascript"></script>
 <script src="grids/SuiteGrid.js" type="text/javascript"></script>	

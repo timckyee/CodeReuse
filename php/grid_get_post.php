@@ -18,7 +18,7 @@
 
     $myArray = array();
     $result;
-	
+
 	if($_SERVER["REQUEST_METHOD"] == "GET") {	
 		
 		$queryName = $_GET["queryName"];
@@ -42,6 +42,208 @@
 
 			$result = $mysqli->query("select tenantId, tableGridGetPostBuilding.buildingId, tableGridGetPostBuilding.buildingName, tableGridGetPostSuite.suiteId, tableGridGetPostSuite.suiteNumber, firstname, lastname from tableGridGetPostBuilding inner join tableGridGetPostSuite on tableGridGetPostBuilding.buildingId = tableGridGetPostSuite.buildingId inner join tableGridGetPostTenant on tableGridGetPostSuite.suiteId = tableGridGetPostTenant.suiteId where tableGridGetPostBuilding.buildingId=" . $buildingId . " order by " . $sortColumn . " " . $sortDirection . ", tenantId " . $fieldPrimaryKeySortSecondColumnDirection);
 						
+		}
+		else
+		if($queryName == "update_session")
+		{	
+			$userId = $_GET["userId"];
+
+			$result = $mysqli->query("select count(UserId) as CountSessionId from tableGridGetPostSession where UserId = " . $userId);
+
+			$row = $result->fetch_assoc();
+
+			$sessionId = bin2hex(random_bytes(16));
+
+			if($row["CountSessionId"] == "0")
+			{
+				$mysqli->query("insert into tableGridGetPostSession (UserId, SessionId) values (" . $userId . ",'" . $sessionId . "')");
+
+				echo $sessionId;
+
+				//echo "Logging in.";
+			}
+			else
+			{
+				$result = $mysqli->query("update tableGridGetPostSession set SessionId = '" . $sessionId . "' where UserId = " . $userId);
+	
+				echo $sessionId;
+
+				//$result = $mysqli->query("update tableGridGetPostSession set SessionId = '" . $sessionId . "' where UserId = " . $userId); 
+				
+				//echo 'User is already logged in.';
+			}
+
+			return;
+
+		}
+		else
+		if($queryName == "remove_session")
+		{
+			$userId = $_GET["userId"];
+
+			$mysqli->query("delete from tableGridGetPostSession where UserId = " . $userId);
+
+			return;
+		}	
+		else
+		if($queryName == "verify_session")
+		{	
+			$sessionId = $_GET["sessionId"];
+
+			$result = $mysqli->query("select count(UserId) as CountSessionId from tableGridGetPostSession where SessionId = '" . $sessionId . "'");
+
+			$row = $result->fetch_assoc();
+
+			if($row["CountSessionId"] == 0)
+			{
+				echo "Invalid Session Id. Redirecting to login page.";
+			}
+			else
+			{
+				$result = $mysqli->query("select UserId from tableGridGetPostSession where SessionId = '" . $sessionId . "'");
+
+				$row = $result->fetch_assoc();
+
+				echo $row["UserId"];
+
+				return;
+
+				//echo "Valid Session Id.";
+			}
+
+			return;
+
+		}
+		else
+		if($queryName == "lock")
+		{			
+			$tableName = $_GET["tableName"];
+			$primaryKey = $_GET["primaryKey"];
+			$userId = $_GET["userId"];
+
+			$mysqli->query("insert into tableGridGetPostLock (TableName, PrimaryKey, UserId) values ('" . $tableName . "'," . $primaryKey . "," . $userId . ")");
+
+			echo "Record has been locked";
+			return;
+		}
+		else		
+		if($queryName == "unlock")
+		{			
+			$tableName = $_GET["tableName"];
+			$primaryKey = $_GET["primaryKey"];
+			$userId = $_GET["userId"];
+
+			if($primaryKey != "")
+			{
+				$result = $mysqli->query("select count(UserId) as CountLockPrimaryKey from tableGridGetPostLock where TableName = '" . $tableName . "' and PrimaryKey = " . $primaryKey);
+
+				$row = $result->fetch_assoc();
+
+				if($row["CountLockPrimaryKey"] == "1")
+				{	
+					$mysqli->query("delete from tableGridGetPostLock where TableName='" . $tableName . "' and PrimaryKey=" . $primaryKey . " and UserId=" . $userId);
+				}
+			}
+
+			return;
+		}		
+		else
+		if($queryName == "form_unlock")
+		{
+			$tableName = $_GET["tableName"];
+			$previousPrimaryKey = $_GET["previousPrimaryKey"];
+			$primaryKey = $_GET["primaryKey"];
+			$userId = $_GET["userId"];
+
+			$result = $mysqli->query("select count(UserId) as CountLockPrimaryKey from tableGridGetPostLock where TableName = '" . $tableName . "' and PrimaryKey = " . $primaryKey);
+
+			$row = $result->fetch_assoc();
+
+			if($row["CountLockPrimaryKey"] != "1")
+			{	
+				$result = $mysqli->query("select count(UserId) as CountLockPreviousPrimaryKey from tableGridGetPostLock where TableName = '" . $tableName . "' and PrimaryKey = " . $previousPrimaryKey);
+
+				$row = $result->fetch_assoc();
+	
+				if($row["CountLockPreviousPrimaryKey"] == "1")
+				{	
+					$mysqli->query("delete from tableGridGetPostLock where TableName='" . $tableName . "' and PrimaryKey=" . $previousPrimaryKey . " and UserId=" . $userId);
+				}
+			}
+
+			return;
+		}
+		else
+		if($queryName == "checkdelete_checklock_lock") {
+
+			$tableName = $_GET["tableName"];
+			$primaryKeyFieldName = $_GET["primaryKeyFieldName"];
+			$primaryKey = $_GET["primaryKey"];
+			$userId = $_GET["userId"];
+
+			$result = $mysqli->query("select count(" . $primaryKeyFieldName . ") as numberOfRecords from " . $tableName . " where " . $primaryKeyFieldName . "=" . $primaryKey);
+
+			$row = $result->fetch_assoc();
+
+			if($row["numberOfRecords"] == "0")
+			{
+				echo "Record no longer exists";
+				return;
+			}
+			else
+			{
+				$result = $mysqli->query("select count(UserId) as CountLockPrimaryKey from tableGridGetPostLock where TableName = '" . $tableName . "' and PrimaryKey = " . $primaryKey);
+
+				$row = $result->fetch_assoc();
+
+				if($row["CountLockPrimaryKey"] == "1")
+				{
+					echo "Record is currently locked by another user";
+					return;
+				}
+				else
+				{
+					//test transaction
+					$mysqli->begin_transaction();
+
+					try {
+						/* Insert some values */
+						$mysqli->query("insert into tableGridGetPostLock (TableName, PrimaryKey, UserId) values ('" . $tableName . "'," . $primaryKey . "," . $userId . ")");
+										
+						/* If code reaches this point without errors then commit the data in the database */
+						$mysqli->commit();
+
+						//echo "Record has been locked";
+						//return;
+
+					} catch (mysqli_sql_exception $exception) {
+						$mysqli->rollback();
+
+						throw $exception;
+					}
+
+					echo "Record has been locked";
+
+					return;
+
+
+					//$mysqli->query("insert into tableGridGetPostLock (TableName, PrimaryKey, UserId) values ('" . $tableName . "'," . $primaryKey . "," . $userId . ")");
+
+					//echo "Record has been locked";
+					//return;
+				}
+			}
+		}
+		else
+		if($queryName == "unlockRecordsOnExit") {
+
+			$tableName = $_GET["tableName"];
+			$primaryKey = $_GET["primaryKey"];
+			$userId = $_GET["userId"];
+
+			$mysqli->query("delete from tableGridGetPostLock where TableName = '" . $tableName . "' and PrimaryKey = " . $primaryKey . " and UserId=" . $userId);
+		
+			return;
 		}
 		else
 		if($queryName == "gridtablehomePages") {
@@ -535,7 +737,22 @@
 			echo $row["numberOfRecords"];
 
 			return;
-		}		
+		}
+		else if($queryName == "suiteNumberExists") {
+
+			$inputSuiteNumber = $_GET["inputSuiteNumber"];
+
+			if($inputSuiteNumber != "")
+			{
+				$result = $mysqli->query("select count(suiteId) as numberOfRecords from tableGridGetPostSuite where buildingId = " . $_GET["inputBuildingId"] . " and suiteNumber = '" . $inputSuiteNumber . "'");
+
+				$row = $result->fetch_assoc();
+
+				echo $row["numberOfRecords"];
+			}
+
+			return;
+		}	
 		else if($queryName == "buildings") {
 		
 			$filter = $_GET["filter"];		

@@ -1,0 +1,14 @@
+grid_get_post.php: combine gridtablehome with gridtablehomeSearch like gridtablehomePages
+codereuse.sql with updated session, lock, user table
+login folder and login.html
+javascript docs for classes session.js, session_login, lock.js, unload.js 
+password_encrypt_hash_password and password_verify.php add FirstName and LastName when add user
+include the database table name in grids and objects, tableNameInDb
+suite form save if suite number already exists then prevent saving
+suite number input readonly except when clicking on new button
+clear the form when updating page number or direction arrows or search
+when clicking on grid row if click on the same record do not check
+edit, enter search term, click on search, user message, click on save, then cancel
+lock table showing the users which have locks, user can only remove their own locks
+when logging in if there is no session id create, if session id exists then ask user, user session exists, do u want to drop session and create new session
+search box for home grid edit make read-only on row edit click, when cancel or after save, make search input box readable again
