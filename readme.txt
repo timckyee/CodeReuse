@@ -27,18 +27,23 @@ on the grid if sort column is clicked.
 
 Login component: (note this component requires the website to use SSL)
 - main login page: login.html (Username, Password to Login)
-- every time the user logs in a session id is created. prevent multiple logins and also prevent
+- every time the user logs in a session id is created. this is to prevent multiple logins and also prevent
   users trying to access page with an invalid session id to access the page.
 - note: each tab or browser which is open will have a separate set of sessionStorage variables.
-- when login is verified then Session Id is passed to the main ui page: tabs.html sessionId=<sessionId>
-- once reaches this page the Session Id is verified (Session Id has to exist in database)
-- on clicking logout, closing browser, clicking on browser back button, or refresh button,
-  the Session Id in database is deleted and redirection is made to the login.html page
+- when login is verified then Session Id is passed to the main ui page: tabs.html?sessionId=<sessionId>
+- once reaches this page the Session Id is verified (Session Id has to exist in database) or redirect to login html page
+- on clicking logout, clicking on browser back button, or refresh button,
+  the Session Id in database is deleted, along with user table locks and redirection is made to the login.html page
+- important note:
+  if click on the browser or browser tab exit button the session Id and user table locks will remain in the system
+  if login again there is a notification that the session Id still exists and if the user wants to recover session
+  to avoid this message always click on the Logout button
+  clicking on the Logout button will remove session and user lock records
 - after verification the userId is set in the sessionStorage and used mainly for creating and releasing locks
 
 - create new user page: go to login.html and click on Create New User link (file: createUser.html)
   creates user with firstname, lastname, username, email, and password (where password is encrypted
-  using php password_hash and password_verify).
+  using openssl_encrypt)
 
 - forgot password page: go to login.html and click on Forgot Password link (file: resetPasswordEmail.html)
 - when navigate to the forgot password page, need to enter user email
@@ -46,13 +51,16 @@ Login component: (note this component requires the website to use SSL)
 - if email does not exist then notify user
 - the email has a php hyper link to the server with a token which is the encrypted email using openssl_encrypt
 - the php hyperlink shown in the email links to verifyEmailForm.php which displays the update user password form
-- the update password form has old password, new password, and confirm new password
+- the update password form has two inputs: new password, and confirm new password
 - the update password form includes javascript verifyEmailForm.js which has the updatePassword function to check 
   if new password is the same as confirm password
 - if new password is same as confirm password then go to the updatePassword.php
-- from updatePassword.php check if old password is correct. if so then update new password in database 
-  using the user email.
-- if old password is not correct then show message.
+- from updatePassword.php, update the new password in database with the user email.
+
+- administration page to reset the password for user
+- go to login/resetPasswordAdmin/resetPassword.html
+- to update the password for a user enter the user email address
+- then enter the user new password and click on Reset Password
 
 Lock component:
 - there is a Lock class which has functions to lock and unlock records so users cannot overwite each others information

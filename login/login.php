@@ -16,12 +16,6 @@ if($mysqli->connect_error) {
     echo "connection error";
 }
 
-/*
-Please take note that password_hash() is a one-way encryption.
-There is no way you can decrypt that easily, so you will have
-to ask the user for a new password for password recovery.
-*/
-
 function addUser($firstname, $lastname, $username, $email, $password, $con) {
 
 	$sql = "SELECT count(userId) as UserId FROM `tableGridGetPostUsers` WHERE `email`='" . $email . "'";
@@ -37,10 +31,21 @@ function addUser($firstname, $lastname, $username, $email, $password, $con) {
     }
 
 
+	$encrypt = encrypt($password);
+
+	$iv_hex = $encrypt["iv"];
+
+	$salt_hex = $encrypt["salt"];
+
+	$encrypted_string = $encrypt["encrypted_string"];
+
+	$encrypted_password = $iv_hex . $salt_hex . $encrypted_string;
+	
+
     $sql = "INSERT INTO `tableGridGetPostUsers` (`firstname`, `lastname`, `username`, `email`, `password`) VALUES (?,?,?,?,?)";
     $stmt = $con->prepare($sql);
-    $stmt->bind_param("sssss", $firstname, $lastname, $username, $email, $hash);
-    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $stmt->bind_param("sssss", $firstname, $lastname, $username, $email, $encrypted_password);
+
 
     $stmt->execute();
 
@@ -49,8 +54,57 @@ function addUser($firstname, $lastname, $username, $email, $password, $con) {
    	echo $returnMessage;
 }
 
+function encrypt($string_to_encrypt) {
+				
+    $encrypt_method = "AES-256-CBC";
+    $secret_key = 'mysecretkey1234';
+    
+	//$iv_bin = openssl_random_pseudo_bytes(openssl_cipher_iv_length('AES-256-CBC'));
+	
+    $salt = random_bytes(256);
+    $iterations = 999;
+
+    // when flag is true, key is in binary
+    $key = hash_pbkdf2("sha512", $secret_key, $salt, $iterations, 64, true);
+    //$key = hash_pbkdf2("sha512", $secret_key, $salt, $iterations, 64); 
+
+    $salt_hex = bin2hex($salt);
+
+    $iv_bin = random_bytes(16);
+
+    $iv_hex = bin2hex($iv_bin);
+
+    $encrypted_string = openssl_encrypt($string_to_encrypt, $encrypt_method, $key, 0, $iv_bin);
+        
+    $encrypted_string = base64_encode($encrypted_string);
+
+    $array["encrypted_string"] = $encrypted_string;
+    $array["iv"] = $iv_hex;
+    $array["salt"] = $salt_hex;
+
+    return $array;
+}
+
+function decrypt($text_portion_of_password, $iv_bin, $salt_bin) {
+
+    $encrypt_method = "AES-256-CBC";
+    $secret_key = 'mysecretkey1234';
+
+    $iterations = 999; //same as js encrypting 
+    
+    // when flag is true, key is in binary
+    $key = hash_pbkdf2("sha512", $secret_key, $salt_bin, $iterations, 64, true);
+    //$key = hash_pbkdf2("sha512", $secret_key, $salt_bin, $iterations, 64);
+    
+    $passwordDecrypt = openssl_decrypt(base64_decode($text_portion_of_password), $encrypt_method, $key, 0, $iv_bin);
+
+	return $passwordDecrypt;
+	
+}
+
+
 function login($username, $password, $con){
-      
+	
 	$sql = "SELECT password FROM `tableGridGetPostUsers` WHERE `username`=?";
 	$stmt = $con->prepare($sql);
 	$stmt->bind_param("s", $username);
@@ -61,7 +115,31 @@ function login($username, $password, $con){
 
 	$user = $result->fetch_assoc();
 
-	return password_verify($password, $user['password']);
+	$encrypted_password = $user['password'];
+
+	$iv_hex = substr($encrypted_password, 0, 32);
+
+	$salt_hex = substr($encrypted_password, 32, 512);
+	
+	$lengthOfTextPortion = strlen($encrypted_password) - 32 - 512;
+	
+	$text_portion = substr($encrypted_password, 544, $lengthOfTextPortion);
+
+	$iv_bin = hex2bin($iv_hex);
+	$salt_bin = hex2bin($salt_hex);
+
+	$decrypt = decrypt($text_portion, $iv_bin, $salt_bin);
+
+	$decrypted_password = $decrypt;
+
+	if($decrypted_password == $password)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 $credentials = $_POST["credentials"];
@@ -88,15 +166,12 @@ if($_POST["createOrVerify"] == "create") {
 
 	$username = explode("=", $credentialsArray[0])[1];
 
-	$password = explode("=", $credentialsArray[1])[1];	
+	$password = explode("=", $credentialsArray[1])[1];
 
   	$valid_user = login($username, $password, $mysqli);
 
-
-
 	if($valid_user == 1)
-	{
-
+	{		
 		$sql = "SELECT UserId FROM `tableGridGetPostUsers` WHERE `username`='" . $username . "'";
 	
 		$result = $mysqli->query($sql);

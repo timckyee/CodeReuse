@@ -142,9 +142,9 @@ getPhpFile: function() {
 },
 
 /**
- * To unlock record before sorting
+ * To unlock record before sorting (going to database)
  * @function
- * @name Lock#unlock_sort
+ * @name Lock#unlock_sort_server
  * 
  * @param {Array} gridColumnsInfo array of grid columns and properties
  * @param {string} column the column number that is being sorted
@@ -153,7 +153,7 @@ getPhpFile: function() {
  * @param {string} primaryKey the primary key to unlock
  * @param {string} userId the user logged in
  **/
- unlock_sort: function(gridColumnsInfo, column, pageNumber, tableNameInDb, primaryKey, userId) {
+ unlock_sort_server: function(gridColumnsInfo, column, pageNumber, tableNameInDb, primaryKey, userId) {
 
     var columnSort = column;
 
@@ -210,7 +210,49 @@ getPhpFile: function() {
                 grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', column, direction, pageNumber, '', "false", '', '', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
             }
 
-            sessionStorage.setItem("recordLockInformation", "");
+            sessionStorage.setItem("recordLockInformation", "");            
+
+            var controller = new CodeReuse.Controller();
+            controller.resetTenantFormGridPagingFields();
+        }
+    }
+    
+    var queryName = "unlock";
+    
+    var queryString = "queryName=" + queryName + "&tableName=" + tableNameInDb + "&primaryKey=" + primaryKey + "&userId=" + userId;
+
+    window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
+    window.getXmlHttpRequest.send();
+            
+},
+
+/**
+ * To unlock record before sorting (not going to database, sort on client)
+ * @function
+ * @name Lock#unlock_sort_client
+ * 
+ * @param {string} sortTableHtmlObjectId the table being sorted
+ * @param {Array} gridColumnsInfo array of grid columns and properties
+ * @param {string} column the column number that is being sorted
+ * @param {string} tableNameInDb the table name in the database
+ * @param {string} primaryKey the primary key to unlock
+ * @param {string} userId the user logged in
+ **/
+ unlock_sort_client: function(sortTableHtmlObjectId, gridColumnsInfo, column, tableNameInDb, primaryKey, userId) {
+
+    window.getXmlHttpRequest.onreadystatechange = function() {
+    
+        if (this.readyState == 4 && this.status == 200) {
+    
+            var response = this.responseText;
+
+            //alert(response);
+
+            var sort = new CodeReuse.Sort();
+
+            sort.sortTable(sortTableHtmlObjectId, column, gridColumnsInfo);
+
+            //sessionStorage.setItem("recordLockInformation", "");
         }
     }
     
@@ -602,17 +644,10 @@ window.getXmlHttpRequest.send();
  * @function
  * @name Lock#unlockRecordsOnExit
  * 
- * @param {string} tableNameInDb the table name in the database
- * @param {string} primaryKey the primary key
  * @param {string} userId the user logged in
  **/
- unlockRecordsOnExit: function(tableNameInDb, primaryKey, userId) {
+ unlockRecordsOnExit: function(userId) {
     
-    //var session = new CodeReuse.Session();
-    //session.remove_session(userId);
-
-    //sessionStorage.clear();
-
     window.getXmlHttpRequest = new XMLHttpRequest();
 
     window.getXmlHttpRequest.onreadystatechange = function() {
@@ -630,8 +665,10 @@ window.getXmlHttpRequest.send();
     
     var queryName = "unlockRecordsOnExit";
     
-    var queryString = "queryName=" + queryName + "&tableName=" + tableNameInDb + "&primaryKey=" + primaryKey + "&userId=" + userId;
+    //var queryString = "queryName=" + queryName + "&tableName=" + tableNameInDb + "&primaryKey=" + primaryKey + "&userId=" + userId;
     
+    var queryString = "queryName=" + queryName + "&userId=" + userId;
+
     window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
     window.getXmlHttpRequest.send();
             

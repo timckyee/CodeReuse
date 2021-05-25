@@ -162,9 +162,30 @@ TenantGridOnClickHandler: function(phpFile, gridRowId, tableHtmlObjectId) {
  **/
 sortTableColumnOnclickHandler: function(sortTableHtmlObjectId, gridColumnsInfo, column) {
 	
-	var sort = new CodeReuse.Sort();
+	var gridObject;
+	var formObject;
+	var tableNameInDb;
+	var selectedId;
 
-	sort.sortTable(sortTableHtmlObjectId, column, gridColumnsInfo);
+	if(sortTableHtmlObjectId == "tableSuite")
+	{
+		gridObject = new CodeReuse.SuiteGrid();
+		formObject = new CodeReuse.Suite();
+		tableNameInDb = formObject.getTableNameInDb();
+		selectedId = gridObject.getSuiteSelectedRowId();
+	}
+	else
+	if(sortTableHtmlObjectId == "tableTenant")
+	{
+		gridObject = new CodeReuse.TenantGrid();
+		formObject = new CodeReuse.Tenant();
+		tableNameInDb = formObject.getTableNameInDb();
+		selectedId = gridObject.getTenantSelectedRowId();
+	}
+
+	var lock = new CodeReuse.Lock();
+		
+	lock.unlock_sort_client(sortTableHtmlObjectId, gridColumnsInfo, column, tableNameInDb, selectedId, sessionStorage.getItem("userId"));
 	
 },
 
@@ -189,55 +210,7 @@ sortTableColumnOnclickHandlerHomeTenantFormGridPaging: function(gridColumnsInfo,
 
 	var lock = new CodeReuse.Lock();
 		
-	lock.unlock_sort(gridColumnsInfo, column, pageNumber, tableNameInDb, selectedId, sessionStorage.getItem("userId"));
-
-
-	/*
-	var home_tenant_form_grid_paging = new CodeReuse.HomeTenantFormGridPaging();
-	
-	var grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
-	
-	var callback = new CodeReuse.Callback();
-
-	var sortColumn = gridColumnsInfo[column].id;		
-	
-	var sortDirection = sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging");	
-	
-	if(sortColumn != sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging"))
-	{
-		sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
-	}
-	else
-	{
-		if(sortDirection == "asc")
-		{
-			sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "desc");	
-		}
-		else
-		{
-			if(sortDirection == "desc")
-			{
-				sessionStorage.setItem("arraySortDirection_tenant_form_grid_paging", "asc");
-			}
-		}			
-	}
-	
-	sessionStorage.setItem("arraySortColumn_tenant_form_grid_paging", sortColumn);
-
-	var column = sessionStorage.getItem("arraySortColumn_tenant_form_grid_paging");
-	var direction = sessionStorage.getItem("arraySortDirection_tenant_form_grid_paging");
-
-	var searchValue = home_tenant_form_grid_paging.getSearchValue();
-
-	if(searchValue == "" || searchValue == undefined)
-	{
-		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryName(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), '', '', callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', column, direction, pageNumber, '', "false", '', '', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
-	}
-	else
-	{
-		grid_get_post_functions.grid(home_tenant_form_grid_paging.getGridGetPostDivElement(), home_tenant_form_grid_paging.getPhpFile(), home_tenant_form_grid_paging.getRefreshHomeTenantGridQueryNameSearch(), home_tenant_form_grid_paging.getGridIdField(), home_tenant_form_grid_paging.getGridColumnsInfo(), home_tenant_form_grid_paging.getTableHtmlObjectId(), "searchValue", searchValue, callback.gridCallback, home_tenant_form_grid_paging.getRowOnClick(), '', column, direction, pageNumber, '', "false", '', '', "true", home_tenant_form_grid_paging.getHomeTenantGridPagingDiv(), home_tenant_form_grid_paging.getPageSize(), '');
-	}
-	*/
+	lock.unlock_sort_server(gridColumnsInfo, column, pageNumber, tableNameInDb, selectedId, sessionStorage.getItem("userId"));
 	
 },
 

@@ -237,11 +237,20 @@
 		else
 		if($queryName == "unlockRecordsOnExit") {
 
-			$tableName = $_GET["tableName"];
-			$primaryKey = $_GET["primaryKey"];
+			//$tableName = $_GET["tableName"];
+			//$primaryKey = $_GET["primaryKey"];
 			$userId = $_GET["userId"];
 
-			$mysqli->query("delete from tableGridGetPostLock where TableName = '" . $tableName . "' and PrimaryKey = " . $primaryKey . " and UserId=" . $userId);
+			$result = $mysqli->query("select count(UserId) as CountLockPrimaryKey from tableGridGetPostLock where UserId=" . $userId);
+
+			$row = $result->fetch_assoc();
+
+			$CountLockPrimaryKey = intval($row["CountLockPrimaryKey"]);
+
+			if($CountLockPrimaryKey >= 1)
+			{
+				$mysqli->query("delete from tableGridGetPostLock where UserId=" . $userId);
+			}
 		
 			return;
 		}

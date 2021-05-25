@@ -33,6 +33,8 @@ function loginVerifyUser() {
 
             response = xhr.responseText;
 
+            //alert(response);
+
             var loginInfo = response.split("&");
 
             var messageType = loginInfo[0].split("=")[1];
@@ -99,7 +101,7 @@ function loginVerifyUser() {
 
 function resetPassword() {
 
-window.location.href = "login/resetPasswordEmail.html";
+window.location.href = "login/resetPasswordEmail/resetPasswordEmail.html";
 
 }
 

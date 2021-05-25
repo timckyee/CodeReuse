@@ -37,7 +37,8 @@ getPhpFile: function() {
 
             if(response == "Invalid Session Id. Redirecting to login page.")
             {
-                window.location.href = "login.html";
+                //window.location.href = "login.html";
+                window.location.href = "index.html";
             }
             else
             {
@@ -153,7 +154,8 @@ remove_session: function(userId) {
 
             setTimeout(function(){ 
 
-                window.location.href = "login.html";
+                //window.location.href = "login.html";
+                window.location.href = "index.html";
           
             }, 400);
         }

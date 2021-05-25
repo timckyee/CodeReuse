@@ -219,34 +219,35 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		{
 			tableHeaderSpan.onclick = function(headerCellSpan) {
 
-				if(sessionStorage.getItem("editMode") == "true")
+				if(tableHtmlObjectId == "tableHomeTenant")
 				{
-					var helper = new CodeReuse.Helper();
+					if(sessionStorage.getItem("editMode") == "true")
+					{
+						var helper = new CodeReuse.Helper();
 
-					helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode before sorting.');
+						helper.msgBox('alert', 'You are in edit mode. Please click save to leave save mode before sorting.');
 
-					return;
+						return;
+					}
+				}
+
+				var columnId = headerCellSpan.srcElement.id;
+				for(var column=0; column<gridColumnsInfo.length; column++)
+				{
+					if(tableHtmlObjectId + "_" + gridColumnsInfo[column].id + "Span" == columnId)
+						break;
+				}
+				
+				var handler = new CodeReuse.Handler();
+
+				if(tableHtmlObjectId == "tableHomeTenant")
+				{
+					handler.sortTableColumnOnclickHandlerHomeTenantGrid(gridColumnsInfo, column.toString(), pageNumber);
 				}
 				else
+				if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 				{
-					var columnId = headerCellSpan.srcElement.id;
-					for(var column=0; column<gridColumnsInfo.length; column++)
-					{
-						if(tableHtmlObjectId + "_" + gridColumnsInfo[column].id + "Span" == columnId)
-							break;
-					}
-					
-					var handler = new CodeReuse.Handler();
-
-					if(tableHtmlObjectId == "tableHomeTenant")
-					{
-						handler.sortTableColumnOnclickHandlerHomeTenantGrid(gridColumnsInfo, column.toString(), pageNumber);
-					}
-					else
-					if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
-					{
-						handler.sortTableColumnOnclickHandlerHomeTenantFormGridPaging(gridColumnsInfo, column.toString(), pageNumber);
-					}
+					handler.sortTableColumnOnclickHandlerHomeTenantFormGridPaging(gridColumnsInfo, column.toString(), pageNumber);
 				}
 			}
 		}
@@ -704,9 +705,9 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 
 	var helper = new CodeReuse.Helper();
 
-	var homeTenantGrid = new CodeReuse.HomeTenantGrid();
+	//var homeTenantGrid = new CodeReuse.HomeTenantGrid();
 
-	helper.resetRowHighlight(homeTenantGrid.getTableHtmlObjectId());
+	//helper.resetRowHighlight(homeTenantGrid.getTableHtmlObjectId());
 
 	tableEdit.rows[tableEditCount + 1].className = "highlightRow";
 	

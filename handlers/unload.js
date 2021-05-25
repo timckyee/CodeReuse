@@ -71,6 +71,11 @@ CodeReuse.Onunload.prototype = {
  **/
  unlock_remove_session: function() {
     
+    var lock = new CodeReuse.Lock();
+
+    lock.unlockRecordsOnExit(sessionStorage.getItem("userId"));
+
+    /*
     var recordLockInformation = sessionStorage.getItem("recordLockInformation");
     
     var tableName;
@@ -95,6 +100,7 @@ CodeReuse.Onunload.prototype = {
         var session = new CodeReuse.Session();  
         session.remove_session(sessionStorage.getItem("userId"));       
     }
+    */
 }
 
 }

@@ -17,7 +17,7 @@ CodeReuse.Sort.prototype = {
  * @param {string} column the column number we are sorting
  * @param {Array} gridColumnsInfo the grid columns in the grid object (SuiteGrid or TenantGrid)
  **/
-sortTable: function(tblId, column, gridColumnsInfo){
+sortTable: function(tblId, column, gridColumnsInfo) {
 	
 	var sortColumn = gridColumnsInfo[column].id;
 	
@@ -77,9 +77,8 @@ sortTable: function(tblId, column, gridColumnsInfo){
 
 		column_update = sessionStorage.getItem("arraySortColumn_tenant");
 		direction_update = sessionStorage.getItem("arraySortDirection_tenant");		
-	}
+	}	
 
-	
 	var table = document.getElementById(tblId);
     
     var Arr = [];
@@ -215,6 +214,21 @@ sortTable: function(tblId, column, gridColumnsInfo){
     
 	Arr = null;
 
+	sessionStorage.setItem("recordLockInformation", "");
+
+	var helper = new CodeReuse.Helper();
+	helper.resetRowHighlight(tblId);
+
+	var controller = new CodeReuse.Controller();
+    if(tblId == "tableSuite")
+    {
+		controller.resetSuiteFields();
+	}
+	else
+	if(tblId == "tableTenant")
+    {
+		controller.resetTenantFields();
+	}
 }
 
 }
