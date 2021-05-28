@@ -421,7 +421,7 @@ getPhpFile: function() {
 },
 
 /**
- * To unlock table record if new or clear lock button is clicked
+ * To unlock table record before searching on the home form grid paging
  * @function
  * @name Lock#unlock_search_home_form_grid_paging
  * 

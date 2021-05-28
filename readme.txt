@@ -16,17 +16,19 @@ The main important components:
 - grid sorting (on server using paging, or client side) - two way sorting ascending or descending
 - grid paging (navigate using left and right arrows, also update page number and clicking on go)
 - grid search (server, enter search string, click on search then data filters)
-- saving of grid edit record or form record will preserve sort order of record
-on the grid if sort column is clicked.
-- clicking on grid populates form, can click save to update record or new.
+- saving of grid edit record or form record will preserve sort order of record on the grid if sort column is clicked.
+- for Suite, Tenant, or TenantFormGridPaging grids
+  clicking on grid populates form, can click save to update record or create new
 - the forms also have Clear Lock button (see Lock component below) which has to be clicked
-  before navigating to a new tab if a form record is selected to unlock the record
+before navigating to a new tab if a previous form record is selected
 - grids with paging (home grid edit and home form grid paging) show the total number of pages
 - dynamically populating select list html object
 (shown on Tenants Form - Suite Number select field refreshes when updating Building selection)
 
 Login component: (note this component requires the website to use SSL)
 - main login page: login.html (Username, Password to Login)
+- two users in users table (username/password/email)
+  TestUser/testpassword/testuser@testing.com and TestUser4/Hello1234/testuser4@testing.com
 - every time the user logs in a session id is created. this is to prevent multiple logins and also prevent
   users trying to access page with an invalid session id to access the page.
 - note: each tab or browser which is open will have a separate set of sessionStorage variables.
@@ -53,9 +55,10 @@ Login component: (note this component requires the website to use SSL)
 - the php hyperlink shown in the email links to verifyEmailForm.php which displays the update user password form
 - the update password form has two inputs: new password, and confirm new password
 - the update password form includes javascript verifyEmailForm.js which has the updatePassword function to check 
-  if new password is the same as confirm password
+if new password is the same as confirm password
 - if new password is same as confirm password then go to the updatePassword.php
-- from updatePassword.php, update the new password in database with the user email.
+passing in new password and encrypted email
+- from updatePassword.php, update the new password in database with the decrypted email.
 
 - administration page to reset the password for user
 - go to login/resetPasswordAdmin/resetPassword.html
@@ -70,20 +73,25 @@ Lock component:
 - form grid - (tenant form grid paging, suite grid, tenant grid) - form_unlock to unlock the previous form selection
   then form_checkdelete_checklock_lock - which check whether record exists, then check if there is a lock
   on the record, then if there is no lock then locks the record, then populates the form with the onclick row information
-- there are 2 other functions to unlock - grid_unlock_cancel and grid_unlock_update
+- grid_unlock_cancel and grid_unlock_update
   these two functions unlock the grid edit when clicking on cancel and also after and record update
-- there is 1 other functions lock - form_lock_insertRecord
+- form_lock_insertRecord
   this function locks the new form record created
-- on page unload (including refreshing the webpage) the unlockRecordsOnExit function is called which unlocks
-  the lock table records which the User Id has locked. same as clicking on Logout.
-
+- unlock_search_home_form_grid_paging
+  unlocks record when clicking on search
+- unlock_sort_client and unlock_sort_server or unlock_update_page_direction and unlock_update_page_number
+  unlocks record when clicking on sort on client or server, or when updating page direction or page number
+- on click of logout button, browser back button, reload page button, the unlockRecordsOnExit function is called which
+unlocks the lock table records which the User Id has locked and also removes the User Session Id
 
 Session component:
-- there is a SessionLogin (session_login.js) and Session (session.js) class which has functions to create, update, verify and remove the session
-- SessionLogin class creates or update session record in database
-  if UserId is not found in session table then create Session Id record using bin2hex(random_bytes(16)) and returns to client
-  if UserId is found in the session table then use return same Session Id that was created before
-  if either option after Session Id is sent back to client then go to the main page (tabs.html)
+- there is a SessionLogin (session_login.js) to create or update session
+- and Session (session.js) class which has functions to verify and remove the session
+- for SessionLogin class
+  create new Session Id bin2hex(random_bytes(16))
+  if UserId is not found in session table then use this new Session Id
+  if UserId is found in the session table then update the current Session Id with this Session Id
+  if either option, Session Id is sent back to client then go to the main page (tabs.html)
   passing in the sessionId to the url.
 - onload of the tabs.html file, we get the Session Id from the query string 
   then call the verify_session passing in the Session Id
@@ -93,7 +101,7 @@ Session component:
 
 Password Encryption component (php files):
 - description: two methods for encrypting passwords or sensitive data.
-- php/password_encrypt_hash_verify.php - one-way encryption method used for passwords using hash (recommended)
+- php/password_encrypt_hash_verify.php - one-way encryption method used for passwords using hash
 - php/password_encrypt_openssl.php - two-way encryption used for passwords or sensitive data using openssl
 - view the comments in the appropriate files for instructions on how to test encryption or decryption
 

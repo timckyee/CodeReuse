@@ -511,6 +511,8 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 					return;
 				}
 
+				helper.resetRowHighlight(tableHtmlObjectId);
+
 				
 				var gridObject;
 				var tableNameInDb;

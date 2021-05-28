@@ -101,8 +101,13 @@ echo "<br>";
 */
 
 //$serverUrl = $_POST["serverUrl"];
-$serverUrl = "http://localhost:8888";
-$url = $serverUrl . "/codereuse/login/resetPasswordEmail/verifyEmailForm.php?token=";
+//$serverUrl = "http://localhost:8888";
+
+$serverUrl = "https://staging.closedarea.com";
+
+//$url = $serverUrl . "/codereuse/login/resetPasswordEmail/verifyEmailForm.php?token=";
+
+$url = $serverUrl . "/login/resetPasswordEmail/verifyEmailForm.php?token=";
 
 //echo $url . $token;
 

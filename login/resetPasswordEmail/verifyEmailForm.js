@@ -25,8 +25,8 @@ function updatePassword(token) {
 
             response = xhr.responseText;
 
-            //alert(response);
-            //return;
+            alert(response);
+            return;
 
             /*
             verifyOldPassword = "User old password is not correct";
