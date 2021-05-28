@@ -27,20 +27,6 @@ function updatePassword(token) {
 
             alert(response);
             return;
-
-            /*
-            verifyOldPassword = "User old password is not correct";
-
-            if(response == verifyOldPassword)
-            {
-                alert(verifyOldPassword)
-                return;
-            }
-            else
-            {
-                alert(response);
-            }
-            */
         }
 
     };
