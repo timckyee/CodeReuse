@@ -34,8 +34,8 @@ Login component: (note this component requires the website to use SSL)
 - note: each tab or browser which is open will have a separate set of sessionStorage variables.
 - when login is verified then Session Id is passed to the main ui page: tabs.html?sessionId=<sessionId>
 - once reaches this page the Session Id is verified (Session Id has to exist in database) or redirect to login html page
-- on clicking logout, clicking on browser back button, or refresh button,
-  the Session Id in database is deleted, along with user table locks and redirection is made to the login.html page
+- on clicking logout, clicking on browser back button, refresh button, or updating the url to another session Id,
+  the session Id in database is deleted, along with user table locks and redirection is made to the login.html page
 - important note:
   if click on the browser or browser tab exit button the session Id and user table locks will remain in the system
   if login again there is a notification that the session Id still exists and if the user wants to recover session
@@ -98,6 +98,14 @@ Session component:
   if the Session Id does not exist in the table then redirect to the login.html page
   if Session Id exists then continue to initialize and load the page
 
+Ajax (Asynchronous JavaScript and XML) calls
+- note this web application uses ajax calls to get, update, create or delete data from the database
+- ajax can access the server both synchronously and asynchronously
+- Synchronously, in which the script stops and waits for the server to send back a reply before continuing.
+  Asynchronously, in which the script allows the page to continue to be processed and handles the reply if and when it arrives.
+- mostly asychronous is used in this web application but synchronous is used too
+- the way to use synchronous instead of asynchronous is to pass false argument to xmlHttpRequest.open  
+  window.xmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, false);
 
 Password Encryption component (php files):
 - description: two methods for encrypting passwords or sensitive data.

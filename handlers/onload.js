@@ -19,7 +19,9 @@ window.addEventListener("load", function() {
 
 		var onunload = new CodeReuse.Onunload();
     
-		onunload.unlock_remove_session(); 
+		onunload.unlock_remove_session();
+
+		return;
     }
 	
 	var query = window.location.search.substring(1).split("&");

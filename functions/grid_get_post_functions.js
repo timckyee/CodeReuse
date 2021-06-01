@@ -172,6 +172,15 @@ showTheGridAfterSaveRecord: function(phpFile, queryName, queryType, savePrimaryK
 			
 				if(pageNumberString == "0")
 				{
+					var formObject = new CodeReuse.TenantFormGridPaging();
+					var tableNameInDb = formObject.getTableNameInDb();
+				
+					var lock = new CodeReuse.Lock();
+				
+					// this unlock function is using get request which is synchronous
+					lock.unlock(tableNameInDb, savePrimaryKeyValue, sessionStorage.getItem("userId"));
+
+
 					var pageNumberHomeTenantGrid = sessionStorage.getItem("homeTenantFormGridPagingPageNumber");
 			
 					if(searchValue == "" || searchValue == undefined)

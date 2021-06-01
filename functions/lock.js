@@ -136,7 +136,8 @@ getPhpFile: function() {
     
     var queryString = "queryName=" + queryName + "&tableName=" + tableNameInDb + "&primaryKey=" + primaryKey + "&userId=" + userId;
 
-    window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, true);
+    // note: this get request is synchronous
+    window.getXmlHttpRequest.open("GET", this.phpFileGridGetPost + "?" + queryString, false);
     window.getXmlHttpRequest.send();
             
 },

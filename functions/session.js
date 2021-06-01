@@ -37,11 +37,20 @@ getPhpFile: function() {
 
             if(response == "Invalid Session Id. Redirecting to login page.")
             {
+                alert(response);
+
+                var onunload = new CodeReuse.Onunload();
+    
+                onunload.unlock_remove_session();
+                
                 //window.location.href = "login.html";
-                window.location.href = "index.html";
+                //window.location.href = "index.html";
             }
             else
             {
+                document.getElementById("tabsTable").style.display = "block";
+
+                
                 sessionStorage.setItem("userId", response);
 
                 controller = new CodeReuse.Controller();

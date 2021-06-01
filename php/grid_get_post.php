@@ -105,9 +105,7 @@
 				$row = $result->fetch_assoc();
 
 				echo $row["UserId"];
-
-				return;
-
+				
 				//echo "Valid Session Id.";
 			}
 
