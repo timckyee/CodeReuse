@@ -95,8 +95,15 @@ getPhpFile: function() {
 
             //alert(response);
 
-            var lock = new CodeReuse.Lock();
-            lock.form_checkdelete_checklock_lock(tableNameInDb, primaryKeyFieldName, primaryKey, sessionStorage.getItem("userId"), rowOnClick, phpFile, tableHtmlObjectId);
+            if(response == "Record locked by another user")
+            {
+                alert(response);
+            }
+            else
+            {
+                var lock = new CodeReuse.Lock();
+                lock.form_checkdelete_checklock_lock(tableNameInDb, primaryKeyFieldName, primaryKey, sessionStorage.getItem("userId"), rowOnClick, phpFile, tableHtmlObjectId);
+            }
         }
     }
     

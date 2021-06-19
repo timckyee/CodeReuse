@@ -168,6 +168,11 @@
 					$mysqli->query("delete from tableGridGetPostLock where TableName='" . $tableName . "' and PrimaryKey=" . $previousPrimaryKey . " and UserId=" . $userId);
 				}
 			}
+			else
+			if($row["CountLockPrimaryKey"] == "1")
+			{
+				echo "Record locked by another user";
+			}
 
 			return;
 		}
@@ -211,16 +216,19 @@
 						/* If code reaches this point without errors then commit the data in the database */
 						$mysqli->commit();
 
-						//echo "Record has been locked";
-						//return;
-
 					} catch (mysqli_sql_exception $exception) {
+
 						$mysqli->rollback();
 
 						throw $exception;
+
+					} finally {
+
+						echo "Record has been locked";
+
 					}
 
-					echo "Record has been locked";
+					//echo "Record has been locked";
 
 					return;
 
@@ -811,6 +819,15 @@
     }
     else if($_SERVER["REQUEST_METHOD"] == "POST") {
 	 
+		if($_POST["postType"] == "removeSessionAndLocks")
+		{
+			$userId = $_POST["userId"];
+
+			$mysqli->query("delete from tableGridGetPostSession where UserId = " . $userId);
+
+			$mysqli->query("delete from tableGridGetPostLock where UserId=" . $userId);
+		}
+		else
 		if($_POST["postType"] == "updateTableGridGetPostSuite")
 	    {   		    
 			$result = $mysqli->query("update tableGridGetPostSuite set " . $_POST["updateString"] . " where " . "suiteId = " . $_POST["htmlObjectPrimaryKeyValue"]);

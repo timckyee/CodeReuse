@@ -233,7 +233,7 @@ CodeReuse.Controller.prototype = {
 		
 				var selectedRowId = gridObject.getTenantSelectedRowId();
 		
-				if(selectedRowId != undefined)
+				if(selectedRowId != undefined && selectedRowId != "")
 				{
 					var lock = new CodeReuse.Lock();
 		

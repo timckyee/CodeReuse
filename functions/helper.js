@@ -144,7 +144,7 @@ validateHtmlObjectFieldsTenant: function(fieldsInfo)
 
 	document.getElementById("inputSuiteNumber").readOnly = false;
 
-	if(selectedRowId != undefined)
+	if(selectedRowId != undefined && selectedRowId != "")
 	{
 		var lock = new CodeReuse.Lock();
 
@@ -175,7 +175,7 @@ validateHtmlObjectFieldsTenant: function(fieldsInfo)
 
 		var selectedRowId = gridObject.getTenantSelectedRowId();
 
-		if(selectedRowId != undefined)
+		if(selectedRowId != undefined && selectedRowId != "")
 		{
 			var lock = new CodeReuse.Lock();
 

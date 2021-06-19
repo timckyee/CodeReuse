@@ -2,7 +2,7 @@
 
 var images = [];
 
-window.addEventListener("load", function() {
+document.getElementById("tabsBody").onload = function() {
 
     var currpage    = window.location.href;
     var lasturl     = sessionStorage.getItem("last_url");
@@ -35,8 +35,8 @@ window.addEventListener("load", function() {
 	var session = new CodeReuse.Session();
 
 	session.verify_session(sessionId);
-
-});
+	
+}
 
 /**
  * Class for onload functions

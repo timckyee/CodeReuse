@@ -12,42 +12,29 @@ window.addEventListener("popstate", function () {
 /*
 window.addEventListener("unload", function () {
 
-    var onunload = new CodeReuse.Onunload();
-    
-    onunload.unlock_remove_session();
-
 });
 */
 
 /*
 window.addEventListener("beforeunload", function () {
 
-    var onunload = new CodeReuse.Onunload();
-    
-    onunload.unlock_remove_session();
-
 });
 */
 
-/*
-window.addEventListener('beforeunload', function (e) {
-    // Cancel the event
-    e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-    // Chrome requires returnValue to be set
-    e.returnValue = '';
-  });
-*/
-
-/*
 document.getElementById("tabsBody").onbeforeunload = function ()
 {
-    var onunload = new CodeReuse.Onunload();
+    //var onunload = new CodeReuse.Onunload();
     
-    onunload.unlock_remove_session();
+    //onunload.unlock_remove_session();
 
     //return "unload";
+
+    var formData = new FormData();
+    formData.append("postType", "removeSessionAndLocks");
+    formData.append("userId", sessionStorage.getItem("userId"));
+
+    navigator.sendBeacon('php/grid_get_post.php', formData);
 }
-*/
 
 /*
 var needToConfirm = true;

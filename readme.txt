@@ -34,12 +34,16 @@ Login component: (note this component requires the website to use SSL)
 - note: each tab or browser which is open will have a separate set of sessionStorage variables.
 - when login is verified then Session Id is passed to the main ui page: tabs.html?sessionId=<sessionId>
 - once reaches this page the Session Id is verified (Session Id has to exist in database) or redirect to login html page
-- on clicking logout, clicking on browser back button, refresh button, or updating the url to another session Id,
+- on clicking on the left bottom tab logout button, clicking on browser back button, refresh button, or updating the url to another session Id,
   the session Id in database is deleted, along with user table locks and redirection is made to the login.html page
 - important note:
-  if click on the browser or browser tab exit button the session Id and user table locks will remain in the system
+  on clicking on the browser or tab exit button the navigator.sendBeacon function is used
+  to remove session and the user locks. the navigator.sendBeacon function
+  is compatible with Chrome macos, Safari macos, Chrome windows, Edge windows
+  and has been tested and does not work on mobile platforms: Chrome Android, Chrome IOS iPhone or Ipad, or Safari IOS iPhone or Ipad
+- if using mobile platforms: if click on the browser or browser tab exit button the session Id and user table locks will remain in the system
   if login again there is a notification that the session Id still exists and if the user wants to recover session
-  to avoid this message always click on the Logout button
+  to avoid this message always click on the Logout button after using this web application
   clicking on the Logout button will remove session and user lock records
 - after verification the userId is set in the sessionStorage and used mainly for creating and releasing locks
 
@@ -112,7 +116,6 @@ Password Encryption component (php files):
 - php/password_encrypt_hash_verify.php - one-way encryption method used for passwords using hash
 - php/password_encrypt_openssl.php - two-way encryption used for passwords or sensitive data using openssl
 - view the comments in the appropriate files for instructions on how to test encryption or decryption
-
 
 Programming Languages:
 
