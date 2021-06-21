@@ -1,0 +1,30 @@
+<html>
+
+<script>
+
+function TestOnClick()
+{
+    window.location.href = "onload_page.html";
+}
+
+</script>
+
+
+<body id="bodyId">
+
+    <button onclick="TestOnClick()">Go to onload_page.html</button>
+
+</body>
+
+<script>
+
+document.getElementById("bodyId").onload = function() 
+{
+
+    alert('onload page 1');
+
+}
+
+</script>
+
+</html>
