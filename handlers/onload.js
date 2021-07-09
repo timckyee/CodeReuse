@@ -23,9 +23,9 @@ document.getElementById("tabsBody").onload = function() {
 
 		return;
     }
-	
-	var query = window.location.search.substring(1).split("&");
 
+	var query = window.location.search.substring(1).split("&");
+	
 	var helper = new CodeReuse.Helper();
 
 	var GET_parameters = helper.parameterPassingUrl(query);

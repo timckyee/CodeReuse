@@ -613,6 +613,23 @@ window.getXmlHttpRequest.send();
                 {
                     var highlightId = primaryKey;
 
+
+                    if(tableHtmlObjectId == suiteGrid.getTableHtmlObjectId())
+                    {
+                        var formObject = new CodeReuse.Suite();
+                        var tableNameInDb = formObject.getTableNameInDb();
+                    }
+                    else
+                    if(tableHtmlObjectId == tenantGrid.getTableHtmlObjectId())
+                    {
+                        var formObject = new CodeReuse.Tenant();
+                        var tableNameInDb = formObject.getTableNameInDb();
+                    }
+
+                    var lock = new CodeReuse.Lock();
+                    
+                    lock.unlock(tableNameInDb, primaryKey, sessionStorage.getItem("userId"));
+
                     if(refreshGridCallback != undefined)
                         refreshGridCallback(highlightId);						
                 }

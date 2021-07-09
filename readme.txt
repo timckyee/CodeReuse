@@ -34,22 +34,7 @@ Login component: (note this component requires the website to use SSL)
 - note: each tab or browser which is open will have a separate set of sessionStorage variables.
 - when login is verified then Session Id is passed to the main ui page: tabs.html?sessionId=<sessionId>
 - once reaches this page the Session Id is verified (Session Id has to exist in database) or redirect to login html page
-- on clicking on the left bottom tab logout button, clicking on browser back button, refresh button, or updating the url to another session Id,
-  the session Id in database is deleted, along with user table locks and redirection is made to the login.html page
-- important note:
-  on clicking on the browser or tab exit button the navigator.sendBeacon function is used
-  to remove session and the user locks. the navigator.sendBeacon function
-  is compatible with Chrome macos, Safari macos, Chrome windows, Edge windows
-  and has been tested and does not work on mobile platforms: Chrome Android, Chrome IOS iPhone or Ipad, or Safari IOS iPhone or Ipad
-- if using mobile platforms: if click on the browser or browser tab exit button the session Id and user table locks will remain in the system
-  if login again there is a notification that the session Id still exists and if the user wants to recover session
-  to avoid this message always click on the Logout button after using this web application
-  clicking on the Logout button will remove session and user lock records
 - after verification the userId is set in the sessionStorage and used mainly for creating and releasing locks
-
-- create new user page: go to login.html and click on Create New User link (file: createUser.html)
-  creates user with firstname, lastname, username, email, and password (where password is encrypted
-  using openssl_encrypt)
 
 - forgot password page: go to login.html and click on Forgot Password link (file: resetPasswordEmail.html)
 - when navigate to the forgot password page, need to enter user email
@@ -64,12 +49,58 @@ if new password is the same as confirm password
 passing in new password and encrypted email
 - from updatePassword.php, update the new password in database with the decrypted email.
 
+- create new user page: go to login.html and click on Create New User link (file: createUser.html)
+  creates user with firstname, lastname, username, email, and password (where password is encrypted
+  using openssl_encrypt)
+
 - administration page to reset the password for user
 - go to login/resetPasswordAdmin/resetPassword.html
 - to update the password for a user enter the user email address
 - then enter the user new password and click on Reset Password
 
+Logout component:
+- on clicking on the left bottom tab logout button, clicking on browser back button, refresh button, or updating the url to another session Id,
+  the session Id in database is deleted, along with user table locks and redirection is made to the login.html page
+- important note:
+  on clicking on the browser or tab exit button the navigator.sendBeacon function is used to remove session and the user locks. 
+  With the sendBeacon() method, the data is transmitted asynchronously when the user agent has an opportunity to do so,
+  without delaying unload or the next navigation.
+  the navigator.sendBeacon function is compatible with Chrome macos, Safari macos, Chrome windows, Edge windows
+  and has been tested and does not work on mobile platforms: Chrome Android, Chrome IOS iPhone or Ipad, or Safari IOS iPhone or Ipad
+- if using mobile platforms: 
+  there are no events such as unload or beforeunload, so sendBeacon does not work.
+  if click on the browser or browser tab exit button the session Id and user table locks will remain in the system
+  if login again there is a notification that the session Id still exists and if the user wants to recover session
+  to avoid this message always click on the Logout button after using this web application
+  clicking on the Logout button will remove session and user lock records
+
+- Recommendation is to not remove record from SessionId table when using the methods
+  to leave the application (click left bottom tab logout, clicking on browser back button, refresh button, or updating
+  the url to another sessionId, or clicking on browser or tab exit button)
+  But instead keep the SessionId record in the Session table:
+  - if first time logging into application create new SessionId and store in Session table
+  - if not first time logging in, update the users SessionId to new SessionId
+  This method ensures even if using mobile platforms do not have to deal with removing Session Ids.
+
 Lock component:
+- Note: it is recommended that there should be no locking mechanism on the client side
+  - If not using locks then even if using mobile platforms there's no need to deal with removing locks
+    This is because there is no unload or beforeunload on mobile platforms so can't use sendBeacon
+    to remove the SessionId and Locks. 
+  - I have included this Lock component because it would be lots of work to undo the Lock component code.
+  The main reason that locks should be considered is in order to resolve data contention.
+  - Data contention means when two users access the same record and makes updates at similar times
+    and overwrites each others updates.
+  Reasons to use client locks is worse than not using client locks.
+  Reasons to not using client locks:
+  - waiting for locks to be released decreases productivity and may lead to errors if forget to update a locked record.
+  - possible that the Lock will remain in the database and need to sweep through database to remove these records.
+  - scalabilty of the application: more and more users use the system then more likelihood they will access
+    the same record. if first user that locks record does not make any changes and the second user wants to access
+    the same record, you have annoyed the second user.
+  - record locking is hard on the database server.
+
+(If using Lock component) Lock component description:
 - there is a Lock class which has functions to lock and unlock records so users cannot overwite each others information
 - there are 2 types of lock: one for edit grid and other for the form grids
 - edit grid - grid_checkdelete_checklock_lock which checks whether record exists, then check if there is a lock
@@ -96,11 +127,18 @@ Session component:
   if UserId is not found in session table then use this new Session Id
   if UserId is found in the session table then update the current Session Id with this Session Id
   if either option, Session Id is sent back to client then go to the main page (tabs.html)
-  passing in the sessionId to the url.
+  passing in the sessionId to the url (tabs.html?sessionId=)
 - onload of the tabs.html file, we get the Session Id from the query string 
   then call the verify_session passing in the Session Id
-  if the Session Id does not exist in the table then redirect to the login.html page
+  if the Session Id does not exist in the database table then redirect to the login.html page
   if Session Id exists then continue to initialize and load the page
+- the sessionId query string variable taken from the windows.location.href (tabs.html?sessionId=)
+  is used to make sure the sessionId exists in the database in order to update or insert data
+  the instances in which the check is made is before:
+  - update or insert into tableGridGetPost2
+  - update or insert into tableGridGetPostSuite
+  - update or insert into tableGridGetPostTenant
+  if sessionId does not exist in database before the update or insert, show message else continue with update or insert
 
 Ajax (Asynchronous JavaScript and XML) calls
 - note this web application uses ajax calls to get, update, create or delete data from the database

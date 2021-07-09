@@ -830,41 +830,119 @@
 		else
 		if($_POST["postType"] == "updateTableGridGetPostSuite")
 	    {   		    
-			$result = $mysqli->query("update tableGridGetPostSuite set " . $_POST["updateString"] . " where " . "suiteId = " . $_POST["htmlObjectPrimaryKeyValue"]);
+			$sessionId = $_POST["sessionId"];
+
+			$result = $mysqli->query("select count(UserId) as CountSessionId from tableGridGetPostSession where SessionId = '" . $sessionId . "'");
+
+			$row = $result->fetch_assoc();
+
+			if($row["CountSessionId"] == "1")
+			{
+				$result = $mysqli->query("update tableGridGetPostSuite set " . $_POST["updateString"] . " where " . "suiteId = " . $_POST["htmlObjectPrimaryKeyValue"]);
+			}
+			else
+			{
+				echo 'Session Id not valid';
+			}
 	    }
 	    else
 		if($_POST["postType"] == "createRecordTableGridGetPostSuite")
-	    {   		    
-            if($mysqli->query("insert into tableGridGetPostSuite " . $_POST["insertString"]) === true);
-            {
-            	$last_id = $mysqli->insert_id;
-				echo $last_id;
+	    {   		
+			$sessionId = $_POST["sessionId"];
+
+			$result = $mysqli->query("select count(UserId) as CountSessionId from tableGridGetPostSession where SessionId = '" . $sessionId . "'");
+
+			$row = $result->fetch_assoc();
+
+			if($row["CountSessionId"] == "1")
+			{
+				if($mysqli->query("insert into tableGridGetPostSuite " . $_POST["insertString"]) === true);
+				{
+					$last_id = $mysqli->insert_id;
+					echo $last_id;
+				}
+			}
+			else
+			{
+				echo 'Session Id not valid';
 			}
 	    }
 	    else
 		if($_POST["postType"] == "updateTableGridGetPost")
 	    {   		    
-			$result = $mysqli->query("update tableGridGetPost2 set " . $_POST["updateString"] . " where " . "fieldPrimaryKey = " . $_POST["htmlObjectPrimaryKeyValue"]);
+			$sessionId = $_POST["sessionId"];
+
+			$result = $mysqli->query("select count(UserId) as CountSessionId from tableGridGetPostSession where SessionId = '" . $sessionId . "'");
+
+			$row = $result->fetch_assoc();
+
+			if($row["CountSessionId"] == "1")
+			{
+				$result = $mysqli->query("update tableGridGetPost2 set " . $_POST["updateString"] . " where " . "fieldPrimaryKey = " . $_POST["htmlObjectPrimaryKeyValue"]);
+			}
+			else
+			{
+				echo 'Session Id not valid';
+			}
 	    }
 		else		
 		if($_POST["postType"] == "updateTableTenant")
-	    {   		    
-			$result = $mysqli->query("update tableGridGetPostTenant set " . $_POST["updateString"] . " where " . "tenantId = " . $_POST["htmlObjectPrimaryKeyValue"]);
+	    {   		
+			$sessionId = $_POST["sessionId"];
+
+			$result = $mysqli->query("select count(UserId) as CountSessionId from tableGridGetPostSession where SessionId = '" . $sessionId . "'");
+
+			$row = $result->fetch_assoc();
+
+			if($row["CountSessionId"] == "1")
+			{
+				$result = $mysqli->query("update tableGridGetPostTenant set " . $_POST["updateString"] . " where " . "tenantId = " . $_POST["htmlObjectPrimaryKeyValue"]);
+			}
+			else
+			{
+				echo 'Session Id not valid';
+			}
 	    }
 	    else if($_POST["postType"] == "createRecordTableGridGetPost")
 	    {
-            if($mysqli->query("insert into tableGridGetPost2 " . $_POST["insertString"]) === true);
-            {
-            	$last_id = $mysqli->insert_id;
-				echo $last_id;
+			$sessionId = $_POST["sessionId"];
+
+			$result = $mysqli->query("select count(UserId) as CountSessionId from tableGridGetPostSession where SessionId = '" . $sessionId . "'");
+
+			$row = $result->fetch_assoc();
+
+			if($row["CountSessionId"] == "1")
+			{
+				if($mysqli->query("insert into tableGridGetPost2 " . $_POST["insertString"]) === true);
+				{
+					$last_id = $mysqli->insert_id;
+					echo $last_id;
+				}
+			}
+			else
+			{
+				echo 'Session Id not valid';
 			}
 	    }		
 	    else if($_POST["postType"] == "createRecordTableGridGetPostTenant")
 	    {
-            if($mysqli->query("insert into tableGridGetPostTenant " . $_POST["insertString"]) === true);
-            {
-            	$last_id = $mysqli->insert_id;
-				echo $last_id;
+			$sessionId = $_POST["sessionId"];
+
+			$result = $mysqli->query("select count(UserId) as CountSessionId from tableGridGetPostSession where SessionId = '" . $sessionId . "'");
+
+			$row = $result->fetch_assoc();
+
+			if($row["CountSessionId"] == "1")
+			{
+				if($mysqli->query("insert into tableGridGetPostTenant " . $_POST["insertString"]) === true);
+				{
+					$last_id = $mysqli->insert_id;
+					echo $last_id;
+				}
+			}
+			else
+			{
+				echo 'Session Id not valid';
 			}
 	    }
 	}

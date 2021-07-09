@@ -238,6 +238,7 @@ td.gridBorderThick {
 
 }
 
+/* border of 0.4px not supported by iphone safari or chrome */
 td.gridBorderThin {
 
 	border: 0.4px solid black;

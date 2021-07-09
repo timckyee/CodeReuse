@@ -437,7 +437,18 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 				window.postXmlHttpRequest.onreadystatechange = function() {
 					
 					if (this.readyState == 4 && this.status == 200) {
-														
+					
+						var response = this.responseText;
+
+						if(response == "Session Id not valid")
+						{
+							alert('Session Id not valid. Redirecting to login page.');
+
+							window.location.href = "index.html";
+
+							return;
+						}
+
 						for(update=0; update<fieldsInfo.length; update++)
 						{			
 							arrayOldValuesTable[fieldsInfo[update].htmlObjectId] = htmlObjectFieldsValuesUpdate[update];
@@ -458,8 +469,24 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 								highlightId = tenantGrid.getTenantSelectedRowId();
 							}
 
+							if(tableHtmlObjectId == suiteGrid.getTableHtmlObjectId())
+							{
+								var formObject = new CodeReuse.Suite();
+								var tableNameInDb = formObject.getTableNameInDb();
+							}
+							else
+							if(tableHtmlObjectId == tenantGrid.getTableHtmlObjectId())
+							{
+								var formObject = new CodeReuse.Tenant();
+								var tableNameInDb = formObject.getTableNameInDb();
+							}
+
+							var lock = new CodeReuse.Lock();
+							
+							lock.unlock(tableNameInDb, htmlObjectPrimaryKeyValue, sessionStorage.getItem("userId"));
+
 							if(refreshGridCallback != undefined)
-								refreshGridCallback(highlightId);
+								refreshGridCallback(highlightId);						
 						}
 						else
 						if(tableHtmlObjectId == home_tenant_form_grid_paging.getTableHtmlObjectId())
@@ -482,8 +509,16 @@ post_updateForm:function (phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 						
 					}
 				}
+
+				var query = window.location.search.substring(1).split("&");
+
+				var helper = new CodeReuse.Helper();
 			
-				var formVariables = "postType" + "=" + postType + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue + "&" + "updateString" + "=" + encodeURIComponent(updateString);
+				var GET_parameters = helper.parameterPassingUrl(query);
+			
+				var sessionId = GET_parameters["sessionId"];
+
+				var formVariables = "postType" + "=" + postType + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue + "&" + "updateString" + "=" + encodeURIComponent(updateString) + "&" + "sessionId" + "=" + sessionId;
 					
 				window.postXmlHttpRequest.open("POST", phpFile, true);
 				window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -601,6 +636,17 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 					
 					if (this.readyState == 4 && this.status == 200) {
 
+						var response = this.responseText;
+
+						if(response == "Session Id not valid")
+						{
+							alert('Session Id not valid. Redirecting to login page.');
+
+							window.location.href = "index.html";
+
+							return;
+						}
+
 						var gridObject;
 						var tableNameInDb;
 						var primaryKeyFieldName;
@@ -618,7 +664,15 @@ post_updateGrid: function(phpFile, postType, htmlObjectPrimaryKeyValue, htmlObje
 					}
 				}
 
-				var formVariables = "postType" + "=" + postType + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue + "&" + "updateString" + "=" + encodeURIComponent(updateString);
+				var query = window.location.search.substring(1).split("&");
+
+				var helper = new CodeReuse.Helper();
+			
+				var GET_parameters = helper.parameterPassingUrl(query);
+			
+				var sessionId = GET_parameters["sessionId"];
+
+				var formVariables = "postType" + "=" + postType + "&" + "htmlObjectPrimaryKeyValue" + "=" + htmlObjectPrimaryKeyValue + "&" + "updateString" + "=" + encodeURIComponent(updateString) + "&" + "sessionId" + "=" + sessionId;
 					
 				window.postXmlHttpRequest.open("POST", phpFile, true);
 				window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -725,6 +779,17 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 				
 				if (this.readyState == 4 && this.status == 200) {	
 				
+					var response = this.responseText;
+
+					if(response == "Session Id not valid")
+					{
+						alert('Session Id not valid. Redirecting to login page.');
+
+						window.location.href = "index.html";
+
+						return;
+					}
+
 					var insertId = this.responseText;
 					
 					document.getElementById(inputPrimaryKeyId).value = insertId;
@@ -784,7 +849,15 @@ post_insertRecordForm: function(phpFile, postType, htmlObjectFieldsValuesInsert,
 				}
 			}	
 			
-			var formVariables = "postType" + "=" + postType + "&" + "insertString" + "=" + encodeURIComponent(insertString);
+			var query = window.location.search.substring(1).split("&");
+
+			var helper = new CodeReuse.Helper();
+		
+			var GET_parameters = helper.parameterPassingUrl(query);
+		
+			var sessionId = GET_parameters["sessionId"];
+
+			var formVariables = "postType" + "=" + postType + "&" + "insertString" + "=" + encodeURIComponent(insertString) + "&" + "sessionId" + "=" + sessionId;
 				
 			window.postXmlHttpRequest.open("POST", phpFile, true);
 			window.postXmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

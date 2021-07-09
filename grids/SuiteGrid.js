@@ -117,14 +117,16 @@ CodeReuse.SuiteGrid.prototype = {
 		grid_get_post_functions = new CodeReuse.Grid_Get_Post_Functions();
 		
 		var callback = new CodeReuse.Callback();
-				
+		
 		if(document.getElementById("selectBuildingSuite").selectedIndex != 0)
 		{
 			var sortColumn = sessionStorage.getItem("arraySortColumn_suite");
 
 			var sortDirection = sessionStorage.getItem("arraySortDirection_suite");
 
-			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId, "false", '', '', "false", '', '', '');
+			grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', '', "false", '', '', "false", '', '', '');
+		
+			//grid_get_post_functions.grid(this.gridGetPostDivElement, phpFile, this.getRefreshSuiteGridQueryName(), this.getGridIdField(), this.getGridColumnsInfo(), this.tableHtmlObjectId, "building", document.getElementById("selectBuildingSuite").value, callback.gridCallback, this.rowOnClick, "noEdit", sortColumn, sortDirection, '', highlightId, "false", '', '', "false", '', '', '');
 		}
 	},
 	
