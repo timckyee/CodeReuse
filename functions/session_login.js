@@ -47,6 +47,60 @@ getPhpFile: function() {
             }
             */
 
+            /*
+            var platform;
+
+            var isIOS_safari = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+            var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+        
+            var isAndroid = /Android/i.test(navigator.userAgent);
+        
+            if(isIOS_safari == false && isIOS == false && isAndroid == false)
+            {
+                if(navigator.userAgent.indexOf('Chrome') != -1)
+                {
+                    platform = "desktop_chrome";
+                }
+                else
+                {
+                    platform = "desktop_safari";
+                }
+            }
+            else
+            if(isIOS_safari == true)
+            {
+                platform = "IOS_safari";
+            }
+            else
+            if(isIOS == true)
+            {
+                platform = "IOS";
+            }
+            else
+            if(isAndroid == true)
+            {
+                platform  = "android";
+            }
+            */
+
+            /*
+
+            if(platform == "desktop_chrome")
+            {
+                //var mainPage = window.open("tabs.html?sessionId=" + response, '', "width = 1280, height = 1024");
+
+                window.open("tabs.html?sessionId=" + response, "", "width=" + screen.availWidth + ",height=" + screen.availHeight);
+
+                //mainPage.moveTo(0,0);
+                //mainPage.resizeTo(screen.width, screen.height);                
+            }
+            else
+            {
+                window.location.href = "tabs.html?sessionId=" + response;
+            }
+            */
+
             window.location.href = "tabs.html?sessionId=" + response;
         }
     }

@@ -1,7 +1,8 @@
+
 table {
-	
 	border-collapse: collapse;
-	
+    table-layout: fixed; 
+	width: 200px;
 }
 
 .tableHover:hover {
@@ -19,6 +20,18 @@ table {
 td {
 	
 	border: 1px solid black;
+	height: 20px;
+	
+}
+
+th {
+	
+	border: 1px solid black;
+	height: 20px;
+	position: sticky; 
+	top: 0;
+	background: lightgray;
+	padding-top: 10px;
 	
 }
 
@@ -292,15 +305,16 @@ sorting header icon ellipsis
     overflow: auto;
 }
 
+/*
 th
 {
 	position: sticky; 
 	top: 0;
 	background: lightgray;
 	padding-top: 10px; 
-	/* border: solid 1px black; */
 	box-shadow: inset 1px 1px #000, 0 1px #000;
 }
+*/
 
 .button
 {

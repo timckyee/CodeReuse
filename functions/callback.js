@@ -43,7 +43,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 
 	if(platform == "desktop_safari")
 	{
-		/*
 		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 		{
 			tbl.className = "homeGrid_safari";
@@ -61,12 +60,10 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		{
 			tbl.className = "tenantGrid";
 		}
-		*/
 	}
 	else
 	if(platform == "desktop_chrome")
 	{
-		/*
 		if(tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 		{
 			tbl.className = "homeGrid_chrome";
@@ -84,7 +81,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		{
 			tbl.className = "tenantGrid";
 		}
-		*/
 	}
 	else
 	if(platform == "IOS_safari")
@@ -161,19 +157,14 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		tableHeader.style.width = "70px";
 		//tableHeader.style.height = "25px";
 		
+		//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome
 		if(platform == "desktop_safari" || platform == "android")
 		{
-			//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome
 			tableHeader.className = "grid gridBorderThin";
 		}
 		else if(platform == "desktop_chrome" || platform == "IOS" || platform == "IOS_safari")
 		{
 			tableHeader.className = "grid gridBorderThick";
-		}
-
-		if(platform == "desktop_chrome")
-		{
-			tableHeader.style.borderBottom = "solid 1px black";
 		}
 
 		tableHeaderRow.appendChild(tableHeader);
@@ -183,95 +174,11 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 	{	
 		tableHeader = document.createElement("th");
 
-		if(platform == "desktop_safari" || 	platform == "desktop_chrome")
-		{
-			if(tableHtmlObjectId == "tableHomeTenantFormGridPaging" || tableHtmlObjectId == "tableHomeTenant") 
-			{
-				if(gridColumnsInfo[i].id == "fieldPrimaryKey")
-				{
-					tableHeader.style.width = "200px";
-				}
-
-				if(gridColumnsInfo[i].id == "buildingName")
-				{
-					tableHeader.style.width = "200px";
-				}
-				
-				if(gridColumnsInfo[i].id == "tenantName")
-				{
-					tableHeader.style.width = "200px";
-				}
-
-				if(gridColumnsInfo[i].id == "field1")
-				{
-					tableHeader.style.width = "200px";
-				}
-				
-				if(gridColumnsInfo[i].id == "field2")
-				{
-					tableHeader.style.width = "200px";
-				}	
-			}
-			else 
-			if(tableHtmlObjectId == "tableSuite")
-			{
-				if(gridColumnsInfo[i].id == "suiteId")
-				{
-					tableHeader.style.width = "200px";
-				}
-
-				if(gridColumnsInfo[i].id == "suiteNumber")
-				{
-					tableHeader.style.width = "200px";
-				}
-
-				if(gridColumnsInfo[i].id == "buildingName")
-				{
-					tableHeader.style.width = "200px";
-				}
-
-				if(gridColumnsInfo[i].id == "location")
-				{
-					tableHeader.style.width = "200px";
-				}					
-			}		
-			else
-			if(tableHtmlObjectId == "tableTenant")
-			{
-				if(gridColumnsInfo[i].id == "tenantId")
-				{
-					tableHeader.style.width = "200px";
-				}
-
-				if(gridColumnsInfo[i].id == "buildingName")
-				{
-					tableHeader.style.width = "200px";
-				}
-				
-				if(gridColumnsInfo[i].id == "suiteNumber")
-				{
-					tableHeader.style.width = "200px";
-				}
-				
-				if(gridColumnsInfo[i].id == "firstname")
-				{
-					tableHeader.style.width = "200px";
-				}
-
-				if(gridColumnsInfo[i].id == "lastname")
-				{
-					tableHeader.style.width = "200px";
-				}			
-			}
-		}	
-
-
 		tableHeader.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeader";
 		
 		var tableHeaderStyle = tableHeader.style;
 
 		// set right border of the last th header or there will be no border
-		// this is when using box-shadow in style.css to fix the table header and preserve borders when scrolling
 		if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
 		{
 			if(gridColumnsInfo[i].id == "field2")
@@ -301,13 +208,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		tableHeaderStyle.overflow = "hidden";
 		tableHeaderStyle.className = "grid";
 		tableHeaderStyle.textOverflow = "ellipsis";
-
-		if(platform == "desktop_chrome")
-		{
-			tableHeaderStyle.borderBottom = "solid 1px black";
-		}
-
-		//tableHeaderStyle.borderBottom = "solid 1px black";
 
         var columnName = gridColumnsInfo[i].colName;
 
@@ -588,9 +488,9 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 			cell = document.createElement("td");
 			//cell.className = "grid";
 			
+			//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome	
 			if(platform == "desktop_safari" || platform == "android")
 			{
-				//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome
 				cell.className = "grid gridBorderThin";
 			}
 			else if(platform == "desktop_chrome" || platform == "IOS" || platform == "IOS_safari")
@@ -669,11 +569,12 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		{	
 			cell = document.createElement("td");
 
-			// IOS, IOS safari, desktop safari and android: table borders of th headers not lining up with the td cells
-			// desktop chrome is working ok. for the others make the border thinner.
+			// desktop safari and android: table borders of th headers not lining up with the td cells so make borders thin
+			// desktop chrome, iphone IOS chrome and ipad IOS chrome, iphone IOS safari and ipad IOS safari borders are ok
+			
+			//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome
 			if(platform == "desktop_safari" || platform == "android")
 			{
-				//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome
 				cell.className = "grid gridBorderThin";
 			}
 			else if(platform == "desktop_chrome" || platform == "IOS" || platform == "IOS_safari")
