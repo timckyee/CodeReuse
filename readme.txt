@@ -16,7 +16,7 @@ The main important components:
 - grid sorting (on server using paging, or client side) - two way sorting ascending or descending
 - grid paging (navigate using left and right arrows, also update page number and clicking on go)
 - grid search (server, enter search string, click on search then data filters)
-- saving of grid edit record or form record will preserve sort order of record on the grid if sort column is clicked.
+- saving of grid edit record or form record will preserve sort order of record on the grid if sort column is clicked
 - for Suite, Tenant, or TenantFormGridPaging grids
   clicking on grid populates form, can click save to update record or create new
 - the forms also have Clear Lock button (see Lock component below) which has to be clicked
@@ -29,7 +29,7 @@ Login component: (note this component requires the website to use SSL)
 - main login page: login.html (Username, Password to Login)
 - two users in users table (username/password/email)
   TestUser/testpassword/testuser@testing.com and TestUser4/Hello1234/testuser4@testing.com
-- every time the user logs in a session id is created. this is to prevent multiple logins and also prevent
+- every time the user logs in a session id is created if not exist or updated if exists. this is to prevent
   users trying to access page with an invalid session id to access the page.
 - note: each tab or browser which is open will have a separate set of sessionStorage variables.
 - when login is verified then Session Id is passed to the main ui page: tabs.html?sessionId=<sessionId>
@@ -67,27 +67,33 @@ Logout component:
   without delaying unload or the next navigation.
   the navigator.sendBeacon function is compatible with Chrome macos, Safari macos, Chrome windows, Edge windows
   and has been tested and does not work on mobile platforms: Chrome Android, Chrome IOS iPhone or Ipad, or Safari IOS iPhone or Ipad
-- if using mobile platforms: 
+- if using mobile platforms:
   there are no events such as unload or beforeunload, so sendBeacon does not work.
   if click on the browser or browser tab exit button the session Id and user table locks will remain in the system
   if login again there is a notification that the session Id still exists and if the user wants to recover session
   to avoid this message always click on the Logout button after using this web application
   clicking on the Logout button will remove session and user lock records
 
-- Recommendation is to not remove record from SessionId table when using the methods
-  to leave the application (click left bottom tab logout, clicking on browser back button, refresh button, or updating
+- Recommendation is to not remove record from SessionId table when using the methods to leave the application
+  (click left bottom tab logout, clicking on browser back button, refresh button, or updating
   the url to another sessionId, or clicking on browser or tab exit button)
-  But instead keep the SessionId record in the Session table:
+  - the design in this system is to show message to user if the Session Id exists when user logs in.
+  It is better NOT to show the message but just update the Session Id if exists.
+  Should instead keep the SessionId record in the Session table:
   - if first time logging into application create new SessionId and store in Session table
-  - if not first time logging in, update the users SessionId to new SessionId
-  This method ensures even if using mobile platforms do not have to deal with removing Session Ids.
+  - if not first time logging in update the users SessionId to new SessionId
+  Note: In the system the user can only update or create new records if the Session Id exists in the database 
+  Using this method of not removing Session Ids ensures even if using mobile platforms do not have
+  to deal with removing Session Ids and user locks (Lock component explained below)
+  since navigator.sendBeacon does not work on mobile platforms
 
 Lock component:
 - Note: it is recommended that there should be no locking mechanism on the client side
   - If not using locks then even if using mobile platforms there's no need to deal with removing locks
     This is because there is no unload or beforeunload on mobile platforms so can't use sendBeacon
-    to remove the SessionId and Locks. 
-  - I have included this Lock component because it would be lots of work to undo the Lock component code.
+    to remove the SessionId and Locks on browser or tab close. So locks will still be in the system after
+    the user closes the browser in the mobile platform.
+  - IMPORANT NOTE: I have included the Lock component because it would be lots of work to undo the Lock component code.
   The main reason that locks should be considered is in order to resolve data contention.
   - Data contention means when two users access the same record and makes updates at similar times
     and overwrites each others updates.
@@ -98,6 +104,11 @@ Lock component:
   - scalabilty of the application: more and more users use the system then more likelihood they will access
     the same record. if first user that locks record does not make any changes and the second user wants to access
     the same record, you have annoyed the second user.
+  - when on the Home Grid Paging form, the Suite form, or Tenant form there is a bug:
+    when clicking rapidly on the form record and changing records back and forth on the web app on the server
+    some times the record gets locked and cannot unlock it unless you logout.
+    if using localhost there is no problem.
+    it is because the app on the server is slower.
   - record locking is hard on the database server.
 
 (If using Lock component) Lock component description:
@@ -105,9 +116,10 @@ Lock component:
 - there are 2 types of lock: one for edit grid and other for the form grids
 - edit grid - grid_checkdelete_checklock_lock which checks whether record exists, then check if there is a lock
   on the record, then if no lock then locks the record, then show grid edit row
-- form grid - (tenant form grid paging, suite grid, tenant grid) - form_unlock to unlock the previous form selection
-  then form_checkdelete_checklock_lock - which check whether record exists, then check if there is a lock
-  on the record, then if there is no lock then locks the record, then populates the form with the onclick row information
+- form grid - (tenant form grid paging, suite grid, tenant grid) - form_unlock to unlock the previous form selection if
+  there is a previous selection, then form_checkdelete_checklock_lock - which check whether record exists, then check if
+  there is a lock on the record, then if there is no lock then locks the record, then populates the form with the
+  onclick row information
 - grid_unlock_cancel and grid_unlock_update
   these two functions unlock the grid edit when clicking on cancel and also after and record update
 - form_lock_insertRecord
@@ -116,8 +128,9 @@ Lock component:
   unlocks record when clicking on search
 - unlock_sort_client and unlock_sort_server or unlock_update_page_direction and unlock_update_page_number
   unlocks record when clicking on sort on client or server, or when updating page direction or page number
-- on click of logout button, browser back button, reload page button, the unlockRecordsOnExit function is called which
-unlocks the lock table records which the User Id has locked and also removes the User Session Id
+- on click of logout button, browser back button, reload page button, if Session Id is invalid,
+  the unlockRecordsOnExit function is called which unlocks the lock table records which the
+  User Id has locked and also removes the User Session Id
 
 Session component:
 - there is a SessionLogin (session_login.js) to create or update session

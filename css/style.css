@@ -1,8 +1,9 @@
 
 table {
+
 	border-collapse: collapse;
-    table-layout: fixed; 
-	width: 200px;
+    table-layout: fixed;
+	
 }
 
 .tableHover:hover {
@@ -28,8 +29,6 @@ th {
 	
 	border: 1px solid black;
 	height: 20px;
-	position: sticky; 
-	top: 0;
 	background: lightgray;
 	padding-top: 10px;
 	
@@ -245,19 +244,6 @@ td.grid {
 	padding-left: 10px;
 }
 
-td.gridBorderThick {
-
-	border: 1px solid black;
-
-}
-
-/* border of 0.4px not supported by iphone safari or chrome */
-td.gridBorderThin {
-
-	border: 0.4px solid black;
-
-}
-
 .bodyDesktop {
 
 	min-width: 1280px;
@@ -306,6 +292,8 @@ sorting header icon ellipsis
 }
 
 /*
+to keep column header in place when scrolling
+for Suite Form Grid and Tenant Form Grid
 th
 {
 	position: sticky; 

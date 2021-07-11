@@ -156,16 +156,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		
 		tableHeader.style.width = "70px";
 		//tableHeader.style.height = "25px";
-		
-		//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome
-		if(platform == "desktop_safari" || platform == "android")
-		{
-			tableHeader.className = "grid gridBorderThin";
-		}
-		else if(platform == "desktop_chrome" || platform == "IOS" || platform == "IOS_safari")
-		{
-			tableHeader.className = "grid gridBorderThick";
-		}
 
 		tableHeaderRow.appendChild(tableHeader);
 	}
@@ -177,29 +167,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		tableHeader.id = tableHtmlObjectId + "_" + gridColumnsInfo[i].id + "ColumnHeader";
 		
 		var tableHeaderStyle = tableHeader.style;
-
-		// set right border of the last th header or there will be no border
-		if(tableHtmlObjectId == "tableHomeTenant" || tableHtmlObjectId == "tableHomeTenantFormGridPaging")
-		{
-			if(gridColumnsInfo[i].id == "field2")
-			{
-				tableHeaderStyle.borderRight = "solid 1px black";
-			}			
-		}
-		else if(tableHtmlObjectId == "tableSuite")
-		{
-			if(gridColumnsInfo[i].id == "location")
-			{
-				tableHeaderStyle.borderRight = "solid 1px black";
-			}			
-		}
-		else if(tableHtmlObjectId == "tableTenant")
-		{ 
-			if(gridColumnsInfo[i].id == "lastname")
-			{
-				tableHeaderStyle.borderRight = "solid 1px black";
-			}
-		}
 
 		//tableHeaderStyle.height = "25px";
 		tableHeaderStyle.paddingBottom = "10px";
@@ -487,16 +454,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		{			
 			cell = document.createElement("td");
 			//cell.className = "grid";
-			
-			//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome	
-			if(platform == "desktop_safari" || platform == "android")
-			{
-				cell.className = "grid gridBorderThin";
-			}
-			else if(platform == "desktop_chrome" || platform == "IOS" || platform == "IOS_safari")
-			{
-				cell.className = "grid gridBorderThick";
-			}
 
 			cell.style.padding = "10px";
 			
@@ -568,19 +525,6 @@ gridCallback: function(phpFile, response, divTable, tableHtmlObjectId, gridIdFie
 		for(var i=0; i<gridColumnsInfo.length; i++)
 		{	
 			cell = document.createElement("td");
-
-			// desktop safari and android: table borders of th headers not lining up with the td cells so make borders thin
-			// desktop chrome, iphone IOS chrome and ipad IOS chrome, iphone IOS safari and ipad IOS safari borders are ok
-			
-			//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome
-			if(platform == "desktop_safari" || platform == "android")
-			{
-				cell.className = "grid gridBorderThin";
-			}
-			else if(platform == "desktop_chrome" || platform == "IOS" || platform == "IOS_safari")
-			{
-				cell.className = "grid gridBorderThick";
-			}
 
 			cell.style.padding = "10px";
 
@@ -731,21 +675,7 @@ get_populateGrid_callback: function(response, gridColumnsInfo, arrayOldValuesTab
 
 	tableEdit.rows[tableEditCount + 1].className = "highlightRow";
 	
-	var platform = helper.checkPlatform();
-
-	if(platform == "desktop_safari" || platform == "android")
-	{
-		// if desktop_safari or android then gridBorderThin
-
-		//border of 0.4px (gridBorderThin) not supported by iphone safari or chrome
-		tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid gridBorderThin\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid gridBorderThin\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid gridBorderThin\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid gridBorderThin\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid gridBorderThin\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\" />&nbsp;&nbsp;<img id=\"inputCalendar_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td><td class=\"grid gridBorderThin\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\"/>&nbsp;&nbsp;<img id=\"inputCalendarTesting_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td>";		
-	}
-	else if(platform == "desktop_chrome" || platform == "IOS" || platform == "IOS_safari")
-	{
-		// if desktop_chrome or IOS or IOS_safari then gridBorderThick
-	
-		tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid gridBorderThick\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid gridBorderThick\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid gridBorderThick\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid gridBorderThick\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid gridBorderThick\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\" />&nbsp;&nbsp;<img id=\"inputCalendar_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td><td class=\"grid gridBorderThick\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\"/>&nbsp;&nbsp;<img id=\"inputCalendarTesting_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td>";	
-	}	
+	tableEdit.rows[tableEditCount + 1].innerHTML = "<td height=\"25\" class=\"grid\" style=\"padding: 10px\"><a id=\"saveLink2\" class=\"underline\" style=\"cursor: pointer; width: 50px\">save</a></td><td class=\"grid\"><span id=\"inputPrimaryKey_grid\"></span></td><td class=\"grid\"><select id=\"building_option_grid\"><option value=\"\"><option value=\"1\">building</option><option value=\"2\">building2</option></select></td><td class=\"grid\"><input id=\"tenant_input_grid\" value=\"\" style=\"position: relative; z-index: 1; background-color: white; width: 200\" \"/></td><td class=\"grid\"><input id=\"inputCalendar_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\" />&nbsp;&nbsp;<img id=\"inputCalendar_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td><td class=\"grid\"><input id=\"inputCalendarTesting_grid\" style=\"position: relative; z-index: 1; background-color: white; width: 100\" value=\"\"/>&nbsp;&nbsp;<img id=\"inputCalendarTesting_grid_icon\" src=\"images/favpng_font-awesome-calendar-font.png\" width=\"14\" height=\"14\" style=\"cursor: pointer\"></td>";
 
 	var gridEventFunctions = new CodeReuse.GridEventFunctions();
 
